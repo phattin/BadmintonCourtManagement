@@ -110,6 +110,8 @@ namespace BadmintonCourtManagement.GUI
                     // Chuyển sang MainLayout
                     MainLayout main = new MainLayout(account); 
                     main.Show();
+                    // Khi MainLayout đóng → LoginGUI cũng đóng
+                    main.FormClosed += (s, args) => this.Close();
                     this.Hide();
                 }
                 else

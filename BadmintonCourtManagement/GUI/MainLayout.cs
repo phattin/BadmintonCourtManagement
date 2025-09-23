@@ -20,4 +20,6 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
         }
     }
+
+
 }
