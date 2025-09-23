@@ -7,11 +7,17 @@ namespace BadmintonCourtManagement.DTO
         private string username;
         private string password;
         private string permissionId;
-        private int isDeleted;
+        private bool isDeleted;
 
-        public AccountDTO() { }
+        public AccountDTO()
+        {
+            username = "";
+            password = "";
+            permissionId = "";
+            isDeleted = false;
+        }
 
-        public AccountDTO(string username, string password, string permissionId, int isDeleted)
+        public AccountDTO(string username, string password, string permissionId, bool isDeleted)
         {
             this.username = username;
             this.password = password;
@@ -37,7 +43,7 @@ namespace BadmintonCourtManagement.DTO
             set { permissionId = value; }
         }
 
-        public int IsDeleted
+        public bool IsDeleted
         {
             get { return isDeleted; }
             set { isDeleted = value; }
