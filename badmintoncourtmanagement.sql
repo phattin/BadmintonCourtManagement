@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 23, 2025 lúc 07:21 AM
+-- Thời gian đã tạo: Th9 24, 2025 lúc 10:34 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -52,8 +52,8 @@ CREATE TABLE `billbooking` (
   `EmployeeId` varchar(10) NOT NULL,
   `CustomerId` varchar(10) NOT NULL,
   `BookingId` varchar(10) NOT NULL,
-  `TotalPrice` int(11) DEFAULT NULL,
-  `PrePayment` int(11) DEFAULT NULL
+  `TotalPrice` double DEFAULT 0,
+  `PrePayment` double DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -66,8 +66,8 @@ CREATE TABLE `billimportproductdetail` (
   `ImportBillId` varchar(10) NOT NULL,
   `ProductId` varchar(10) NOT NULL,
   `Quantity` int(11) NOT NULL,
-  `Price` int(11) DEFAULT NULL,
-  `TotalPrice` int(11) DEFAULT NULL,
+  `Price` double NOT NULL,
+  `TotalPrice` double NOT NULL,
   `Status` enum('paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -81,7 +81,7 @@ CREATE TABLE `billproduct` (
   `BillProductId` varchar(10) NOT NULL,
   `EmployeeId` varchar(10) NOT NULL,
   `CustomerId` varchar(10) NOT NULL,
-  `TotalPrice` int(11) DEFAULT NULL,
+  `TotalPrice` double NOT NULL,
   `Status` enum('paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -185,7 +185,7 @@ CREATE TABLE `importbill` (
   `ImportBillId` varchar(10) NOT NULL,
   `EmployeeId` varchar(10) NOT NULL,
   `SupplierId` varchar(10) NOT NULL,
-  `TotalPrice` int(11) DEFAULT NULL,
+  `TotalPrice` double NOT NULL,
   `Status` enum('pending','delivered') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -200,8 +200,8 @@ CREATE TABLE `payment` (
   `BillProductId` varchar(10) NOT NULL,
   `PaymentMethod` varchar(50) NOT NULL,
   `TimePayment` datetime NOT NULL,
-  `AmountPaid` int(11) DEFAULT NULL,
-  `RemainingAmount` int(11) DEFAULT NULL
+  `AmountPaid` double NOT NULL,
+  `RemainingAmount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
