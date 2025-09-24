@@ -9,7 +9,13 @@ namespace BadmintonCourtManagement.DTO
         private string permissionId;
         private int isDeleted;
 
-        public AccountDTO() { }
+        public AccountDTO()
+        {
+            username = "";
+            password = "";
+            permissionId = "";
+            isDeleted = 0;
+        }
 
         public AccountDTO(string username, string password, string permissionId, int isDeleted)
         {
