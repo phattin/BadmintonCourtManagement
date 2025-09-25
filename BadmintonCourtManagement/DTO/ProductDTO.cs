@@ -1,34 +1,31 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class ProductDTO
+    public class ProductDTO
     {
-        private string productId = "";
-        private string productName = "";
-        private string producing = "";
-        private int quantity = 0;
-        private string brandId = "";
-        private string typeId = "";
-        private int isDeleted = 0; // 0 = chưa xóa, 1 = đã xóa
-
-        public string ProductId { get => productId; set => productId = value; }
-        public string ProductName { get => productName; set => productName = value; }
-        public string Producing { get => producing; set => producing = value; }
-        public int Quantity { get => quantity; set => quantity = value; }
-        public string BrandId { get => brandId; set => brandId = value; }
-        public string TypeId { get => typeId; set => typeId = value; }
-        public int IsDeleted { get => isDeleted; set => isDeleted = value; }
+        public string ProductId { get; set; } = string.Empty;
+        public string ProductName { get; set; } = string.Empty;
+        public string Producing { get; set; } = string.Empty;
+        public int Quantity { get; set; } = 0;
+        public string BrandId { get; set; } = string.Empty;
+        public string TypeId { get; set; } = string.Empty;
+        public int IsDeleted { get; set; } = 0; 
 
         public ProductDTO() { }
 
-        public ProductDTO(string productId, string productName, string producing, int quantity, string brandId, string typeId, int isDeleted)
+        public ProductDTO(string productId, string productName, string producing, int quantity, string brandId, string typeId, int isDeleted = 0)
         {
-            this.ProductId = productId;
-            this.ProductName = productName;
-            this.Producing = producing;
-            this.Quantity = quantity;
-            this.BrandId = brandId;
-            this.TypeId = typeId;
-            this.IsDeleted = isDeleted;
+            ProductId = productId;
+            ProductName = productName;
+            Producing = producing;
+            Quantity = quantity;
+            BrandId = brandId;
+            TypeId = typeId;
+            IsDeleted = isDeleted;
+        }
+
+        public override string ToString()
+        {
+            return $"[{ProductId}] {ProductName} - SL: {Quantity}, Brand: {BrandId}, Type: {TypeId}, Deleted: {IsDeleted}";
         }
     }
 }
