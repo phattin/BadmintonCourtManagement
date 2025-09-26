@@ -28,195 +28,207 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
+            pSignIn = new Panel();
             panel2 = new Panel();
-            textBox1 = new TextBox();
-            pictureBox2 = new PictureBox();
-            button1 = new Button();
-            label3 = new Label();
-            pictureBox3 = new PictureBox();
-            label1 = new Label();
-            label2 = new Label();
-            pictureBox1 = new PictureBox();
+            txtUsername = new TextBox();
+            pIconUser = new PictureBox();
+            bSignIn = new Button();
+            lblTitle = new Label();
+            pIconPassword = new PictureBox();
+            lblWelcome = new Label();
+            lblBrand = new Label();
+            pLogo = new PictureBox();
             panel3 = new Panel();
-            textBox2 = new TextBox();
-            panel1.SuspendLayout();
+            txtPassword = new TextBox();
+            pSignIn.SuspendLayout();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pIconUser).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pIconPassword).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pLogo).BeginInit();
             panel3.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
+            // pSignIn
             // 
-            panel1.BackColor = Color.FromArgb(235, 235, 235);
-            panel1.Controls.Add(panel2);
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(label3);
-            panel1.Location = new Point(418, -1);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(567, 662);
-            panel1.TabIndex = 0;
+            pSignIn.BackColor = Color.FromArgb(235, 235, 235);
+            pSignIn.Controls.Add(panel2);
+            pSignIn.Controls.Add(bSignIn);
+            pSignIn.Controls.Add(lblTitle);
+            pSignIn.Location = new Point(597, -2);
+            pSignIn.Margin = new Padding(4, 5, 4, 5);
+            pSignIn.Name = "pSignIn";
+            pSignIn.Size = new Size(810, 1103);
+            pSignIn.TabIndex = 0;
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(textBox1);
-            panel2.Controls.Add(pictureBox2);
-            panel2.Location = new Point(0, 195);
+            panel2.Controls.Add(txtUsername);
+            panel2.Controls.Add(pIconUser);
+            panel2.Location = new Point(0, 325);
+            panel2.Margin = new Padding(4, 5, 4, 5);
             panel2.Name = "panel2";
-            panel2.Size = new Size(567, 51);
+            panel2.Size = new Size(810, 85);
             panel2.TabIndex = 8;
             panel2.Paint += panel2_Paint;
             // 
-            // textBox1
+            // txtUsername
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(67, 14);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Username";
-            textBox1.Size = new Size(487, 24);
-            textBox1.TabIndex = 3;
-            textBox1.Tag = "";
-            textBox1.TextChanged += textBox1_TextChanged;
+            txtUsername.BorderStyle = BorderStyle.None;
+            txtUsername.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtUsername.ForeColor = Color.Black;
+            txtUsername.Location = new Point(96, 23);
+            txtUsername.Margin = new Padding(4, 5, 4, 5);
+            txtUsername.Name = "txtUsername";
+            txtUsername.PlaceholderText = "Username";
+            txtUsername.Size = new Size(696, 38);
+            txtUsername.TabIndex = 3;
+            txtUsername.Tag = "";
+            txtUsername.TextChanged += txtUsername_TextChanged;
+            txtUsername.KeyDown += txtUsername_KeyDown;
             // 
-            // pictureBox2
+            // pIconUser
             // 
-            pictureBox2.BackColor = Color.White;
-            pictureBox2.Image = Properties.Resources.user_solid_full;
-            pictureBox2.Location = new Point(12, 6);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(39, 42);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 5;
-            pictureBox2.TabStop = false;
+            pIconUser.BackColor = Color.White;
+            pIconUser.Image = Properties.Resources.user_solid_full;
+            pIconUser.Location = new Point(17, 10);
+            pIconUser.Margin = new Padding(4, 5, 4, 5);
+            pIconUser.Name = "pIconUser";
+            pIconUser.Size = new Size(56, 70);
+            pIconUser.SizeMode = PictureBoxSizeMode.StretchImage;
+            pIconUser.TabIndex = 5;
+            pIconUser.TabStop = false;
             // 
-            // button1
+            // bSignIn
             // 
-            button1.BackColor = Color.FromArgb(125, 179, 125);
-            button1.BackgroundImageLayout = ImageLayout.None;
-            button1.Cursor = Cursors.AppStarting;
-            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(197, 415);
-            button1.Name = "button1";
-            button1.Size = new Size(188, 55);
-            button1.TabIndex = 7;
-            button1.Text = "Đăng nhập";
-            button1.TextImageRelation = TextImageRelation.TextAboveImage;
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            bSignIn.BackColor = Color.FromArgb(125, 179, 125);
+            bSignIn.BackgroundImageLayout = ImageLayout.None;
+            bSignIn.Cursor = Cursors.AppStarting;
+            bSignIn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            bSignIn.ForeColor = Color.White;
+            bSignIn.Location = new Point(281, 692);
+            bSignIn.Margin = new Padding(4, 5, 4, 5);
+            bSignIn.Name = "bSignIn";
+            bSignIn.Size = new Size(269, 92);
+            bSignIn.TabIndex = 7;
+            bSignIn.Text = "Đăng nhập";
+            bSignIn.TextImageRelation = TextImageRelation.TextAboveImage;
+            bSignIn.UseVisualStyleBackColor = false;
+            bSignIn.Click += bSignIn_Click;
             // 
-            // label3
+            // lblTitle
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.FromArgb(125, 179, 125);
-            label3.Location = new Point(212, 117);
-            label3.Name = "label3";
-            label3.Size = new Size(151, 37);
-            label3.TabIndex = 2;
-            label3.Text = "Đăng nhập";
-            label3.TextAlign = ContentAlignment.TopCenter;
-            label3.Click += label3_Click;
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI Semibold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.FromArgb(125, 179, 125);
+            lblTitle.Location = new Point(303, 195);
+            lblTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(228, 55);
+            lblTitle.TabIndex = 2;
+            lblTitle.Text = "Đăng nhập";
+            lblTitle.TextAlign = ContentAlignment.TopCenter;
+            lblTitle.Click += lblTitle_Click;
             // 
-            // pictureBox3
+            // pIconPassword
             // 
-            pictureBox3.BackColor = Color.White;
-            pictureBox3.Image = Properties.Resources.lock_solid_full;
-            pictureBox3.Location = new Point(12, 3);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(39, 42);
-            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox3.TabIndex = 6;
-            pictureBox3.TabStop = false;
-            pictureBox3.Click += pictureBox3_Click;
+            pIconPassword.BackColor = Color.White;
+            pIconPassword.Image = Properties.Resources.lock_solid_full;
+            pIconPassword.Location = new Point(17, 5);
+            pIconPassword.Margin = new Padding(4, 5, 4, 5);
+            pIconPassword.Name = "pIconPassword";
+            pIconPassword.Size = new Size(56, 70);
+            pIconPassword.SizeMode = PictureBoxSizeMode.StretchImage;
+            pIconPassword.TabIndex = 6;
+            pIconPassword.TabStop = false;
+            pIconPassword.Click += pIconPassword_Click;
             // 
-            // label1
+            // lblWelcome
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(70, 116);
-            label1.Name = "label1";
-            label1.Size = new Size(193, 37);
-            label1.TabIndex = 1;
-            label1.Text = "WELCOME TO ";
-            label1.Click += label1_Click;
+            lblWelcome.AutoSize = true;
+            lblWelcome.Font = new Font("Segoe UI Semibold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblWelcome.ForeColor = Color.White;
+            lblWelcome.Location = new Point(100, 193);
+            lblWelcome.Margin = new Padding(4, 0, 4, 0);
+            lblWelcome.Name = "lblWelcome";
+            lblWelcome.Size = new Size(292, 55);
+            lblWelcome.TabIndex = 1;
+            lblWelcome.Text = "WELCOME TO ";
+            lblWelcome.Click += lblWelcome_Click;
             // 
-            // label2
+            // lblBrand
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(70, 153);
-            label2.Name = "label2";
-            label2.Size = new Size(82, 37);
-            label2.TabIndex = 2;
-            label2.Text = "SCLL ";
-            label2.Click += label2_Click;
+            lblBrand.AutoSize = true;
+            lblBrand.Font = new Font("Segoe UI Semibold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblBrand.ForeColor = Color.White;
+            lblBrand.Location = new Point(100, 255);
+            lblBrand.Margin = new Padding(4, 0, 4, 0);
+            lblBrand.Name = "lblBrand";
+            lblBrand.Size = new Size(122, 55);
+            lblBrand.TabIndex = 2;
+            lblBrand.Text = "SCLL ";
+            lblBrand.Click += lblBrand_Click;
             // 
-            // pictureBox1
+            // pLogo
             // 
-            pictureBox1.Image = Properties.Resources.image_3;
-            pictureBox1.Location = new Point(70, 266);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(253, 264);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 3;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
+            pLogo.Image = Properties.Resources.image_3;
+            pLogo.Location = new Point(100, 443);
+            pLogo.Margin = new Padding(4, 5, 4, 5);
+            pLogo.Name = "pLogo";
+            pLogo.Size = new Size(361, 440);
+            pLogo.SizeMode = PictureBoxSizeMode.StretchImage;
+            pLogo.TabIndex = 3;
+            pLogo.TabStop = false;
+            pLogo.Click += pLogo_Click;
             // 
             // panel3
             // 
             panel3.BackColor = Color.White;
-            panel3.Controls.Add(textBox2);
-            panel3.Controls.Add(pictureBox3);
-            panel3.Location = new Point(418, 266);
+            panel3.Controls.Add(txtPassword);
+            panel3.Controls.Add(pIconPassword);
+            panel3.Location = new Point(597, 443);
+            panel3.Margin = new Padding(4, 5, 4, 5);
             panel3.Name = "panel3";
-            panel3.Size = new Size(567, 51);
+            panel3.Size = new Size(810, 85);
             panel3.TabIndex = 9;
             // 
-            // textBox2
+            // txtPassword
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox2.ForeColor = Color.Black;
-            textBox2.Location = new Point(67, 14);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "Password";
-            textBox2.Size = new Size(487, 24);
-            textBox2.TabIndex = 3;
-            textBox2.Tag = "";
-            textBox2.UseSystemPasswordChar = true;
+            txtPassword.BorderStyle = BorderStyle.None;
+            txtPassword.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPassword.ForeColor = Color.Black;
+            txtPassword.Location = new Point(96, 23);
+            txtPassword.Margin = new Padding(4, 5, 4, 5);
+            txtPassword.Name = "txtPassword";
+            txtPassword.PlaceholderText = "Password";
+            txtPassword.Size = new Size(696, 38);
+            txtPassword.TabIndex = 3;
+            txtPassword.Tag = "";
+            txtPassword.UseSystemPasswordChar = true;
+            txtPassword.TextChanged += txtPassword_TextChanged;
+            txtPassword.KeyDown += txtPassword_KeyDown;
             // 
             // LoginGUI
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(125, 179, 125);
-            ClientSize = new Size(984, 661);
+            ClientSize = new Size(1406, 1050);
             Controls.Add(panel3);
-            Controls.Add(pictureBox1);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(panel1);
-            Margin = new Padding(2);
+            Controls.Add(pLogo);
+            Controls.Add(lblBrand);
+            Controls.Add(lblWelcome);
+            Controls.Add(pSignIn);
             Name = "LoginGUI";
             Text = "Đăng nhập";
             Load += LoginGUI_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            pSignIn.ResumeLayout(false);
+            pSignIn.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pIconUser).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pIconPassword).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pLogo).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ResumeLayout(false);
@@ -225,17 +237,17 @@
 
         #endregion
 
-        private Panel panel1;
-        private Label label1;
-        private Label label2;
-        private PictureBox pictureBox1;
-        private Label label3;
-        private TextBox textBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
-        private Button button1;
+        private Panel pSignIn;
+        private Label lblWelcome;
+        private Label lblBrand;
+        private PictureBox pLogo;
+        private Label lblTitle;
+        private TextBox txtUsername;
+        private PictureBox pIconUser;
+        private PictureBox pIconPassword;
+        private Button bSignIn;
         private Panel panel2;
         private Panel panel3;
-        private TextBox textBox2;
+        private TextBox txtPassword;
     }
 }
