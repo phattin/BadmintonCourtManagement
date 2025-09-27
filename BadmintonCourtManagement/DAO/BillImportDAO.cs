@@ -22,7 +22,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@SupplierId", importBill.SupplierId);
                 cmd.Parameters.AddWithValue("@DateCreated", importBill.DateCreated);
                 cmd.Parameters.AddWithValue("@TotalPrice", importBill.TotalPrice);
-                cmd.Parameters.AddWithValue("@Status", importBill.Status);
+                cmd.Parameters.AddWithValue("@Status", importBill.Status.ToString());
                 result = cmd.ExecuteNonQuery();
             }
             finally {
@@ -171,16 +171,14 @@ namespace BadmintonCourtManagement.DAO
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    list.Add(new ImportBillDTO()
+                    list.Add(new ImportBillDTO
                     {
                         ImportBillId = reader["ImportBillId"].ToString(),
                         EmployeeId = reader["EmployeeId"].ToString(),
                         SupplierId = reader["SupplierId"].ToString(),
                         DateCreated = DateTime.Parse(reader["DateCreated"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
-                        Status = reader["Status"] != DBNull.Value
-                            ? (ImportBillDTO.Option)Enum.Parse(typeof(ImportBillDTO.Option), reader["Status"].ToString())
-                            : default(ImportBillDTO.Option),
+                        Status = (ImportBillDTO.Option)Enum.Parse(typeof(ImportBillDTO.Option), reader["Status"].ToString())
                     });
                 }
                 reader.Close();
