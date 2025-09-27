@@ -82,6 +82,7 @@ CREATE TABLE `billproduct` (
   `EmployeeId` varchar(10) NOT NULL,
   `CustomerId` varchar(10) NOT NULL,
   `TotalPrice` double NOT NULL,
+  `DateCreated` datetime NOT NULL,
   `Status` enum('paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

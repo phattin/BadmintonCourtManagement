@@ -1,6 +1,6 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class PriceBookingDetailDTO
+    public class PriceBookingDetailDTO
     {
         private string priceRuleId = "";
         private string billBookingId = "";

@@ -1,26 +1,26 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class SupplierDTO
+    public class SupplierDTO
     {
-        private string id = "";
-        private string name = "";
-        private string address = "";
-        private string email = "";
-        private bool isDeleted = false;
+        private string supplierId = "";
+        private string supplierName = "";
+        private string supplierAddress = "";
+        private string supplierEmail = "";
+        private int isDeleted = 0;
 
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string Address { get => address; set => address = value; }
-        public string Email { get => email; set => email = value; }
-        public bool IsDeleted { get => isDeleted; set => isDeleted = value; }
+        public string SupplierId { get => supplierId; set => supplierId = value; }
+        public string SupplierName { get => supplierName; set => supplierName = value; }
+        public string SupplierAddress { get => supplierAddress; set => supplierAddress = value; }
+        public string SupplierEmail { get => supplierEmail; set => supplierEmail = value; }
+        public int IsDeleted { get => isDeleted; set => isDeleted = value; }
 
         public SupplierDTO() { }
-        public SupplierDTO(string id, string name, string address, string email, bool isDeleted)
+        public SupplierDTO(string supplierId, string supplierName, string supplierAddress, string supplierEmail, int isDeleted)
         {
-            this.Id = id;
-            this.Name = name;
-            this.Address = address;
-            this.Email = email;
+            this.SupplierId = supplierId;
+            this.SupplierName = supplierName;
+            this.SupplierAddress = supplierAddress;
+            this.SupplierEmail = supplierEmail;
             this.IsDeleted = isDeleted;
         }
     }

@@ -1,27 +1,27 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class CourtDTO
+    public class CourtDTO
     {
-        private string id = "";
-        private string name = "";
+        private string courtId = "";
+        private string courtName = "";
         public enum Option { Active, UnderMaintenance };
         private Option status = Option.Active;
 
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
+        public string CourtId { get => courtId; set => courtId = value; }
+        public string CourtName { get => courtName; set => courtName = value; }
         public Option Status { get => status; set => status = value; }
 
         public CourtDTO()
         {
-            this.Id = "";
-            this.Name = "";
+            this.CourtId = "";
+            this.CourtName = "";
             this.Status = Option.Active;
         }
 
-        public CourtDTO(string id, string name, Option status)
+        public CourtDTO(string courtId, string courtName, Option status)
         {
-            this.Id = id;
-            this.Name = name;
+            this.CourtId = courtId;
+            this.CourtName = courtName;
             this.Status = status;
         }
     }

@@ -1,24 +1,24 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class EmployeeDTO
+    public class EmployeeDTO
     {
-        private string id = "";
-        private string name = "";
-        private string phone = "";
-        private string address = "";
+        private string employeeId = "";
+        private string employeeName = "";
+        private string employeePhone = "";
+        private string employeeAddress = "";
         private string username = "";
         private string roleId = "";
 
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string Phone
+        public string EmployeeId { get => employeeId; set => employeeId = value; }
+        public string EmployeeName { get => employeeName; set => employeeName = value; }
+        public string EmployeePhone
         {
-            get => phone;
+            get => employeePhone;
             set
             {
                 if (value.Length == 10 && System.Text.RegularExpressions.Regex.IsMatch(value, @"^0(9|8|6|5|7|3)\d{8}$"))
                 {
-                    phone = value;
+                    employeePhone = value;
                 }
                 else
                 {
@@ -26,26 +26,26 @@ namespace BadmintonCourtManagement.DTO
                 }
             }
         }
-        public string Address { get => address; set => address = value; }
+        public string Address { get => employeeAddress; set => employeeAddress = value; }
         public string Username { get => username; set => username = value; }
         public string RoleId { get => roleId; set => roleId = value; }
 
         public EmployeeDTO()
         {
-            this.Id = "";
-            this.Name = "";
-            this.Phone = "";
+            this.EmployeeId = "";
+            this.EmployeeName = "";
+            this.EmployeePhone = "";
             this.Address = "";
             this.Username = "";
             this.RoleId = "";
         }
 
-        public EmployeeDTO(string id, string name, string phone, string address, string username, string roleId)
+        public EmployeeDTO(string employeeId, string employeeName, string employeePhone, string employeeAddress, string username, string roleId)
         {
-            this.Id = id;
-            this.Name = name;
-            this.Phone = phone;
-            this.Address = address;
+            this.EmployeeId = employeeId;
+            this.EmployeeName = employeeName;
+            this.EmployeePhone = employeePhone;
+            this.Address = employeeAddress;
             this.Username = username;
             this.RoleId = roleId;
         }
