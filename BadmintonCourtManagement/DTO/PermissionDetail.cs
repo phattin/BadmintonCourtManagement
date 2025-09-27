@@ -17,9 +17,9 @@ namespace BadmintonCourtManagement.DTO
 
         public PermissionDetailDTO(string permissionId, string functionId, Option permissionOption)
         {
-            this.permissionId = permissionId;
-            this.functionId = functionId;
-            this.permissionOption = permissionOption;
+            this.PermissionId = permissionId;
+            this.FunctionId = functionId;
+            this.PermissionOption = permissionOption;
         }
     }
 }

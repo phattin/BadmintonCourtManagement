@@ -1,19 +1,19 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class PermissionDTO
+    public class PermissionDTO
     {
-        private string id = "";
-        private string name = "";
+        private string permissionId = "";
+        private string permissionName = "";
 
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
+        public string PermissionId { get => permissionId; set => permissionId = value; }
+        public string PermissionName { get => permissionName; set => permissionName = value; }
 
         public PermissionDTO() { }
 
-        public PermissionDTO(string id, string name)
+        public PermissionDTO(string permissionId, string permissionName)
         {
-            this.id = id;
-            this.name = name;
+            this.PermissionId = permissionId;
+            this.PermissionName = permissionName;
         }
     }
 }

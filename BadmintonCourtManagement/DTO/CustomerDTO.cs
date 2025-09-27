@@ -1,22 +1,22 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class CustomerDTO
+    public class CustomerDTO
     {
-        private string id = "";
-        private string name = "";
-        private string phone = "";
-        private bool isDeleted = false;
+        private string customerId = "";
+        private string customerName = "";
+        private string customerPhone = "";
+        private int isDeleted = 0;
 
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string Phone
+        public string CustomerId { get => customerId; set => customerId = value; }
+        public string CustomerName { get => customerName; set => customerName = value; }
+        public string CustomerPhone
         {
-            get => phone;
+            get => customerPhone;
             set
             {
                 if (value.Length == 10 && System.Text.RegularExpressions.Regex.IsMatch(value, @"^0(9|8|6|5|7|3)\d{8}$"))
                 {
-                    phone = value;
+                    customerPhone = value;
                 }
                 else
                 {
@@ -24,16 +24,16 @@ namespace BadmintonCourtManagement.DTO
                 }
             }
         }
-        public bool IsDeleted { get => isDeleted; set => isDeleted = value; }
+        public int IsDeleted { get => isDeleted; set => isDeleted = value; }
 
         public CustomerDTO() { }
 
-        public CustomerDTO(string id, string name, string phone, bool isDeleted)
+        public CustomerDTO(string customerId, string customerName, string customerPhone, int isDeleted)
         {
-            this.id = id;
-            this.name = name;
-            Phone = phone;
-            this.isDeleted = isDeleted;
+            this.CustomerId = customerId;
+            this.CustomerName = customerName;
+            this.CustomerPhone = customerPhone;
+            this.IsDeleted = isDeleted;
         }
     }
 }
