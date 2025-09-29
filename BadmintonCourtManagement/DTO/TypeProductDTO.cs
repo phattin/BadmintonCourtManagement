@@ -1,16 +1,16 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class TypeProductDTO
+    public class TypeProductDTO
     {
-        private string id = "";
-        private string name = "";
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
+        private string typeProductId = "";
+        private string typeProductName = "";
+        public string TypeProductId { get => typeProductId; set => typeProductId = value; }
+        public string TypeProductName { get => typeProductName; set => typeProductName = value; }
         public TypeProductDTO() { }
-        public TypeProductDTO(string id, string name)
+        public TypeProductDTO(string typeProductId, string typeProductName)
         {
-            this.Id = id;
-            this.Name = name;
+            this.TypeProductId = typeProductId;
+            this.TypeProductName = typeProductName;
         }
     }
 }

@@ -1,31 +1,31 @@
 namespace BadmintonCourtManagement.DTO
 { 
-    class BookingDTO
+    public class BookingDTO
     {
-        private string id = "";
+        private string bookingId = "";
         private string courtId = "";
         private DateTime startTime;
         private DateTime endTime;
-        private bool status;
+        private int status = 0;
 
-        public string Id { get => id; set => id = value; }
+        public string BookingId { get => bookingId; set => bookingId = value; }
         public string CourtId { get => courtId; set => courtId = value; }
         public DateTime StartTime { get => startTime; set => startTime = value; }
         public DateTime EndTime { get => endTime; set => endTime = value; }
-        public bool Status { get => status; set => status = value; }
+        public int Status { get => status; set => status = value; }
 
         public BookingDTO()
         {
-            this.Id = "";
+            this.BookingId = "";
             this.CourtId = "";
-            this.Status = false;
+            this.Status = 0;
             this.StartTime = DateTime.Now;
             this.EndTime = DateTime.Now;
         }
 
-        public BookingDTO(string id, string courtId, bool status, DateTime startTime, DateTime endTime)
+        public BookingDTO(string bookingId, string courtId, int status, DateTime startTime, DateTime endTime)
         {
-            this.Id = id;
+            this.BookingId = bookingId;
             this.CourtId = courtId;
             this.Status = status;
             this.StartTime = startTime;
