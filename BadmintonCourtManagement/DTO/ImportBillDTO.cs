@@ -1,8 +1,8 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class ImportBillDTO
+    public class ImportBillDTO
     {
-        private string id = "";
+        private string importBillId = "";
         private string supplierId = "";
         private string employeeId = "";
         private DateTime dateCreated = DateTime.Now;
@@ -10,7 +10,7 @@ namespace BadmintonCourtManagement.DTO
         public enum Option { Pending, Delivered, Cancelled, Paid, Unpaid }
         private Option status = Option.Unpaid;
 
-        public string Id { get => id; set => id = value; }
+        public string ImportBillId { get => importBillId; set => importBillId = value; }
         public string SupplierId { get => supplierId; set => supplierId = value; }
         public string EmployeeId { get => employeeId; set => employeeId = value; }
         public DateTime DateCreated { get => dateCreated; set => dateCreated = value; }
@@ -18,9 +18,9 @@ namespace BadmintonCourtManagement.DTO
         public Option Status { get => status; set => status = value; }
 
         public ImportBillDTO() { }
-        public ImportBillDTO(string id, string supplierId, string employeeId, DateTime dateCreated, double totalPrice, Option status)
+        public ImportBillDTO(string importBillId, string supplierId, string employeeId, DateTime dateCreated, double totalPrice, Option status)
         {
-            this.Id = id;
+            this.ImportBillId = importBillId;
             this.SupplierId = supplierId;
             this.EmployeeId = employeeId;
             this.DateCreated = dateCreated;
