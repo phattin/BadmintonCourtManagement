@@ -1,3 +1,5 @@
+using MySql.Data.MySqlClient;
+using BadmintonCourtManagement.DTO;
 namespace BadmintonCourtManagement.DAO
 {
     public class CustomerDAO

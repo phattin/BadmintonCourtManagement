@@ -8,7 +8,7 @@ namespace BadmintonCourtManagement.DAO
         private DBConnection db = new DBConnection();
 
         // create
-        public boolean InsertBillImportDetail(BillImportDetailDTO bill)
+        public bool InsertBillImportDetail(BillImportDetailDTO bill)
         {
             string query = "INSERT INTO billimportproductdetail (ImportBillId, ProductId, Quantity, Price, TotalPrice, Status) VALUES (@ImportBillId, @ProductId, @Quantity, @Price, @TotalPrice, @Status)";
             int result = 0;
@@ -51,9 +51,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDecimal(reader["Price"]),
-                        TotalPrice = Convert.ToDecimal(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
                     };
                     billDetails.Add(bill);
@@ -87,9 +87,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDecimal(reader["Price"]),
-                        TotalPrice = Convert.ToDecimal(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
                     });
                 }
@@ -122,9 +122,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDecimal(reader["Price"]),
-                        TotalPrice = Convert.ToDecimal(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
                     });
                 }
@@ -142,7 +142,7 @@ namespace BadmintonCourtManagement.DAO
         }
 
         // update
-        public boolean UpdateBillImportDetail(BillImportDetailDTO bill)
+        public bool UpdateBillImportDetail(BillImportDetailDTO bill)
         {
             string query = "UPDATE billimportproductdetail SET Quantity = @Quantity, Price = @Price, TotalPrice = @TotalPrice, Status = @Status WHERE ImportBillId = @ImportBillId AND ProductId = @ProductId";
             int result = 0;
@@ -170,7 +170,7 @@ namespace BadmintonCourtManagement.DAO
         }
 
         // delete
-        public boolean DeleteBillImportDetail(BillImportDetailDTO bill)
+        public bool DeleteBillImportDetail(BillImportDetailDTO bill)
         {
             string query = "DELETE FROM billimportproductdetail WHERE ImportBillId = @ImportBillId AND ProductId = @ProductId";
             int result = 0;

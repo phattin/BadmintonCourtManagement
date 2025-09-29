@@ -21,10 +21,6 @@ namespace BadmintonCourtManagement.DTO
                 {
                     quantity = value;
                 }
-                else
-                {
-                    throw new Error("Quantity value should be >= 0");
-                }
             }
         }
         public double Price
@@ -35,10 +31,6 @@ namespace BadmintonCourtManagement.DTO
                 if (value >= 0)
                 {
                     price = value;
-                }
-                else
-                {
-                    throw new Error("Price value should be >= 0");
                 }
             }
         }
