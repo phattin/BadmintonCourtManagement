@@ -23,7 +23,7 @@ namespace BadmintonCourtManagement.DTO
                 }
                 else
                 {
-                    throw new Error("Quantity value should be >= 0");
+                    throw new ArgumentException("Quantity value should be >= 0");
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace BadmintonCourtManagement.DTO
                 }
                 else
                 {
-                    throw new Error("Price value should be >= 0");
+                    throw new ArgumentException("Price value should be >= 0");
                 }
             }
         }

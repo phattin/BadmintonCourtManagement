@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BadmintonCourtManagement.GUI
 {
-    public partial class CourtManager : Form
+    public partial class CourtGUI : UserControl
     {
-        public CourtManager()
+        public CourtGUI()
         {
             InitializeComponent();
         }
