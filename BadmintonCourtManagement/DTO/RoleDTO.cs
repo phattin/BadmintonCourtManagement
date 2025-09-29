@@ -1,22 +1,22 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class RoleDTO
+    public class RoleDTO
     {
-        private string id;
-        private string name;
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
+        private string roleId = "";
+        private string roleName = "";
+        public string RoleId { get => roleId; set => roleId = value; }
+        public string RoleName { get => roleName; set => roleName = value; }
 
-        public RoleDTO(string id, string name)
+        public RoleDTO(string roleId, string roleName)
         {
-            this.Id = id;
-            this.Name = name;
+            this.RoleId = roleId;
+            this.RoleName = roleName;
         }
 
         public RoleDTO()
         {
-            this.Id = "";
-            this.Name = "";
+            this.RoleId = "";
+            this.RoleName = "";
         }
     }
 }

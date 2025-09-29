@@ -1,23 +1,23 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class FunctionDTO
+    public class FunctionDTO
     {
-        private string id = "";
-        private string name = "";
+        private string functionId = "";
+        private string functionName = "";
 
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
+        public string FunctionId { get => functionId; set => functionId = value; }
+        public string FunctionName { get => functionName; set => functionName = value; }
 
         public FunctionDTO()
         {
-            id = "";
-            name = "";
+            functionId = "";
+            functionName = "";
         }
 
-        public FunctionDTO(string id, string name)
+        public FunctionDTO(string functionId, string functionName)
         {
-            this.id = id;
-            this.name = name;
+            this.functionId = functionId;
+            this.functionName = functionName;
         }
     }
 }

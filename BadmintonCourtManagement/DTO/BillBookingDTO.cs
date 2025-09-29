@@ -1,8 +1,8 @@
 namespace BadmintonCourtManagement.DTO
 {
-    class BillBookingDTO
+    public class BillBookingDTO
     {
-        private string id = "";
+        private string billBookingId = "";
         private string bookingId = "";
         private double totalPrice;
         private string employeeId = "";
@@ -10,7 +10,7 @@ namespace BadmintonCourtManagement.DTO
         private DateTime dateCreated = DateTime.Now;
         private double prePaid = 0;
 
-        public string Id { get => id; set => id = value; }
+        public string BillBookingId { get => billBookingId; set => billBookingId = value; }
         public string BookingId { get => bookingId; set => bookingId = value; }
         public double TotalPrice { get => totalPrice; set => totalPrice = value; }
         public string EmployeeId { get => employeeId; set => employeeId = value; }
@@ -19,9 +19,9 @@ namespace BadmintonCourtManagement.DTO
         public double PrePaid { get => prePaid; set => prePaid = value; }
 
         public BillBookingDTO() { }
-        public BillBookingDTO(string id, string bookingId, double totalPrice, string employeeId, string customerId, DateTime dateCreated, double prePaid)
+        public BillBookingDTO(string billBookingId, string bookingId, double totalPrice, string employeeId, string customerId, DateTime dateCreated, double prePaid)
         {
-            this.Id = id;
+            this.BillBookingId = billBookingId;
             this.BookingId = bookingId;
             this.TotalPrice = totalPrice;
             this.EmployeeId = employeeId;
