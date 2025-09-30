@@ -5,7 +5,7 @@ namespace BadmintonCourtManagement.DAO
 {
     public class BookingDAO
     {
-        privatte DBConnection db = new DBConnection();
+        private DBConnection db = new DBConnection();
 
         // create
         public bool InsertBooking(BookingDTO booking)
@@ -33,42 +33,42 @@ namespace BadmintonCourtManagement.DAO
             }
             return result > 0;
             }
-            // read
-            public List<BookingDTO> GetAllBookings()
+        }
+        // read
+        public List<BookingDTO> GetAllBookings()
+        {
+            string query = "SELECT * FROM booking";
+            List<BookingDTO> bookings = new List<BookingDTO>();
+            try
             {
-                string query = "SELECT * FROM booking";
-                List<BookingDTO> bookings = new List<BookingDTO>();
-                try
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    db.OpenConnection();
-                    MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                    MySqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    BookingDTO booking = new BookingDTO
                     {
-                        BookingDTO booking = new BookingDTO
-                        {
-                            BookingId = reader["BookingId"].ToString(),
-                            CourtId = reader["CourtId"].ToString(),
-                            Status = reader["Status"] != DBNull.Value
-                            ? (BookingDTO.Option)Enum.Parse(typeof(BookingDTO.Option), reader["Status"].ToString())
-                            : default(BookingDTO.Option),
-                            StartTime = DateTime.Parse(reader["StartTime"].ToString()),
-                            EndTime = DateTime.Parse(reader["EndTime"].ToString()),
-                        };
-                        bookings.Add(booking);
-                    }
-                    reader.Close();
+                        BookingId = reader["BookingId"].ToString(),
+                        CourtId = reader["CourtId"].ToString(),
+                        Status = reader["Status"] != DBNull.Value
+                        ? (BookingDTO.Option)Enum.Parse(typeof(BookingDTO.Option), reader["Status"].ToString())
+                        : default(BookingDTO.Option),
+                        StartTime = DateTime.Parse(reader["StartTime"].ToString()),
+                        EndTime = DateTime.Parse(reader["EndTime"].ToString()),
+                    };
+                    bookings.Add(booking);
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error retrieving bookings: " + ex.Message);
-                }
-                finally
-                {
-                    db.CloseConnection();
-                }
-                    return bookings;
+                reader.Close();
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving bookings: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+                return bookings;
         }
 
         // Get bookings by court ID
