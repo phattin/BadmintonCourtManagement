@@ -21,13 +21,10 @@ namespace BadmintonCourtManagement.DTO
                 {
                     quantity = value;
                 }
-<<<<<<< HEAD
-=======
                 else
                 {
                     throw new ArgumentException("Quantity value should be >= 0");
                 }
->>>>>>> main
             }
         }
         public double Price
@@ -39,13 +36,10 @@ namespace BadmintonCourtManagement.DTO
                 {
                     price = value;
                 }
-<<<<<<< HEAD
-=======
                 else
                 {
                     throw new ArgumentException("Price value should be >= 0");
                 }
->>>>>>> main
             }
         }
         public double TotalPrice
