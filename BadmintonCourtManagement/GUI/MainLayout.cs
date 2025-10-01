@@ -45,16 +45,16 @@ namespace BadmintonCourtManagement.GUI
             // Remove current panel if exists
             if (currentPanel != null)
             {
-                this.Controls.Remove(currentPanel);
+                ModuleToggle.Controls.Remove(currentPanel);
                 currentPanel.Dispose();
             }
-            
+
             // Add new panel
             currentPanel = childPanel;
             childPanel.Dock = DockStyle.Fill;
-            this.Controls.Add(childPanel);
+            ModuleToggle.Controls.Add(childPanel);
             childPanel.BringToFront();
-            
+
             // Keep menu panel on top
             menuPanel.BringToFront();
         }
@@ -86,5 +86,9 @@ namespace BadmintonCourtManagement.GUI
             MessageBox.Show("Cài đặt clicked!");
         }
 
+        private void MainLayout_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
