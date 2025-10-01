@@ -8,7 +8,8 @@ namespace BadmintonCourtManagement.GUI
         private AccountDTO currentAccount;
         public BookCourtGUI(AccountDTO account)
         {
-            AccountDTO accountCurrent = account;
+            // AccountDTO accountCurrent = account;
+            currentAccount = account;
             InitializeComponent();
         }
     }

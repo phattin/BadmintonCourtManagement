@@ -17,6 +17,7 @@ namespace BadmintonCourtManagement.GUI
         private AccountDTO currentAccount;
         private UserControl currentPanel;
         private MenuManager menuManager;
+        private Panel menuPanel, contentPanel;
         public MainLayout(AccountDTO account)
         {
             AccountDTO accountCurrent = account;
@@ -44,18 +45,18 @@ namespace BadmintonCourtManagement.GUI
             // Remove current panel if exists
             if (currentPanel != null)
             {
-                this.Controls.Remove(currentPanel);
+                contentPanel.Controls.Remove(currentPanel);
                 currentPanel.Dispose();
             }
-            
+
             // Add new panel
             currentPanel = childPanel;
+            contentPanel.Controls.Add(childPanel);
             childPanel.Dock = DockStyle.Fill;
-            this.Controls.Add(childPanel);
-            childPanel.BringToFront();
-            
+            //childPanel.BringToFront();
+
             // Keep menu panel on top
-            menuPanel.BringToFront();
+            //menuPanel.BringToFront();
         }
 
         // Event handlers for menu buttons
@@ -72,6 +73,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Customers_Click(object sender, EventArgs e)
         {
+            OpenChildPanel(new CustomerGUI(currentAccount));
             MessageBox.Show("Khách hàng clicked!");
         }
 
@@ -85,5 +87,9 @@ namespace BadmintonCourtManagement.GUI
             MessageBox.Show("Cài đặt clicked!");
         }
 
+        private void MainLayout_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
