@@ -19,28 +19,30 @@
         private void InitializeComponent()
         {
             menuPanel = new Panel();
-            menuPanel.SuspendLayout();
             SuspendLayout();
-            
-            // menuPanel 
+            // 
+            // menuPanel
+            // 
+            menuPanel.BackColor = Color.FromArgb(239, 248, 230);
             menuPanel.Dock = DockStyle.Left;
             menuPanel.Location = new Point(0, 0);
             menuPanel.Name = "menuPanel";
-            menuPanel.Size = new Size(166, 753);
-            menuPanel.BackColor = Color.FromArgb(239, 248, 230);
+            menuPanel.Size = new Size(206, 653);
             menuPanel.TabIndex = 0;
-
+            // 
             // MainLayout
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "MainLayout";
-
-            this.Controls.Add(menuPanel);
-            menuPanel.ResumeLayout(false);
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1103, 653);
+            Controls.Add(menuPanel);
+            Name = "MainLayout";
+            Text = "MainLayout";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private PictureBox pictureBox1;
     }
 }

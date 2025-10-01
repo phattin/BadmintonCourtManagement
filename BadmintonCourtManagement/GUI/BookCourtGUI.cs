@@ -11,5 +11,10 @@ namespace BadmintonCourtManagement.GUI
             AccountDTO accountCurrent = account;
             InitializeComponent();
         }
+
+        private void btnBooking_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
