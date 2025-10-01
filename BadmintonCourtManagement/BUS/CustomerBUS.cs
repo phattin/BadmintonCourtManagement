@@ -14,7 +14,7 @@ namespace BadmintonCourtManagement.BUS
             return dao.Search(search);
         }
 
-        public List<AccountDTO> GetAllCustomers()
+        public List<CustomerDTO> GetAllCustomers()
         {
             return dao.GetAllCustomers();
         }

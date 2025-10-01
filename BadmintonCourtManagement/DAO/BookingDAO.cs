@@ -27,12 +27,12 @@ namespace BadmintonCourtManagement.DAO
             catch (Exception ex)
             {
                 throw new Exception("Error inserting booking: " + ex.Message);
+            }
             finally
             {
                 db.CloseConnection();
             }
             return result > 0;
-            }
         }
         // read
         public List<BookingDTO> GetAllBookings()
@@ -108,7 +108,7 @@ namespace BadmintonCourtManagement.DAO
             }
             return bookings;
         }
-        
+
         // // Get bookings by status
         // public List<BookingDTO> GetBookingsByStatus(string status)
         // {
@@ -147,19 +147,19 @@ namespace BadmintonCourtManagement.DAO
         //     return bookings;
         // }
 
-        public List<BookingDTO> GetBookingsBytId(string bookingId)
+        public BookingDTO GetBookingById(string bookingId)
         {
             string query = "SELECT * FROM booking WHERE BookingId = @BookingId";
-            List<BookingDTO> bookings = new List<BookingDTO>();
+            BookingDTO booking = null;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@BookingId", bookingId);
                 MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (reader.Read()) // ch? ??c 1 dòng duy nh?t
                 {
-                    BookingDTO booking = new BookingDTO
+                    booking = new BookingDTO
                     {
                         BookingId = reader["BookingId"].ToString(),
                         CourtId = reader["CourtId"].ToString(),
@@ -169,20 +169,20 @@ namespace BadmintonCourtManagement.DAO
                         StartTime = DateTime.Parse(reader["StartTime"].ToString()),
                         EndTime = DateTime.Parse(reader["EndTime"].ToString()),
                     };
-                    bookings.Add(booking);
                 }
                 reader.Close();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving bookings by court ID: " + ex.Message);
+                throw new Exception("Error retrieving booking by ID: " + ex.Message);
             }
             finally
             {
                 db.CloseConnection();
             }
-            return bookings;
+            return booking;
         }
+
         public List<BookingDTO> Search(string search )
         {
             string query = "SELECT * FROM booking WHERE BookingId LIKE @search OR CourtId LIKE @search OR Status LIKE @search OR StartTime LIKE @search OR EndTime LIKE @search";
