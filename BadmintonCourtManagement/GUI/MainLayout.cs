@@ -21,6 +21,7 @@ namespace BadmintonCourtManagement.GUI
         {
             AccountDTO accountCurrent = account;
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             CreateMenuButtons();
         }
 

@@ -18,6 +18,7 @@ namespace BadmintonCourtManagement.GUI
         public LoginGUI()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void LoginGUI_Load(object sender, EventArgs e)
@@ -108,7 +109,7 @@ namespace BadmintonCourtManagement.GUI
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Chuyển sang MainLayout
-                    MainLayout main = new MainLayout(account); 
+                    MainLayout main = new MainLayout(account);
                     main.Show();
                     // Khi MainLayout đóng → LoginGUI cũng đóng
                     main.FormClosed += (s, args) => this.Close();
@@ -131,5 +132,9 @@ namespace BadmintonCourtManagement.GUI
 
         }
 
+        private void pSignIn_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
