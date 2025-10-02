@@ -51,9 +51,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDouble(reader["Price"]),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
                     };
                     billDetails.Add(bill);
@@ -87,9 +87,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDouble(reader["Price"]),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
                     });
                 }
@@ -122,9 +122,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDouble(reader["Price"]),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
                     });
                 }
