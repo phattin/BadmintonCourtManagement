@@ -50,9 +50,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = int.Parse(reader["Quantity"].ToString()),
-                        Price = double.Parse(reader["Price"].ToString()),
-                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        Price = Convert.ToDouble(reader["Price"]),
+                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                     };
                     billDetails.Add(bill);
                 }
@@ -85,9 +85,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = int.Parse(reader["Quantity"].ToString()),
-                        Price = double.Parse(reader["Price"].ToString()),
-                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        Price = Convert.ToDouble(reader["Price"]),
+                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                     });
                 }
                 reader.Close();
@@ -119,9 +119,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = int.Parse(reader["Quantity"].ToString()),
-                        Price = double.Parse(reader["Price"].ToString()),
-                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        Price = Convert.ToDouble(reader["Price"]),
+                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                     });
                 }
                 reader.Close();

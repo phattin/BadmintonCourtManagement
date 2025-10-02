@@ -1,5 +1,6 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using BadmintonCourtManagement.DTO;
+
 namespace BadmintonCourtManagement.DAO
 {
     public class CustomerDAO
@@ -66,27 +67,27 @@ namespace BadmintonCourtManagement.DAO
             return customers;
         }
 
-        public List<CustomerDTO> GetCustomerById(string id)
+        public CustomerDTO GetCustomerById(string id)
         {
             string query = "SELECT * FROM customer WHERE CustomerId = @CustomerId AND IsDeleted = 0";
-            List<CustomerDTO> customers = new List<CustomerDTO>();
+            CustomerDTO customer = null;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@CustomerId", id);
                 MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                if (reader.Read()) // chỉ đọc 1 bản ghi
                 {
-                    CustomerDTO customer = new CustomerDTO
+                    customer = new CustomerDTO
                     {
                         CustomerId = reader["CustomerId"].ToString(),
                         CustomerName = reader["CustomerName"].ToString(),
                         CustomerPhone = reader["Phone"].ToString(),
-                        IsDeleted = int.Parse(reader["IsDeleted"].ToString())
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])  // an toàn hơn int.Parse
                     };
-                    customers.Add(customer);
                 }
+                reader.Close();
             }
             catch (Exception ex)
             {
@@ -96,9 +97,9 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.CloseConnection();
             }
-            reader.Close();
-            return customer;
+            return customer; 
         }
+
 
         // search
         public List<CustomerDTO> Search(string search)
@@ -160,7 +161,7 @@ namespace BadmintonCourtManagement.DAO
         }
 
         // delete
-        public bool DeleteCustomer(CustomerDTO customer)
+        public bool DeleteCustomer(string id)
         {
             string query = "UPDATE customer SET IsDeleted = 1 WHERE CustomerId = @CustomerId";
             int result = 0;
@@ -168,7 +169,7 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@CustomerId", customer.CustomerId);
+                cmd.Parameters.AddWithValue("@CustomerId", id);
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)

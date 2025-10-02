@@ -22,7 +22,7 @@ namespace BadmintonCourtManagement.BUS
         public bool InsertBooking(BookingDTO booking)
         {
             // Kiểm tra xem booking đã tồn tại chưa
-            var existing = dao.GetBookingById(booking.Id);
+            var existing = dao.GetBookingById(booking.BookingId);
             if (existing != null)
                 throw new Exception("Booking đã tồn tại!");
 
@@ -31,7 +31,7 @@ namespace BadmintonCourtManagement.BUS
 
         public bool UpdateBooking(BookingDTO booking)
         {
-            var existing = dao.GetBookingById(booking.Id);
+            var existing = dao.GetBookingById(booking.BookingId);
             if (existing == null)
                 throw new Exception("Booking không tồn tại!");
 

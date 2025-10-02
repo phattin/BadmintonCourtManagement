@@ -83,6 +83,16 @@ namespace BadmintonCourtManagement.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap noun_badminton_7535656_1 {
+            get {
+                object obj = ResourceManager.GetObject("noun-badminton-7535656 1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap user_solid_full {
             get {
                 object obj = ResourceManager.GetObject("user-solid-full", resourceCulture);
