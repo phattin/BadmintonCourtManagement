@@ -15,7 +15,7 @@ namespace BadmintonCourtManagement.GUI
     public partial class MainLayout : Form
     {
         private AccountDTO currentAccount;
-        private UserControl currentPanel;
+        private UserControl currentPanel;   
         private MenuManager menuManager;
         private Panel menuPanel, contentPanel;
         public MainLayout(AccountDTO account)
@@ -89,6 +89,11 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void MainLayout_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contentPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }
