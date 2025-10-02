@@ -12,7 +12,7 @@ namespace BadmintonCourtManagement.DAO
         // Lấy nhà cung cấp theo ID
         public SupplierDTO GetById(string id)
         {
-            string query = "SELECT * FROM supplier WHERE Id = @Id AND IsDeleted = 0";
+            string query = "SELECT * FROM supplier WHERE SupplierId = @SupplierId AND IsDeleted = 0";
             SupplierDTO supplier = null;
             try
             {
@@ -24,10 +24,10 @@ namespace BadmintonCourtManagement.DAO
                 {
                     supplier = new SupplierDTO()
                     {
-                        Id = reader["Id"].ToString(),
-                        Name = reader["Name"].ToString(),
-                        Address = reader["Address"].ToString(),
-                        Phone = reader["Phone"].ToString(),
+                        SupplierId = reader["SupplierId"].ToString(),
+                        SupplierName = reader["SupplierName"].ToString(),
+                        SupplierAddress = reader["Address"].ToString(),
+                        SupplierEmail = reader["Email"].ToString(),
                         IsDeleted = Convert.ToInt32(reader["IsDeleted"])
                     };
                 }
@@ -54,10 +54,10 @@ namespace BadmintonCourtManagement.DAO
                 {
                     list.Add(new SupplierDTO()
                     {
-                        Id = reader["Id"].ToString(),
-                        Name = reader["Name"].ToString(),
-                        Address = reader["Address"].ToString(),
-                        Phone = reader["Phone"].ToString(),
+                        SupplierId = reader["SupplierId"].ToString(),
+                        SupplierName = reader["SupplierName"].ToString(),
+                        SupplierAddress = reader["Address"].ToString(),
+                        SupplierEmail = reader["Email"].ToString(),
                         IsDeleted = Convert.ToInt32(reader["IsDeleted"])
                     });
                 }
@@ -73,7 +73,7 @@ namespace BadmintonCourtManagement.DAO
         // Search
         public List<SupplierDTO> Search(string keyword)
         {
-            string query = "SELECT * FROM supplier WHERE (Name LIKE @Keyword OR Address LIKE @Keyword OR Phone LIKE @Keyword) AND IsDeleted = 0";
+            string query = "SELECT * FROM supplier WHERE (SupplierName LIKE @Keyword OR Address LIKE @Keyword OR Email LIKE @Keyword) AND IsDeleted = 0";
             List<SupplierDTO> list = new List<SupplierDTO>();
             try
             {
@@ -85,10 +85,10 @@ namespace BadmintonCourtManagement.DAO
                 {
                     list.Add(new SupplierDTO()
                     {
-                        Id = reader["Id"].ToString(),
-                        Name = reader["Name"].ToString(),
-                        Address = reader["Address"].ToString(),
-                        Phone = reader["Phone"].ToString(),
+                        SupplierId = reader["SipplierId"].ToString(),
+                        SupplierName = reader["Suppliername"].ToString(),
+                        SupplierAddress = reader["Address"].ToString(),
+                        SupplierEmail = reader["Email"].ToString(),
                         IsDeleted = Convert.ToInt32(reader["IsDeleted"])
                     });
                 }
@@ -104,15 +104,15 @@ namespace BadmintonCourtManagement.DAO
         // Insert
         public bool InsertSupplier(SupplierDTO supplier)
         {
-            string query = "INSERT INTO supplier (Name, Address, Phone, IsDeleted) VALUES (@Name, @Address, @Phone, 0)";
+            string query = "INSERT INTO supplier (SupplierName, Address, Email, IsDeleted) VALUES (@SupplierName, @Address, @Email, 0)";
             int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@Name", supplier.Name);
-                cmd.Parameters.AddWithValue("@Address", supplier.Address);
-                cmd.Parameters.AddWithValue("@Phone", supplier.Phone);
+                cmd.Parameters.AddWithValue("@SupplierName", supplier.SupplierName);
+                cmd.Parameters.AddWithValue("@Address", supplier.SupplierAddress);
+                cmd.Parameters.AddWithValue("@Email", supplier.SupplierEmail);
                 result = cmd.ExecuteNonQuery();
             }
             finally
@@ -125,16 +125,16 @@ namespace BadmintonCourtManagement.DAO
         // update
         public bool UpdateSupplier(SupplierDTO supplier)
         {
-            string query = "UPDATE supplier SET Name=@Name, Address=@Address, Phone=@Phone WHERE Id=@Id AND IsDeleted=0";
+            string query = "UPDATE supplier SET SupplierName=@SuplierName, Address=@Address, Email=@Email WHERE SupplierId=@SupplerId AND IsDeleted=0";
             int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@Name", supplier.Name);
-                cmd.Parameters.AddWithValue("@Address", supplier.Address);
-                cmd.Parameters.AddWithValue("@Phone", supplier.Phone);
-                cmd.Parameters.AddWithValue("@Id", supplier.Id);
+                cmd.Parameters.AddWithValue("@SupplierName", supplier.SupplierName);
+                cmd.Parameters.AddWithValue("@Address", supplier.SupplierAddress);
+                cmd.Parameters.AddWithValue("@Email", supplier.SupplierEmail);
+                cmd.Parameters.AddWithValue("@SupplierId", supplier.SupplierId);
                 result = cmd.ExecuteNonQuery();
             }
             finally
@@ -153,7 +153,7 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@SupplierId", id);
                 result = cmd.ExecuteNonQuery();
             }
             finally
