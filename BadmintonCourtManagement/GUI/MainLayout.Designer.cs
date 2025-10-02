@@ -3,7 +3,6 @@
     partial class MainLayout
     {
         private System.ComponentModel.IContainer components = null;
-        private Panel menuPanel;
 
         protected override void Dispose(bool disposing)
         {
@@ -19,30 +18,38 @@
         private void InitializeComponent()
         {
             menuPanel = new Panel();
+            contentPanel = new Panel();
             SuspendLayout();
             // 
             // menuPanel
             // 
             menuPanel.BackColor = Color.FromArgb(239, 248, 230);
+            menuPanel.Width = 166;
             menuPanel.Dock = DockStyle.Left;
-            menuPanel.Location = new Point(0, 0);
             menuPanel.Name = "menuPanel";
-            menuPanel.Size = new Size(206, 653);
-            menuPanel.TabIndex = 0;
+            //
+            // contentPanel
+            //
+            contentPanel.Dock = DockStyle.Fill;
+            contentPanel.Name = "contentPanel";
+            this.Controls.Add(contentPanel);
+            this.Controls.Add(menuPanel);
             // 
             // MainLayout
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1103, 653);
-            Controls.Add(menuPanel);
+            ClientSize = new Size(1059, 657);
             Name = "MainLayout";
             Text = "MainLayout";
+            WindowState = FormWindowState.Maximized;
+            Load += MainLayout_Load;
             ResumeLayout(false);
         }
 
         #endregion
 
         private PictureBox pictureBox1;
+        private Panel ModuleToggle;
     }
 }
