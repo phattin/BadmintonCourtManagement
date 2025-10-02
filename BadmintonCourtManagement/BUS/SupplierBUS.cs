@@ -11,7 +11,7 @@ namespace BadmintonCourtManagement.BUS
 
         public SupplierDTO GetSupplierById(string id)
         {
-            return dao.GetSupplierById(id);
+            return dao.GetById(id);
         }
 
         public List<SupplierDTO> GetAllSuppliers()
@@ -29,7 +29,7 @@ namespace BadmintonCourtManagement.BUS
         public bool InsertSupplier(SupplierDTO supplier)
         {
             // Kiểm tra xem supplier đã tồn tại chưa
-            var existing = dao.GetSupplierById(supplier.Id);
+            var existing = dao.GetById(supplier.SupplierId);
             if (existing != null)
                 throw new Exception("Supplier đã tồn tại!");
 
@@ -38,7 +38,7 @@ namespace BadmintonCourtManagement.BUS
 
         public bool UpdateSupplier(SupplierDTO supplier)
         {
-            var existing = dao.GetSupplierById(supplier.Id);
+            var existing = dao.GetById(supplier.SupplierId);
             if (existing == null)
                 throw new Exception("Supplier không tồn tại!");
 
@@ -47,7 +47,7 @@ namespace BadmintonCourtManagement.BUS
 
         public bool DeleteSupplier(string id)
         {
-            var existing = dao.GetSupplierById(id);
+            var existing = dao.GetById(id);
             if (existing == null)
                 throw new Exception("Supplier không tồn tại!");
 
