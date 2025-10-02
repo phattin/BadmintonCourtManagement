@@ -8,7 +8,7 @@ namespace BadmintonCourtManagement.DAO
         private DBConnection db = new DBConnection();
 
         // create
-        public Boolean InsertBillProductDetail(BillProductDetailDTO bill)
+        public bool InsertBillProductDetail(BillProductDetailDTO bill)
         {
             string query = "INSERT INTO billimportproductdetail (BillProductId, ProductId, Quantity, Price, TotalPrice) VALUES (@BillProductId, @ProductId, @Quantity, @Price, @TotalPrice)";
             int result = 0;
@@ -50,9 +50,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDouble(reader["Price"]),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                     };
                     billDetails.Add(bill);
                 }
@@ -85,9 +85,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDouble(reader["Price"]),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                     });
                 }
                 reader.Close();
@@ -119,9 +119,9 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDouble(reader["Price"]),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        Price = double.Parse(reader["Price"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                     });
                 }
                 reader.Close();
@@ -138,7 +138,7 @@ namespace BadmintonCourtManagement.DAO
         }
 
         // update
-        public Boolean UpdateBillProductDetail(BillProductDetailDTO bill)
+        public bool UpdateBillProductDetail(BillProductDetailDTO bill)
         {
             string query = "UPDATE billproductdetail SET Quantity = @Quantity, Price = @Price, TotalPrice = @TotalPrice WHERE BillProductId = @BillProductId AND ProductId = @ProductId";
             int result = 0;
@@ -165,7 +165,7 @@ namespace BadmintonCourtManagement.DAO
         }
 
         // delete
-        public Boolean DeleteBillProductDetail(BillProductDetailDTO bill)
+        public bool DeleteBillProductDetail(BillProductDetailDTO bill)
         {
             string query = "DELETE FROM billproductdetail WHERE BillProductId = @BillProductId AND ProductId = @ProductId";
             int result = 0;
