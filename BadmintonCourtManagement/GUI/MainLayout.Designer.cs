@@ -24,25 +24,30 @@
             // menuPanel
             // 
             menuPanel.BackColor = Color.FromArgb(239, 248, 230);
-            menuPanel.Width = 166;
             menuPanel.Dock = DockStyle.Left;
+            menuPanel.Location = new Point(0, 0);
             menuPanel.Name = "menuPanel";
-            //
+            menuPanel.Size = new Size(166, 657);
+            menuPanel.TabIndex = 1;
+            // 
             // contentPanel
-            //
+            // 
             contentPanel.Dock = DockStyle.Fill;
+            contentPanel.Location = new Point(166, 0);
             contentPanel.Name = "contentPanel";
-            this.Controls.Add(contentPanel);
-            this.Controls.Add(menuPanel);
+            contentPanel.Size = new Size(893, 657);
+            contentPanel.TabIndex = 0;
+            contentPanel.Paint += contentPanel_Paint;
             // 
             // MainLayout
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1059, 657);
+            Controls.Add(contentPanel);
+            Controls.Add(menuPanel);
             Name = "MainLayout";
             Text = "MainLayout";
-            WindowState = FormWindowState.Maximized;
             Load += MainLayout_Load;
             ResumeLayout(false);
         }
