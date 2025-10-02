@@ -64,7 +64,7 @@ namespace BadmintonCourtManagement.GUI
         private void BookCourt_Click(object sender, EventArgs e)
         {
             OpenChildPanel(new BookCourtGUI(currentAccount));
-            MessageBox.Show("Đặt sân clicked!");
+            // MessageBox.Show("Đặt sân clicked!");
         }
 
         private void ManageCourts_Click(object sender, EventArgs e)
@@ -75,7 +75,7 @@ namespace BadmintonCourtManagement.GUI
         private void Customers_Click(object sender, EventArgs e)
         {
             OpenChildPanel(new CustomerGUI(currentAccount));
-            MessageBox.Show("Khách hàng clicked!");
+            // MessageBox.Show("form: " + this.Size.ToString() + "\ncontentPanel: " + contentPanel.Size.ToString() + "\ncurrentPanel: " + currentPanel.Size.ToString());
         }
 
         private void Reports_Click(object sender, EventArgs e)
@@ -90,7 +90,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void MainLayout_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void contentPanel_Paint(object sender, PaintEventArgs e)

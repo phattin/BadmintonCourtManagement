@@ -32,8 +32,10 @@
             btnBooking2 = new Label();
             pFilter = new CustomPanel();
             customPanel4 = new CustomPanel();
+            dateTimePicker3 = new DateTimePicker();
             lbltimeFinish = new Label();
             customPanel3 = new CustomPanel();
+            dateTimePicker2 = new DateTimePicker();
             lbltimeStart = new Label();
             customPanel2 = new CustomPanel();
             dateTimePicker1 = new DateTimePicker();
@@ -43,8 +45,6 @@
             textBox1 = new TextBox();
             lblTitle = new Label();
             btnBooking = new Label();
-            dateTimePicker3 = new DateTimePicker();
-            dateTimePicker2 = new DateTimePicker();
             draft_panel.SuspendLayout();
             pCourt3.SuspendLayout();
             pCourt2.SuspendLayout();
@@ -236,6 +236,7 @@
             // 
             // pFilter
             // 
+            pFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pFilter.BackColor = Color.FromArgb(217, 217, 217);
             pFilter.BorderRadius = 10;
             pFilter.Controls.Add(customPanel4);
@@ -259,6 +260,13 @@
             customPanel4.Size = new Size(113, 38);
             customPanel4.TabIndex = 3;
             // 
+            // dateTimePicker3
+            // 
+            dateTimePicker3.Location = new Point(88, 5);
+            dateTimePicker3.Name = "dateTimePicker3";
+            dateTimePicker3.Size = new Size(22, 27);
+            dateTimePicker3.TabIndex = 9;
+            // 
             // lbltimeFinish
             // 
             lbltimeFinish.AutoSize = true;
@@ -279,6 +287,14 @@
             customPanel3.Name = "customPanel3";
             customPanel3.Size = new Size(113, 38);
             customPanel3.TabIndex = 2;
+            // 
+            // dateTimePicker2
+            // 
+            dateTimePicker2.Location = new Point(86, 5);
+            dateTimePicker2.Name = "dateTimePicker2";
+            dateTimePicker2.Size = new Size(22, 27);
+            dateTimePicker2.TabIndex = 3;
+            dateTimePicker2.ValueChanged += dateTimePicker2_ValueChanged;
             // 
             // lbltimeStart
             // 
@@ -370,6 +386,7 @@
             // 
             // btnBooking
             // 
+            btnBooking.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnBooking.AutoSize = true;
             btnBooking.BackColor = Color.FromArgb(64, 64, 64);
             btnBooking.Cursor = Cursors.Hand;
@@ -383,21 +400,6 @@
             btnBooking.Text = "Thêm sân";
             btnBooking.TextAlign = ContentAlignment.MiddleCenter;
             btnBooking.Click += btnBooking_Click;
-            // 
-            // dateTimePicker3
-            // 
-            dateTimePicker3.Location = new Point(88, 5);
-            dateTimePicker3.Name = "dateTimePicker3";
-            dateTimePicker3.Size = new Size(22, 27);
-            dateTimePicker3.TabIndex = 9;
-            // 
-            // dateTimePicker2
-            // 
-            dateTimePicker2.Location = new Point(86, 5);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(22, 27);
-            dateTimePicker2.TabIndex = 3;
-            dateTimePicker2.ValueChanged += dateTimePicker2_ValueChanged;
             // 
             // BookCourtGUI
             // 

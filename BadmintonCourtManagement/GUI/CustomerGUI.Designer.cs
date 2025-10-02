@@ -38,6 +38,7 @@
             // 
             // customerPanel
             // 
+            customerPanel.BackColor = Color.White;
             customerPanel.Controls.Add(dataFrameCustomer);
             customerPanel.Controls.Add(btn_add_customer);
             customerPanel.Controls.Add(lbl_title_customer);
@@ -51,24 +52,28 @@
             // 
             // dataFrameCustomer
             // 
+            dataFrameCustomer.AllowUserToAddRows = false;
+            dataFrameCustomer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataFrameCustomer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataFrameCustomer.BackgroundColor = Color.White;
             dataFrameCustomer.ColumnHeadersHeight = 29;
             dataFrameCustomer.Location = new Point(72, 253);
-            dataFrameCustomer.Name = "dataFrameCustomer";
-            dataFrameCustomer.RowHeadersWidth = 51;
-            dataFrameCustomer.Size = new Size(1600, 817);
-            dataFrameCustomer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataFrameCustomer.ReadOnly = true;
-            dataFrameCustomer.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataFrameCustomer.MultiSelect = false;
-            dataFrameCustomer.AllowUserToAddRows = false;
-
+            dataFrameCustomer.Name = "dataFrameCustomer";
+            dataFrameCustomer.ReadOnly = true;
+            dataFrameCustomer.RowHeadersWidth = 51;
+            dataFrameCustomer.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataFrameCustomer.Size = new Size(1600, 817);
+            dataFrameCustomer.TabIndex = 0;
             // 
             // btn_add_customer
             // 
-            btn_add_customer.BackColor = Color.Black;
+            btn_add_customer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btn_add_customer.BackColor = Color.FromArgb(64, 64, 64);
+            btn_add_customer.FlatStyle = FlatStyle.Flat;
             btn_add_customer.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_add_customer.ForeColor = SystemColors.ButtonHighlight;
-            btn_add_customer.Location = new Point(1521, 41);
+            btn_add_customer.Location = new Point(1521, 45);
             btn_add_customer.Name = "btn_add_customer";
             btn_add_customer.Size = new Size(151, 50);
             btn_add_customer.TabIndex = 1;
@@ -78,10 +83,10 @@
             // lbl_title_customer
             // 
             lbl_title_customer.AutoSize = true;
-            lbl_title_customer.Font = new Font("Segoe UI", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbl_title_customer.Location = new Point(72, 42);
+            lbl_title_customer.Font = new Font("Segoe UI Semibold", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbl_title_customer.Location = new Point(44, 45);
             lbl_title_customer.Name = "lbl_title_customer";
-            lbl_title_customer.Size = new Size(285, 62);
+            lbl_title_customer.Size = new Size(277, 62);
             lbl_title_customer.TabIndex = 0;
             lbl_title_customer.Text = "Khách hàng";
             // 
@@ -89,6 +94,8 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
+            BackColor = Color.White;
             Controls.Add(customerPanel);
             MaximumSize = new Size(1752, 1171);
             MinimumSize = new Size(634, 450);
@@ -101,5 +108,7 @@
         }
 
         #endregion
+
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

@@ -36,11 +36,30 @@ namespace BadmintonCourtManagement.GUI
                     IsDeleted = 0
                 });
             }
-
             dataFrameCustomer.DataSource = list;
-
-            // Example: bind to DataGridView if needed
-            // dataFrameCustomer.DataSource = list;
+            this.SizeChanged += (s, e) => responsive(); // Add this line
         }
+
+        private void responsive()
+        {
+            // int num = this.Size.Width - (btn_add_customer.Location.X + 33);
+            if (this.Size.Width < 1036)
+            {
+                btn_add_customer.Size = new Size(118, 39);
+                // btn_add_customer.Location = new Point(this.Size.Width - num, 41);
+                // btn_add_customer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                btn_add_customer.Font = new Font("Segoe UI Semibold", 9.4F, FontStyle.Bold, GraphicsUnit.Point, 0);
+                lbl_title_customer.Font = new Font("Segoe UI Semibold", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            }
+            else
+            {
+                btn_add_customer.Size = new Size(151, 50);
+                // btn_add_customer.Location = new Point(1521, 45);
+                // btn_add_customer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                btn_add_customer.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+                lbl_title_customer.Font = new Font("Segoe UI Semibold", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            }
+        }
+        
     }
 }
