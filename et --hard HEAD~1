@@ -1,0 +1,58 @@
+[33m4444032[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/thanh[m[33m, [m[1;32mthanh[m[33m)[m Merge branch 'master' into thanh
+[33m6506e93[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge branch 'master' of https://github.com/phattin/BadmintonCourtManagement
+[33mb7f10c8[m back booking detail btn
+[33m2f2ef6d[m Merge pull request #20 from phattin/thien
+[33m3c961f6[m[33m ([m[1;31morigin/thien[m[33m)[m responsive CustomerGUI
+[33m225245f[m complete GUI pattern
+[33m2ce360a[m Merge pull request #19 from phattin/main
+[33ma83d9df[m Merge pull request #18 from phattin/luan
+[33mcf51d09[m[33m ([m[1;31morigin/luan[m[33m)[m Merge branch 'luan' of https://github.com/phattin/BadmintonCourtManagement into luan
+[33mfdb9bdf[m them bookcourtdetail
+[33m2f132ba[m Merge pull request #17 from phattin/main
+[33mf2d44db[m Merge pull request #16 from phattin/thaitu
+[33m3aac884[m[33m ([m[1;31morigin/thaitu[m[33m)[m fix Supplier and DTO DAO BUS (PriceRule)
+[33m8364ebd[m Merge pull request #15 from phattin/main
+[33mf33c6d9[m Merge pull request #14 from phattin/luan
+[33m37c1b73[m Merge branch 'main' into luan
+[33m965ca71[m merge thien
+[33me04e377[m fix supplierBUS
+[33m662f620[m Merge branch 'master' of https://github.com/phattin/BadmintonCourtManagement into thaitu
+[33mc85c145[m them CustomPanel
+[33me0adbc1[m Draw customer module
+[33mcf934e3[m fix bug
+[33mb0aa48d[m reset
+[33m82b502f[m Merge branch 'main'
+[33m4c06923[m DTO DAO BUS (Supplier)
+[33m7c0a868[m[33m ([m[1;32mthaitu[m[33m)[m Merge branch 'main' into thaitu
+[33m19eea02[m Merge branch 'main'
+[33m3e84125[m DTO DAO BUS (Customer)
+[33m6b1be70[m DTO DAO DUS (Booking)
+[33m47bc716[m Merge pull request #10 from phattin/luan
+[33m9dda3d7[m fix size
+[33mbb9fa1c[m Fix stupid errors
+[33m93cdcd0[m Merge branch 'main' of https://github.com/phattin/BadmintonCourtManagement into luan
+[33mdc3a1d5[m Merge pull request #9 from phattin/main
+[33m0ca5c37[m Merge pull request #8 from phattin/thien
+[33mc63a1bb[m CustomerDAO
+[33mb1851b4[m Finish BillProductDetail and BillImportDetail DAO files
+[33m414bc05[m create BillProductDAO.cs
+[33mc6b33c2[m Fix DTO files and create ImportBillDAO.cs file
+[33mc58e49a[m Merge branch 'master' of https://github.com/phattin/BadmintonCourtManagement into thien
+[33m31dd11e[m Merge branch 'main' of https://github.com/phattin/BadmintonCourtManagement into thien
+[33m77ad879[m Merge branch 'main' of https://github.com/phattin/BadmintonCourtManagement into luan
+[33m435b573[m ss
+[33m5b248b1[m Merge pull request #6 from phattin/main
+[33m97741e6[m sua sql AccountDTO
+[33mbe5ba25[m Merge branch 'main' of https://github.com/phattin/BadmintonCourtManagement into thien
+[33m98dfaad[m Merge pull request #5 from phattin/thien
+[33m177fa10[m Merge branch 'main' of https://github.com/phattin/BadmintonCourtManagement into thien
+[33me98c9ed[m DTO files draft #1
+[33m9524bf6[m MenuBar Draft #1
+[33mbe38b41[m[33m ([m[1;32mluan[m[33m)[m database
+[33m885dc94[m fix mainlayout close
+[33m96c28a3[m Merge pull request #2 from phattin/luan
+[33m468c035[m Merge pull request #1 from phattin/luan
+[33m8f686fd[m login
+[33m5e10d9a[m login
+[33m4351df6[m Add project files.
+[33m191abcd[m Add .gitattributes and .gitignore.
