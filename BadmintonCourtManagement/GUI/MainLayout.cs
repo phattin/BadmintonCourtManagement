@@ -69,7 +69,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void ManageCourts_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Quản lý sân clicked!");
+            OpenChildPanel(new CourtManagementGUI(currentAccount));
+            //MessageBox.Show("Quản lý sân clicked!");
         }
 
         private void Customers_Click(object sender, EventArgs e)
