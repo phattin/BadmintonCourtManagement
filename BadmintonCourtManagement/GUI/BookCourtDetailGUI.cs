@@ -40,5 +40,13 @@ namespace BadmintonCourtManagement.GUI
         {
 
         }
+
+        private void btnBooking_Click(object sender, EventArgs e)
+        {
+            this.Controls.Clear();
+            var bookingGUI = new BookCourtGUI(currentAccount);
+            bookingGUI.Dock = DockStyle.Fill;
+            this.Controls.Add(bookingGUI);
+        }
     }
 }
