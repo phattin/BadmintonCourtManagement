@@ -29,5 +29,15 @@ namespace BadmintonCourtManagement.GUI
         {
 
         }
+
+        private void CourtManagementGUI_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void drPanelCourtMN_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace BadmintonCourtManagement.GUI
+﻿using System.Reflection;
+
+namespace BadmintonCourtManagement.GUI
 {
     partial class CourtManagementGUI
     {
@@ -80,6 +82,8 @@
             btnDelete = new PictureBox();
             textBox1 = new TextBox();
             btnBooking = new Label();
+            drPanelCourtMN = new Panel();
+            label30 = new Label();
             customPanel1.SuspendLayout();
             customPanel8.SuspendLayout();
             customPanel9.SuspendLayout();
@@ -94,7 +98,21 @@
             customPanel4.SuspendLayout();
             customPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
+            drPanelCourtMN.SuspendLayout();
             SuspendLayout();
+            //
+            // drPanelCourtMN
+            // 
+            drPanelCourtMN.BackColor = Color.White;
+            drPanelCourtMN.Controls.Add(label30);
+            drPanelCourtMN.Controls.Add(customPanel1);
+            drPanelCourtMN.Controls.Add(lblTitle);
+            drPanelCourtMN.Dock = DockStyle.Fill;
+            drPanelCourtMN.Location = new Point(0, 0);
+            drPanelCourtMN.Name = "drPanelCourtMN";
+            drPanelCourtMN.Size = new Size(1243, 766);
+            drPanelCourtMN.TabIndex = 0;
+            drPanelCourtMN.Paint += drPanelCourtMN_Paint;
             // 
             // lblTitle
             // 
@@ -102,11 +120,10 @@
             lblTitle.BackColor = Color.White;
             lblTitle.Font = new Font("Segoe UI Semibold", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitle.ForeColor = Color.Black;
-            lblTitle.Location = new Point(50, 44);
-            lblTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTitle.Location = new Point(53, 15);
             lblTitle.Name = "lblTitle";
-            lblTitle.Padding = new Padding(12, 14, 12, 14);
-            lblTitle.Size = new Size(159, 73);
+            lblTitle.Padding = new Padding(10, 11, 10, 11);
+            lblTitle.Size = new Size(135, 60);
             lblTitle.TabIndex = 5;
             lblTitle.Text = "Sân cầu";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -114,6 +131,7 @@
             // 
             // customPanel1
             // 
+            customPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             customPanel1.BackColor = Color.FromArgb(239, 248, 230);
             customPanel1.BorderRadius = 20;
             customPanel1.Controls.Add(customPanel8);
@@ -125,11 +143,13 @@
             customPanel1.Controls.Add(customPanel5);
             customPanel1.Controls.Add(pCourt);
             customPanel1.Controls.Add(customPanel2);
-            customPanel1.Location = new Point(70, 125);
-            customPanel1.Margin = new Padding(4, 5, 4, 5);
+            customPanel1.Location = new Point(56, 79);
+            customPanel1.Margin = new Padding(3, 4, 3, 4);
             customPanel1.Name = "customPanel1";
-            customPanel1.Size = new Size(1432, 799);
+            customPanel1.Size = new Size(1146, 639);
             customPanel1.TabIndex = 6;
+        
+
             // 
             // customPanel8
             // 
@@ -139,10 +159,9 @@
             customPanel8.Controls.Add(label15);
             customPanel8.Controls.Add(label16);
             customPanel8.Controls.Add(label17);
-            customPanel8.Location = new Point(1079, 421);
-            customPanel8.Margin = new Padding(4, 4, 4, 4);
+            customPanel8.Location = new Point(863, 337);
             customPanel8.Name = "customPanel8";
-            customPanel8.Size = new Size(301, 260);
+            customPanel8.Size = new Size(241, 208);
             customPanel8.TabIndex = 16;
             // 
             // label14
@@ -152,11 +171,10 @@
             label14.Cursor = Cursors.Hand;
             label14.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label14.ForeColor = Color.White;
-            label14.Location = new Point(164, 180);
-            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Location = new Point(131, 144);
             label14.Name = "label14";
-            label14.Padding = new Padding(19, 10, 19, 14);
-            label14.Size = new Size(77, 45);
+            label14.Padding = new Padding(15, 8, 15, 11);
+            label14.Size = new Size(61, 36);
             label14.TabIndex = 10;
             label14.Text = "Sửa";
             label14.TextAlign = ContentAlignment.MiddleCenter;
@@ -165,10 +183,9 @@
             // 
             label15.AutoSize = true;
             label15.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label15.Location = new Point(32, 95);
-            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Location = new Point(26, 76);
             label15.Name = "label15";
-            label15.Size = new Size(193, 50);
+            label15.Size = new Size(159, 40);
             label15.TabIndex = 9;
             label15.Text = "Tên sân: Sân A\r\nTrạng thái: Hoạt động\r\n";
             // 
@@ -178,11 +195,10 @@
             label16.BackColor = Color.FromArgb(200, 250, 214);
             label16.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label16.ForeColor = Color.Black;
-            label16.Location = new Point(99, 14);
-            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Location = new Point(79, 11);
             label16.Name = "label16";
-            label16.Padding = new Padding(12, 14, 12, 14);
-            label16.Size = new Size(89, 66);
+            label16.Padding = new Padding(10, 11, 10, 11);
+            label16.Size = new Size(73, 53);
             label16.TabIndex = 8;
             label16.Text = "S01";
             label16.TextAlign = ContentAlignment.MiddleCenter;
@@ -195,11 +211,10 @@
             label17.Cursor = Cursors.Hand;
             label17.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label17.ForeColor = Color.White;
-            label17.Location = new Point(51, 180);
-            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Location = new Point(41, 144);
             label17.Name = "label17";
-            label17.Padding = new Padding(19, 10, 19, 14);
-            label17.Size = new Size(77, 45);
+            label17.Padding = new Padding(15, 8, 15, 11);
+            label17.Size = new Size(62, 36);
             label17.TabIndex = 7;
             label17.Text = "Xóa";
             label17.TextAlign = ContentAlignment.MiddleCenter;
@@ -212,10 +227,9 @@
             customPanel9.Controls.Add(label19);
             customPanel9.Controls.Add(label20);
             customPanel9.Controls.Add(label21);
-            customPanel9.Location = new Point(730, 421);
-            customPanel9.Margin = new Padding(4, 4, 4, 4);
+            customPanel9.Location = new Point(584, 337);
             customPanel9.Name = "customPanel9";
-            customPanel9.Size = new Size(301, 260);
+            customPanel9.Size = new Size(241, 208);
             customPanel9.TabIndex = 15;
             // 
             // label18
@@ -225,11 +239,10 @@
             label18.Cursor = Cursors.Hand;
             label18.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label18.ForeColor = Color.White;
-            label18.Location = new Point(164, 180);
-            label18.Margin = new Padding(4, 0, 4, 0);
+            label18.Location = new Point(131, 144);
             label18.Name = "label18";
-            label18.Padding = new Padding(19, 10, 19, 14);
-            label18.Size = new Size(77, 45);
+            label18.Padding = new Padding(15, 8, 15, 11);
+            label18.Size = new Size(61, 36);
             label18.TabIndex = 10;
             label18.Text = "Sửa";
             label18.TextAlign = ContentAlignment.MiddleCenter;
@@ -238,10 +251,9 @@
             // 
             label19.AutoSize = true;
             label19.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.Location = new Point(32, 95);
-            label19.Margin = new Padding(4, 0, 4, 0);
+            label19.Location = new Point(26, 76);
             label19.Name = "label19";
-            label19.Size = new Size(193, 50);
+            label19.Size = new Size(159, 40);
             label19.TabIndex = 9;
             label19.Text = "Tên sân: Sân A\r\nTrạng thái: Hoạt động\r\n";
             // 
@@ -251,11 +263,10 @@
             label20.BackColor = Color.FromArgb(200, 250, 214);
             label20.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label20.ForeColor = Color.Black;
-            label20.Location = new Point(99, 14);
-            label20.Margin = new Padding(4, 0, 4, 0);
+            label20.Location = new Point(79, 11);
             label20.Name = "label20";
-            label20.Padding = new Padding(12, 14, 12, 14);
-            label20.Size = new Size(89, 66);
+            label20.Padding = new Padding(10, 11, 10, 11);
+            label20.Size = new Size(73, 53);
             label20.TabIndex = 8;
             label20.Text = "S01";
             label20.TextAlign = ContentAlignment.MiddleCenter;
@@ -268,11 +279,10 @@
             label21.Cursor = Cursors.Hand;
             label21.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label21.ForeColor = Color.White;
-            label21.Location = new Point(51, 180);
-            label21.Margin = new Padding(4, 0, 4, 0);
+            label21.Location = new Point(41, 144);
             label21.Name = "label21";
-            label21.Padding = new Padding(19, 10, 19, 14);
-            label21.Size = new Size(77, 45);
+            label21.Padding = new Padding(15, 8, 15, 11);
+            label21.Size = new Size(62, 36);
             label21.TabIndex = 7;
             label21.Text = "Xóa";
             label21.TextAlign = ContentAlignment.MiddleCenter;
@@ -285,10 +295,9 @@
             customPanel10.Controls.Add(label23);
             customPanel10.Controls.Add(label24);
             customPanel10.Controls.Add(label25);
-            customPanel10.Location = new Point(379, 421);
-            customPanel10.Margin = new Padding(4, 4, 4, 4);
+            customPanel10.Location = new Point(303, 337);
             customPanel10.Name = "customPanel10";
-            customPanel10.Size = new Size(301, 260);
+            customPanel10.Size = new Size(241, 208);
             customPanel10.TabIndex = 14;
             // 
             // label22
@@ -298,11 +307,10 @@
             label22.Cursor = Cursors.Hand;
             label22.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = Color.White;
-            label22.Location = new Point(164, 180);
-            label22.Margin = new Padding(4, 0, 4, 0);
+            label22.Location = new Point(131, 144);
             label22.Name = "label22";
-            label22.Padding = new Padding(19, 10, 19, 14);
-            label22.Size = new Size(77, 45);
+            label22.Padding = new Padding(15, 8, 15, 11);
+            label22.Size = new Size(61, 36);
             label22.TabIndex = 10;
             label22.Text = "Sửa";
             label22.TextAlign = ContentAlignment.MiddleCenter;
@@ -311,10 +319,9 @@
             // 
             label23.AutoSize = true;
             label23.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label23.Location = new Point(32, 95);
-            label23.Margin = new Padding(4, 0, 4, 0);
+            label23.Location = new Point(26, 76);
             label23.Name = "label23";
-            label23.Size = new Size(159, 75);
+            label23.Size = new Size(131, 60);
             label23.TabIndex = 9;
             label23.Text = "Tên sân: Sân A\r\nTrạng thái: Bảo trì\r\n\r\n";
             // 
@@ -324,11 +331,10 @@
             label24.BackColor = Color.FromArgb(255, 176, 163);
             label24.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label24.ForeColor = Color.Black;
-            label24.Location = new Point(99, 14);
-            label24.Margin = new Padding(4, 0, 4, 0);
+            label24.Location = new Point(79, 11);
             label24.Name = "label24";
-            label24.Padding = new Padding(12, 14, 12, 14);
-            label24.Size = new Size(89, 66);
+            label24.Padding = new Padding(10, 11, 10, 11);
+            label24.Size = new Size(73, 53);
             label24.TabIndex = 8;
             label24.Text = "S01";
             label24.TextAlign = ContentAlignment.MiddleCenter;
@@ -341,11 +347,10 @@
             label25.Cursor = Cursors.Hand;
             label25.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label25.ForeColor = Color.White;
-            label25.Location = new Point(51, 180);
-            label25.Margin = new Padding(4, 0, 4, 0);
+            label25.Location = new Point(41, 144);
             label25.Name = "label25";
-            label25.Padding = new Padding(19, 10, 19, 14);
-            label25.Size = new Size(77, 45);
+            label25.Padding = new Padding(15, 8, 15, 11);
+            label25.Size = new Size(62, 36);
             label25.TabIndex = 7;
             label25.Text = "Xóa";
             label25.TextAlign = ContentAlignment.MiddleCenter;
@@ -358,10 +363,9 @@
             customPanel11.Controls.Add(label27);
             customPanel11.Controls.Add(label28);
             customPanel11.Controls.Add(label29);
-            customPanel11.Location = new Point(36, 421);
-            customPanel11.Margin = new Padding(4, 4, 4, 4);
+            customPanel11.Location = new Point(29, 337);
             customPanel11.Name = "customPanel11";
-            customPanel11.Size = new Size(301, 260);
+            customPanel11.Size = new Size(241, 208);
             customPanel11.TabIndex = 13;
             // 
             // label26
@@ -371,11 +375,10 @@
             label26.Cursor = Cursors.Hand;
             label26.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label26.ForeColor = Color.White;
-            label26.Location = new Point(164, 180);
-            label26.Margin = new Padding(4, 0, 4, 0);
+            label26.Location = new Point(131, 144);
             label26.Name = "label26";
-            label26.Padding = new Padding(19, 10, 19, 14);
-            label26.Size = new Size(77, 45);
+            label26.Padding = new Padding(15, 8, 15, 11);
+            label26.Size = new Size(61, 36);
             label26.TabIndex = 10;
             label26.Text = "Sửa";
             label26.TextAlign = ContentAlignment.MiddleCenter;
@@ -384,10 +387,9 @@
             // 
             label27.AutoSize = true;
             label27.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label27.Location = new Point(32, 95);
-            label27.Margin = new Padding(4, 0, 4, 0);
+            label27.Location = new Point(26, 76);
             label27.Name = "label27";
-            label27.Size = new Size(193, 50);
+            label27.Size = new Size(159, 40);
             label27.TabIndex = 9;
             label27.Text = "Tên sân: Sân A\r\nTrạng thái: Hoạt động\r\n";
             // 
@@ -397,11 +399,10 @@
             label28.BackColor = Color.FromArgb(200, 250, 214);
             label28.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label28.ForeColor = Color.Black;
-            label28.Location = new Point(99, 14);
-            label28.Margin = new Padding(4, 0, 4, 0);
+            label28.Location = new Point(79, 11);
             label28.Name = "label28";
-            label28.Padding = new Padding(12, 14, 12, 14);
-            label28.Size = new Size(89, 66);
+            label28.Padding = new Padding(10, 11, 10, 11);
+            label28.Size = new Size(73, 53);
             label28.TabIndex = 8;
             label28.Text = "S01";
             label28.TextAlign = ContentAlignment.MiddleCenter;
@@ -414,11 +415,10 @@
             label29.Cursor = Cursors.Hand;
             label29.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label29.ForeColor = Color.White;
-            label29.Location = new Point(51, 180);
-            label29.Margin = new Padding(4, 0, 4, 0);
+            label29.Location = new Point(41, 144);
             label29.Name = "label29";
-            label29.Padding = new Padding(19, 10, 19, 14);
-            label29.Size = new Size(77, 45);
+            label29.Padding = new Padding(15, 8, 15, 11);
+            label29.Size = new Size(62, 36);
             label29.TabIndex = 7;
             label29.Text = "Xóa";
             label29.TextAlign = ContentAlignment.MiddleCenter;
@@ -431,10 +431,9 @@
             customPanel7.Controls.Add(label11);
             customPanel7.Controls.Add(label12);
             customPanel7.Controls.Add(label13);
-            customPanel7.Location = new Point(1079, 129);
-            customPanel7.Margin = new Padding(4, 4, 4, 4);
+            customPanel7.Location = new Point(863, 103);
             customPanel7.Name = "customPanel7";
-            customPanel7.Size = new Size(301, 260);
+            customPanel7.Size = new Size(241, 208);
             customPanel7.TabIndex = 12;
             // 
             // label10
@@ -444,11 +443,10 @@
             label10.Cursor = Cursors.Hand;
             label10.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label10.ForeColor = Color.White;
-            label10.Location = new Point(164, 180);
-            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Location = new Point(131, 144);
             label10.Name = "label10";
-            label10.Padding = new Padding(19, 10, 19, 14);
-            label10.Size = new Size(77, 45);
+            label10.Padding = new Padding(15, 8, 15, 11);
+            label10.Size = new Size(61, 36);
             label10.TabIndex = 10;
             label10.Text = "Sửa";
             label10.TextAlign = ContentAlignment.MiddleCenter;
@@ -457,10 +455,9 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.Location = new Point(32, 95);
-            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Location = new Point(26, 76);
             label11.Name = "label11";
-            label11.Size = new Size(193, 50);
+            label11.Size = new Size(159, 40);
             label11.TabIndex = 9;
             label11.Text = "Tên sân: Sân A\r\nTrạng thái: Hoạt động\r\n";
             // 
@@ -470,11 +467,10 @@
             label12.BackColor = Color.FromArgb(200, 250, 214);
             label12.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label12.ForeColor = Color.Black;
-            label12.Location = new Point(99, 14);
-            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Location = new Point(79, 11);
             label12.Name = "label12";
-            label12.Padding = new Padding(12, 14, 12, 14);
-            label12.Size = new Size(89, 66);
+            label12.Padding = new Padding(10, 11, 10, 11);
+            label12.Size = new Size(73, 53);
             label12.TabIndex = 8;
             label12.Text = "S01";
             label12.TextAlign = ContentAlignment.MiddleCenter;
@@ -487,11 +483,10 @@
             label13.Cursor = Cursors.Hand;
             label13.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label13.ForeColor = Color.White;
-            label13.Location = new Point(51, 180);
-            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Location = new Point(41, 144);
             label13.Name = "label13";
-            label13.Padding = new Padding(19, 10, 19, 14);
-            label13.Size = new Size(77, 45);
+            label13.Padding = new Padding(15, 8, 15, 11);
+            label13.Size = new Size(62, 36);
             label13.TabIndex = 7;
             label13.Text = "Xóa";
             label13.TextAlign = ContentAlignment.MiddleCenter;
@@ -504,10 +499,9 @@
             customPanel6.Controls.Add(label7);
             customPanel6.Controls.Add(label8);
             customPanel6.Controls.Add(label9);
-            customPanel6.Location = new Point(730, 129);
-            customPanel6.Margin = new Padding(4, 4, 4, 4);
+            customPanel6.Location = new Point(584, 103);
             customPanel6.Name = "customPanel6";
-            customPanel6.Size = new Size(301, 260);
+            customPanel6.Size = new Size(241, 208);
             customPanel6.TabIndex = 11;
             // 
             // label6
@@ -517,11 +511,10 @@
             label6.Cursor = Cursors.Hand;
             label6.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.White;
-            label6.Location = new Point(164, 180);
-            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Location = new Point(131, 144);
             label6.Name = "label6";
-            label6.Padding = new Padding(19, 10, 19, 14);
-            label6.Size = new Size(77, 45);
+            label6.Padding = new Padding(15, 8, 15, 11);
+            label6.Size = new Size(61, 36);
             label6.TabIndex = 10;
             label6.Text = "Sửa";
             label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -530,10 +523,9 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(32, 95);
-            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Location = new Point(26, 76);
             label7.Name = "label7";
-            label7.Size = new Size(193, 50);
+            label7.Size = new Size(159, 40);
             label7.TabIndex = 9;
             label7.Text = "Tên sân: Sân A\r\nTrạng thái: Hoạt động\r\n";
             // 
@@ -543,11 +535,10 @@
             label8.BackColor = Color.FromArgb(200, 250, 214);
             label8.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.Black;
-            label8.Location = new Point(99, 14);
-            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Location = new Point(79, 11);
             label8.Name = "label8";
-            label8.Padding = new Padding(12, 14, 12, 14);
-            label8.Size = new Size(89, 66);
+            label8.Padding = new Padding(10, 11, 10, 11);
+            label8.Size = new Size(73, 53);
             label8.TabIndex = 8;
             label8.Text = "S01";
             label8.TextAlign = ContentAlignment.MiddleCenter;
@@ -560,11 +551,10 @@
             label9.Cursor = Cursors.Hand;
             label9.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label9.ForeColor = Color.White;
-            label9.Location = new Point(51, 180);
-            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Location = new Point(41, 144);
             label9.Name = "label9";
-            label9.Padding = new Padding(19, 10, 19, 14);
-            label9.Size = new Size(77, 45);
+            label9.Padding = new Padding(15, 8, 15, 11);
+            label9.Size = new Size(62, 36);
             label9.TabIndex = 7;
             label9.Text = "Xóa";
             label9.TextAlign = ContentAlignment.MiddleCenter;
@@ -577,10 +567,9 @@
             customPanel5.Controls.Add(label3);
             customPanel5.Controls.Add(label4);
             customPanel5.Controls.Add(label5);
-            customPanel5.Location = new Point(379, 129);
-            customPanel5.Margin = new Padding(4, 4, 4, 4);
+            customPanel5.Location = new Point(303, 103);
             customPanel5.Name = "customPanel5";
-            customPanel5.Size = new Size(301, 260);
+            customPanel5.Size = new Size(241, 208);
             customPanel5.TabIndex = 8;
             // 
             // label2
@@ -590,11 +579,10 @@
             label2.Cursor = Cursors.Hand;
             label2.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(164, 180);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(131, 144);
             label2.Name = "label2";
-            label2.Padding = new Padding(19, 10, 19, 14);
-            label2.Size = new Size(77, 45);
+            label2.Padding = new Padding(15, 8, 15, 11);
+            label2.Size = new Size(61, 36);
             label2.TabIndex = 10;
             label2.Text = "Sửa";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -603,10 +591,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(32, 95);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(26, 76);
             label3.Name = "label3";
-            label3.Size = new Size(159, 75);
+            label3.Size = new Size(131, 60);
             label3.TabIndex = 9;
             label3.Text = "Tên sân: Sân A\r\nTrạng thái: Bảo trì\r\n\r\n";
             // 
@@ -616,11 +603,10 @@
             label4.BackColor = Color.FromArgb(255, 176, 163);
             label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.Black;
-            label4.Location = new Point(99, 14);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(79, 11);
             label4.Name = "label4";
-            label4.Padding = new Padding(12, 14, 12, 14);
-            label4.Size = new Size(89, 66);
+            label4.Padding = new Padding(10, 11, 10, 11);
+            label4.Size = new Size(73, 53);
             label4.TabIndex = 8;
             label4.Text = "S01";
             label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -633,11 +619,10 @@
             label5.Cursor = Cursors.Hand;
             label5.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(51, 180);
-            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Location = new Point(41, 144);
             label5.Name = "label5";
-            label5.Padding = new Padding(19, 10, 19, 14);
-            label5.Size = new Size(77, 45);
+            label5.Padding = new Padding(15, 8, 15, 11);
+            label5.Size = new Size(62, 36);
             label5.TabIndex = 7;
             label5.Text = "Xóa";
             label5.TextAlign = ContentAlignment.MiddleCenter;
@@ -650,10 +635,9 @@
             pCourt.Controls.Add(lblCourtInfo);
             pCourt.Controls.Add(lblText);
             pCourt.Controls.Add(btnBooking2);
-            pCourt.Location = new Point(36, 129);
-            pCourt.Margin = new Padding(4, 4, 4, 4);
+            pCourt.Location = new Point(29, 103);
             pCourt.Name = "pCourt";
-            pCourt.Size = new Size(301, 260);
+            pCourt.Size = new Size(241, 208);
             pCourt.TabIndex = 7;
             // 
             // label1
@@ -663,11 +647,10 @@
             label1.Cursor = Cursors.Hand;
             label1.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(164, 180);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(131, 144);
             label1.Name = "label1";
-            label1.Padding = new Padding(19, 10, 19, 14);
-            label1.Size = new Size(77, 45);
+            label1.Padding = new Padding(15, 8, 15, 11);
+            label1.Size = new Size(61, 36);
             label1.TabIndex = 10;
             label1.Text = "Sửa";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -676,10 +659,9 @@
             // 
             lblCourtInfo.AutoSize = true;
             lblCourtInfo.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCourtInfo.Location = new Point(32, 95);
-            lblCourtInfo.Margin = new Padding(4, 0, 4, 0);
+            lblCourtInfo.Location = new Point(26, 76);
             lblCourtInfo.Name = "lblCourtInfo";
-            lblCourtInfo.Size = new Size(193, 50);
+            lblCourtInfo.Size = new Size(159, 40);
             lblCourtInfo.TabIndex = 9;
             lblCourtInfo.Text = "Tên sân: Sân A\r\nTrạng thái: Hoạt động\r\n";
             // 
@@ -689,11 +671,10 @@
             lblText.BackColor = Color.FromArgb(200, 250, 214);
             lblText.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblText.ForeColor = Color.Black;
-            lblText.Location = new Point(99, 14);
-            lblText.Margin = new Padding(4, 0, 4, 0);
+            lblText.Location = new Point(79, 11);
             lblText.Name = "lblText";
-            lblText.Padding = new Padding(12, 14, 12, 14);
-            lblText.Size = new Size(89, 66);
+            lblText.Padding = new Padding(10, 11, 10, 11);
+            lblText.Size = new Size(73, 53);
             lblText.TabIndex = 8;
             lblText.Text = "S01";
             lblText.TextAlign = ContentAlignment.MiddleCenter;
@@ -706,11 +687,10 @@
             btnBooking2.Cursor = Cursors.Hand;
             btnBooking2.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBooking2.ForeColor = Color.White;
-            btnBooking2.Location = new Point(51, 180);
-            btnBooking2.Margin = new Padding(4, 0, 4, 0);
+            btnBooking2.Location = new Point(41, 144);
             btnBooking2.Name = "btnBooking2";
-            btnBooking2.Padding = new Padding(19, 10, 19, 14);
-            btnBooking2.Size = new Size(77, 45);
+            btnBooking2.Padding = new Padding(15, 8, 15, 11);
+            btnBooking2.Size = new Size(62, 36);
             btnBooking2.TabIndex = 7;
             btnBooking2.Text = "Xóa";
             btnBooking2.TextAlign = ContentAlignment.MiddleCenter;
@@ -723,22 +703,24 @@
             customPanel2.Controls.Add(customPanel4);
             customPanel2.Controls.Add(customPanel3);
             customPanel2.Location = new Point(0, 0);
-            customPanel2.Margin = new Padding(4, 5, 4, 5);
+            customPanel2.Margin = new Padding(3, 4, 3, 4);
             customPanel2.Name = "customPanel2";
-            customPanel2.Size = new Size(1432, 91);
+            customPanel2.Size = new Size(1146, 73);
             customPanel2.TabIndex = 0;
+            customPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;    
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(1355, 15);
-            pictureBox1.Margin = new Padding(4, 5, 4, 5);
+            pictureBox1.Location = new Point(1084, 12);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(51, 59);
+            pictureBox1.Size = new Size(41, 47);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             // 
             // customPanel4
             // 
@@ -746,28 +728,26 @@
             customPanel4.BorderRadius = 10;
             customPanel4.Controls.Add(dateTimePicker1);
             customPanel4.Controls.Add(lblDate);
-            customPanel4.Location = new Point(1096, 15);
-            customPanel4.Margin = new Padding(4, 4, 4, 4);
+            customPanel4.Location = new Point(877, 12);
             customPanel4.Name = "customPanel4";
-            customPanel4.Size = new Size(221, 64);
+            customPanel4.Size = new Size(177, 51);
             customPanel4.TabIndex = 2;
+            customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(189, 14);
-            dateTimePicker1.Margin = new Padding(4, 4, 4, 4);
+            dateTimePicker1.Location = new Point(151, 11);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(26, 31);
+            dateTimePicker1.Size = new Size(22, 27);
             dateTimePicker1.TabIndex = 1;
             // 
             // lblDate
             // 
             lblDate.AutoSize = true;
             lblDate.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDate.Location = new Point(4, 19);
-            lblDate.Margin = new Padding(4, 0, 4, 0);
+            lblDate.Location = new Point(3, 15);
             lblDate.Name = "lblDate";
-            lblDate.Size = new Size(103, 21);
+            lblDate.Size = new Size(86, 17);
             lblDate.TabIndex = 2;
             lblDate.Text = "Ngày mở sân";
             // 
@@ -777,19 +757,17 @@
             customPanel3.BorderRadius = 30;
             customPanel3.Controls.Add(btnDelete);
             customPanel3.Controls.Add(textBox1);
-            customPanel3.Location = new Point(19, 15);
-            customPanel3.Margin = new Padding(4, 4, 4, 4);
+            customPanel3.Location = new Point(15, 12);
             customPanel3.Name = "customPanel3";
-            customPanel3.Size = new Size(650, 64);
+            customPanel3.Size = new Size(520, 51);
             customPanel3.TabIndex = 1;
             // 
             // btnDelete
             // 
             btnDelete.Image = Properties.Resources.X;
-            btnDelete.Location = new Point(612, 24);
-            btnDelete.Margin = new Padding(4, 4, 4, 4);
+            btnDelete.Location = new Point(490, 19);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(16, 16);
+            btnDelete.Size = new Size(13, 13);
             btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
             btnDelete.TabIndex = 1;
             btnDelete.TabStop = false;
@@ -799,12 +777,11 @@
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(18, 16);
-            textBox1.Margin = new Padding(4, 4, 4, 4);
+            textBox1.Location = new Point(14, 13);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Value";
-            textBox1.Size = new Size(156, 30);
+            textBox1.Size = new Size(125, 24);
             textBox1.TabIndex = 0;
             // 
             // btnBooking
@@ -814,26 +791,41 @@
             btnBooking.Cursor = Cursors.Hand;
             btnBooking.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBooking.ForeColor = Color.White;
-            btnBooking.Location = new Point(1349, 44);
-            btnBooking.Margin = new Padding(4, 0, 4, 0);
+            btnBooking.Location = new Point(1676, 617);
             btnBooking.Name = "btnBooking";
-            btnBooking.Padding = new Padding(12, 14, 12, 16);
-            btnBooking.Size = new Size(147, 62);
+            btnBooking.Padding = new Padding(10, 11, 10, 13);
+            btnBooking.Size = new Size(123, 52);
             btnBooking.TabIndex = 7;
             btnBooking.Text = "Thêm sân";
             btnBooking.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // 
+            // label30
+            // 
+            label30.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label30.AutoSize = true;
+            label30.BackColor = Color.FromArgb(64, 64, 64);
+            label30.Cursor = Cursors.Hand;
+            label30.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label30.ForeColor = Color.White;
+            label30.Location = new Point(1079, 22);
+            label30.Name = "label30";
+            label30.Padding = new Padding(10, 11, 10, 13);
+            label30.Size = new Size(123, 52);
+            label30.TabIndex = 7;
+            label30.Text = "Thêm sân";
+            label30.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // CourtManagementGUI
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(btnBooking);
-            Controls.Add(customPanel1);
-            Controls.Add(lblTitle);
-            Margin = new Padding(4, 5, 4, 5);
+            Controls.Add(drPanelCourtMN);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "CourtManagementGUI";
-            Size = new Size(1554, 958);
+            Size = new Size(1243, 766);
+            Load += CourtManagementGUI_Load;
             customPanel1.ResumeLayout(false);
             customPanel8.ResumeLayout(false);
             customPanel8.PerformLayout();
@@ -858,8 +850,10 @@
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
+            drPanelCourtMN.ResumeLayout(false);
+            drPanelCourtMN.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
+
         }
 
         #endregion
@@ -915,5 +909,7 @@
         private Label label11;
         private Label label12;
         private Label label13;
+        private Panel drPanelCourtMN;
+        private Label label30;
     }
 }
