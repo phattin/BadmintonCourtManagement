@@ -30,6 +30,7 @@
             menuPanel.Name = "menuPanel";
             menuPanel.Size = new Size(166, 657);
             menuPanel.TabIndex = 1;
+            menuPanel.Paint += menuPanel_Paint;
             // 
             // contentPanel
             // 
