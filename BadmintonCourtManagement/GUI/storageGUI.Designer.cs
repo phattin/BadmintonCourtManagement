@@ -936,6 +936,7 @@
             cardButton.TabIndex = 5;
             cardButton.Text = "Xem chi tiết";
             cardButton.UseVisualStyleBackColor = false;
+            cardButton.Click += cardButton_Click;
             cardButton.MouseEnter += buttonEnter;
             cardButton.MouseLeave += buttonLeave;
             // 

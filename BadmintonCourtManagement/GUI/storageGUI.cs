@@ -121,5 +121,11 @@ namespace BadmintonCourtManagement.GUI
         {
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
         }
+
+        private void cardButton_Click(object sender, EventArgs e)
+        {
+            StorageDetailsGUI storeDetail = new StorageDetailsGUI();
+            storeDetail.ShowDialog();
+        }
     }
 }
