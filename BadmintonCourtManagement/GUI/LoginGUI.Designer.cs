@@ -31,9 +31,11 @@
             pSignIn = new Panel();
             panel3 = new Panel();
             txtPassword = new TextBox();
+            txtPassword.Text = "admin123"; // Default password for testing
             pIconPassword = new PictureBox();
             panel2 = new Panel();
             txtUsername = new TextBox();
+            txtUsername.Text = "admin"; // Default username for testing
             pIconUser = new PictureBox();
             bSignIn = new Button();
             lblTitle = new Label();

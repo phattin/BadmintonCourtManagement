@@ -249,6 +249,7 @@
             // 
             // pFilter
             // 
+            pFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pFilter.BackColor = Color.FromArgb(217, 217, 217);
             pFilter.BorderRadius = 10;
             pFilter.Controls.Add(customPanel4);
@@ -307,17 +308,6 @@
             customPanel3.Name = "customPanel3";
             customPanel3.Size = new Size(141, 48);
             customPanel3.TabIndex = 2;
-            // 
-            // dateTimePicker2
-            // 
-            dateTimePicker2.Format = DateTimePickerFormat.Time;
-            dateTimePicker2.Location = new Point(108, 6);
-            dateTimePicker2.Margin = new Padding(4);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.ShowUpDown = true;
-            dateTimePicker2.Size = new Size(26, 31);
-            dateTimePicker2.TabIndex = 3;
-            dateTimePicker2.ValueChanged += dateTimePicker2_ValueChanged;
             // 
             // lbltimeStart
             // 
@@ -417,6 +407,7 @@
             // 
             // btnBooking
             // 
+            btnBooking.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnBooking.AutoSize = true;
             btnBooking.BackColor = Color.FromArgb(64, 64, 64);
             btnBooking.Cursor = Cursors.Hand;

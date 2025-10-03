@@ -23,6 +23,7 @@
             // 
             // menuPanel
             // 
+            menuPanel.AutoScroll = true;
             menuPanel.BackColor = Color.FromArgb(239, 248, 230);
             menuPanel.Dock = DockStyle.Left;
             menuPanel.Location = new Point(0, 0);
