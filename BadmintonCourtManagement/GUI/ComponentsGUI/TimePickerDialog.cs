@@ -3,6 +3,13 @@ using System.Windows.Forms;
 
 namespace BadmintonCourtManagement.GUI.ComponentsGUI
 {
+    public class TwoDigitNumericUpDown : NumericUpDown
+    {
+        protected override void UpdateEditText()
+        {
+            this.Text = this.Value.ToString("00"); // ép thành 2 chữ số
+        }
+    }
     public class TimePickerDialog : Form
     {
         private NumericUpDown numHour, numMinute;
@@ -16,10 +23,9 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterParent;
             this.Width = 350;
-            this.Height = 250;   // tăng kích thước form cho rộng
+            this.Height = 250;  
 
-            // Giờ theo 24h
-            numHour = new NumericUpDown
+            numHour = new TwoDigitNumericUpDown
             {
                 Minimum = 0,
                 Maximum = 23,
@@ -30,8 +36,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI
                 Font = new System.Drawing.Font("Segoe UI", 14)
             };
 
-            // Phút
-            numMinute = new NumericUpDown
+            numMinute = new TwoDigitNumericUpDown
             {
                 Minimum = 0,
                 Maximum = 59,
@@ -41,7 +46,14 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI
                 Width = 80,
                 Font = new System.Drawing.Font("Segoe UI", 14)
             };
-
+            numHour.ValueChanged += (s, e) =>
+            {
+                numHour.Text = numHour.Value.ToString("00");
+            };
+            numMinute.ValueChanged += (s, e) =>
+            {
+                numMinute.Text = numMinute.Value.ToString("00");
+            };
             // Nút OK
             btnOK = new Button
             {
