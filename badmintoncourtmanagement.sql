@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 24, 2025 lúc 10:34 AM
+-- Thời gian đã tạo: Th10 04, 2025 lúc 01:18 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -137,6 +137,20 @@ CREATE TABLE `court` (
   `Status` enum('active','maintenance') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `court`
+--
+
+INSERT INTO `court` (`CourtId`, `CourtName`, `Status`) VALUES
+('CO00001', 'Sân 01', 'active'),
+('CO00002', 'Sân 02', 'active'),
+('CO00003', 'Sân 03', 'active'),
+('CO00004', 'Sân 04', 'active'),
+('CO00005', 'Sân 05', 'active'),
+('CO00006', 'Sân 06', 'active'),
+('CO00007', 'Sân 07', 'active'),
+('CO00008', 'Sân 08', 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -261,8 +275,16 @@ CREATE TABLE `pricerule` (
   `StartDate` datetime DEFAULT NULL,
   `EndDate` datetime DEFAULT NULL,
   `Description` varchar(255) DEFAULT NULL,
-  `Status` tinyint(1) DEFAULT NULL
+  `Status` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `pricerule`
+--
+
+INSERT INTO `pricerule` (`PriceRuleId`, `Price`, `StartTime`, `EndTime`, `StartDate`, `EndDate`, `Description`, `Status`) VALUES
+('PR0001', 60000, '05:00:00', '16:00:00', NULL, NULL, 'Ngày thường', 'Đang áp dụng'),
+('PR0002', 80000, '16:00:00', '23:00:00', NULL, NULL, 'Ngày thường', 'Đang áp dụng');
 
 -- --------------------------------------------------------
 

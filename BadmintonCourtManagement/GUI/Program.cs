@@ -1,3 +1,5 @@
+using BadmintonCourtManagement.DTO;
+
 namespace BadmintonCourtManagement.GUI
 {
     internal static class Program
