@@ -18,7 +18,7 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@SupplierId", id);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
