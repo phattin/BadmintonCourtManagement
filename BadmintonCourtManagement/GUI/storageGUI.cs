@@ -127,5 +127,21 @@ namespace BadmintonCourtManagement.GUI
             StorageDetailsGUI storeDetail = new StorageDetailsGUI();
             storeDetail.ShowDialog();
         }
+
+        private void cardTitlePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void NhapHangFilterButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NhapHangButtonCard_Click(object sender, EventArgs e)
+        {
+            SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
+            supplyDetails.ShowDialog();
+        }
     }
 }
