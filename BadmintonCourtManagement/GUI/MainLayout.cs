@@ -15,7 +15,7 @@ namespace BadmintonCourtManagement.GUI
     public partial class MainLayout : Form
     {
         private AccountDTO currentAccount;
-        private UserControl currentPanel;   
+        private UserControl currentPanel;
         private MenuManager menuManager;
         private Panel menuPanel, contentPanel;
         public MainLayout(AccountDTO account)
@@ -34,6 +34,7 @@ namespace BadmintonCourtManagement.GUI
                 { "Đặt sân", BookCourt_Click },
                 { "Quản lý sân", ManageCourts_Click },
                 { "Khách hàng", Customers_Click },
+                { "Kho và Nhập hàng", Storage_Click },
                 { "Báo cáo", Reports_Click },
                 { "Cài đặt", Settings_Click }
             };
@@ -79,6 +80,11 @@ namespace BadmintonCourtManagement.GUI
             // MessageBox.Show("form: " + this.Size.ToString() + "\ncontentPanel: " + contentPanel.Size.ToString() + "\ncurrentPanel: " + currentPanel.Size.ToString());
         }
 
+        private void Storage_Click(object sender, EventArgs e)
+        {
+            OpenChildPanel(new storageGUI(currentAccount));
+        }
+
         private void Reports_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Báo cáo clicked!");
@@ -91,10 +97,15 @@ namespace BadmintonCourtManagement.GUI
 
         private void MainLayout_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void contentPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void menuPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }
