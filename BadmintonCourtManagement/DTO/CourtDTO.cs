@@ -4,8 +4,8 @@ namespace BadmintonCourtManagement.DTO
     {
         private string courtId = "";
         private string courtName = "";
-        public enum Option { Active, UnderMaintenance };
-        private Option status = Option.Active;
+        public enum Option { active, maintenance };
+        private Option status = Option.active;
 
         public string CourtId { get => courtId; set => courtId = value; }
         public string CourtName { get => courtName; set => courtName = value; }
@@ -15,7 +15,7 @@ namespace BadmintonCourtManagement.DTO
         {
             this.CourtId = "";
             this.CourtName = "";
-            this.Status = Option.Active;
+            this.Status = Option.active;
         }
 
         public CourtDTO(string courtId, string courtName, Option status)

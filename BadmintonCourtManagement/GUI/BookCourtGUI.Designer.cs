@@ -18,6 +18,7 @@
         private void InitializeComponent()
         {
             draft_panel = new Panel();
+            pCourtList = new TableLayoutPanel();
             pFilter = new CustomPanel();
             customPanel4 = new CustomPanel();
             btnTimeFinish = new BadmintonCourtManagement.GUI.ComponentsGUI.TimePicker();
@@ -33,7 +34,6 @@
             textBox1 = new TextBox();
             lblTitle = new Label();
             btnBooking = new Label();
-            pCourtList = new FlowLayoutPanel();
             draft_panel.SuspendLayout();
             pFilter.SuspendLayout();
             customPanel4.SuspendLayout();
@@ -46,10 +46,10 @@
             // draft_panel
             // 
             draft_panel.BackColor = Color.White;
+            draft_panel.Controls.Add(pCourtList);
             draft_panel.Controls.Add(pFilter);
             draft_panel.Controls.Add(lblTitle);
             draft_panel.Controls.Add(btnBooking);
-            draft_panel.Controls.Add(pCourtList);
             draft_panel.Dock = DockStyle.Fill;
             draft_panel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             draft_panel.Location = new Point(0, 0);
@@ -58,6 +58,23 @@
             draft_panel.Size = new Size(1126, 816);
             draft_panel.TabIndex = 0;
             draft_panel.Paint += draft_panel_Paint;
+            // 
+            // pCourtList
+            // 
+            pCourtList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pCourtList.ColumnCount = 4;
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.Location = new Point(73, 319);
+            pCourtList.Name = "pCourtList";
+            pCourtList.RowCount = 2;
+            pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pCourtList.Size = new Size(999, 450);
+            pCourtList.TabIndex = 0;
+            pCourtList.Paint += pCourtList_Paint;
             // 
             // pFilter
             // 
@@ -91,7 +108,7 @@
             // 
             btnTimeFinish.Location = new Point(110, 10);
             btnTimeFinish.Name = "btnTimeFinish";
-            btnTimeFinish.SelectedTime = new DateTime(2025, 10, 3, 15, 20, 6, 16);
+            btnTimeFinish.SelectedTime = new DateTime(2025, 10, 3, DateTime.Now.Hour, DateTime.Now.Minute, 6, 16);
             btnTimeFinish.Size = new Size(25, 27);
             btnTimeFinish.TabIndex = 10;
             btnTimeFinish.ValueChanged += btnTimeFinish_ValueChanged;
@@ -124,7 +141,7 @@
             // 
             btnTimeStart.Location = new Point(113, 10);
             btnTimeStart.Name = "btnTimeStart";
-            btnTimeStart.SelectedTime = new DateTime(2025, 10, 3, 15, 20, 6, 16);
+            btnTimeStart.SelectedTime = new DateTime(2025, 10, 3, DateTime.Now.Hour, DateTime.Now.Minute, 6, 16);
             btnTimeStart.Size = new Size(25, 27);
             btnTimeStart.TabIndex = 9;
             btnTimeStart.ValueChanged += btnTimeStart_ValueChanged;
@@ -244,21 +261,6 @@
             btnBooking.TextAlign = ContentAlignment.MiddleCenter;
             btnBooking.Click += btnBooking_Click;
             // 
-            // pCourtList
-            // 
-            pCourtList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pCourtList.BackColor = Color.Gray;
-            pCourtList.Location = new Point(70, 336);
-            pCourtList.Name = "pCourtList";
-            pCourtList.Size = new Size(1002, 453);
-            pCourtList.TabIndex = 1;
-            pCourtList.Paint += pCourtList_Paint;
-            pCourtList.Resize += pCourtList_Resize;
-            pCourtList.WrapContents = true;
-            pCourtList.FlowDirection = FlowDirection.LeftToRight;
-            pCourtList.AutoScroll = true;
-
-            // 
             // BookCourtGUI
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -300,6 +302,6 @@
         private Label lblDate;
         private ComponentsGUI.TimePicker btnTimeStart;
         private ComponentsGUI.TimePicker btnTimeFinish;
-        private FlowLayoutPanel pCourtList;
+        private TableLayoutPanel pCourtList;
     }
 }

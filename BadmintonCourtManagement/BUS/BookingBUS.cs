@@ -19,6 +19,15 @@ namespace BadmintonCourtManagement.BUS
             return dao.GetAllBookings();
         }
 
+        public List<BookingDTO> GetSuccessfulBookings()
+        {
+            return dao.GetSuccessfulBookings();
+        }
+
+        public List<BookingDTO> GetSuccessfulBookingsByCourtID(string courtID)
+        {
+            return dao.GetSuccessfulBookingsByCourtID(courtID);
+        }
         public bool InsertBooking(BookingDTO booking)
         {
             // Kiểm tra xem booking đã tồn tại chưa

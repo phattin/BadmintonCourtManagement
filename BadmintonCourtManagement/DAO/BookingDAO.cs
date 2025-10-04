@@ -147,6 +147,79 @@ namespace BadmintonCourtManagement.DAO
         //     return bookings;
         // }
 
+        public List<BookingDTO> GetSuccessfulBookings()
+        {
+            string query = "SELECT * FROM booking WHERE Status = 'successful'";
+            List<BookingDTO> bookings = new List<BookingDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    BookingDTO booking = new BookingDTO
+                    {
+                        BookingId = reader["BookingId"].ToString(),
+                        CourtId = reader["CourtId"].ToString(),
+                        Status = reader["Status"] != DBNull.Value
+                            ? (BookingDTO.Option)Enum.Parse(typeof(BookingDTO.Option), reader["Status"].ToString())
+                            : default(BookingDTO.Option),
+                        StartTime = DateTime.Parse(reader["StartTime"].ToString()),
+                        EndTime = DateTime.Parse(reader["EndTime"].ToString()),
+                    };
+                    bookings.Add(booking);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving successful bookings: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return bookings;
+        }
+
+        public List<BookingDTO> GetSuccessfulBookingsByCourtID (string courtID)
+        {
+            string query = "SELECT * FROM booking WHERE Status = 'successful' AND CourtId = @CourtId";
+            List<BookingDTO> bookings = new List<BookingDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@CourtId", courtID);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    BookingDTO booking = new BookingDTO
+                    {
+                        BookingId = reader["BookingId"].ToString(),
+                        CourtId = reader["CourtId"].ToString(),
+                        Status = reader["Status"] != DBNull.Value
+                            ? (BookingDTO.Option)Enum.Parse(typeof(BookingDTO.Option), reader["Status"].ToString())
+                            : default(BookingDTO.Option),
+                        StartTime = DateTime.Parse(reader["StartTime"].ToString()),
+                        EndTime = DateTime.Parse(reader["EndTime"].ToString()),
+                    };
+                    bookings.Add(booking);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving successful bookings by court ID: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return bookings;
+        }
+
         public BookingDTO GetBookingById(string bookingId)
         {
             string query = "SELECT * FROM booking WHERE BookingId = @BookingId";

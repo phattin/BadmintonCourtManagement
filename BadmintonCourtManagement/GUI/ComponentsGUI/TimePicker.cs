@@ -42,7 +42,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI
 
         private void UpdateText()
         {
-            txtTime.Text = SelectedTime.ToString("hh:mm tt"); // 07:15 AM
+            txtTime.Text = SelectedTime.ToString("hh:mm tt");
         }
 
         protected virtual void OnValueChanged()
