@@ -72,7 +72,7 @@ namespace BadmintonCourtManagement.GUI
             label1 = new Label();
             lblCourtInfo = new Label();
             lblText = new Label();
-            btnBooking2 = new Label();
+            btncourtDelete = new Label();
             customPanel2 = new CustomPanel();
             pictureBox1 = new PictureBox();
             customPanel4 = new CustomPanel();
@@ -100,19 +100,6 @@ namespace BadmintonCourtManagement.GUI
             ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
             drPanelCourtMN.SuspendLayout();
             SuspendLayout();
-            //
-            // drPanelCourtMN
-            // 
-            drPanelCourtMN.BackColor = Color.White;
-            drPanelCourtMN.Controls.Add(label30);
-            drPanelCourtMN.Controls.Add(customPanel1);
-            drPanelCourtMN.Controls.Add(lblTitle);
-            drPanelCourtMN.Dock = DockStyle.Fill;
-            drPanelCourtMN.Location = new Point(0, 0);
-            drPanelCourtMN.Name = "drPanelCourtMN";
-            drPanelCourtMN.Size = new Size(1243, 766);
-            drPanelCourtMN.TabIndex = 0;
-            drPanelCourtMN.Paint += drPanelCourtMN_Paint;
             // 
             // lblTitle
             // 
@@ -148,8 +135,6 @@ namespace BadmintonCourtManagement.GUI
             customPanel1.Name = "customPanel1";
             customPanel1.Size = new Size(1146, 639);
             customPanel1.TabIndex = 6;
-        
-
             // 
             // customPanel8
             // 
@@ -634,7 +619,7 @@ namespace BadmintonCourtManagement.GUI
             pCourt.Controls.Add(label1);
             pCourt.Controls.Add(lblCourtInfo);
             pCourt.Controls.Add(lblText);
-            pCourt.Controls.Add(btnBooking2);
+            pCourt.Controls.Add(btncourtDelete);
             pCourt.Location = new Point(29, 103);
             pCourt.Name = "pCourt";
             pCourt.Size = new Size(241, 208);
@@ -680,23 +665,25 @@ namespace BadmintonCourtManagement.GUI
             lblText.TextAlign = ContentAlignment.MiddleCenter;
             lblText.UseWaitCursor = true;
             // 
-            // btnBooking2
+            // btncourtDelete
             // 
-            btnBooking2.AutoSize = true;
-            btnBooking2.BackColor = Color.FromArgb(64, 64, 64);
-            btnBooking2.Cursor = Cursors.Hand;
-            btnBooking2.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnBooking2.ForeColor = Color.White;
-            btnBooking2.Location = new Point(41, 144);
-            btnBooking2.Name = "btnBooking2";
-            btnBooking2.Padding = new Padding(15, 8, 15, 11);
-            btnBooking2.Size = new Size(62, 36);
-            btnBooking2.TabIndex = 7;
-            btnBooking2.Text = "Xóa";
-            btnBooking2.TextAlign = ContentAlignment.MiddleCenter;
+            btncourtDelete.AutoSize = true;
+            btncourtDelete.BackColor = Color.FromArgb(64, 64, 64);
+            btncourtDelete.Cursor = Cursors.Hand;
+            btncourtDelete.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btncourtDelete.ForeColor = Color.White;
+            btncourtDelete.Location = new Point(41, 144);
+            btncourtDelete.Name = "btncourtDelete";
+            btncourtDelete.Padding = new Padding(15, 8, 15, 11);
+            btncourtDelete.Size = new Size(62, 36);
+            btncourtDelete.TabIndex = 7;
+            btncourtDelete.Text = "Xóa";
+            btncourtDelete.TextAlign = ContentAlignment.MiddleCenter;
+            btncourtDelete.Click += btncourtDelete_Click;
             // 
             // customPanel2
             // 
+            customPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             customPanel2.BackColor = Color.FromArgb(0, 120, 103);
             customPanel2.BorderRadius = 20;
             customPanel2.Controls.Add(pictureBox1);
@@ -707,10 +694,10 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.Name = "customPanel2";
             customPanel2.Size = new Size(1146, 73);
             customPanel2.TabIndex = 0;
-            customPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;    
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(1084, 12);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
@@ -720,10 +707,10 @@ namespace BadmintonCourtManagement.GUI
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             // 
             // customPanel4
             // 
+            customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             customPanel4.BackColor = Color.White;
             customPanel4.BorderRadius = 10;
             customPanel4.Controls.Add(dateTimePicker1);
@@ -732,7 +719,6 @@ namespace BadmintonCourtManagement.GUI
             customPanel4.Name = "customPanel4";
             customPanel4.Size = new Size(177, 51);
             customPanel4.TabIndex = 2;
-            customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             // 
             // dateTimePicker1
             // 
@@ -799,6 +785,18 @@ namespace BadmintonCourtManagement.GUI
             btnBooking.Text = "Thêm sân";
             btnBooking.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // drPanelCourtMN
+            // 
+            drPanelCourtMN.BackColor = Color.White;
+            drPanelCourtMN.Controls.Add(label30);
+            drPanelCourtMN.Controls.Add(customPanel1);
+            drPanelCourtMN.Controls.Add(lblTitle);
+            drPanelCourtMN.Dock = DockStyle.Fill;
+            drPanelCourtMN.Location = new Point(0, 0);
+            drPanelCourtMN.Name = "drPanelCourtMN";
+            drPanelCourtMN.Size = new Size(1243, 766);
+            drPanelCourtMN.TabIndex = 0;
+            drPanelCourtMN.Paint += drPanelCourtMN_Paint;
             // 
             // label30
             // 
@@ -872,7 +870,7 @@ namespace BadmintonCourtManagement.GUI
         private CustomPanel pCourt;
         private Label lblCourtInfo;
         private Label lblText;
-        private Label btnBooking2;
+        private Label btncourtDelete;
         private Label label1;
         private CustomPanel customPanel6;
         private Label label6;
