@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace BadmintonCourtManagement.GUI
 {
-    public partial class storageGUI : UserControl
+    public partial class EmployeeGUI : UserControl
     {
-        public storageGUI(AccountDTO currentAccount)
+        public EmployeeGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
         }
@@ -156,14 +156,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void cardButton_Click_1(object sender, EventArgs e)
         {
-            StorageDetailsGUI storageDetails = new StorageDetailsGUI();
-            storageDetails.ShowDialog();
-        }
-
-        private void NhapHangButtonCard_Click_1(object sender, EventArgs e)
-        {
-            SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
-            supplyDetails.ShowDialog();
+            EmployeeDetailsGUI employeeDetails = new EmployeeDetailsGUI();
+            employeeDetails.ShowDialog();
         }
     }
 }
