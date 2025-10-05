@@ -34,6 +34,7 @@ namespace BadmintonCourtManagement.GUI
                 { "Đặt sân", BookCourt_Click },
                 { "Quản lý sân", ManageCourts_Click },
                 { "Khách hàng", Customers_Click },
+                { "Nhân viên", Employee_Click },
                 { "Kho và Nhập hàng", Storage_Click },
                 { "Báo cáo", Reports_Click },
                 { "Cài đặt", Settings_Click }
@@ -83,6 +84,11 @@ namespace BadmintonCourtManagement.GUI
         private void Storage_Click(object sender, EventArgs e)
         {
             OpenChildPanel(new storageGUI(currentAccount));
+        }
+
+        private void Employee_Click(object sender, EventArgs e)
+        {
+            OpenChildPanel(new EmployeeGUI(currentAccount));
         }
 
         private void Reports_Click(object sender, EventArgs e)

@@ -38,11 +38,8 @@
             previousButton = new Button();
             cardList = new TableLayoutPanel();
             card = new Panel();
-            cardBodyPanel = new Panel();
-            cardBody = new Label();
-            cardButtonPanel = new Panel();
             cardButton = new Button();
-            cardTitlePanel = new Panel();
+            cardBody = new Label();
             cardTitle = new Label();
             toolBar = new TableLayoutPanel();
             endDate = new DateTimePicker();
@@ -61,11 +58,8 @@
             NhapHangPrevious = new Button();
             NhapHangCardList = new TableLayoutPanel();
             NhapHangCard = new Panel();
-            NhapHangBodyCardPanel = new Panel();
-            NhapHangBodyCard = new Label();
-            NhapHangButtonCardPanel = new Panel();
             NhapHangButtonCard = new Button();
-            NhapHangTitleCardPanel = new Panel();
+            NhapHangBodyCard = new Label();
             NhapHangTitleCard = new Label();
             NhapHangToolBar = new TableLayoutPanel();
             NhapHangEndDate = new DateTimePicker();
@@ -81,18 +75,12 @@
             pageButtonPanel.SuspendLayout();
             cardList.SuspendLayout();
             card.SuspendLayout();
-            cardBodyPanel.SuspendLayout();
-            cardButtonPanel.SuspendLayout();
-            cardTitlePanel.SuspendLayout();
             toolBar.SuspendLayout();
             titlePanel.SuspendLayout();
             nhapHangPage.SuspendLayout();
             NhapHangPagePanel.SuspendLayout();
             NhapHangCardList.SuspendLayout();
             NhapHangCard.SuspendLayout();
-            NhapHangBodyCardPanel.SuspendLayout();
-            NhapHangButtonCardPanel.SuspendLayout();
-            NhapHangTitleCardPanel.SuspendLayout();
             NhapHangToolBar.SuspendLayout();
             NhapHangTitlePanel.SuspendLayout();
             SuspendLayout();
@@ -216,93 +204,56 @@
             // 
             // card
             // 
-            card.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             card.AutoSize = true;
             card.BackColor = Color.FromArgb(200, 250, 214);
-            card.Controls.Add(cardBodyPanel);
-            card.Controls.Add(cardButtonPanel);
-            card.Controls.Add(cardTitlePanel);
-            card.Location = new Point(15, 21);
+            card.Controls.Add(cardButton);
+            card.Controls.Add(cardBody);
+            card.Controls.Add(cardTitle);
+            card.Dock = DockStyle.Fill;
+            card.Location = new Point(15, 15);
             card.Margin = new Padding(15);
             card.Name = "card";
-            card.Size = new Size(380, 457);
+            card.Size = new Size(380, 470);
             card.TabIndex = 0;
-            // 
-            // cardBodyPanel
-            // 
-            cardBodyPanel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            cardBodyPanel.AutoSize = true;
-            cardBodyPanel.Controls.Add(cardBody);
-            cardBodyPanel.Location = new Point(3, 126);
-            cardBodyPanel.Margin = new Padding(0);
-            cardBodyPanel.Name = "cardBodyPanel";
-            cardBodyPanel.Size = new Size(374, 230);
-            cardBodyPanel.TabIndex = 2;
-            // 
-            // cardBody
-            // 
-            cardBody.Dock = DockStyle.Fill;
-            cardBody.Font = new Font("Roboto SemiBold", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cardBody.Location = new Point(0, 0);
-            cardBody.Name = "cardBody";
-            cardBody.Size = new Size(374, 230);
-            cardBody.TabIndex = 0;
-            cardBody.Text = "ID: 0001\r\nSL: 100\r\nGiá: 100.000đ";
-            cardBody.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // cardButtonPanel
-            // 
-            cardButtonPanel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            cardButtonPanel.AutoSize = true;
-            cardButtonPanel.Controls.Add(cardButton);
-            cardButtonPanel.Location = new Point(63, 387);
-            cardButtonPanel.Margin = new Padding(20, 0, 0, 0);
-            cardButtonPanel.Name = "cardButtonPanel";
-            cardButtonPanel.Size = new Size(258, 70);
-            cardButtonPanel.TabIndex = 1;
             // 
             // cardButton
             // 
+            cardButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cardButton.BackColor = Color.Black;
             cardButton.Cursor = Cursors.Hand;
-            cardButton.Dock = DockStyle.Fill;
             cardButton.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cardButton.ForeColor = Color.White;
-            cardButton.Location = new Point(0, 0);
+            cardButton.Location = new Point(57, 347);
             cardButton.Margin = new Padding(0);
             cardButton.Name = "cardButton";
             cardButton.Size = new Size(258, 70);
-            cardButton.TabIndex = 5;
+            cardButton.TabIndex = 6;
             cardButton.Text = "Xem chi tiết";
             cardButton.UseVisualStyleBackColor = false;
-            cardButton.Click += cardButton_Click;
-            cardButton.MouseEnter += buttonEnter;
-            cardButton.MouseLeave += buttonLeave;
+            cardButton.Click += cardButton_Click_1;
             // 
-            // cardTitlePanel
+            // cardBody
             // 
-            cardTitlePanel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            cardTitlePanel.AutoSize = true;
-            cardTitlePanel.Controls.Add(cardTitle);
-            cardTitlePanel.Location = new Point(3, 1);
-            cardTitlePanel.Margin = new Padding(0);
-            cardTitlePanel.Name = "cardTitlePanel";
-            cardTitlePanel.Size = new Size(374, 125);
-            cardTitlePanel.TabIndex = 0;
-            cardTitlePanel.Paint += cardTitlePanel_Paint;
+            cardBody.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cardBody.Font = new Font("Roboto Medium", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            cardBody.Location = new Point(3, 111);
+            cardBody.Name = "cardBody";
+            cardBody.Size = new Size(374, 220);
+            cardBody.TabIndex = 4;
+            cardBody.Text = "Mã sản phẩm: 0001\r\nSố lượng: 100\r\nGiá: 100.000đ";
+            cardBody.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // cardTitle
             // 
-            cardTitle.Dock = DockStyle.Fill;
+            cardTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cardTitle.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cardTitle.Location = new Point(0, 0);
+            cardTitle.Location = new Point(3, 2);
             cardTitle.Margin = new Padding(0);
             cardTitle.Name = "cardTitle";
-            cardTitle.Size = new Size(374, 125);
-            cardTitle.TabIndex = 0;
+            cardTitle.Size = new Size(374, 109);
+            cardTitle.TabIndex = 3;
             cardTitle.Text = "KH0001";
             cardTitle.TextAlign = ContentAlignment.MiddleCenter;
-            cardTitle.Click += label4_Click_2;
             // 
             // toolBar
             // 
@@ -547,89 +498,54 @@
             // 
             // NhapHangCard
             // 
-            NhapHangCard.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             NhapHangCard.AutoSize = true;
             NhapHangCard.BackColor = Color.FromArgb(200, 250, 214);
-            NhapHangCard.Controls.Add(NhapHangBodyCardPanel);
-            NhapHangCard.Controls.Add(NhapHangButtonCardPanel);
-            NhapHangCard.Controls.Add(NhapHangTitleCardPanel);
-            NhapHangCard.Location = new Point(15, 22);
+            NhapHangCard.Controls.Add(NhapHangButtonCard);
+            NhapHangCard.Controls.Add(NhapHangBodyCard);
+            NhapHangCard.Controls.Add(NhapHangTitleCard);
+            NhapHangCard.Dock = DockStyle.Fill;
+            NhapHangCard.Location = new Point(15, 15);
             NhapHangCard.Margin = new Padding(15);
             NhapHangCard.Name = "NhapHangCard";
-            NhapHangCard.Size = new Size(381, 468);
+            NhapHangCard.Size = new Size(381, 482);
             NhapHangCard.TabIndex = 0;
-            // 
-            // NhapHangBodyCardPanel
-            // 
-            NhapHangBodyCardPanel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangBodyCardPanel.AutoSize = true;
-            NhapHangBodyCardPanel.Controls.Add(NhapHangBodyCard);
-            NhapHangBodyCardPanel.Location = new Point(1, 108);
-            NhapHangBodyCardPanel.Margin = new Padding(0);
-            NhapHangBodyCardPanel.Name = "NhapHangBodyCardPanel";
-            NhapHangBodyCardPanel.Size = new Size(373, 274);
-            NhapHangBodyCardPanel.TabIndex = 2;
-            // 
-            // NhapHangBodyCard
-            // 
-            NhapHangBodyCard.Dock = DockStyle.Fill;
-            NhapHangBodyCard.Font = new Font("Roboto SemiBold", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangBodyCard.Location = new Point(0, 0);
-            NhapHangBodyCard.Name = "NhapHangBodyCard";
-            NhapHangBodyCard.Size = new Size(373, 274);
-            NhapHangBodyCard.TabIndex = 0;
-            NhapHangBodyCard.Text = "Nhân viên: 0001\r\nNhà cung cấp: 0001\r\nSố lượng: 100\r\nTổng tiền: 10.000.000đ";
-            NhapHangBodyCard.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // NhapHangButtonCardPanel
-            // 
-            NhapHangButtonCardPanel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangButtonCardPanel.AutoSize = true;
-            NhapHangButtonCardPanel.Controls.Add(NhapHangButtonCard);
-            NhapHangButtonCardPanel.Location = new Point(67, 382);
-            NhapHangButtonCardPanel.Margin = new Padding(20, 0, 0, 0);
-            NhapHangButtonCardPanel.Name = "NhapHangButtonCardPanel";
-            NhapHangButtonCardPanel.Size = new Size(252, 86);
-            NhapHangButtonCardPanel.TabIndex = 1;
             // 
             // NhapHangButtonCard
             // 
+            NhapHangButtonCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             NhapHangButtonCard.BackColor = Color.Black;
             NhapHangButtonCard.Cursor = Cursors.Hand;
-            NhapHangButtonCard.Dock = DockStyle.Fill;
             NhapHangButtonCard.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
             NhapHangButtonCard.ForeColor = Color.White;
-            NhapHangButtonCard.Location = new Point(0, 0);
+            NhapHangButtonCard.Location = new Point(64, 373);
             NhapHangButtonCard.Margin = new Padding(0);
             NhapHangButtonCard.Name = "NhapHangButtonCard";
-            NhapHangButtonCard.Size = new Size(252, 86);
-            NhapHangButtonCard.TabIndex = 5;
+            NhapHangButtonCard.Size = new Size(252, 74);
+            NhapHangButtonCard.TabIndex = 6;
             NhapHangButtonCard.Text = "Xem chi tiết";
             NhapHangButtonCard.UseVisualStyleBackColor = false;
-            NhapHangButtonCard.Click += NhapHangButtonCard_Click;
-            NhapHangButtonCard.MouseEnter += buttonEnter;
-            NhapHangButtonCard.MouseLeave += buttonLeave;
+            NhapHangButtonCard.Click += NhapHangButtonCard_Click_1;
             // 
-            // NhapHangTitleCardPanel
+            // NhapHangBodyCard
             // 
-            NhapHangTitleCardPanel.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangTitleCardPanel.AutoSize = true;
-            NhapHangTitleCardPanel.Controls.Add(NhapHangTitleCard);
-            NhapHangTitleCardPanel.Location = new Point(1, 4);
-            NhapHangTitleCardPanel.Margin = new Padding(0);
-            NhapHangTitleCardPanel.Name = "NhapHangTitleCardPanel";
-            NhapHangTitleCardPanel.Size = new Size(379, 104);
-            NhapHangTitleCardPanel.TabIndex = 0;
+            NhapHangBodyCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            NhapHangBodyCard.Font = new Font("Roboto SemiBold", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            NhapHangBodyCard.Location = new Point(0, 89);
+            NhapHangBodyCard.Name = "NhapHangBodyCard";
+            NhapHangBodyCard.Size = new Size(379, 284);
+            NhapHangBodyCard.TabIndex = 2;
+            NhapHangBodyCard.Text = "Nhân viên: 0001\r\nNhà cung cấp: 0001\r\nSố lượng: 100\r\nTổng tiền: 10.000.000đ";
+            NhapHangBodyCard.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // NhapHangTitleCard
             // 
-            NhapHangTitleCard.Dock = DockStyle.Fill;
+            NhapHangTitleCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             NhapHangTitleCard.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangTitleCard.Location = new Point(0, 0);
+            NhapHangTitleCard.Location = new Point(0, 2);
             NhapHangTitleCard.Margin = new Padding(0);
             NhapHangTitleCard.Name = "NhapHangTitleCard";
-            NhapHangTitleCard.Size = new Size(379, 104);
-            NhapHangTitleCard.TabIndex = 0;
+            NhapHangTitleCard.Size = new Size(379, 87);
+            NhapHangTitleCard.TabIndex = 1;
             NhapHangTitleCard.Text = "NH0001";
             NhapHangTitleCard.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -787,10 +703,6 @@
             cardList.ResumeLayout(false);
             cardList.PerformLayout();
             card.ResumeLayout(false);
-            card.PerformLayout();
-            cardBodyPanel.ResumeLayout(false);
-            cardButtonPanel.ResumeLayout(false);
-            cardTitlePanel.ResumeLayout(false);
             toolBar.ResumeLayout(false);
             toolBar.PerformLayout();
             titlePanel.ResumeLayout(false);
@@ -800,10 +712,6 @@
             NhapHangCardList.ResumeLayout(false);
             NhapHangCardList.PerformLayout();
             NhapHangCard.ResumeLayout(false);
-            NhapHangCard.PerformLayout();
-            NhapHangBodyCardPanel.ResumeLayout(false);
-            NhapHangButtonCardPanel.ResumeLayout(false);
-            NhapHangTitleCardPanel.ResumeLayout(false);
             NhapHangToolBar.ResumeLayout(false);
             NhapHangToolBar.PerformLayout();
             NhapHangTitlePanel.ResumeLayout(false);
@@ -823,12 +731,6 @@
         private DateTimePicker endDate;
         private TableLayoutPanel cardList;
         private Panel card;
-        private Panel cardBodyPanel;
-        private Label cardBody;
-        private Panel cardButtonPanel;
-        private Button cardButton;
-        private Panel cardTitlePanel;
-        private Label cardTitle;
         private Panel titlePanel;
         private Label titleText;
         private Panel pageButtonPanel;
@@ -848,16 +750,16 @@
         private Button NhapHangFilterButton;
         private TableLayoutPanel NhapHangCardList;
         private Panel NhapHangCard;
-        private Panel NhapHangBodyCardPanel;
-        private Label NhapHangBodyCard;
-        private Panel NhapHangButtonCardPanel;
-        private Button NhapHangButtonCard;
-        private Panel NhapHangTitleCardPanel;
-        private Label NhapHangTitleCard;
         private Panel NhapHangPagePanel;
         private Button NhapHangExtraNext;
         private Button NhapHangExtraPrevious;
         private Button NhapHangNext;
         private Button NhapHangPrevious;
+        private Button cardButton;
+        private Label cardBody;
+        private Label cardTitle;
+        private Button NhapHangButtonCard;
+        private Label NhapHangBodyCard;
+        private Label NhapHangTitleCard;
     }
 }

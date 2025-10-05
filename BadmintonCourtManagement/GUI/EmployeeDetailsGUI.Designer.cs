@@ -1,6 +1,6 @@
 ﻿namespace BadmintonCourtManagement.GUI
 {
-    partial class StorageDetailsGUI
+    partial class EmployeeDetailsGUI
     {
         /// <summary>
         /// Required designer variable.
@@ -34,19 +34,19 @@
             ActiveIconPanel = new Panel();
             ActiveIcon = new Label();
             ProductStatusPanel = new Panel();
-            ProductStatus = new Label();
+            EmployeeStatus = new Label();
             ProductTotalPanel = new Panel();
-            ProductTotal = new Label();
+            EmployeeAccount = new Label();
             ProductPricePanel = new Panel();
-            ProductPrice = new Label();
+            EmployeeAddress = new Label();
             ProductQuantityPanel = new Panel();
-            ProductQuantity = new Label();
+            EmployeeID = new Label();
             ProductBrandPanel = new Panel();
-            ProductBrand = new Label();
+            EmployeePhone = new Label();
             ProductNamePanel = new Panel();
-            ProductName = new Label();
+            EmployeeRole = new Label();
             ProductIDPanel = new Panel();
-            ProductID = new Label();
+            EmployeeName = new Label();
             TitlePanel = new Panel();
             TitleText = new Label();
             MainPanel.SuspendLayout();
@@ -80,7 +80,7 @@
             MainPanel.Location = new Point(61, 59);
             MainPanel.Margin = new Padding(0);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(1488, 837);
+            MainPanel.Size = new Size(1488, 937);
             MainPanel.TabIndex = 0;
             // 
             // PicturePanel
@@ -90,17 +90,17 @@
             PicturePanel.Controls.Add(Picture);
             PicturePanel.Location = new Point(843, 171);
             PicturePanel.Name = "PicturePanel";
-            PicturePanel.Size = new Size(592, 604);
+            PicturePanel.Size = new Size(592, 735);
             PicturePanel.TabIndex = 10;
             // 
             // Picture
             // 
             Picture.Dock = DockStyle.Fill;
-            Picture.Image = Properties.Resources.Picture;
+            Picture.Image = Properties.Resources.Employee;
             Picture.Location = new Point(0, 0);
             Picture.Margin = new Padding(0);
             Picture.Name = "Picture";
-            Picture.Size = new Size(592, 604);
+            Picture.Size = new Size(592, 735);
             Picture.TabIndex = 0;
             // 
             // ActiveIconPanel
@@ -108,7 +108,7 @@
             ActiveIconPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ActiveIconPanel.AutoSize = true;
             ActiveIconPanel.Controls.Add(ActiveIcon);
-            ActiveIconPanel.Location = new Point(723, 718);
+            ActiveIconPanel.Location = new Point(723, 849);
             ActiveIconPanel.Margin = new Padding(0);
             ActiveIconPanel.Name = "ActiveIconPanel";
             ActiveIconPanel.Size = new Size(765, 57);
@@ -131,162 +131,162 @@
             // 
             ProductStatusPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProductStatusPanel.AutoSize = true;
-            ProductStatusPanel.Controls.Add(ProductStatus);
-            ProductStatusPanel.Location = new Point(125, 718);
+            ProductStatusPanel.Controls.Add(EmployeeStatus);
+            ProductStatusPanel.Location = new Point(125, 849);
             ProductStatusPanel.Margin = new Padding(0);
             ProductStatusPanel.Name = "ProductStatusPanel";
             ProductStatusPanel.Size = new Size(1363, 57);
             ProductStatusPanel.TabIndex = 8;
             // 
-            // ProductStatus
+            // EmployeeStatus
             // 
-            ProductStatus.Dock = DockStyle.Fill;
-            ProductStatus.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductStatus.Location = new Point(0, 0);
-            ProductStatus.Margin = new Padding(0);
-            ProductStatus.Name = "ProductStatus";
-            ProductStatus.Size = new Size(1363, 57);
-            ProductStatus.TabIndex = 0;
-            ProductStatus.Text = "Tình trạng: đang hoạt động";
-            ProductStatus.TextAlign = ContentAlignment.MiddleLeft;
+            EmployeeStatus.Dock = DockStyle.Fill;
+            EmployeeStatus.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EmployeeStatus.Location = new Point(0, 0);
+            EmployeeStatus.Margin = new Padding(0);
+            EmployeeStatus.Name = "EmployeeStatus";
+            EmployeeStatus.Size = new Size(1363, 57);
+            EmployeeStatus.TabIndex = 0;
+            EmployeeStatus.Text = "Tình trạng: đang hoạt động";
+            EmployeeStatus.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductTotalPanel
             // 
             ProductTotalPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProductTotalPanel.AutoSize = true;
-            ProductTotalPanel.Controls.Add(ProductTotal);
-            ProductTotalPanel.Location = new Point(125, 626);
+            ProductTotalPanel.Controls.Add(EmployeeAccount);
+            ProductTotalPanel.Location = new Point(125, 691);
             ProductTotalPanel.Margin = new Padding(0);
             ProductTotalPanel.Name = "ProductTotalPanel";
-            ProductTotalPanel.Size = new Size(1363, 57);
+            ProductTotalPanel.Size = new Size(715, 149);
             ProductTotalPanel.TabIndex = 7;
             // 
-            // ProductTotal
+            // EmployeeAccount
             // 
-            ProductTotal.Dock = DockStyle.Fill;
-            ProductTotal.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductTotal.Location = new Point(0, 0);
-            ProductTotal.Margin = new Padding(0);
-            ProductTotal.Name = "ProductTotal";
-            ProductTotal.Size = new Size(1363, 57);
-            ProductTotal.TabIndex = 0;
-            ProductTotal.Text = "Thành tiền: 10.000.000đ";
-            ProductTotal.TextAlign = ContentAlignment.MiddleLeft;
+            EmployeeAccount.Dock = DockStyle.Fill;
+            EmployeeAccount.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EmployeeAccount.Location = new Point(0, 0);
+            EmployeeAccount.Margin = new Padding(0);
+            EmployeeAccount.Name = "EmployeeAccount";
+            EmployeeAccount.Size = new Size(715, 149);
+            EmployeeAccount.TabIndex = 0;
+            EmployeeAccount.Text = "Tên tài khoản: ltttrang@gmail.com";
+            EmployeeAccount.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductPricePanel
             // 
             ProductPricePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProductPricePanel.AutoSize = true;
-            ProductPricePanel.Controls.Add(ProductPrice);
+            ProductPricePanel.Controls.Add(EmployeeAddress);
             ProductPricePanel.Location = new Point(125, 540);
             ProductPricePanel.Margin = new Padding(0);
             ProductPricePanel.Name = "ProductPricePanel";
-            ProductPricePanel.Size = new Size(1363, 57);
+            ProductPricePanel.Size = new Size(715, 131);
             ProductPricePanel.TabIndex = 6;
             // 
-            // ProductPrice
+            // EmployeeAddress
             // 
-            ProductPrice.Dock = DockStyle.Fill;
-            ProductPrice.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductPrice.Location = new Point(0, 0);
-            ProductPrice.Margin = new Padding(0);
-            ProductPrice.Name = "ProductPrice";
-            ProductPrice.Size = new Size(1363, 57);
-            ProductPrice.TabIndex = 0;
-            ProductPrice.Text = "Đơn giá: 100.000đ";
-            ProductPrice.TextAlign = ContentAlignment.MiddleLeft;
+            EmployeeAddress.Dock = DockStyle.Fill;
+            EmployeeAddress.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EmployeeAddress.Location = new Point(0, 0);
+            EmployeeAddress.Margin = new Padding(0);
+            EmployeeAddress.Name = "EmployeeAddress";
+            EmployeeAddress.Size = new Size(715, 131);
+            EmployeeAddress.TabIndex = 0;
+            EmployeeAddress.Text = "Địa chỉ: 276 Lò Cao, phường Tân Phú, TPHCM";
+            EmployeeAddress.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductQuantityPanel
             // 
             ProductQuantityPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProductQuantityPanel.AutoSize = true;
-            ProductQuantityPanel.Controls.Add(ProductQuantity);
+            ProductQuantityPanel.Controls.Add(EmployeeID);
             ProductQuantityPanel.Location = new Point(125, 444);
             ProductQuantityPanel.Margin = new Padding(0);
             ProductQuantityPanel.Name = "ProductQuantityPanel";
             ProductQuantityPanel.Size = new Size(1363, 57);
             ProductQuantityPanel.TabIndex = 5;
             // 
-            // ProductQuantity
+            // EmployeeID
             // 
-            ProductQuantity.Dock = DockStyle.Fill;
-            ProductQuantity.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductQuantity.Location = new Point(0, 0);
-            ProductQuantity.Margin = new Padding(0);
-            ProductQuantity.Name = "ProductQuantity";
-            ProductQuantity.Size = new Size(1363, 57);
-            ProductQuantity.TabIndex = 0;
-            ProductQuantity.Text = "Số lượng: 100";
-            ProductQuantity.TextAlign = ContentAlignment.MiddleLeft;
+            EmployeeID.Dock = DockStyle.Fill;
+            EmployeeID.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EmployeeID.Location = new Point(0, 0);
+            EmployeeID.Margin = new Padding(0);
+            EmployeeID.Name = "EmployeeID";
+            EmployeeID.Size = new Size(1363, 57);
+            EmployeeID.TabIndex = 0;
+            EmployeeID.Text = "CCCD: 123456789";
+            EmployeeID.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductBrandPanel
             // 
             ProductBrandPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProductBrandPanel.AutoSize = true;
-            ProductBrandPanel.Controls.Add(ProductBrand);
+            ProductBrandPanel.Controls.Add(EmployeePhone);
             ProductBrandPanel.Location = new Point(125, 355);
             ProductBrandPanel.Margin = new Padding(0);
             ProductBrandPanel.Name = "ProductBrandPanel";
             ProductBrandPanel.Size = new Size(1363, 57);
             ProductBrandPanel.TabIndex = 4;
             // 
-            // ProductBrand
+            // EmployeePhone
             // 
-            ProductBrand.Dock = DockStyle.Fill;
-            ProductBrand.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductBrand.Location = new Point(0, 0);
-            ProductBrand.Margin = new Padding(0);
-            ProductBrand.Name = "ProductBrand";
-            ProductBrand.Size = new Size(1363, 57);
-            ProductBrand.TabIndex = 0;
-            ProductBrand.Text = "Hãng sản xuất: Nike";
-            ProductBrand.TextAlign = ContentAlignment.MiddleLeft;
+            EmployeePhone.Dock = DockStyle.Fill;
+            EmployeePhone.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EmployeePhone.Location = new Point(0, 0);
+            EmployeePhone.Margin = new Padding(0);
+            EmployeePhone.Name = "EmployeePhone";
+            EmployeePhone.Size = new Size(1363, 57);
+            EmployeePhone.TabIndex = 0;
+            EmployeePhone.Text = "Số điện thoại: 0123456789";
+            EmployeePhone.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductNamePanel
             // 
             ProductNamePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProductNamePanel.AutoSize = true;
-            ProductNamePanel.Controls.Add(ProductName);
+            ProductNamePanel.Controls.Add(EmployeeRole);
             ProductNamePanel.Location = new Point(125, 266);
             ProductNamePanel.Margin = new Padding(0);
             ProductNamePanel.Name = "ProductNamePanel";
             ProductNamePanel.Size = new Size(1363, 57);
             ProductNamePanel.TabIndex = 3;
             // 
-            // ProductName
+            // EmployeeRole
             // 
-            ProductName.Dock = DockStyle.Fill;
-            ProductName.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductName.Location = new Point(0, 0);
-            ProductName.Margin = new Padding(0);
-            ProductName.Name = "ProductName";
-            ProductName.Size = new Size(1363, 57);
-            ProductName.TabIndex = 0;
-            ProductName.Text = "Tên sản phẩm: Giày thể thao";
-            ProductName.TextAlign = ContentAlignment.MiddleLeft;
+            EmployeeRole.Dock = DockStyle.Fill;
+            EmployeeRole.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EmployeeRole.Location = new Point(0, 0);
+            EmployeeRole.Margin = new Padding(0);
+            EmployeeRole.Name = "EmployeeRole";
+            EmployeeRole.Size = new Size(1363, 57);
+            EmployeeRole.TabIndex = 0;
+            EmployeeRole.Text = "Công việc: thu ngân";
+            EmployeeRole.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductIDPanel
             // 
             ProductIDPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProductIDPanel.AutoSize = true;
-            ProductIDPanel.Controls.Add(ProductID);
+            ProductIDPanel.Controls.Add(EmployeeName);
             ProductIDPanel.Location = new Point(125, 171);
             ProductIDPanel.Margin = new Padding(0);
             ProductIDPanel.Name = "ProductIDPanel";
             ProductIDPanel.Size = new Size(1363, 57);
             ProductIDPanel.TabIndex = 1;
             // 
-            // ProductID
+            // EmployeeName
             // 
-            ProductID.Dock = DockStyle.Fill;
-            ProductID.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductID.Location = new Point(0, 0);
-            ProductID.Margin = new Padding(0);
-            ProductID.Name = "ProductID";
-            ProductID.Size = new Size(1363, 57);
-            ProductID.TabIndex = 0;
-            ProductID.Text = "Mã sản phẩm: SP0001";
-            ProductID.TextAlign = ContentAlignment.MiddleLeft;
+            EmployeeName.Dock = DockStyle.Fill;
+            EmployeeName.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            EmployeeName.Location = new Point(0, 0);
+            EmployeeName.Margin = new Padding(0);
+            EmployeeName.Name = "EmployeeName";
+            EmployeeName.Size = new Size(1363, 57);
+            EmployeeName.TabIndex = 0;
+            EmployeeName.Text = "Tên nhân viên: Lê Thị Thu Trang";
+            EmployeeName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // TitlePanel
             // 
@@ -308,21 +308,21 @@
             TitleText.Name = "TitleText";
             TitleText.Size = new Size(1363, 94);
             TitleText.TabIndex = 0;
-            TitleText.Text = "Chi tiết: KH0001";
+            TitleText.Text = "Chi tiết: NV0001";
             TitleText.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // StorageDetailsGUI
+            // EmployeeDetailsGUI
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 120, 103);
-            ClientSize = new Size(1613, 955);
+            ClientSize = new Size(1613, 1055);
             Controls.Add(MainPanel);
             Font = new Font("Roboto", 12F);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4);
             MaximizeBox = false;
-            Name = "StorageDetailsGUI";
+            Name = "EmployeeDetailsGUI";
             Text = "Chi tiết kho hàng";
             MainPanel.ResumeLayout(false);
             MainPanel.PerformLayout();
@@ -345,19 +345,19 @@
         private Panel TitlePanel;
         private Label TitleText;
         private Panel ProductIDPanel;
-        private Label ProductID;
+        private Label EmployeeName;
         private Panel ProductTotalPanel;
-        private Label ProductTotal;
+        private Label EmployeeAccount;
         private Panel ProductPricePanel;
-        private Label ProductPrice;
+        private Label EmployeeAddress;
         private Panel ProductQuantityPanel;
-        private Label ProductQuantity;
+        private Label EmployeeID;
         private Panel ProductBrandPanel;
-        private Label ProductBrand;
+        private Label EmployeePhone;
         private Panel ProductNamePanel;
-        private Label ProductName;
+        private Label EmployeeRole;
         private Panel ProductStatusPanel;
-        private Label ProductStatus;
+        private Label EmployeeStatus;
         private Panel ActiveIconPanel;
         private Label ActiveIcon;
         private Panel PicturePanel;
