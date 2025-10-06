@@ -7,7 +7,7 @@ namespace BadmintonCourtManagement.DTO
         
         public enum Option {View, Add, Edit, Delete}
         
-        private Option permissionOption;
+        private Option permissionOption = Option.View;
 
         public string PermissionId { get => permissionId; set => permissionId = value; }
         public string FunctionId { get => functionId; set => functionId = value; }
