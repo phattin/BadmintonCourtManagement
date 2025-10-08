@@ -15,5 +15,16 @@ namespace BadmintonCourtManagement.BUS
         {
             return courtDAO.GetAllCourts();
         }
+
+        public bool UpdateCourt(CourtDTO court)
+        {
+            return courtDAO.UpdateCourt(court);
+        }
+
+        public bool DeleteCourt(string courtId)
+        {
+            return courtDAO.DeleteCourt(courtId);
+        }
+
     }
 }
