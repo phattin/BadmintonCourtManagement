@@ -5,7 +5,7 @@ using BadmintonCourtManagement.DAO;
 
 namespace BadmintonCourtManagement.BUS
 {
-    public class PermisstionBUS
+    public class PermissionDetailBUS
     {
         private PermissionDetailDAO dao = new PermissionDetailDAO();
 
@@ -39,15 +39,17 @@ namespace BadmintonCourtManagement.BUS
             return dao.DeletePermissionDetail(permissionDetail);
         }
 
-        public bool InsertPermissionDetail(PermissionDetailDTO permissionDetail)
+        public bool InsertPermissionDetail(List<PermissionDetailDTO> permissionDetailList)
         {
-            // Kiểm tra xem permission detail đã tồn tại chưa
-            var existing = dao.GetPermissionDetailsByPermissionId(permissionDetail.PermissionId)
-                              .Find(pd => pd.FunctionId == permissionDetail.FunctionId && pd.PermissionOption == permissionDetail.PermissionOption);
-            if (existing != null)
-                throw new Exception("Chi tiết quyền đã tồn tại!");
-
-            return dao.InsertPermissionDetail(permissionDetail);
+            foreach(var permissionDetail in permissionDetailList)
+            {
+                if(!dao.InsertPermissionDetail(permissionDetail))
+                {
+                    MessageBox.Show("Thêm chi tiết quyền thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            return true;
         }
         
         public bool UpdatePermissionDetail(PermissionDetailDTO permissionDetail)
