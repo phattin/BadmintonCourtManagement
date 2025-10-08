@@ -1,6 +1,5 @@
+﻿using BadmintonCourtManagement.DTO;
 using MySql.Data.MySqlClient;
-using BadmintonCourtManagement.DTO;
-
 namespace BadmintonCourtManagement.DAO
 {
     public class PermissionDAO
@@ -62,63 +61,52 @@ namespace BadmintonCourtManagement.DAO
             return permission;
         }
 
-        // Thêm quyền
+
         public bool InsertPermission(PermissionDTO permission)
         {
             string query = "INSERT INTO permission (PermissionId, PermissionName) VALUES (@PermissionId, @PermissionName)";
-            int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@PermissionId", permission.PermissionId);
                 cmd.Parameters.AddWithValue("@PermissionName", permission.PermissionName);
-                result = cmd.ExecuteNonQuery();
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi thêm phân quyền: " + ex.Message);
+                return false;
             }
             finally
             {
                 db.CloseConnection();
             }
-            return result > 0;
         }
 
-        // Cập nhật quyền
         public bool UpdatePermission(PermissionDTO permission)
         {
             string query = "UPDATE permission SET PermissionName = @PermissionName WHERE PermissionId = @PermissionId";
-            int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@PermissionId", permission.PermissionId);
                 cmd.Parameters.AddWithValue("@PermissionName", permission.PermissionName);
-                result = cmd.ExecuteNonQuery();
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi cập nhật phân quyền: " + ex.Message);
+                return false;
             }
             finally
             {
                 db.CloseConnection();
             }
-            return result > 0;
         }
 
-        // Xóa quyền   
-        public bool DeletePermission(string id)
-        {
-            string query = "DELETE FROM permission WHERE PermissionId = @PermissionId";
-            int result = 0;
-            try
-            {
-                db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@PermissionId", id);
-                result = cmd.ExecuteNonQuery();
-            }
-            finally
-            {
-                db.CloseConnection();
-            }
-            return result > 0;
-        }
     }
 }
