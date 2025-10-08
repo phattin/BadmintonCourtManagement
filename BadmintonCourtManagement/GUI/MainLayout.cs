@@ -31,13 +31,16 @@ namespace BadmintonCourtManagement.GUI
             menuManager = new MenuManager();
             var menuItems = new Dictionary<string, EventHandler>
             {
-                { "Đặt sân", BookCourt_Click },
-                { "Quản lý sân", ManageCourts_Click },
                 { "Khách hàng", Customers_Click },
+                { "Phân quyền", Permission_Click },
+                { "Tài khoản", Account_Click },
                 { "Nhân viên", Employee_Click },
+                { "Hóa đơn", Bill_Click },
+                { "Bán hàng", Sell_Click },
                 { "Kho và Nhập hàng", Storage_Click },
-                { "Báo cáo", Reports_Click },
-                { "Cài đặt", Settings_Click }
+                { "Quản lý sân", ManageCourts_Click },
+                { "Đặt sân", BookCourt_Click },
+                { "Thống kê", Statistics_Click }
             };
 
             menuManager.CreateMenuButtons(menuPanel, menuItems);
@@ -60,6 +63,26 @@ namespace BadmintonCourtManagement.GUI
 
             // Keep menu panel on top
             //menuPanel.BringToFront();
+        }
+
+        private void Permission_Click(object sender, EventArgs e)
+        {
+            OpenChildPanel(new PermissionGUI(currentAccount));
+        }
+        
+        private void Account_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Tài khoản clicked!");
+        }
+
+        private void Bill_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hóa đơn clicked!");
+        }
+
+        private void Sell_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Bán hàng clicked!");
         }
 
         // Event handlers for menu buttons
@@ -91,14 +114,9 @@ namespace BadmintonCourtManagement.GUI
             OpenChildPanel(new EmployeeGUI(currentAccount));
         }
 
-        private void Reports_Click(object sender, EventArgs e)
+        private void Statistics_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Báo cáo clicked!");
-        }
-
-        private void Settings_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Cài đặt clicked!");
+            MessageBox.Show("Thống kê clicked!");
         }
 
         private void MainLayout_Load(object sender, EventArgs e)
