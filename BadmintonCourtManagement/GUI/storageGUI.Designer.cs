@@ -51,6 +51,9 @@
             titlePanel = new Panel();
             titleText = new Label();
             nhapHangPage = new TabPage();
+            HeaderPanel = new TableLayoutPanel();
+            Title = new Label();
+            AddButton = new Button();
             NhapHangPagePanel = new Panel();
             NhapHangExtraNext = new Button();
             NhapHangExtraPrevious = new Button();
@@ -68,8 +71,6 @@
             NhapHangStartDate = new DateTimePicker();
             NhapHangStart = new Label();
             NhapHangFilterButton = new Button();
-            NhapHangTitlePanel = new Panel();
-            NhapHangTitle = new Label();
             tabPane.SuspendLayout();
             khoHangPage.SuspendLayout();
             pageButtonPanel.SuspendLayout();
@@ -78,11 +79,11 @@
             toolBar.SuspendLayout();
             titlePanel.SuspendLayout();
             nhapHangPage.SuspendLayout();
+            HeaderPanel.SuspendLayout();
             NhapHangPagePanel.SuspendLayout();
             NhapHangCardList.SuspendLayout();
             NhapHangCard.SuspendLayout();
             NhapHangToolBar.SuspendLayout();
-            NhapHangTitlePanel.SuspendLayout();
             SuspendLayout();
             // 
             // tabPane
@@ -368,6 +369,7 @@
             filterButton.Size = new Size(135, 123);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
+            filterButton.Click += filterButton_Click;
             filterButton.MouseEnter += filterButton_MouseEnter;
             filterButton.MouseLeave += filterButton_MouseLeave;
             // 
@@ -397,10 +399,10 @@
             // nhapHangPage
             // 
             nhapHangPage.AutoScroll = true;
+            nhapHangPage.Controls.Add(HeaderPanel);
             nhapHangPage.Controls.Add(NhapHangPagePanel);
             nhapHangPage.Controls.Add(NhapHangCardList);
             nhapHangPage.Controls.Add(NhapHangToolBar);
-            nhapHangPage.Controls.Add(NhapHangTitlePanel);
             nhapHangPage.Location = new Point(4, 48);
             nhapHangPage.Margin = new Padding(0);
             nhapHangPage.Name = "nhapHangPage";
@@ -408,6 +410,50 @@
             nhapHangPage.TabIndex = 1;
             nhapHangPage.Text = "Nhập hàng";
             nhapHangPage.UseVisualStyleBackColor = true;
+            // 
+            // HeaderPanel
+            // 
+            HeaderPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            HeaderPanel.AutoSize = true;
+            HeaderPanel.ColumnCount = 2;
+            HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            HeaderPanel.Controls.Add(Title, 0, 0);
+            HeaderPanel.Controls.Add(AddButton, 1, 0);
+            HeaderPanel.Location = new Point(0, 0);
+            HeaderPanel.Name = "HeaderPanel";
+            HeaderPanel.RowCount = 1;
+            HeaderPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            HeaderPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            HeaderPanel.Size = new Size(1645, 97);
+            HeaderPanel.TabIndex = 5;
+            // 
+            // Title
+            // 
+            Title.Dock = DockStyle.Fill;
+            Title.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Title.Location = new Point(3, 0);
+            Title.Name = "Title";
+            Title.Padding = new Padding(20, 0, 0, 0);
+            Title.Size = new Size(816, 97);
+            Title.TabIndex = 0;
+            Title.Text = "Nhập hàng";
+            Title.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // AddButton
+            // 
+            AddButton.BackColor = Color.Black;
+            AddButton.Cursor = Cursors.Hand;
+            AddButton.Dock = DockStyle.Right;
+            AddButton.ForeColor = Color.White;
+            AddButton.Location = new Point(1384, 0);
+            AddButton.Margin = new Padding(0, 0, 40, 0);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(221, 97);
+            AddButton.TabIndex = 1;
+            AddButton.Text = "+ Thêm";
+            AddButton.UseVisualStyleBackColor = false;
+            AddButton.Click += AddButton_Click_1;
             // 
             // NhapHangPagePanel
             // 
@@ -661,29 +707,6 @@
             NhapHangFilterButton.MouseEnter += filterButton_MouseEnter;
             NhapHangFilterButton.MouseLeave += filterButton_MouseLeave;
             // 
-            // NhapHangTitlePanel
-            // 
-            NhapHangTitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangTitlePanel.AutoSize = true;
-            NhapHangTitlePanel.Controls.Add(NhapHangTitle);
-            NhapHangTitlePanel.Location = new Point(0, 0);
-            NhapHangTitlePanel.Margin = new Padding(0);
-            NhapHangTitlePanel.Name = "NhapHangTitlePanel";
-            NhapHangTitlePanel.Size = new Size(1645, 100);
-            NhapHangTitlePanel.TabIndex = 1;
-            // 
-            // NhapHangTitle
-            // 
-            NhapHangTitle.Dock = DockStyle.Fill;
-            NhapHangTitle.Font = new Font("Roboto", 31.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangTitle.Location = new Point(0, 0);
-            NhapHangTitle.Margin = new Padding(0);
-            NhapHangTitle.Name = "NhapHangTitle";
-            NhapHangTitle.Size = new Size(1645, 100);
-            NhapHangTitle.TabIndex = 2;
-            NhapHangTitle.Text = "Nhập hàng";
-            NhapHangTitle.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // storageGUI
             // 
             AutoScaleDimensions = new SizeF(10F, 24F);
@@ -708,13 +731,13 @@
             titlePanel.ResumeLayout(false);
             nhapHangPage.ResumeLayout(false);
             nhapHangPage.PerformLayout();
+            HeaderPanel.ResumeLayout(false);
             NhapHangPagePanel.ResumeLayout(false);
             NhapHangCardList.ResumeLayout(false);
             NhapHangCardList.PerformLayout();
             NhapHangCard.ResumeLayout(false);
             NhapHangToolBar.ResumeLayout(false);
             NhapHangToolBar.PerformLayout();
-            NhapHangTitlePanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -739,8 +762,6 @@
         private Button extraNextButton;
         private Button extraPreviousButton;
         private Button filterButton;
-        private Panel NhapHangTitlePanel;
-        private Label NhapHangTitle;
         private TableLayoutPanel NhapHangToolBar;
         private DateTimePicker NhapHangEndDate;
         private Label NhapHangEnd;
@@ -761,5 +782,8 @@
         private Button NhapHangButtonCard;
         private Label NhapHangBodyCard;
         private Label NhapHangTitleCard;
+        private TableLayoutPanel HeaderPanel;
+        private Label Title;
+        private Button AddButton;
     }
 }
