@@ -165,5 +165,22 @@ namespace BadmintonCourtManagement.GUI
             SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
             supplyDetails.ShowDialog();
         }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            SupplyAddGUI supplyAdd = new SupplyAddGUI();
+            supplyAdd.ShowDialog();
+        }
+
+        private void AddButton_Click_1(object sender, EventArgs e)
+        {
+            SupplyAddGUI supplyAdd = new SupplyAddGUI();
+            supplyAdd.ShowDialog();
+        }
     }
 }
