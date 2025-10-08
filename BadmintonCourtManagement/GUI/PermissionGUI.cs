@@ -141,7 +141,31 @@ namespace BadmintonCourtManagement.GUI
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
+            Form dialog = new Form()
+            {
+                Text = string.Empty, // bỏ tiêu đề
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                StartPosition = FormStartPosition.CenterParent,
+                Size = new Size(900, 900),
+                MaximizeBox = false,
+                MinimizeBox = false,
+                ShowInTaskbar = false
+            };
 
+            var insertPermissionGUI = new InsertPermissionGUI();
+            insertPermissionGUI.Dock = DockStyle.Fill;
+
+            dialog.Controls.Add(insertPermissionGUI);
+
+            dialog.ShowDialog();
+
+            ReloadList(); // reload danh sách sau khi đóng dialog
+        }
+
+        private void ReloadList()
+        {
+            List<PermissionDTO> pqList = permissionBUS.GetAllPermissions();
+            LoadPermission(pqList);
         }
     }
 }

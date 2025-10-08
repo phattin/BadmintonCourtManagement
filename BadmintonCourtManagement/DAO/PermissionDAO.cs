@@ -108,5 +108,27 @@ namespace BadmintonCourtManagement.DAO
             }
         }
 
+        public bool checkNameExists(string name)
+        {
+            string query = "SELECT COUNT(*) FROM permission WHERE PermissionName = @PermissionName";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@PermissionName", name);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi kiểm tra tên phân quyền: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
     }
 }

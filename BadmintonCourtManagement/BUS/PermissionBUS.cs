@@ -18,6 +18,16 @@ namespace BadmintonCourtManagement.BUS
 
         public bool InsertPermission(PermissionDTO permission)
         {
+            if (permission.PermissionName.Length > 50)
+            {
+                MessageBox.Show("Tên quyền không được vượt quá 50 ký tự!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (permissionDAO.checkNameExists(permission.PermissionName))
+            {
+                MessageBox.Show("Tên quyền đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             return permissionDAO.InsertPermission(permission);
         }
 
