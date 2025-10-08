@@ -51,10 +51,10 @@
             draft_panel.Dock = DockStyle.Fill;
             draft_panel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             draft_panel.Location = new Point(0, 0);
-            draft_panel.Margin = new Padding(4);
             draft_panel.Name = "draft_panel";
-            draft_panel.Size = new Size(1126, 816);
+            draft_panel.Size = new Size(901, 653);
             draft_panel.TabIndex = 0;
+            draft_panel.TabStop = true;
             draft_panel.Paint += draft_panel_Paint;
             // 
             // pCourtList
@@ -65,12 +65,13 @@
             pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pCourtList.Location = new Point(73, 319);
+            pCourtList.Location = new Point(58, 255);
+            pCourtList.Margin = new Padding(2, 2, 2, 2);
             pCourtList.Name = "pCourtList";
             pCourtList.RowCount = 2;
             pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            pCourtList.Size = new Size(999, 450);
+            pCourtList.Size = new Size(799, 360);
             pCourtList.TabIndex = 0;
             pCourtList.Paint += pCourtList_Paint;
             // 
@@ -83,10 +84,9 @@
             pFilter.Controls.Add(customPanel3);
             pFilter.Controls.Add(customPanel2);
             pFilter.Controls.Add(customPanel1);
-            pFilter.Location = new Point(72, 166);
-            pFilter.Margin = new Padding(4);
+            pFilter.Location = new Point(58, 133);
             pFilter.Name = "pFilter";
-            pFilter.Size = new Size(1000, 84);
+            pFilter.Size = new Size(800, 67);
             pFilter.TabIndex = 5;
             pFilter.Paint += pFilter_Paint;
             // 
@@ -96,15 +96,15 @@
             customPanel4.BorderRadius = 10;
             customPanel4.Controls.Add(btnTimeFinish);
             customPanel4.Controls.Add(lbltimeFinish);
-            customPanel4.Location = new Point(824, 20);
-            customPanel4.Margin = new Padding(4);
+            customPanel4.Location = new Point(659, 16);
             customPanel4.Name = "customPanel4";
-            customPanel4.Size = new Size(141, 48);
+            customPanel4.Size = new Size(113, 38);
             customPanel4.TabIndex = 3;
             // 
             // btnTimeFinish
             // 
-            btnTimeFinish.Location = new Point(110, 10);
+            btnTimeFinish.Location = new Point(88, 8);
+            btnTimeFinish.Margin = new Padding(2, 2, 2, 2);
             btnTimeFinish.Name = "btnTimeFinish";
             btnTimeFinish.SelectedTime = new DateTime(2025, 10, 3, 15, 16, 6, 16);
             btnTimeFinish.Size = new Size(25, 27);
@@ -116,10 +116,9 @@
             // 
             lbltimeFinish.AutoSize = true;
             lbltimeFinish.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbltimeFinish.Location = new Point(4, 12);
-            lbltimeFinish.Margin = new Padding(4, 0, 4, 0);
+            lbltimeFinish.Location = new Point(3, 10);
             lbltimeFinish.Name = "lbltimeFinish";
-            lbltimeFinish.Size = new Size(94, 21);
+            lbltimeFinish.Size = new Size(77, 17);
             lbltimeFinish.TabIndex = 2;
             lbltimeFinish.Text = "Giờ kết thúc";
             // 
@@ -129,15 +128,15 @@
             customPanel3.BorderRadius = 10;
             customPanel3.Controls.Add(btnTimeStart);
             customPanel3.Controls.Add(lbltimeStart);
-            customPanel3.Location = new Point(654, 20);
-            customPanel3.Margin = new Padding(4);
+            customPanel3.Location = new Point(523, 16);
             customPanel3.Name = "customPanel3";
-            customPanel3.Size = new Size(141, 48);
+            customPanel3.Size = new Size(113, 38);
             customPanel3.TabIndex = 2;
             // 
             // btnTimeStart
             // 
-            btnTimeStart.Location = new Point(113, 10);
+            btnTimeStart.Location = new Point(90, 8);
+            btnTimeStart.Margin = new Padding(2, 2, 2, 2);
             btnTimeStart.Name = "btnTimeStart";
             btnTimeStart.SelectedTime = new DateTime(2025, 10, 3, 15, 16, 6, 16);
             btnTimeStart.Size = new Size(25, 27);
@@ -149,10 +148,9 @@
             // 
             lbltimeStart.AutoSize = true;
             lbltimeStart.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbltimeStart.Location = new Point(4, 12);
-            lbltimeStart.Margin = new Padding(4, 0, 4, 0);
+            lbltimeStart.Location = new Point(3, 10);
             lbltimeStart.Name = "lbltimeStart";
-            lbltimeStart.Size = new Size(91, 21);
+            lbltimeStart.Size = new Size(77, 17);
             lbltimeStart.TabIndex = 2;
             lbltimeStart.Text = "Giờ bắt đầu";
             // 
@@ -162,18 +160,16 @@
             customPanel2.BorderRadius = 10;
             customPanel2.Controls.Add(dateTimePicker1);
             customPanel2.Controls.Add(lblDate);
-            customPanel2.Location = new Point(491, 20);
-            customPanel2.Margin = new Padding(4);
+            customPanel2.Location = new Point(393, 16);
             customPanel2.Name = "customPanel2";
-            customPanel2.Size = new Size(141, 48);
+            customPanel2.Size = new Size(113, 38);
             customPanel2.TabIndex = 1;
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(110, 6);
-            dateTimePicker1.Margin = new Padding(4);
+            dateTimePicker1.Location = new Point(88, 5);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(26, 31);
+            dateTimePicker1.Size = new Size(22, 27);
             dateTimePicker1.TabIndex = 1;
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             // 
@@ -181,10 +177,9 @@
             // 
             lblDate.AutoSize = true;
             lblDate.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDate.Location = new Point(4, 12);
-            lblDate.Margin = new Padding(4, 0, 4, 0);
+            lblDate.Location = new Point(3, 10);
             lblDate.Name = "lblDate";
-            lblDate.Size = new Size(47, 21);
+            lblDate.Size = new Size(39, 17);
             lblDate.TabIndex = 2;
             lblDate.Text = "Ngày";
             // 
@@ -194,19 +189,17 @@
             customPanel1.BorderRadius = 30;
             customPanel1.Controls.Add(btnDelete);
             customPanel1.Controls.Add(textBox1);
-            customPanel1.Location = new Point(32, 20);
-            customPanel1.Margin = new Padding(4);
+            customPanel1.Location = new Point(26, 16);
             customPanel1.Name = "customPanel1";
-            customPanel1.Size = new Size(309, 48);
+            customPanel1.Size = new Size(247, 38);
             customPanel1.TabIndex = 0;
             // 
             // btnDelete
             // 
             btnDelete.Image = Properties.Resources.X;
-            btnDelete.Location = new Point(274, 12);
-            btnDelete.Margin = new Padding(4);
+            btnDelete.Location = new Point(219, 10);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(16, 18);
+            btnDelete.Size = new Size(13, 14);
             btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
             btnDelete.TabIndex = 1;
             btnDelete.TabStop = false;
@@ -216,12 +209,11 @@
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(15, 10);
-            textBox1.Margin = new Padding(4);
+            textBox1.Location = new Point(12, 8);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Value";
-            textBox1.Size = new Size(156, 30);
+            textBox1.Size = new Size(125, 24);
             textBox1.TabIndex = 0;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
@@ -231,11 +223,10 @@
             lblTitle.BackColor = Color.White;
             lblTitle.Font = new Font("Segoe UI Semibold", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitle.ForeColor = Color.Black;
-            lblTitle.Location = new Point(50, 44);
-            lblTitle.Margin = new Padding(4, 0, 4, 0);
+            lblTitle.Location = new Point(40, 35);
             lblTitle.Name = "lblTitle";
-            lblTitle.Padding = new Padding(12, 14, 12, 14);
-            lblTitle.Size = new Size(156, 73);
+            lblTitle.Padding = new Padding(10, 11, 10, 11);
+            lblTitle.Size = new Size(133, 60);
             lblTitle.TabIndex = 4;
             lblTitle.Text = "Đặt sân";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -243,12 +234,11 @@
             // 
             // BookCourtGUI
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(draft_panel);
-            Margin = new Padding(4);
             Name = "BookCourtGUI";
-            Size = new Size(1126, 816);
+            Size = new Size(901, 653);
             draft_panel.ResumeLayout(false);
             draft_panel.PerformLayout();
             pFilter.ResumeLayout(false);
