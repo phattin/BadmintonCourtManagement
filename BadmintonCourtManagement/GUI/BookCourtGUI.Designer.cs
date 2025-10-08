@@ -33,7 +33,6 @@
             btnDelete = new PictureBox();
             textBox1 = new TextBox();
             lblTitle = new Label();
-            btnBooking = new Label();
             draft_panel.SuspendLayout();
             pFilter.SuspendLayout();
             customPanel4.SuspendLayout();
@@ -49,7 +48,6 @@
             draft_panel.Controls.Add(pCourtList);
             draft_panel.Controls.Add(pFilter);
             draft_panel.Controls.Add(lblTitle);
-            draft_panel.Controls.Add(btnBooking);
             draft_panel.Dock = DockStyle.Fill;
             draft_panel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             draft_panel.Location = new Point(0, 0);
@@ -108,8 +106,8 @@
             btnTimeFinish.Location = new Point(88, 8);
             btnTimeFinish.Margin = new Padding(2, 2, 2, 2);
             btnTimeFinish.Name = "btnTimeFinish";
-            btnTimeFinish.SelectedTime = new DateTime(2025, 10, 3, 13, 24, 6, 16);
-            btnTimeFinish.Size = new Size(20, 22);
+            btnTimeFinish.SelectedTime = new DateTime(2025, 10, 3, 15, 16, 6, 16);
+            btnTimeFinish.Size = new Size(25, 27);
             btnTimeFinish.TabIndex = 10;
             btnTimeFinish.ValueChanged += btnTimeFinish_ValueChanged;
             btnTimeFinish.Load += btnTimeFinish_Load;
@@ -140,8 +138,8 @@
             btnTimeStart.Location = new Point(90, 8);
             btnTimeStart.Margin = new Padding(2, 2, 2, 2);
             btnTimeStart.Name = "btnTimeStart";
-            btnTimeStart.SelectedTime = new DateTime(2025, 10, 3, 13, 24, 6, 16);
-            btnTimeStart.Size = new Size(20, 22);
+            btnTimeStart.SelectedTime = new DateTime(2025, 10, 3, 15, 16, 6, 16);
+            btnTimeStart.Size = new Size(25, 27);
             btnTimeStart.TabIndex = 9;
             btnTimeStart.ValueChanged += btnTimeStart_ValueChanged;
             btnTimeStart.Load += btnTimeStart_Load;
@@ -234,23 +232,6 @@
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             lblTitle.UseWaitCursor = true;
             // 
-            // btnBooking
-            // 
-            btnBooking.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBooking.AutoSize = true;
-            btnBooking.BackColor = Color.FromArgb(64, 64, 64);
-            btnBooking.Cursor = Cursors.Hand;
-            btnBooking.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnBooking.ForeColor = Color.White;
-            btnBooking.Location = new Point(735, 35);
-            btnBooking.Name = "btnBooking";
-            btnBooking.Padding = new Padding(10, 11, 10, 13);
-            btnBooking.Size = new Size(123, 52);
-            btnBooking.TabIndex = 3;
-            btnBooking.Text = "Thêm sân";
-            btnBooking.TextAlign = ContentAlignment.MiddleCenter;
-            btnBooking.Click += btnBooking_Click;
-            // 
             // BookCourtGUI
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -276,7 +257,6 @@
 
 
         private Panel draft_panel;
-        private Label btnBooking;
         private CustomPanel pFilter;
         private Label lblTitle;
         private CustomPanel customPanel1;

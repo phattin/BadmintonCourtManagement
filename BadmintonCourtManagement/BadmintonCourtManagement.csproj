@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="GUI\ComponentsGUI\SupplyAddGUI\SupplyDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="GUI\EmployeeGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
