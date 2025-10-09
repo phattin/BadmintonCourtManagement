@@ -37,10 +37,6 @@
             nextButton = new Button();
             previousButton = new Button();
             cardList = new TableLayoutPanel();
-            card = new Panel();
-            cardButton = new Button();
-            cardBody = new Label();
-            cardTitle = new Label();
             toolBar = new TableLayoutPanel();
             endDate = new DateTimePicker();
             endText = new Label();
@@ -75,7 +71,7 @@
             khoHangPage.SuspendLayout();
             pageButtonPanel.SuspendLayout();
             cardList.SuspendLayout();
-            card.SuspendLayout();
+            //card.SuspendLayout();
             toolBar.SuspendLayout();
             titlePanel.SuspendLayout();
             nhapHangPage.SuspendLayout();
@@ -193,7 +189,7 @@
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            cardList.Controls.Add(card, 0, 0);
+            //cardList.Controls.Add(card, 0, 0);
             cardList.Location = new Point(0, 246);
             cardList.Margin = new Padding(0);
             cardList.Name = "cardList";
@@ -202,59 +198,60 @@
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             cardList.Size = new Size(1642, 1000);
             cardList.TabIndex = 2;
-            // 
-            // card
-            // 
-            card.AutoSize = true;
-            card.BackColor = Color.FromArgb(200, 250, 214);
-            card.Controls.Add(cardButton);
-            card.Controls.Add(cardBody);
-            card.Controls.Add(cardTitle);
-            card.Dock = DockStyle.Fill;
-            card.Location = new Point(15, 15);
-            card.Margin = new Padding(15);
-            card.Name = "card";
-            card.Size = new Size(380, 470);
-            card.TabIndex = 0;
-            // 
-            // cardButton
-            // 
-            cardButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cardButton.BackColor = Color.Black;
-            cardButton.Cursor = Cursors.Hand;
-            cardButton.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cardButton.ForeColor = Color.White;
-            cardButton.Location = new Point(57, 347);
-            cardButton.Margin = new Padding(0);
-            cardButton.Name = "cardButton";
-            cardButton.Size = new Size(258, 70);
-            cardButton.TabIndex = 6;
-            cardButton.Text = "Xem chi tiết";
-            cardButton.UseVisualStyleBackColor = false;
-            cardButton.Click += cardButton_Click_1;
-            // 
-            // cardBody
-            // 
-            cardBody.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cardBody.Font = new Font("Roboto Medium", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cardBody.Location = new Point(3, 111);
-            cardBody.Name = "cardBody";
-            cardBody.Size = new Size(374, 220);
-            cardBody.TabIndex = 4;
-            cardBody.Text = "Mã sản phẩm: 0001\r\nSố lượng: 100\r\nGiá: 100.000đ";
-            cardBody.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // cardTitle
-            // 
-            cardTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cardTitle.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cardTitle.Location = new Point(3, 2);
-            cardTitle.Margin = new Padding(0);
-            cardTitle.Name = "cardTitle";
-            cardTitle.Size = new Size(374, 109);
-            cardTitle.TabIndex = 3;
-            cardTitle.Text = "KH0001";
-            cardTitle.TextAlign = ContentAlignment.MiddleCenter;
+            //// 
+            //// card
+            //// 
+            //card.AutoSize = true;
+            //card.BackColor = Color.FromArgb(200, 250, 214);
+            //card.Controls.Add(cardButton);
+            //card.Controls.Add(cardBody);
+            //card.Controls.Add(cardTitle);
+            //card.Dock = DockStyle.Fill;
+            //card.Location = new Point(15, 15);
+            //card.Margin = new Padding(15);
+            //card.Name = "card";
+            //card.Size = new Size(380, 470);
+            //card.TabIndex = 0;
+            //// 
+            //// cardButton
+            //// 
+            //cardButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            //cardButton.BackColor = Color.Black;
+            //cardButton.Cursor = Cursors.Hand;
+            //cardButton.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            //cardButton.ForeColor = Color.White;
+            //cardButton.Location = new Point(57, 347);
+            //cardButton.Margin = new Padding(0);
+            //cardButton.Name = "cardButton";
+            //cardButton.Size = new Size(258, 70);
+            //cardButton.TabIndex = 6;
+            //cardButton.Text = "Xem chi tiết";
+            //cardButton.UseVisualStyleBackColor = false;
+            //cardButton.Click += cardButton_Click_1;
+            //// 
+            //// cardBody
+            //// 
+            //cardBody.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            //cardBody.Font = new Font("Roboto Medium", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            //cardBody.Location = new Point(3, 111);
+            //cardBody.Name = "cardBody";
+            //cardBody.Size = new Size(374, 220);
+            //cardBody.TabIndex = 4;
+            //cardBody.Text = "Mã sản phẩm: 0001\r\nSố lượng: 100\r\nGiá: 100.000đ";
+            //cardBody.TextAlign = ContentAlignment.MiddleCenter;
+            //cardBody.Click += cardBody_Click_1;
+            //// 
+            //// cardTitle
+            //// 
+            //cardTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            //cardTitle.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            //cardTitle.Location = new Point(3, 2);
+            //cardTitle.Margin = new Padding(0);
+            //cardTitle.Name = "cardTitle";
+            //cardTitle.Size = new Size(374, 109);
+            //cardTitle.TabIndex = 3;
+            //cardTitle.Text = "KH0001";
+            //cardTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // toolBar
             // 
@@ -725,7 +722,6 @@
             pageButtonPanel.ResumeLayout(false);
             cardList.ResumeLayout(false);
             cardList.PerformLayout();
-            card.ResumeLayout(false);
             toolBar.ResumeLayout(false);
             toolBar.PerformLayout();
             titlePanel.ResumeLayout(false);
@@ -753,7 +749,6 @@
         private Label endText;
         private DateTimePicker endDate;
         private TableLayoutPanel cardList;
-        private Panel card;
         private Panel titlePanel;
         private Label titleText;
         private Panel pageButtonPanel;
@@ -776,9 +771,6 @@
         private Button NhapHangExtraPrevious;
         private Button NhapHangNext;
         private Button NhapHangPrevious;
-        private Button cardButton;
-        private Label cardBody;
-        private Label cardTitle;
         private Button NhapHangButtonCard;
         private Label NhapHangBodyCard;
         private Label NhapHangTitleCard;

@@ -316,9 +316,35 @@ CREATE TABLE `typeproduct` (
   `TypeName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `storage`
+--
+
+CREATE TABLE `storage` (
+  `StorageId` varchar(10) NOT NULL,
+  `ImportBillId` varchar(10) NOT NULL,
+  `ProductId` varchar(10) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `Price` double NOT NULL,
+  `TotalPrice` double NOT NULL,
+  `Status` enum('active','inactive') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `storage`
+--
+ALTER TABLE `storage`
+  ADD PRIMARY KEY (`StorageID`),
+  ADD KEY `ImportBillId` (`ImportBillId`),
+  ADD KEY `ProductId` (`ProductId`);
 
 --
 -- Chỉ mục cho bảng `account`
@@ -473,6 +499,13 @@ ALTER TABLE `typeproduct`
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
+
+--
+-- Các ràng buộc cho bảng `storage`
+--
+ALTER TABLE `storage`
+  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`ImportBillId`) REFERENCES `importbill` (`ImportBillId`),
+  ADD CONSTRAINT `storage_ibfk_2` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 
 --
 -- Các ràng buộc cho bảng `account`
