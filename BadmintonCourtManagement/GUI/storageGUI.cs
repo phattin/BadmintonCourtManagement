@@ -1,4 +1,5 @@
-﻿using BadmintonCourtManagement.DTO;
+﻿using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +14,296 @@ namespace BadmintonCourtManagement.GUI
 {
     public partial class storageGUI : UserControl
     {
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<StorageDTO> oldList = new List<StorageDTO>();
+        private List<StorageDTO> searchList = new List<StorageDTO>();
+        private List<string> filter = new List<string>();
+        private int page = 0;
+        private int itemPerPage = 8;
+        private Boolean isFiltered = false;
+
         public storageGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
+            this.Load += StorageGUI_Load;
         }
 
+        // hàm khởi tạo danh sách kho
+        private void StorageGUI_Load(object sender, EventArgs e)
+        {
+            // lấy danh sách kho hàng
+            storageList = StorageBUS.GetAllStorages();
+            oldList = storageList;
+            searchList = oldList;
+            page = 0;
+            Pagination();
+        }
+
+        // hàm phân trang
+        private void Pagination()
+        {
+            try
+            {
+                // lấy item
+                if (storageList.Count > 0)
+                {
+                    cardList.Controls.Clear();
+                    int index = page * itemPerPage;
+                    for (int i = index; i < index + itemPerPage; i++)
+                    {
+                        if (i <= storageList.Count() - 1 && i >= 0)
+                        {
+                            Panel card = new Panel();
+                            Button cardButton = new Button();
+                            Label cardBody = new Label();
+                            Label cardTitle = new Label();
+
+                            card.AutoSize = true;
+                            card.BackColor = Color.FromArgb(200, 250, 214);
+                            card.Controls.Add(cardButton);
+                            card.Controls.Add(cardBody);
+                            card.Controls.Add(cardTitle);
+                            card.Dock = DockStyle.Fill;
+                            card.Location = new Point(15, 15);
+                            card.Margin = new Padding(15);
+                            card.Name = "card";
+                            card.Size = new Size(380, 470);
+                            card.TabIndex = 0;
+
+                            cardButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                            cardButton.BackColor = Color.Black;
+                            cardButton.Cursor = Cursors.Hand;
+                            cardButton.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                            cardButton.ForeColor = Color.White;
+                            cardButton.Location = new Point(57, 347);
+                            cardButton.Margin = new Padding(0);
+                            cardButton.Name = "cardButton";
+                            cardButton.Size = new Size(258, 70);
+                            cardButton.TabIndex = 6;
+                            cardButton.Text = "Xem chi tiết";
+                            cardButton.UseVisualStyleBackColor = false;
+                            cardButton.MouseEnter += buttonEnter;
+                            cardButton.MouseLeave += buttonLeave;
+                            cardButton.Click += cardButton_Click;
+
+                            cardBody.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                            cardBody.Font = new Font("Roboto Medium", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+                            cardBody.Location = new Point(3, 111);
+                            cardBody.Name = "cardBody";
+                            cardBody.Size = new Size(374, 220);
+                            cardBody.TabIndex = 4;
+                            cardBody.Text = "Mã sản phẩm: " + storageList[i].ProductId
+                                + "\r\nSố lượng: " + storageList[i].Quantity
+                                + "\r\nGiá: " + storageList[i].Price + "đ"
+                                + "\r\nNgày: " + storageList[i].CreatedAt.ToString("dd/MM/yyyy");
+                            cardBody.TextAlign = ContentAlignment.MiddleCenter;
+                            cardBody.Click += cardBody_Click_1;
+
+                            cardTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                            cardTitle.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+                            cardTitle.Location = new Point(3, 2);
+                            cardTitle.Margin = new Padding(0);
+                            cardTitle.Name = "cardTitle";
+                            cardTitle.Size = new Size(374, 109);
+                            cardTitle.TabIndex = 3;
+                            cardTitle.Text = storageList[i].StorageId;
+                            cardTitle.TextAlign = ContentAlignment.MiddleCenter;
+
+                            cardList.Controls.Add(card);
+                        }
+                        else break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi xảy ra khi phân trang " + ex.Message,
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        // sự kiện chuyển trang
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            page--;
+            if (page < 0) page = 0;
+            Pagination();
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            page++;
+            if (page > (int)Math.Ceiling((double)storageList.Count() / 8) - 1)
+                page = (int)Math.Ceiling((double)storageList.Count() / 8) - 1;
+            Pagination();
+        }
+
+        private void extraPreviousButton_Click(object sender, EventArgs e)
+        {
+            page = 0;
+            Pagination();
+        }
+
+        private void extraNextButton_Click(object sender, EventArgs e)
+        {
+            page = (int)Math.Ceiling((double)storageList.Count() / 8) - 1;
+            if (page < 0) page = 0;
+            Pagination();
+        }
+
+        // hàm sự kiện tìm kiếm
+        private void searchEnterEvent(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                search(searchBar.Text.ToString());
+            }
+        }
+
+        // hàm tìm kiếm
+        private void search(string info)
+        {
+            try
+            {
+                List<StorageDTO> tempList = new List<StorageDTO>();
+                List<StorageDTO> replaceList = oldList;
+
+                if (string.IsNullOrWhiteSpace(info))
+                {
+                    MessageBox.Show("Vui lòng nhập thông tin cần tìm.",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                bool isInt = int.TryParse(info, out int intValue);
+                bool isDouble = double.TryParse(info, out double doubleValue);
+
+                if (isFiltered) replaceList = storageList;
+
+                foreach (var item in replaceList)
+                {
+                    bool match = false;
+
+                    if (item.StorageId.Contains(info, StringComparison.OrdinalIgnoreCase)
+                        || item.ProductId.Contains(info, StringComparison.OrdinalIgnoreCase)
+                        || item.ImportBillId.Contains(info, StringComparison.OrdinalIgnoreCase)
+                        || item.Status.ToString().Contains(info, StringComparison.OrdinalIgnoreCase))
+                    {
+                        match = true;
+                    }
+
+                    if (isInt && item.Quantity == intValue)
+                        match = true;
+
+                    if (isDouble && (item.Price == doubleValue || item.TotalPrice == doubleValue))
+                        match = true;
+
+                    if (match)
+                        tempList.Add(item);
+                }
+
+                if (tempList.Count() > 0)
+                {
+                    page = 0;
+                    storageList = tempList;
+                    searchList = storageList;
+                    Pagination();
+                    searchBar.Text = ""; // reset tìm kiếm
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy kết quả phù hợp",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm " + ex.Message,
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        // hàm reset item
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            page = 0;
+            storageList = oldList;
+            searchList = oldList;
+            Pagination();
+            isFiltered = false;
+            searchBar.Text = "";
+        }
+
+        // hàm lọc theo ngày
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DateTime start = startDate.Value;
+                DateTime end = endDate.Value;
+
+                List<StorageDTO> tempList = new List<StorageDTO>();
+                foreach (var item in searchList)
+                {
+                    if (item.CreatedAt >= start && item.CreatedAt <= end)
+                    {
+                        tempList.Add(item);
+                    }
+                }
+
+                if (tempList.Count > 0)
+                {
+                    page = 0;
+                    storageList = tempList;
+                    Pagination();
+                    isFiltered = true;
+                }
+                else
+                {
+                    isFiltered = false;
+                    MessageBox.Show("Không tìm thấy kết quả theo bộ lọc",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi lọc " + ex.Message,
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        // hàm xem chi tiết kho hàng
+        private void cardButton_Click(object sender, EventArgs e)
+        {
+            Button cardButton = sender as Button;
+            if (cardButton == null) return;
+            Panel card = cardButton.Parent as Panel;
+            if (card == null) return;
+            Label cardTitle = card.Controls["cardTitle"] as Label;
+            if (cardTitle == null) return;
+
+            foreach (var item in searchList)
+            {
+                if (item.StorageId.Equals(cardTitle.Text.ToString()))
+                {
+                    StorageDetailsGUI storeDetail = new StorageDetailsGUI(item);
+                    storeDetail.ShowDialog();
+                    return;
+                }
+            }
+        }
+
+        // các hàm tạm
         private void buttonEnter(object sender, EventArgs e)
         {
             Button btn = sender as Button;
@@ -122,12 +408,6 @@ namespace BadmintonCourtManagement.GUI
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
         }
 
-        private void cardButton_Click(object sender, EventArgs e)
-        {
-            StorageDetailsGUI storeDetail = new StorageDetailsGUI();
-            storeDetail.ShowDialog();
-        }
-
         private void cardTitlePanel_Paint(object sender, PaintEventArgs e)
         {
 
@@ -154,21 +434,10 @@ namespace BadmintonCourtManagement.GUI
 
         }
 
-        private void cardButton_Click_1(object sender, EventArgs e)
-        {
-            StorageDetailsGUI storageDetails = new StorageDetailsGUI();
-            storageDetails.ShowDialog();
-        }
-
         private void NhapHangButtonCard_Click_1(object sender, EventArgs e)
         {
             SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
             supplyDetails.ShowDialog();
-        }
-
-        private void filterButton_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -181,6 +450,16 @@ namespace BadmintonCourtManagement.GUI
         {
             SupplyAddGUI supplyAdd = new SupplyAddGUI();
             supplyAdd.ShowDialog();
+        }
+
+        private void cardBody_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cardList_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
