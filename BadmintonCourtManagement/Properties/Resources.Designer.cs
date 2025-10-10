@@ -143,6 +143,16 @@ namespace BadmintonCourtManagement.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Reset {
+            get {
+                object obj = ResourceManager.GetObject("Reset", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap user_solid_full {
             get {
                 object obj = ResourceManager.GetObject("user-solid-full", resourceCulture);

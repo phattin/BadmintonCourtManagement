@@ -329,6 +329,7 @@ CREATE TABLE `storage` (
   `Quantity` int(11) NOT NULL,
   `Price` double NOT NULL,
   `TotalPrice` double NOT NULL,
+  `CreatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

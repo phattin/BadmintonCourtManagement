@@ -15,7 +15,7 @@ namespace BadmintonCourtManagement.DAO
         // create
         public bool InsertStorage(StorageDTO storage)
         {
-            string query = "INSERT INTO storage (StorageId, ImportBillId, ProductId, Quantity, Price, TotalPrice, Status) VALUES (@StorageId, @ImportBillId, @ProductId, @Quantity, @Price, @TotalPrice, @Status)";
+            string query = "INSERT INTO storage (StorageId, ImportBillId, ProductId, Quantity, Price, TotalPrice, CreatedAt, Status) VALUES (@StorageId, @ImportBillId, @ProductId, @Quantity, @Price, @TotalPrice, @CreatedAt, @Status)";
             int result = 0;
             try
             {
@@ -27,6 +27,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@Quantity", storage.Quantity);
                 cmd.Parameters.AddWithValue("@Price", storage.Price);
                 cmd.Parameters.AddWithValue("@TotalPrice", storage.TotalPrice);
+                cmd.Parameters.AddWithValue("@CreatedAt", storage.CreatedAt);
                 cmd.Parameters.AddWithValue("@Status", storage.Status);
                 result = cmd.ExecuteNonQuery();
             }
@@ -61,6 +62,7 @@ namespace BadmintonCourtManagement.DAO
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     };
                     storageList.Add(storage);
@@ -80,7 +82,7 @@ namespace BadmintonCourtManagement.DAO
 
         public List<StorageDTO> GetStorageListByBillImportId(string importBillId)
         {
-            string query = "SELECT * FROM billimportproductdetail WHERE ImportBillId = @ImportBillId";
+            string query = "SELECT * FROM storage WHERE ImportBillId = @ImportBillId";
             List<StorageDTO> storageList = new List<StorageDTO>();
             try
             {
@@ -98,6 +100,7 @@ namespace BadmintonCourtManagement.DAO
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     });
                 }
@@ -134,6 +137,7 @@ namespace BadmintonCourtManagement.DAO
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     });
                 }
@@ -170,6 +174,7 @@ namespace BadmintonCourtManagement.DAO
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
                         Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     };
                 }

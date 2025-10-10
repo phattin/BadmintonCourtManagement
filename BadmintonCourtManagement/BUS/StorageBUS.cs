@@ -27,13 +27,15 @@ namespace BadmintonCourtManagement.BUS
             StorageList.Clear();
             for (int i = 0; i < 20; i++)
             {
+                // kho hàng
                 StorageList.Add(new StorageDTO()
                 {
-                    StorageId = "KH" + (random.Next(0, 1000) + 1),
-                    ImportBillId = "NH" + (random.Next(0, 1000) + 1),
-                    ProductId = "SP" + (random.Next(0, 1000) + 1),
+                    StorageId = "KH" + (i + 1),
+                    ImportBillId = "NH" + (i + 1),
+                    ProductId = "SP" + (i + 1),
                     Quantity = random.Next(0, 100) + 1,
                     Price = random.Next(0, 1000) + 1,
+                    CreatedAt = new DateTime(2025, 1, i + 1, 8, 0, 0),
                     Status = StorageDTO.Option.active
                 });
             }

@@ -14,6 +14,7 @@ namespace BadmintonCourtManagement.DTO
         private int quantity = 0;
         private double price = 0;
         private double totalPrice = 0;
+        private DateTime createdAt;
         public enum Option { active, inactive };
         private Option status;
 
@@ -53,11 +54,16 @@ namespace BadmintonCourtManagement.DTO
                 }
             }
         }
+
+        public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
+
         public Option Status { get => status; set => status = value; }
 
         public StorageDTO() { }
 
-        public StorageDTO(string storageId, string importBillId, string productId, int quantity, double price, Option status)
+        public StorageDTO(string storageId, string importBillId, 
+            string productId, int quantity, double price, 
+            DateTime createdAt, Option status)
         {
             StorageId = storageId;
             ImportBillId = importBillId;
@@ -65,6 +71,7 @@ namespace BadmintonCourtManagement.DTO
             Quantity = quantity;
             Price = price;
             CalcTotal();
+            CreatedAt = createdAt;
             Status = status;
         }
 
