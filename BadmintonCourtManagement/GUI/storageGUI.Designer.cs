@@ -37,11 +37,8 @@
             nextButton = new Button();
             previousButton = new Button();
             cardList = new TableLayoutPanel();
-            card = new Panel();
-            cardButton = new Button();
-            cardBody = new Label();
-            cardTitle = new Label();
             toolBar = new TableLayoutPanel();
+            Reset = new Button();
             endDate = new DateTimePicker();
             endText = new Label();
             searchBar = new TextBox();
@@ -74,8 +71,6 @@
             tabPane.SuspendLayout();
             khoHangPage.SuspendLayout();
             pageButtonPanel.SuspendLayout();
-            cardList.SuspendLayout();
-            card.SuspendLayout();
             toolBar.SuspendLayout();
             titlePanel.SuspendLayout();
             nhapHangPage.SuspendLayout();
@@ -142,6 +137,7 @@
             extraNextButton.TabIndex = 16;
             extraNextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraNextButton.UseVisualStyleBackColor = false;
+            extraNextButton.Click += extraNextButton_Click;
             // 
             // extraPreviousButton
             // 
@@ -156,6 +152,7 @@
             extraPreviousButton.TabIndex = 13;
             extraPreviousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraPreviousButton.UseVisualStyleBackColor = false;
+            extraPreviousButton.Click += extraPreviousButton_Click;
             // 
             // nextButton
             // 
@@ -169,6 +166,7 @@
             nextButton.TabIndex = 15;
             nextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             nextButton.UseVisualStyleBackColor = false;
+            nextButton.Click += nextButton_Click;
             // 
             // previousButton
             // 
@@ -182,6 +180,7 @@
             previousButton.TabIndex = 14;
             previousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             previousButton.UseVisualStyleBackColor = false;
+            previousButton.Click += previousButton_Click;
             // 
             // cardList
             // 
@@ -193,7 +192,6 @@
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            cardList.Controls.Add(card, 0, 0);
             cardList.Location = new Point(0, 246);
             cardList.Margin = new Padding(0);
             cardList.Name = "cardList";
@@ -202,71 +200,21 @@
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             cardList.Size = new Size(1642, 1000);
             cardList.TabIndex = 2;
-            // 
-            // card
-            // 
-            card.AutoSize = true;
-            card.BackColor = Color.FromArgb(200, 250, 214);
-            card.Controls.Add(cardButton);
-            card.Controls.Add(cardBody);
-            card.Controls.Add(cardTitle);
-            card.Dock = DockStyle.Fill;
-            card.Location = new Point(15, 15);
-            card.Margin = new Padding(15);
-            card.Name = "card";
-            card.Size = new Size(380, 470);
-            card.TabIndex = 0;
-            // 
-            // cardButton
-            // 
-            cardButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cardButton.BackColor = Color.Black;
-            cardButton.Cursor = Cursors.Hand;
-            cardButton.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cardButton.ForeColor = Color.White;
-            cardButton.Location = new Point(57, 347);
-            cardButton.Margin = new Padding(0);
-            cardButton.Name = "cardButton";
-            cardButton.Size = new Size(258, 70);
-            cardButton.TabIndex = 6;
-            cardButton.Text = "Xem chi tiết";
-            cardButton.UseVisualStyleBackColor = false;
-            cardButton.Click += cardButton_Click_1;
-            // 
-            // cardBody
-            // 
-            cardBody.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cardBody.Font = new Font("Roboto Medium", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cardBody.Location = new Point(3, 111);
-            cardBody.Name = "cardBody";
-            cardBody.Size = new Size(374, 220);
-            cardBody.TabIndex = 4;
-            cardBody.Text = "Mã sản phẩm: 0001\r\nSố lượng: 100\r\nGiá: 100.000đ";
-            cardBody.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // cardTitle
-            // 
-            cardTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cardTitle.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cardTitle.Location = new Point(3, 2);
-            cardTitle.Margin = new Padding(0);
-            cardTitle.Name = "cardTitle";
-            cardTitle.Size = new Size(374, 109);
-            cardTitle.TabIndex = 3;
-            cardTitle.Text = "KH0001";
-            cardTitle.TextAlign = ContentAlignment.MiddleCenter;
+            cardList.Paint += cardList_Paint;
             // 
             // toolBar
             // 
             toolBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             toolBar.BackColor = Color.FromArgb(0, 120, 103);
-            toolBar.ColumnCount = 6;
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 27.0795383F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.1469336F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17.78992F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.4615383F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.33846F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.075289F));
+            toolBar.ColumnCount = 7;
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.6420288F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.8735247F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.1885948F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.159811F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.68776F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.569667F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.4463625F));
+            toolBar.Controls.Add(Reset, 6, 0);
             toolBar.Controls.Add(endDate, 4, 0);
             toolBar.Controls.Add(endText, 3, 0);
             toolBar.Controls.Add(searchBar, 0, 0);
@@ -283,6 +231,20 @@
             toolBar.TabIndex = 1;
             toolBar.Paint += tableLayoutPanel1_Paint;
             // 
+            // Reset
+            // 
+            Reset.BackColor = Color.FromArgb(0, 120, 103);
+            Reset.Cursor = Cursors.Hand;
+            Reset.Dock = DockStyle.Fill;
+            Reset.Image = Properties.Resources.Reset;
+            Reset.Location = new Point(1494, 10);
+            Reset.Margin = new Padding(0);
+            Reset.Name = "Reset";
+            Reset.Size = new Size(138, 123);
+            Reset.TabIndex = 5;
+            Reset.UseVisualStyleBackColor = false;
+            Reset.Click += Reset_Click;
+            // 
             // endDate
             // 
             endDate.Anchor = AnchorStyles.None;
@@ -290,11 +252,11 @@
             endDate.DropDownAlign = LeftRightAlignment.Right;
             endDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             endDate.Format = DateTimePickerFormat.Short;
-            endDate.Location = new Point(1209, 43);
+            endDate.Location = new Point(1087, 43);
             endDate.Margin = new Padding(0, 0, 10, 0);
             endDate.Name = "endDate";
             endDate.ShowUpDown = true;
-            endDate.Size = new Size(268, 56);
+            endDate.Size = new Size(259, 56);
             endDate.TabIndex = 3;
             // 
             // endText
@@ -303,10 +265,10 @@
             endText.Dock = DockStyle.Fill;
             endText.Font = new Font("Roboto Condensed", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
             endText.ForeColor = Color.White;
-            endText.Location = new Point(976, 10);
+            endText.Location = new Point(885, 10);
             endText.Margin = new Padding(10, 0, 0, 0);
             endText.Name = "endText";
-            endText.Size = new Size(224, 123);
+            endText.Size = new Size(202, 123);
             endText.TabIndex = 3;
             endText.Text = "Ngày kết thúc:";
             endText.TextAlign = ContentAlignment.MiddleCenter;
@@ -317,13 +279,14 @@
             searchBar.Anchor = AnchorStyles.None;
             searchBar.Cursor = Cursors.IBeam;
             searchBar.Font = new Font("Roboto Medium", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            searchBar.Location = new Point(24, 45);
+            searchBar.Location = new Point(10, 45);
             searchBar.Margin = new Padding(0, 0, 10, 0);
             searchBar.Name = "searchBar";
             searchBar.PlaceholderText = "value...";
-            searchBar.Size = new Size(401, 52);
+            searchBar.Size = new Size(387, 52);
             searchBar.TabIndex = 1;
             searchBar.TextChanged += textBox1_TextChanged;
+            searchBar.KeyDown += searchEnterEvent;
             // 
             // startDate
             // 
@@ -332,14 +295,14 @@
             startDate.DropDownAlign = LeftRightAlignment.Right;
             startDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             startDate.Format = DateTimePickerFormat.Short;
-            startDate.Location = new Point(687, 43);
+            startDate.Location = new Point(614, 43);
             startDate.Margin = new Padding(0, 0, 10, 0);
             startDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
             startDate.Name = "startDate";
             startDate.ShowUpDown = true;
-            startDate.Size = new Size(260, 56);
+            startDate.Size = new Size(251, 56);
             startDate.TabIndex = 2;
-            startDate.Value = new DateTime(2025, 10, 1, 0, 0, 0, 0);
+            startDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             startDate.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // startText
@@ -348,10 +311,10 @@
             startText.AutoSize = true;
             startText.Font = new Font("Roboto", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             startText.ForeColor = Color.White;
-            startText.Location = new Point(449, 51);
+            startText.Location = new Point(434, 30);
             startText.Margin = new Padding(0);
             startText.Name = "startText";
-            startText.Size = new Size(229, 41);
+            startText.Size = new Size(153, 82);
             startText.TabIndex = 2;
             startText.Text = "Ngày bắt đầu:";
             startText.TextAlign = ContentAlignment.MiddleCenter;
@@ -363,10 +326,10 @@
             filterButton.Cursor = Cursors.Hand;
             filterButton.Dock = DockStyle.Fill;
             filterButton.Image = Properties.Resources.Filter;
-            filterButton.Location = new Point(1497, 10);
+            filterButton.Location = new Point(1356, 10);
             filterButton.Margin = new Padding(0);
             filterButton.Name = "filterButton";
-            filterButton.Size = new Size(135, 123);
+            filterButton.Size = new Size(138, 123);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
             filterButton.Click += filterButton_Click;
@@ -723,9 +686,6 @@
             khoHangPage.ResumeLayout(false);
             khoHangPage.PerformLayout();
             pageButtonPanel.ResumeLayout(false);
-            cardList.ResumeLayout(false);
-            cardList.PerformLayout();
-            card.ResumeLayout(false);
             toolBar.ResumeLayout(false);
             toolBar.PerformLayout();
             titlePanel.ResumeLayout(false);
@@ -753,7 +713,6 @@
         private Label endText;
         private DateTimePicker endDate;
         private TableLayoutPanel cardList;
-        private Panel card;
         private Panel titlePanel;
         private Label titleText;
         private Panel pageButtonPanel;
@@ -776,14 +735,12 @@
         private Button NhapHangExtraPrevious;
         private Button NhapHangNext;
         private Button NhapHangPrevious;
-        private Button cardButton;
-        private Label cardBody;
-        private Label cardTitle;
         private Button NhapHangButtonCard;
         private Label NhapHangBodyCard;
         private Label NhapHangTitleCard;
         private TableLayoutPanel HeaderPanel;
         private Label Title;
         private Button AddButton;
+        private Button Reset;
     }
 }

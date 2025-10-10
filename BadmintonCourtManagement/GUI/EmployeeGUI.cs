@@ -124,8 +124,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void cardButton_Click(object sender, EventArgs e)
         {
-            StorageDetailsGUI storeDetail = new StorageDetailsGUI();
-            storeDetail.ShowDialog();
+            EmployeeDetailsGUI employeeDetail = new EmployeeDetailsGUI();
+            employeeDetail.ShowDialog();
         }
 
         private void cardTitlePanel_Paint(object sender, PaintEventArgs e)
