@@ -65,60 +65,8 @@ namespace BadmintonCourtManagement.DAO
             return permissionDetails;
         }
 
-        // update
-        public bool UpdatePermissionDetail(PermissionDetailDTO permissionDetail)
-        {
-            string query = "UPDATE permissiondetail SET Option = @Option " +
-                           "WHERE PermissionId = @PermissionId AND FunctionId = @FunctionId";
-            int result = 0;
-            try
-            {
-                db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@PermissionId", permissionDetail.PermissionId);
-                cmd.Parameters.AddWithValue("@FunctionId", permissionDetail.FunctionId);
-                cmd.Parameters.AddWithValue("@Option", permissionDetail.Option.ToString());
-                result = cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error updating permission detail: " + ex.Message);
-            }
-            finally
-            {
-                db.CloseConnection();
-            }
-            return result > 0;
-        }
-
-
-
-        public bool DeletePermissionDetail(PermissionDetailDTO permissionDetail)
-        {
-            string query = "DELETE FROM billproductdetail WHERE BillProductId = @BillProductId AND ProductId = @ProductId";
-            int result = 0;
-            try
-            {
-                db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@BillProductId", permissionDetail.PermissionId);
-                cmd.Parameters.AddWithValue("@FunctionId", permissionDetail.FunctionId);
-                cmd.Parameters.AddWithValue("@Option", permissionDetail.Option.ToString());
-                result = cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error deleting bill product detail: " + ex.Message);
-            }
-            finally
-            {
-                db.CloseConnection();
-            }
-            return result > 0;
-        }
-
         //update
-        public bool DeletePermissionDetailsByPermissionId(PermissionDetailDTO permissionDetail)
+        public bool DeletePermissionDetailsByPermissionId(string permissionId)
         {
             string query = "DELETE FROM permissiondetail WHERE PermissionId = @PermissionId";
             int result = 0;
@@ -126,14 +74,12 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@PermissionId", permissionDetail.PermissionId);
-                cmd.Parameters.AddWithValue("@FunctionId", permissionDetail.FunctionId);
-                cmd.Parameters.AddWithValue("@Option", permissionDetail.Option.ToString());
+                cmd.Parameters.AddWithValue("@PermissionId", permissionId);
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error deleting permission details: " + ex.Message);
+                MessageBox.Show("L?i khi xóa chi ti?t quy?n: " + ex.Message);
             }
             finally
             {

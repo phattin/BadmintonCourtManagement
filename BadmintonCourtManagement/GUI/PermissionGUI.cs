@@ -1,6 +1,5 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
-using BadmintonCourtManagement.GUI;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -22,7 +21,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-
+            LoadPermission(permissionBUS.Search(txtSearch.Text));
         }
 
         private void LoadPermission(List<PermissionDTO> danhSachSan)
@@ -121,7 +120,42 @@ namespace BadmintonCourtManagement.GUI
 
             btnView.Click += (s, e) =>
             {
-                MessageBox.Show("Xem chi tiết " + permissionDTO.PermissionId);
+                Form dialog = new Form()
+                {
+                    Text = string.Empty, // bỏ tiêu đề
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent,
+                    Size = new Size(900, 900),
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    ShowInTaskbar = false
+                };
+
+                var formPermissionGUI = new FormPermissionGUI("View", permissionDTO.PermissionId, currentAccount);
+                formPermissionGUI.Dock = DockStyle.Fill;
+
+                dialog.Controls.Add(formPermissionGUI);
+
+                dialog.ShowDialog();
+            };
+
+            btnUpdate.Click += (s, e) =>
+            {
+                Form dialog = new Form()
+                {
+                    Text = string.Empty, // bỏ tiêu đề
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent,
+                    Size = new Size(900, 900),
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    ShowInTaskbar = false
+                };
+                var formPermissionGUI = new FormPermissionGUI("Update", permissionDTO.PermissionId, currentAccount);
+                formPermissionGUI.Dock = DockStyle.Fill;
+                dialog.Controls.Add(formPermissionGUI);
+                dialog.ShowDialog();
+                ReloadList();
             };
 
             tlCourt.Controls.Add(lblName, 0, 0);
@@ -152,7 +186,7 @@ namespace BadmintonCourtManagement.GUI
                 ShowInTaskbar = false
             };
 
-            var insertPermissionGUI = new InsertPermissionGUI();
+            var insertPermissionGUI = new FormPermissionGUI("Insert", permissionBUS.GetNextId(), currentAccount);
             insertPermissionGUI.Dock = DockStyle.Fill;
 
             dialog.Controls.Add(insertPermissionGUI);
@@ -166,6 +200,11 @@ namespace BadmintonCourtManagement.GUI
         {
             List<PermissionDTO> pqList = permissionBUS.GetAllPermissions();
             LoadPermission(pqList);
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            ReloadList();
         }
     }
 }
