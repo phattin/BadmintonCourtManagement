@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 04, 2025 lúc 01:18 PM
+-- Thời gian đã tạo: Th10 11, 2025 lúc 04:45 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -190,6 +190,24 @@ CREATE TABLE `function` (
   `FunctionName` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `function`
+--
+
+INSERT INTO `function` (`FunctionId`, `FunctionName`) VALUES
+('F03', 'Bán hàng'),
+('F05', 'Nhập hàng'),
+('F04', 'Quản lý hóa đơn đặt sân'),
+('F08', 'Quản lý khách hàng'),
+('F07', 'Quản lý nhà cung cấp'),
+('F09', 'Quản lý nhân viên'),
+('F11', 'Quản lý phân quyền'),
+('F02', 'Quản lý sân'),
+('F06', 'Quản lý sản phẩm'),
+('F10', 'Quản lý tài khoản'),
+('F12', 'Thống kê'),
+('F01', 'Đặt sân');
+
 -- --------------------------------------------------------
 
 --
@@ -227,7 +245,7 @@ CREATE TABLE `payment` (
 
 CREATE TABLE `permission` (
   `PermissionId` varchar(10) NOT NULL,
-  `PermissionName` varchar(30) NOT NULL
+  `PermissionName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -235,6 +253,7 @@ CREATE TABLE `permission` (
 --
 
 INSERT INTO `permission` (`PermissionId`, `PermissionName`) VALUES
+('P00002', 'Admin'),
 ('P00001', 'Quản lý');
 
 -- --------------------------------------------------------
@@ -246,8 +265,58 @@ INSERT INTO `permission` (`PermissionId`, `PermissionName`) VALUES
 CREATE TABLE `permissiondetail` (
   `PermissionId` varchar(10) NOT NULL,
   `FunctionId` varchar(10) NOT NULL,
-  `Option` enum('view','add','edit','delete') DEFAULT NULL
+  `Option` enum('View','Insert','Update','Delete') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_nopad_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `permissiondetail`
+--
+
+INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
+('P00002', 'F11', 'Delete'),
+('P00002', 'F11', 'Update'),
+('P00002', 'F11', 'Insert'),
+('P00002', 'F11', 'View'),
+('P00002', 'F10', 'Delete'),
+('P00002', 'F10', 'Update'),
+('P00002', 'F10', 'Insert'),
+('P00002', 'F10', 'View'),
+('P00002', 'F09', 'View'),
+('P00001', 'F12', 'View'),
+('P00001', 'F11', 'Delete'),
+('P00001', 'F11', 'Update'),
+('P00001', 'F11', 'Insert'),
+('P00001', 'F11', 'View'),
+('P00001', 'F10', 'Delete'),
+('P00001', 'F10', 'Update'),
+('P00001', 'F10', 'Insert'),
+('P00001', 'F10', 'View'),
+('P00001', 'F09', 'Delete'),
+('P00001', 'F09', 'Update'),
+('P00001', 'F09', 'Insert'),
+('P00001', 'F09', 'View'),
+('P00001', 'F08', 'Update'),
+('P00001', 'F08', 'Insert'),
+('P00001', 'F08', 'View'),
+('P00001', 'F07', 'Delete'),
+('P00001', 'F07', 'Update'),
+('P00001', 'F07', 'Insert'),
+('P00001', 'F07', 'View'),
+('P00001', 'F06', 'Delete'),
+('P00001', 'F06', 'Update'),
+('P00001', 'F06', 'Insert'),
+('P00001', 'F06', 'View'),
+('P00001', 'F05', 'Insert'),
+('P00001', 'F05', 'View'),
+('P00001', 'F04', 'View'),
+('P00001', 'F03', 'Insert'),
+('P00001', 'F03', 'View'),
+('P00001', 'F02', 'Delete'),
+('P00001', 'F02', 'Update'),
+('P00001', 'F02', 'Insert'),
+('P00001', 'F01', 'Insert'),
+('P00001', 'F01', 'View'),
+('P00001', 'F02', 'View');
 
 -- --------------------------------------------------------
 
@@ -274,6 +343,7 @@ CREATE TABLE `pricerule` (
   `EndTime` time DEFAULT NULL,
   `StartDate` datetime DEFAULT NULL,
   `EndDate` datetime DEFAULT NULL,
+  `EndType` enum('Holiday','Weekday','Weekend') NOT NULL DEFAULT 'Holiday',
   `Description` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -282,9 +352,9 @@ CREATE TABLE `pricerule` (
 -- Đang đổ dữ liệu cho bảng `pricerule`
 --
 
-INSERT INTO `pricerule` (`PriceRuleId`, `Price`, `StartTime`, `EndTime`, `StartDate`, `EndDate`, `Description`, `Status`) VALUES
-('PR0001', 60000, '05:00:00', '16:00:00', NULL, NULL, 'Ngày thường', 'Đang áp dụng'),
-('PR0002', 80000, '16:00:00', '23:00:00', NULL, NULL, 'Ngày thường', 'Đang áp dụng');
+INSERT INTO `pricerule` (`PriceRuleId`, `Price`, `StartTime`, `EndTime`, `StartDate`, `EndDate`, `EndType`, `Description`, `Status`) VALUES
+('PR0001', 60000, '05:00:00', '16:00:00', NULL, NULL, 'Weekday', 'Ngày thường', 'Đang áp dụng'),
+('PR0002', 80000, '16:00:00', '23:00:00', NULL, NULL, 'Weekday', 'Ngày thường', 'Đang áp dụng');
 
 -- --------------------------------------------------------
 
@@ -311,6 +381,23 @@ CREATE TABLE `product` (
 CREATE TABLE `role` (
   `RoleId` varchar(10) NOT NULL,
   `RoleName` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `storage`
+--
+
+CREATE TABLE `storage` (
+  `StorageId` varchar(10) NOT NULL,
+  `ImportBillId` varchar(10) NOT NULL,
+  `ProductId` varchar(10) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `Price` double NOT NULL,
+  `TotalPrice` double NOT NULL,
+  `CreatedAt` datetime DEFAULT current_timestamp(),
+  `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -449,7 +536,6 @@ ALTER TABLE `permission`
 -- Chỉ mục cho bảng `permissiondetail`
 --
 ALTER TABLE `permissiondetail`
-  ADD PRIMARY KEY (`PermissionId`,`FunctionId`),
   ADD KEY `FunctionId` (`FunctionId`);
 
 --
@@ -479,6 +565,14 @@ ALTER TABLE `product`
 ALTER TABLE `role`
   ADD PRIMARY KEY (`RoleId`),
   ADD UNIQUE KEY `RoleName` (`RoleName`);
+
+--
+-- Chỉ mục cho bảng `storage`
+--
+ALTER TABLE `storage`
+  ADD PRIMARY KEY (`StorageId`),
+  ADD KEY `ImportBillId` (`ImportBillId`),
+  ADD KEY `ProductId` (`ProductId`);
 
 --
 -- Chỉ mục cho bảng `supplier`
@@ -558,13 +652,6 @@ ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`BillProductId`) REFERENCES `billproduct` (`BillProductId`);
 
 --
--- Các ràng buộc cho bảng `permissiondetail`
---
-ALTER TABLE `permissiondetail`
-  ADD CONSTRAINT `permissiondetail_ibfk_1` FOREIGN KEY (`PermissionId`) REFERENCES `permission` (`PermissionId`),
-  ADD CONSTRAINT `permissiondetail_ibfk_2` FOREIGN KEY (`FunctionId`) REFERENCES `function` (`FunctionId`);
-
---
 -- Các ràng buộc cho bảng `pricebookingdetail`
 --
 ALTER TABLE `pricebookingdetail`
@@ -577,6 +664,13 @@ ALTER TABLE `pricebookingdetail`
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`BrandId`) REFERENCES `brand` (`BrandId`),
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `typeproduct` (`TypeId`);
+
+--
+-- Các ràng buộc cho bảng `storage`
+--
+ALTER TABLE `storage`
+  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`ImportBillId`) REFERENCES `importbill` (`ImportBillId`),
+  ADD CONSTRAINT `storage_ibfk_2` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
