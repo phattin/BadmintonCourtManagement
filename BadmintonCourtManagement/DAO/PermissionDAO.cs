@@ -76,7 +76,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi khi thêm phân quyền: " + ex.Message);
+                MessageBox.Show("Lỗi khi thêm phân quyền: " + ex.Message);
                 return false;
             }
             finally
@@ -99,7 +99,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi khi cập nhật phân quyền: " + ex.Message);
+                MessageBox.Show("Lỗi khi cập nhật phân quyền: " + ex.Message);
                 return false;
             }
             finally
@@ -121,13 +121,43 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Lỗi khi kiểm tra tên phân quyền: " + ex.Message);
+                MessageBox.Show("Lỗi khi kiểm tra tên phân quyền: " + ex.Message);
                 return false;
             }
             finally
             {
                 db.CloseConnection();
             }
+        }
+
+        public string GetNextId()
+        {
+            string query = "SELECT PermissionId FROM permission ORDER BY PermissionId DESC LIMIT 1";
+            string nextId = "P00001";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    string lastId = reader["PermissionId"].ToString();
+                    int numericPart = int.Parse(lastId.Substring(1));
+                    nextId = "P" + (numericPart + 1).ToString("D5");
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lấy ID tiếp theo: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return nextId;
         }
 
     }

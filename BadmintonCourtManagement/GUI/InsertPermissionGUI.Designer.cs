@@ -581,7 +581,7 @@
             chbViewProduct.Name = "chbViewProduct";
             chbViewProduct.Size = new Size(40, 40);
             chbViewProduct.TabIndex = 37;
-            chbViewProduct.Tag = "ViewCourt";
+            chbViewProduct.Tag = "ViewProduct";
             chbViewProduct.UseVisualStyleBackColor = false;
             // 
             // chbInsertImport
