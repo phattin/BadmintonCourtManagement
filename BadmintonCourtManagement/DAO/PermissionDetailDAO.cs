@@ -8,7 +8,7 @@ namespace BadmintonCourtManagement.DAO
         private DBConnection db = new DBConnection();
         public bool InsertPermissionDetail(PermissionDetailDTO permissionDetail)
         {
-            string query = "INSERT INTO PermissionDetails (PermissionId, FunctionId, Option) " +
+            string query = "INSERT INTO permissiondetail (PermissionId, FunctionId, Option) " +
                            "VALUES (@PermissionId, @FunctionId, @Option)";
             int result = 0;
             try
@@ -17,12 +17,12 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@PermissionId", permissionDetail.PermissionId);
                 cmd.Parameters.AddWithValue("@FunctionId", permissionDetail.FunctionId);
-                cmd.Parameters.AddWithValue("@Option", permissionDetail.PermissionOption.ToString());
+                cmd.Parameters.AddWithValue("@Option", permissionDetail.Option.ToString());
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error inserting permission detail: " + ex.Message);
+                MessageBox.Show("Error inserting permission detail: " + ex.Message);
             }
             finally
             {
@@ -35,7 +35,7 @@ namespace BadmintonCourtManagement.DAO
         public List<PermissionDetailDTO> GetPermissionDetailsByPermissionId(string permissionId)
         {
             List<PermissionDetailDTO> permissionDetails = new List<PermissionDetailDTO>();
-            string query = "SELECT * FROM PermissionDetails WHERE PermissionId = @PermissionId";
+            string query = "SELECT * FROM permissiondetail WHERE PermissionId = @PermissionId";
             try
             {
                 db.OpenConnection();
@@ -48,9 +48,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         PermissionId = reader["PermissionId"].ToString(),
                         FunctionId = reader["FunctionId"].ToString(),
-                        PermissionOption = reader["Option"] != DBNull.Value
-                        ? (PermissionDetailDTO.Option)Enum.Parse(typeof(PermissionDetailDTO.Option), reader["Option"].ToString())
-                        : default(PermissionDetailDTO.Option),
+                        Option = reader["Option"].ToString()
                     };
                     permissionDetails.Add(detail);
                 }
@@ -58,7 +56,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving permission details: " + ex.Message);
+                MessageBox.Show("Error retrieving permission details: " + ex.Message);
             }
             finally
             {
@@ -70,7 +68,7 @@ namespace BadmintonCourtManagement.DAO
         // update
         public bool UpdatePermissionDetail(PermissionDetailDTO permissionDetail)
         {
-            string query = "UPDATE PermissionDetails SET Option = @Option " +
+            string query = "UPDATE permissiondetail SET Option = @Option " +
                            "WHERE PermissionId = @PermissionId AND FunctionId = @FunctionId";
             int result = 0;
             try
@@ -79,12 +77,12 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@PermissionId", permissionDetail.PermissionId);
                 cmd.Parameters.AddWithValue("@FunctionId", permissionDetail.FunctionId);
-                cmd.Parameters.AddWithValue("@Option", permissionDetail.PermissionOption.ToString());
+                cmd.Parameters.AddWithValue("@Option", permissionDetail.Option.ToString());
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error updating permission detail: " + ex.Message);
+                MessageBox.Show("Error updating permission detail: " + ex.Message);
             }
             finally
             {
@@ -105,12 +103,12 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@BillProductId", permissionDetail.PermissionId);
                 cmd.Parameters.AddWithValue("@FunctionId", permissionDetail.FunctionId);
-                cmd.Parameters.AddWithValue("@Option", permissionDetail.PermissionOption.ToString());
+                cmd.Parameters.AddWithValue("@Option", permissionDetail.Option.ToString());
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error deleting bill product detail: " + ex.Message);
+                MessageBox.Show("Error deleting bill product detail: " + ex.Message);
             }
             finally
             {
@@ -122,7 +120,7 @@ namespace BadmintonCourtManagement.DAO
         //update
         public bool DeletePermissionDetailsByPermissionId(PermissionDetailDTO permissionDetail)
         {
-            string query = "DELETE FROM PermissionDetails WHERE PermissionId = @PermissionId";
+            string query = "DELETE FROM permissiondetail WHERE PermissionId = @PermissionId";
             int result = 0;
             try
             {
@@ -130,12 +128,12 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@PermissionId", permissionDetail.PermissionId);
                 cmd.Parameters.AddWithValue("@FunctionId", permissionDetail.FunctionId);
-                cmd.Parameters.AddWithValue("@Option", permissionDetail.PermissionOption.ToString());
+                cmd.Parameters.AddWithValue("@Option", permissionDetail.Option.ToString());
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error deleting permission details: " + ex.Message);
+                MessageBox.Show("Error deleting permission details: " + ex.Message);
             }
             finally
             {
@@ -148,7 +146,7 @@ namespace BadmintonCourtManagement.DAO
         public List<PermissionDetailDTO> GetPermissionDetailsByFunctionId(string functionId)
         {
             List<PermissionDetailDTO> permissionDetails = new List<PermissionDetailDTO>();
-            string query = "SELECT * FROM PermissionDetails WHERE FunctionId = @FunctionId";
+            string query = "SELECT * FROM permissiondetail WHERE FunctionId = @FunctionId";
             try
             {
                 db.OpenConnection();
@@ -161,9 +159,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         PermissionId = reader["PermissionId"].ToString(),
                         FunctionId = reader["FunctionId"].ToString(),
-                        PermissionOption = reader["Option"] != DBNull.Value
-                        ? (PermissionDetailDTO.Option)Enum.Parse(typeof(PermissionDetailDTO.Option), reader["Option"].ToString())
-                        : default(PermissionDetailDTO.Option),
+                        Option = reader["Option"].ToString()
                     };
                     permissionDetails.Add(detail);
                 }
@@ -171,7 +167,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving permission details by FunctionId: " + ex.Message);
+                MessageBox.Show("Error retrieving permission details by FunctionId: " + ex.Message);
             }
             finally
             {
@@ -184,7 +180,7 @@ namespace BadmintonCourtManagement.DAO
         public List<PermissionDetailDTO> GetPermissionDetailsByOption(string permissionId)
         {
             List<PermissionDetailDTO> permissionDetails = new List<PermissionDetailDTO>();
-            string query = "SELECT * FROM PermissionDetails WHERE PermissionId = @PermissionId";
+            string query = "SELECT * FROM permissiondetail WHERE PermissionId = @PermissionId";
             try
             {
                 db.OpenConnection();
@@ -197,9 +193,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         PermissionId = reader["PermissionId"].ToString(),
                         FunctionId = reader["FunctionId"].ToString(),
-                        PermissionOption = reader["Option"] != DBNull.Value
-                        ? (PermissionDetailDTO.Option)Enum.Parse(typeof(PermissionDetailDTO.Option), reader["Option"].ToString())
-                        : default(PermissionDetailDTO.Option),
+                        Option = reader["Option"].ToString()
                     };
                     permissionDetails.Add(detail);
                 }
@@ -207,7 +201,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving permission details by Option: " + ex.Message);
+                MessageBox.Show("Error retrieving permission details by Option: " + ex.Message);
             }
             finally
             {
@@ -219,7 +213,7 @@ namespace BadmintonCourtManagement.DAO
         public List<PermissionDetailDTO> GetAllPermissionDetails()
         {
             List<PermissionDetailDTO> permissionDetails = new List<PermissionDetailDTO>();
-            string query = "SELECT * FROM PermissionDetails";
+            string query = "SELECT * FROM permissiondetail";
             try
             {
                 db.OpenConnection();
@@ -231,9 +225,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         PermissionId = reader["PermissionId"].ToString(),
                         FunctionId = reader["FunctionId"].ToString(),
-                        PermissionOption = reader["Option"] != DBNull.Value
-                        ? (PermissionDetailDTO.Option)Enum.Parse(typeof(PermissionDetailDTO.Option), reader["Option"].ToString())
-                        : default(PermissionDetailDTO.Option),
+                        Option = reader["Option"].ToString()
                     };
                     permissionDetails.Add(detail);
                 }
@@ -241,7 +233,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving all permission details: " + ex.Message);
+                MessageBox.Show("Error retrieving all permission details: " + ex.Message);
             }
             finally
             {

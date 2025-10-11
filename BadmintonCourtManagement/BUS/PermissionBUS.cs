@@ -36,5 +36,10 @@ namespace BadmintonCourtManagement.BUS
             return permissionDAO.UpdatePermission(permission);
         }
 
+        public string GetNextId()
+        {
+            return permissionDAO.GetNextId();
+        }
+
     }
 }

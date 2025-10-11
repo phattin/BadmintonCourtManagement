@@ -11,6 +11,7 @@ namespace BadmintonCourtManagement.GUI
         public InsertPermissionGUI()
         {
             InitializeComponent();
+            txtPermissionId.Text = permissionBUS.GetNextId();
             SetupPermissionTable();
         }
 
@@ -32,7 +33,7 @@ namespace BadmintonCourtManagement.GUI
                     cb.CheckedChanged += (s, e) =>
                     {
                         var box = (CheckBox)s;
-                        box.BackColor = box.Checked ? Color.MediumSeaGreen : Color.WhiteSmoke;
+                        box.BackColor = box.Checked ? ColorTranslator.FromHtml("#007867") : Color.WhiteSmoke;
                         box.ForeColor = box.Checked ? Color.White : Color.Black;
                     };
                 }
@@ -44,9 +45,62 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
+        private void SetupCheckboxLogic()
+        {
+            // Duyệt tất cả checkbox trong tPermission
+            foreach (Control c in tPermission.Controls)
+            {
+                if (c is CheckBox cb && cb.Tag != null)
+                {
+                    cb.CheckedChanged += (s, e) =>
+                    {
+                        string tag = cb.Tag.ToString();
+
+                        // --- Lấy prefix và target ---
+                        string prefix = "";
+                        string target = "";
+                        if (tag.StartsWith("View")) { prefix = "View"; target = tag.Substring(4); }
+                        else if (tag.StartsWith("Insert")) { prefix = "Insert"; target = tag.Substring(6); }
+                        else if (tag.StartsWith("Update")) { prefix = "Update"; target = tag.Substring(6); }
+                        else if (tag.StartsWith("Delete")) { prefix = "Delete"; target = tag.Substring(6); }
+
+                        // --- Nếu tick Update/Delete thì phải tick View ---
+                        if ((prefix == "Update" || prefix == "Delete") && cb.Checked)
+                        {
+                            foreach (Control c2 in tPermission.Controls)
+                            {
+                                if (c2 is CheckBox cb2 && cb2.Tag != null && cb2.Tag.ToString() == "View" + target)
+                                {
+                                    cb2.Checked = true;
+                                }
+                            }
+                        }
+
+                        // --- Nếu bỏ tick View thì bỏ luôn Update & Delete ---
+                        if (prefix == "View" && !cb.Checked)
+                        {
+                            foreach (Control c2 in tPermission.Controls)
+                            {
+                                if (c2 is CheckBox cb2 && cb2.Tag != null)
+                                {
+                                    string tag2 = cb2.Tag.ToString();
+                                    if (tag2 == "Update" + target || tag2 == "Delete" + target)
+                                    {
+                                        cb2.Checked = false;
+                                    }
+                                }
+                            }
+                        }
+                    };
+                }
+            }
+        }
+
+
         private void draftPanel_Paint(object sender, PaintEventArgs e)
         {
             StyleCheckBoxes(this);
+            SetupCheckboxLogic();
         }
 
         private void SetupPermissionTable()
@@ -116,7 +170,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            if(txtPermissionName.Text.Trim() == "")
+            string permissionId = txtPermissionId.Text;
+            if (txtPermissionName.Text.Trim() == "")
             {
                 MessageBox.Show("Tên quyền không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -170,11 +225,32 @@ namespace BadmintonCourtManagement.GUI
                     // Thêm vào danh sách DTO
                     permissionDetailList.Add(new PermissionDetailDTO
                     {
-                        PermissionId = "", // Chưa có ID quyền, sẽ gán sau khi tạo quyền
+                        PermissionId = permissionId, // Chưa có ID quyền, sẽ gán sau khi tạo quyền
                         FunctionId = functionID,
-                        PermissionOption = action
+                        Option = action
                     });
                 }
+            }
+            if(permissionBUS.InsertPermission(new PermissionDTO
+            {
+                PermissionId = permissionId,
+                PermissionName = permissionName
+            })
+                && permissionDetailBUS.InsertPermissionDetail(permissionDetailList))
+            {
+                // Lấy ID quyền vừa tạo
+                string newPermissionId = txtPermissionId.Text;
+                MessageBox.Show("Thêm phân quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Đóng form
+                Form parentForm = this.FindForm();
+                if (parentForm != null)
+                {
+                    parentForm.Close();
+                }
+            }
+            else
+            {
+                return;
             }
 
         }
