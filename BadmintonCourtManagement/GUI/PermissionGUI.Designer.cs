@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PermissionGUI));
             draftPanel = new Panel();
+            btnInsert = new Label();
             pListBG = new CustomPanel();
             pList = new TableLayoutPanel();
             pFilter = new CustomPanel();
@@ -37,7 +38,6 @@
             pSearch = new CustomPanel();
             txtSearch = new TextBox();
             lblTitle = new Label();
-            btnInsert = new Label();
             draftPanel.SuspendLayout();
             pListBG.SuspendLayout();
             pFilter.SuspendLayout();
@@ -55,6 +55,24 @@
             draftPanel.Name = "draftPanel";
             draftPanel.Size = new Size(915, 490);
             draftPanel.TabIndex = 0;
+            // 
+            // btnInsert
+            // 
+            btnInsert.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnInsert.AutoSize = true;
+            btnInsert.BackColor = Color.FromArgb(64, 64, 64);
+            btnInsert.Cursor = Cursors.Hand;
+            btnInsert.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnInsert.ForeColor = Color.White;
+            btnInsert.Location = new Point(633, 24);
+            btnInsert.Margin = new Padding(4, 0, 4, 0);
+            btnInsert.Name = "btnInsert";
+            btnInsert.Padding = new Padding(12, 14, 12, 16);
+            btnInsert.Size = new Size(243, 62);
+            btnInsert.TabIndex = 4;
+            btnInsert.Text = "Thêm phân quyền";
+            btnInsert.TextAlign = ContentAlignment.MiddleCenter;
+            btnInsert.Click += btnInsert_Click;
             // 
             // pListBG
             // 
@@ -108,6 +126,7 @@
             btnReset.SizeMode = PictureBoxSizeMode.StretchImage;
             btnReset.TabIndex = 4;
             btnReset.TabStop = false;
+            btnReset.Click += btnReset_Click;
             // 
             // pSearch
             // 
@@ -147,24 +166,6 @@
             lblTitle.Text = "Phân quyền";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             lblTitle.UseWaitCursor = true;
-            // 
-            // btnInsert
-            // 
-            btnInsert.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnInsert.AutoSize = true;
-            btnInsert.BackColor = Color.FromArgb(64, 64, 64);
-            btnInsert.Cursor = Cursors.Hand;
-            btnInsert.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnInsert.ForeColor = Color.White;
-            btnInsert.Location = new Point(633, 24);
-            btnInsert.Margin = new Padding(4, 0, 4, 0);
-            btnInsert.Name = "btnInsert";
-            btnInsert.Padding = new Padding(12, 14, 12, 16);
-            btnInsert.Size = new Size(243, 62);
-            btnInsert.TabIndex = 4;
-            btnInsert.Text = "Thêm phân quyền";
-            btnInsert.TextAlign = ContentAlignment.MiddleCenter;
-            btnInsert.Click += btnInsert_Click;
             // 
             // PermissionGUI
             // 

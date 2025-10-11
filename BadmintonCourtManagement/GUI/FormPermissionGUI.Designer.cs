@@ -1,6 +1,6 @@
 ﻿namespace BadmintonCourtManagement.GUI
 {
-    partial class InsertPermissionGUI
+    partial class FormPermissionGUI
     {
         /// <summary> 
         /// Required designer variable.
@@ -139,9 +139,9 @@
             btnConfirm.Margin = new Padding(4, 0, 4, 0);
             btnConfirm.Name = "btnConfirm";
             btnConfirm.Padding = new Padding(12, 14, 12, 16);
-            btnConfirm.Size = new Size(127, 58);
+            btnConfirm.Size = new Size(123, 58);
             btnConfirm.TabIndex = 8;
-            btnConfirm.Text = "Thêm sân";
+            btnConfirm.Text = "Xác nhận";
             btnConfirm.TextAlign = ContentAlignment.MiddleCenter;
             btnConfirm.Click += btnConfirm_Click;
             // 
@@ -983,12 +983,12 @@
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Thêm quyền";
             // 
-            // InsertPermissionGUI
+            // FormPermissionGUI
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(draftPanel);
-            Name = "InsertPermissionGUI";
+            Name = "FormPermissionGUI";
             Size = new Size(900, 850);
             draftPanel.ResumeLayout(false);
             draftPanel.PerformLayout();

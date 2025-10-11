@@ -130,6 +130,56 @@ namespace BadmintonCourtManagement.DAO
             }
         }
 
+        public bool checkNameExistsUpdate(string id, string name)
+        {
+            string query = "SELECT COUNT(*) FROM permission WHERE PermissionName = @PermissionName AND PermissionId != @PermissionId";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@PermissionName", name);
+                cmd.Parameters.AddWithValue("@PermissionId", id);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi kiểm tra tên phân quyền: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
+        public List<PermissionDTO> Search(string keyword)
+        {
+            string query = "SELECT * FROM permission WHERE PermissionId LIKE @Keyword OR PermissionName LIKE @Keyword";
+            List<PermissionDTO> list = new List<PermissionDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Keyword", "%" + keyword + "%");
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new PermissionDTO()
+                    {
+                        PermissionId = reader["PermissionId"].ToString(),
+                        PermissionName = reader["PermissionName"].ToString(),
+                    });
+                }
+                reader.Close();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return list;
+        }
+
         public string GetNextId()
         {
             string query = "SELECT PermissionId FROM permission ORDER BY PermissionId DESC LIMIT 1";

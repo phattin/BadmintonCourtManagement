@@ -29,16 +29,6 @@ namespace BadmintonCourtManagement.BUS
             return dao.GetPermissionDetailsByFunctionId(functionId);
         }
 
-        public bool DeletePermissionDetail(PermissionDetailDTO permissionDetail)
-        {
-            var existing = dao.GetPermissionDetailsByPermissionId(permissionDetail.PermissionId)
-                              .Find(pd => pd.FunctionId == permissionDetail.FunctionId && pd.Option == permissionDetail.Option);
-            if (existing == null)
-                throw new Exception("Chi tiết quyền không tồn tại!");
-
-            return dao.DeletePermissionDetail(permissionDetail);
-        }
-
         public bool InsertPermissionDetail(List<PermissionDetailDTO> permissionDetailList)
         {
             foreach(var permissionDetail in permissionDetailList)
@@ -47,14 +37,15 @@ namespace BadmintonCourtManagement.BUS
             return true;
         }
         
-        public bool UpdatePermissionDetail(PermissionDetailDTO permissionDetail)
+        public bool UpdatePermissionDetail(List<PermissionDetailDTO> permissionDetailList)
         {
-            var existing = dao.GetPermissionDetailsByPermissionId(permissionDetail.PermissionId)
-                              .Find(pd => pd.FunctionId == permissionDetail.FunctionId && pd.Option == permissionDetail.Option);
-            if (existing == null)
-                throw new Exception("Chi tiết quyền không tồn tại!");
-
-            return dao.UpdatePermissionDetail(permissionDetail);
+            if(permissionDetailList.Count == 0) return false;
+            if(!dao.DeletePermissionDetailsByPermissionId(permissionDetailList[0].PermissionId))
+                return false;
+            foreach(var permissionDetail in permissionDetailList)
+                if(!dao.InsertPermissionDetail(permissionDetail))
+                    return false;
+            return true;
         }
     }
 }

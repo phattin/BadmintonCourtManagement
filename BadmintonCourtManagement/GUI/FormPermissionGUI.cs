@@ -4,15 +4,88 @@ using BadmintonCourtManagement.DTO;
 
 namespace BadmintonCourtManagement.GUI
 {
-    public partial class InsertPermissionGUI : UserControl
+    public partial class FormPermissionGUI : UserControl
     {
+        private string mode; // View, Insert, Update
+        private string permissionId;
+        private AccountDTO currentAccount;
         private PermissionBUS permissionBUS = new PermissionBUS();
         private PermissionDetailBUS permissionDetailBUS = new PermissionDetailBUS();
-        public InsertPermissionGUI()
+        public FormPermissionGUI(string mode, string permissionId, AccountDTO currentAccount)
         {
+            this.mode = mode;
+            this.permissionId = permissionId;
+            this.currentAccount = currentAccount;
             InitializeComponent();
-            txtPermissionId.Text = permissionBUS.GetNextId();
+            txtPermissionId.Text = permissionId;
             SetupPermissionTable();
+            StyleCheckBoxes(this);
+            SetupCheckboxLogic();
+            if (mode != "Insert")
+                loadDataCheckBox();
+            if (mode == "View")
+            {
+                lblTitle.Text = "Chi tiết phân quyền";
+                btnConfirm.Visible = false; btnCancel.Text = "Đóng";
+                btnCancel.Location = new Point((this.Width - btnCancel.Width) / 2, btnCancel.Location.Y);
+            }
+            if (mode == "Update")
+                lblTitle.Text = "Sửa phân quyền";
+        }
+
+        private void loadDataCheckBox()
+        {
+            // Map mã chức năng sang tên
+            Dictionary<string, string> functionMap = new Dictionary<string, string>()
+    {
+        { "F01", "Booking" },
+        { "F02", "Court" },
+        { "F03", "Sell" },
+        { "F04", "Bill" },
+        { "F05", "Import" },
+        { "F06", "Product" },
+        { "F07", "Supplier" },
+        { "F08", "Customer" },
+        { "F09", "Employee" },
+        { "F10", "Account" },
+        { "F11", "Permission" },
+        { "F12", "Statistic" }
+    };
+
+            // Lấy chi tiết quyền
+            var permissionDetails = permissionDetailBUS.GetPermissionDetailsByPermissionId(permissionId);
+            foreach (var detail in permissionDetails)
+            {
+                if (!functionMap.ContainsKey(detail.FunctionId)) continue;
+                string tagToFind = detail.Option + functionMap[detail.FunctionId];
+
+                foreach (Control c in tPermission.Controls)
+                {
+                    if (c is CheckBox cb && cb.Tag != null && cb.Tag.ToString() == tagToFind)
+                    {
+                        cb.Checked = true;
+                    }
+                }
+            }
+
+            // Load thông tin quyền
+            var permission = permissionBUS.GetPermissionById(permissionId);
+            if (permission != null)
+            {
+                txtPermissionId.Text = permission.PermissionId;
+                txtPermissionName.Text = permission.PermissionName;
+            }
+
+            // Nếu chỉ xem → disable chỉnh sửa
+            if (mode == "View")
+            {
+                txtPermissionName.ReadOnly = true;
+                foreach (Control c in tPermission.Controls)
+                {
+                    if (c is CheckBox cb)
+                        cb.Enabled = false;
+                }
+            }
         }
 
         private void StyleCheckBoxes(Control parent)
@@ -99,8 +172,6 @@ namespace BadmintonCourtManagement.GUI
 
         private void draftPanel_Paint(object sender, PaintEventArgs e)
         {
-            StyleCheckBoxes(this);
-            SetupCheckboxLogic();
         }
 
         private void SetupPermissionTable()
@@ -170,7 +241,6 @@ namespace BadmintonCourtManagement.GUI
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            string permissionId = txtPermissionId.Text;
             if (txtPermissionName.Text.Trim() == "")
             {
                 MessageBox.Show("Tên quyền không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -231,28 +301,53 @@ namespace BadmintonCourtManagement.GUI
                     });
                 }
             }
-            if(permissionBUS.InsertPermission(new PermissionDTO
+            if (mode == "Insert")
             {
-                PermissionId = permissionId,
-                PermissionName = permissionName
-            })
-                && permissionDetailBUS.InsertPermissionDetail(permissionDetailList))
-            {
-                // Lấy ID quyền vừa tạo
-                string newPermissionId = txtPermissionId.Text;
-                MessageBox.Show("Thêm phân quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // Đóng form
-                Form parentForm = this.FindForm();
-                if (parentForm != null)
+                if (permissionBUS.InsertPermission(new PermissionDTO
                 {
-                    parentForm.Close();
+                    PermissionId = permissionId,
+                    PermissionName = permissionName
+                })
+                    && permissionDetailBUS.InsertPermissionDetail(permissionDetailList))
+                {
+                    // Lấy ID quyền vừa tạo
+                    string newPermissionId = txtPermissionId.Text;
+                    MessageBox.Show("Thêm phân quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Đóng form
+                    Form parentForm = this.FindForm();
+                    if (parentForm != null)
+                    {
+                        parentForm.Close();
+                    }
+                }
+                else
+                {
+                    return;
                 }
             }
-            else
+            else if (mode == "Update")
             {
-                return;
-            }
+                if (permissionBUS.UpdatePermission(new PermissionDTO
+                {
+                    PermissionId = permissionId,
+                    PermissionName = permissionName
+                })
+                    && permissionDetailBUS.UpdatePermissionDetail(permissionDetailList))
+                {
+                    MessageBox.Show("Cập nhật phân quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Đóng form
+                    Form parentForm = this.FindForm();
+                    if (parentForm != null)
+                    {
+                        parentForm.Close();
+                    }
+                }
+                else
+                {
+                    return;
+                }
 
+            }
         }
     }
 
