@@ -1,12 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BadmintonCourtManagement.DAO;
+using BadmintonCourtManagement.DTO;
 
 namespace BadmintonCourtManagement.BUS
 {
-    internal class EmployeeBUS
+    public class EmployeeBUS
     {
+        private EmployeeDAO employeeDAO;
+
+        public EmployeeBUS()
+        {
+            employeeDAO = new EmployeeDAO();
+        }
+
+        public List<EmployeeDTO> GetAllEmployees()
+        {
+            return employeeDAO.GetAllEmployees();
+        }
+
+        public EmployeeDTO GetEmployeeById(string id)
+        {
+            return employeeDAO.GetEmployeeById(id);
+        }
+
+        public bool InsertEmployee(EmployeeDTO employee)
+        {
+            return employeeDAO.InsertEmployee(employee);
+        }
+
+        public bool UpdateEmployee(EmployeeDTO employee)
+        {
+            return employeeDAO.UpdateEmployee(employee);
+        }
+
+        public bool DeleteEmployee(string id)
+        {
+            return employeeDAO.DeleteEmployee(id);
+        }
+
+        public List<EmployeeDTO> Search(string keyword)
+        {
+            return employeeDAO.Search(keyword);
+        }
+
+        public string GetNextId()
+        {
+            return employeeDAO.GetNextId();
+        }
     }
 }
