@@ -12,21 +12,17 @@ namespace BadmintonCourtManagement.DTO
         public string CustomerPhone
         {
             get => customerPhone;
-            set
-            {
-                if (value.Length == 10 && System.Text.RegularExpressions.Regex.IsMatch(value, @"^0(9|8|6|5|7|3)\d{8}$"))
-                {
-                    customerPhone = value;
-                }
-                else
-                {
-                    throw new Exception("Số điện thoại không hợp lệ");
-                }
-            }
+            set => customerPhone = value;
         }
         public int IsDeleted { get => isDeleted; set => isDeleted = value; }
 
-        public CustomerDTO() { }
+        public CustomerDTO()
+        {
+            this.CustomerId = "";
+            this.CustomerName = "";
+            this.CustomerPhone = "";
+            this.IsDeleted = 0;
+        }
 
         public CustomerDTO(string customerId, string customerName, string customerPhone, int isDeleted)
         {
