@@ -36,7 +36,7 @@ namespace BadmintonCourtManagement.DAO
         // read
         public List<CustomerDTO> GetAllCustomers()
         {
-            string query = "SELECT * FROM customer WHERE IsDeleted = 0";
+            string query = "SELECT * FROM customer ";
             List<CustomerDTO> customers = new List<CustomerDTO>();
             try
             {
@@ -50,7 +50,9 @@ namespace BadmintonCourtManagement.DAO
                         CustomerId = reader["CustomerId"].ToString(),
                         CustomerName = reader["CustomerName"].ToString(),
                         CustomerPhone = reader["Phone"].ToString(),
-                        IsDeleted = int.Parse(reader["IsDeleted"].ToString())
+                       IsDeleted = Convert.ToBoolean(reader["IsDeleted"]) ? 1 : 0
+
+
                     };
                     customers.Add(customer);
                 }
