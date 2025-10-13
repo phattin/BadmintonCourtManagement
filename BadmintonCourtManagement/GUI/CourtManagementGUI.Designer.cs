@@ -115,7 +115,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.Size = new Size(1146, 73);
             customPanel2.TabIndex = 0;
             // 
-            // pictureBox1
+            // pictureBox1 (reload icon)
             // 
             pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
@@ -128,7 +128,7 @@ namespace BadmintonCourtManagement.GUI
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
-            // customPanel4
+            // customPanel4 (date picker)
             // 
             customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             customPanel4.BackColor = Color.White;
@@ -147,7 +147,7 @@ namespace BadmintonCourtManagement.GUI
             dateTimePicker1.Size = new Size(22, 27);
             dateTimePicker1.TabIndex = 1;
             // 
-            // lblDate
+            // lblDate (label for date picker)
             // 
             lblDate.AutoSize = true;
             lblDate.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -157,7 +157,7 @@ namespace BadmintonCourtManagement.GUI
             lblDate.TabIndex = 2;
             lblDate.Text = "Ngày mở sân";
             // 
-            // customPanel3
+            // customPanel3 (search bar panel)
             // 
             customPanel3.BackColor = Color.White;
             customPanel3.BorderRadius = 30;

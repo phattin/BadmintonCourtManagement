@@ -83,9 +83,20 @@ namespace BadmintonCourtManagement.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Employee {
-            get {
+        internal static System.Drawing.Bitmap Employee
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Employee", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DefaultProductImage
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("../Resources/Img/Product/DefaultProductImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
