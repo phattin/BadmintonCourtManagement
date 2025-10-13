@@ -132,7 +132,7 @@ namespace BadmintonCourtManagement.GUI
             };
 
             // Label trạng thái
-            string statusText = courtDTO.Status == CourtDTO.Option.active ? "Hoạt động" : "Ngừng hoạt động";
+            string statusText = courtDTO.Status == CourtDTO.Option.active ? "Hoạt động" : "Bảo trì";
             var lblStatus = new Label
             {
                 Text = "Trạng thái: " + statusText,
@@ -140,6 +140,16 @@ namespace BadmintonCourtManagement.GUI
                 Font = new Font("Segoe UI", 10, FontStyle.Regular),
                 TextAlign = ContentAlignment.MiddleCenter
             };
+
+            if (courtDTO.Status == CourtDTO.Option.maintenance)
+            {
+                panel.BackColor = Color.FromArgb(255, 176, 163); // màu cam khi bảo trì
+            }
+            else if (courtDTO.Status == CourtDTO.Option.active)
+            {
+                panel.BackColor = Color.FromArgb(200, 250, 214); // xanh lá nhạt
+            }
+
 
             // Panel chứa hai nút
             var buttonPanel = new FlowLayoutPanel
@@ -220,24 +230,24 @@ namespace BadmintonCourtManagement.GUI
             {
                 Form dialog = new Form()
                 {
-                    Text = string.Empty, // bỏ tiêu đề
+                    Text = string.Empty,
                     FormBorderStyle = FormBorderStyle.FixedDialog,
                     StartPosition = FormStartPosition.CenterParent,
-                    Size = new Size(450, 450),
+                    Size = new Size(600, 600),
                     MaximizeBox = false,
                     MinimizeBox = false,
                     ShowInTaskbar = false
                 };
 
-                var editCourtGUI = new EditCourtGUI(courtDTO);
+                var editCourtGUI = new FormCourtGUI("Update", courtDTO.CourtId, currentAccount);
                 editCourtGUI.Dock = DockStyle.Fill;
 
                 dialog.Controls.Add(editCourtGUI);
-
                 dialog.ShowDialog();
 
-                ReloadCourtList(); // reload danh sách sau khi đóng dialog
+                ReloadCourtList();
             };
+
 
 
             buttonPanel.Controls.Add(btnDelete);
@@ -263,6 +273,52 @@ namespace BadmintonCourtManagement.GUI
         private void customPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            Form dialog = new Form()
+            {
+                Text = string.Empty,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                StartPosition = FormStartPosition.CenterParent,
+                Size = new Size(600, 600),
+                MaximizeBox = false,
+                MinimizeBox = false,
+                ShowInTaskbar = false
+            };
+
+            var addCourtGUI = new FormCourtGUI("Insert", courtBUS.GetNextId(), currentAccount);
+            addCourtGUI.Dock = DockStyle.Fill;
+
+            dialog.Controls.Add(addCourtGUI);
+            dialog.ShowDialog();
+
+            ReloadCourtList(); // refresh danh sách sau khi thêm
+        }
+
+        private void statusFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedStatus = statusFilter.SelectedItem.ToString();
+
+            string statusCode = "all";
+            if (selectedStatus == "Hoạt động")
+                statusCode = "active";
+            else if (selectedStatus == "Bảo trì")
+                statusCode = "maintenance";
+
+            List<CourtDTO> filteredCourts = courtBUS.FilterByStatus(statusCode);
+            LoadCourts(filteredCourts);
+        }
+
+        private void customPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            LoadCourts(courtBUS.Search(textBox1.Text));
         }
     }
 }
