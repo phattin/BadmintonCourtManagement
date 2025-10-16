@@ -29,6 +29,8 @@ namespace BadmintonCourtManagement.GUI
             int panelWidth = pProductList.Width;
             int panelHeight = pProductList.Height;
             pProductList.Controls.Clear();
+            pProductList.ColumnStyles.Clear();
+            pProductList.RowStyles.Clear();
             // int columns = panelWidth / 200;
             // int rows = panelHeight / 280;
             int columns = 4; // Số cột cố định
@@ -72,10 +74,10 @@ namespace BadmintonCourtManagement.GUI
             // tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 8F));  // Tên sản phẩm
             // tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));  // Nút
 
-            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));  // Mã sản phẩm
-            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));  // Ảnh sản phẩm
-            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));  // Tên sản phẩm
-            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));  // Nút
+            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));  // Mã sản phẩm
+            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 65F));  // Ảnh sản phẩm
+            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));  // Tên sản phẩm
+            tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));  // Nút
 
             // Label mã sản phẩm
             var lblID = new Label
@@ -127,7 +129,8 @@ namespace BadmintonCourtManagement.GUI
                 Image = productImage,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Fill,
-                Margin = new Padding(10)
+                Margin = new Padding(10),
+                Size = new Size(300, 300)
             };
 
             // ===== AI Generated =====
@@ -135,9 +138,9 @@ namespace BadmintonCourtManagement.GUI
             // Label tên sản phẩm
             var lblName = new Label
             {
-                Text = "Tên SP: " + productDTO.ProductName,
+                Text = productDTO.ProductName,
                 Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 10, FontStyle.Regular),
+                Font = new Font("Segoe UI", 15, FontStyle.Regular),
                 TextAlign = ContentAlignment.MiddleCenter
             };
 

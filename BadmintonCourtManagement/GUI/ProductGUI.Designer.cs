@@ -48,7 +48,8 @@
             titlePanel = new Panel();
             titleText = new Label();
             bigPanel = new Panel();
-            bodyPanel = new CustomPanel();
+            bodyPanel = new TableLayoutPanel();
+            productListPanel = new Panel();
             pProductList = new TableLayoutPanel();
             pageButtonPanel.SuspendLayout();
             cardList.SuspendLayout();
@@ -327,9 +328,12 @@
             // 
             bodyPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             bodyPanel.BackColor = Color.FromArgb(239, 248, 230);
-            bodyPanel.BorderRadius = 20;
-            bodyPanel.Controls.Add(pProductList);
+            bodyPanel.ColumnCount = 1;
+            bodyPanel.RowCount = 2;
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 90F));
             bodyPanel.Controls.Add(toolBar);
+            bodyPanel.Controls.Add(productListPanel);
             bodyPanel.Location = new Point(56, 79);
             bodyPanel.Margin = new Padding(3, 4, 3, 4);
             bodyPanel.Name = "bodyPanel";
@@ -338,7 +342,17 @@
             // 
             // pProductList
             // 
-            pProductList.AutoScroll = true;
+            productListPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            productListPanel.AutoScroll = true;
+            productListPanel.Size = new Size(1059, 621);
+            productListPanel.Location = new Point(43, 101);
+            productListPanel.Margin = new Padding(2);
+            productListPanel.Controls.Add(pProductList);
+            productListPanel.BackColor = Color.Transparent;
+            //
+            // productListPanel
+            //
+            // pProductList.AutoScroll = true;
             pProductList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pProductList.ColumnCount = 4;
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
@@ -351,7 +365,7 @@
             pProductList.RowCount = 2;
             pProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             pProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            pProductList.Size = new Size(1059, 621);
+            pProductList.Dock = DockStyle.Fill;
             // 
             // ProductGUI
             // 
@@ -401,7 +415,8 @@
 
         // from court management GUI
         private Panel bigPanel;
-        private CustomPanel bodyPanel;
+        private TableLayoutPanel bodyPanel;
+        private Panel productListPanel;
         private TableLayoutPanel pProductList;
         private CustomPanel toolBar;
         private CustomPanel searchPanel;
