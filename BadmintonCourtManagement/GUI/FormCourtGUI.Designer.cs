@@ -1,6 +1,6 @@
 ﻿namespace BadmintonCourtManagement.GUI
 {
-    partial class EditCourtGUI
+    partial class FormCourtGUI
     {
         /// <summary> 
         /// Required designer variable.
@@ -31,19 +31,21 @@
             Title = new Label();
             lblCourtName = new Label();
             lblCourtSTT = new Label();
-            textBox1 = new TextBox();
-            comboBox1 = new ComboBox();
+            txtCourtName = new TextBox();
+            Status = new ComboBox();
             btnAccept = new Button();
             btnCancel = new Button();
+            lblCourtID = new Label();
+            CourtID = new Label();
             SuspendLayout();
             // 
             // Title
             // 
             Title.AutoSize = true;
             Title.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Title.Location = new Point(146, 29);
+            Title.Location = new Point(128, 22);
             Title.Name = "Title";
-            Title.Size = new Size(123, 47);
+            Title.Size = new Size(98, 38);
             Title.TabIndex = 0;
             Title.Text = "Sửa sân";
             Title.UseCompatibleTextRendering = true;
@@ -52,9 +54,9 @@
             // 
             lblCourtName.AutoSize = true;
             lblCourtName.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCourtName.Location = new Point(42, 100);
+            lblCourtName.Location = new Point(28, 138);
             lblCourtName.Name = "lblCourtName";
-            lblCourtName.Size = new Size(91, 37);
+            lblCourtName.Size = new Size(73, 30);
             lblCourtName.TabIndex = 1;
             lblCourtName.Text = "Tên sân";
             lblCourtName.UseCompatibleTextRendering = true;
@@ -63,37 +65,39 @@
             // 
             lblCourtSTT.AutoSize = true;
             lblCourtSTT.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCourtSTT.Location = new Point(42, 177);
+            lblCourtSTT.Location = new Point(28, 190);
             lblCourtSTT.Name = "lblCourtSTT";
-            lblCourtSTT.Size = new Size(118, 37);
+            lblCourtSTT.Size = new Size(94, 30);
             lblCourtSTT.TabIndex = 2;
             lblCourtSTT.Text = "Trạng thái";
             lblCourtSTT.UseCompatibleTextRendering = true;
             // 
-            // textBox1
+            // txtCourtName
             // 
-            textBox1.Location = new Point(172, 100);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(209, 28);
-            textBox1.TabIndex = 3;
+            txtCourtName.Location = new Point(165, 138);
+            txtCourtName.Margin = new Padding(3, 2, 3, 2);
+            txtCourtName.Multiline = true;
+            txtCourtName.Name = "txtCourtName";
+            txtCourtName.Size = new Size(183, 22);
+            txtCourtName.TabIndex = 3;
             // 
-            // comboBox1
+            // Status
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(172, 183);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(209, 28);
-            comboBox1.TabIndex = 4;
-            //comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            Status.FormattingEnabled = true;
+            Status.Location = new Point(165, 190);
+            Status.Margin = new Padding(3, 2, 3, 2);
+            Status.Name = "Status";
+            Status.Size = new Size(183, 23);
+            Status.TabIndex = 4;
             // 
             // btnAccept
             // 
             btnAccept.BackColor = Color.IndianRed;
             btnAccept.ForeColor = Color.White;
-            btnAccept.Location = new Point(103, 270);
+            btnAccept.Location = new Point(81, 262);
+            btnAccept.Margin = new Padding(3, 2, 3, 2);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(106, 40);
+            btnAccept.Size = new Size(93, 30);
             btnAccept.TabIndex = 5;
             btnAccept.Text = "Xác nhận";
             btnAccept.UseVisualStyleBackColor = false;
@@ -103,27 +107,53 @@
             // 
             btnCancel.BackColor = Color.DimGray;
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(231, 270);
+            btnCancel.Location = new Point(203, 262);
+            btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(106, 40);
+            btnCancel.Size = new Size(93, 30);
             btnCancel.TabIndex = 6;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
             // 
-            // EditCourtGUI
+            // lblCourtID
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            lblCourtID.AutoSize = true;
+            lblCourtID.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCourtID.Location = new Point(28, 78);
+            lblCourtID.Name = "lblCourtID";
+            lblCourtID.Size = new Size(68, 30);
+            lblCourtID.TabIndex = 7;
+            lblCourtID.Text = "Mã sân";
+            lblCourtID.UseCompatibleTextRendering = true;
+            // 
+            // CourtID
+            // 
+            CourtID.AutoSize = true;
+            CourtID.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            CourtID.Location = new Point(165, 78);
+            CourtID.Name = "CourtID";
+            CourtID.Size = new Size(68, 30);
+            CourtID.TabIndex = 8;
+            CourtID.Text = "C00001";
+            CourtID.UseCompatibleTextRendering = true;
+            // 
+            // FormCourtGUI
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(CourtID);
+            Controls.Add(lblCourtID);
             Controls.Add(btnCancel);
             Controls.Add(btnAccept);
-            Controls.Add(comboBox1);
-            Controls.Add(textBox1);
+            Controls.Add(Status);
+            Controls.Add(txtCourtName);
             Controls.Add(lblCourtSTT);
             Controls.Add(lblCourtName);
             Controls.Add(Title);
-            Name = "EditCourtGUI";
-            Size = new Size(419, 417);
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "FormCourtGUI";
+            Size = new Size(367, 383);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -133,9 +163,11 @@
         private Label Title;
         private Label lblCourtName;
         private Label lblCourtSTT;
-        private TextBox textBox1;
-        private ComboBox comboBox1;
+        private TextBox txtCourtName;
+        private ComboBox Status;
         private Button btnAccept;
         private Button btnCancel;
+        private Label lblCourtID;
+        private Label CourtID;
     }
 }
