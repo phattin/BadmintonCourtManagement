@@ -121,7 +121,7 @@ namespace BadmintonCourtManagement.DAO
                         CustomerId = reader["CustomerId"].ToString(),
                         CustomerName = reader["CustomerName"].ToString(),
                         CustomerPhone = reader["Phone"].ToString(),
-                        IsDeleted = int.Parse(reader["IsDeleted"].ToString())
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
                     };
                     customers.Add(customer);
                 }
