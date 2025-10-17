@@ -1,5 +1,4 @@
 ﻿using BadmintonCourtManagement.BUS;
-using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
 using System;
 using System.Collections.Generic;
@@ -69,11 +68,6 @@ namespace BadmintonCourtManagement.GUI
                 RowCount = 4 // Thông tin: Id, Img, Name, Nút
             };
 
-            // tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 6F));  // Mã sản phẩm
-            // tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 62F));  // Ảnh sản phẩm
-            // tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 8F));  // Tên sản phẩm
-            // tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));  // Nút
-
             tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));  // Mã sản phẩm
             tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 65F));  // Ảnh sản phẩm
             tlProduct.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));  // Tên sản phẩm
@@ -90,15 +84,6 @@ namespace BadmintonCourtManagement.GUI
 
             // ===== AI Generated =====
 
-            // PictureBox ảnh sản phẩm (giả sử đã có ảnh trong database)
-            // var imagePath = System.IO.Path.Combine(
-            //     Application.StartupPath,
-            //     "Resources",
-            //     "Img",
-            //     "Product",
-            //     productDTO.ProductImg ?? "DefaultProductImage.jpg"
-            // );
-
             string imageFileName = string.IsNullOrWhiteSpace(productDTO.ProductImg) ? 
                 "DefaultProductImage.jpg" : productDTO.ProductImg;
             string imagePath = string.Concat("Resources\\Img\\Product\\", imageFileName);
@@ -106,7 +91,7 @@ namespace BadmintonCourtManagement.GUI
             // MessageBox.Show(productDTO.ProductImg);
             // MessageBox.Show(imagePath);
             Image productImage;
-            try 
+            try
             {
                 if (System.IO.File.Exists(imagePath))
                 {
@@ -123,12 +108,19 @@ namespace BadmintonCourtManagement.GUI
                 // Double fallback in case of any file loading issues
                 productImage = Properties.Resources.DefaultProductImage;
             }
+            // check if productImage is null
+            if (productImage == null)
+            {
+                productImage = Properties.Resources.DefaultProductImage;
+            }
+
+            Bitmap resizedImage = new Bitmap(productImage, new Size(300, 300));
 
             var pictureBox = new PictureBox
             {
-                Image = productImage,
+                Image = (Image)resizedImage ?? productImage,
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Fill,
+                Dock = DockStyle.Top,
                 Margin = new Padding(10),
                 Size = new Size(300, 300)
             };
@@ -161,7 +153,7 @@ namespace BadmintonCourtManagement.GUI
             var btnDetail = new Button
             {
                 Text = "Chi tiết",
-                Width = 70,
+                Width = 100,
                 Height = 35,
                 BackColor = Color.FromArgb(64, 64, 64),
                 ForeColor = Color.White,

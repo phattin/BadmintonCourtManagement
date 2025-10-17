@@ -340,17 +340,18 @@
             bodyPanel.Size = new Size(1146, 527);
             bodyPanel.TabIndex = 0;
             // 
-            // pProductList
+            // productListPanel
             // 
             productListPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             productListPanel.AutoScroll = true;
-            productListPanel.Size = new Size(1059, 621);
-            productListPanel.Location = new Point(43, 101);
-            productListPanel.Margin = new Padding(2);
+            productListPanel.Size = new Size(927, 370);
+            // productListPanel.Location = new Point(43, 101);
+            productListPanel.Location = new Point(38, 76);
+            productListPanel.Margin = new Padding(2, 4, 2, 4);
             productListPanel.Controls.Add(pProductList);
             productListPanel.BackColor = Color.Transparent;
             //
-            // productListPanel
+            // pProductList
             //
             // pProductList.AutoScroll = true;
             pProductList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -359,7 +360,6 @@
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pProductList.Location = new Point(43, 101);
             pProductList.Margin = new Padding(2);
             pProductList.Name = "pProductList";
             pProductList.RowCount = 2;
