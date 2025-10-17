@@ -112,7 +112,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.Size = new Size(1003, 55);
             customPanel2.TabIndex = 0;
             // 
-            // pictureBox1
+            // pictureBox1 (reload icon)
             // 
             pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
@@ -124,7 +124,7 @@ namespace BadmintonCourtManagement.GUI
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
-            // customPanel4
+            // customPanel4 (date picker)
             // 
             customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             customPanel4.BackColor = Color.White;
@@ -148,7 +148,7 @@ namespace BadmintonCourtManagement.GUI
             statusFilter.SelectedItem = "Tất cả";
             statusFilter.SelectedIndexChanged += statusFilter_SelectedIndexChanged;
             // 
-            // customPanel3
+            // customPanel3 (search bar panel)
             // 
             customPanel3.BackColor = Color.White;
             customPanel3.BorderRadius = 30;

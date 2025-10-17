@@ -24,6 +24,7 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             CreateMenuButtons();
+            OpenChildPanel(new ProductGUI(currentAccount));
         }
 
         private void CreateMenuButtons()
@@ -35,6 +36,7 @@ namespace BadmintonCourtManagement.GUI
                 { "Phân quyền", Permission_Click },
                 { "Tài khoản", Account_Click },
                 { "Nhân viên", Employee_Click },
+                {"Sản phẩm", Product_Click},
                 { "Hóa đơn", Bill_Click },
                 { "Bán hàng", Sell_Click },
                 { "Kho và Nhập hàng", Storage_Click },
@@ -112,6 +114,11 @@ namespace BadmintonCourtManagement.GUI
         private void Employee_Click(object sender, EventArgs e)
         {
             OpenChildPanel(new EmployeeGUI(currentAccount));
+        }
+
+        private void Product_Click(object sender, EventArgs e)
+        {
+            OpenChildPanel(new ProductGUI(currentAccount));
         }
 
         private void Statistics_Click(object sender, EventArgs e)
