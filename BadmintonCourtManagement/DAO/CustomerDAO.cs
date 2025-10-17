@@ -36,7 +36,7 @@ namespace BadmintonCourtManagement.DAO
         // read
         public List<CustomerDTO> GetAllCustomers()
         {
-            string query = "SELECT * FROM customer ";
+            string query = "SELECT * FROM customer WHERE IsDeleted = 0";
             List<CustomerDTO> customers = new List<CustomerDTO>();
             try
             {
@@ -184,5 +184,34 @@ namespace BadmintonCourtManagement.DAO
             }
             return result > 0;
         }
+
+        public string GetNextId()
+        {
+            string query = "SELECT CustomerId FROM customer ORDER BY CustomerId DESC LIMIT 1";
+            string nextId = "CUO00001";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    string lastId = reader["CustomerId"].ToString();
+                    int numericPart = int.Parse(lastId.Substring(2));
+                    nextId = "CU" + (numericPart + 1).ToString("D5");
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lấy ID sân tiếp theo: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return nextId;
+        } 
     }
 }

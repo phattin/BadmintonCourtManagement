@@ -118,5 +118,10 @@ namespace BadmintonCourtManagement.GUI
             if (parentForm != null)
                 parentForm.Close();
         }
+
+        private void lblCourtSTT_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
