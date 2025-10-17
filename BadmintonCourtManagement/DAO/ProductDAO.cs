@@ -23,13 +23,13 @@ namespace BadmintonCourtManagement.DAO
                 {
                     list.Add(new ProductDTO()
                     {
-                        ProductId = reader["ProductId"].ToString(),
-                        ProductName = reader["ProductName"].ToString(),
-                        Producing = reader["Producing"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
-                        BrandId = reader["BrandId"].ToString(),
-                        TypeId = reader["TypeId"].ToString(),
-                        IDeleted = Convert.ToInt32(reader["IsDeleted"])
+                        ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
+                        ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
+                        Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,
+                        BrandId = reader["BrandId"]?.ToString() ?? string.Empty,
+                        TypeId = reader["TypeId"]?.ToString() ?? string.Empty,
+                        IsDeleted = reader["IsDeleted"] != DBNull.Value ? Convert.ToInt32(reader["IsDeleted"]) : 0
                     });
                 }
                 reader.Close();
@@ -44,15 +44,15 @@ namespace BadmintonCourtManagement.DAO
         // Thêm sản phẩm mới
         public bool InsertProduct(ProductDTO product)
         {
-            string query = "INSERT INTO product (ProductId, ProductName, Producing, Quantity, BrandId, TypeId, IsDeleted) " +
-                           "VALUES (@ProductId, @ProductName, @Producing, @Quantity, @BrandId, @TypeId, 0)";
+            string query = "INSERT INTO product (ProductId, ProductName, ProductImg, Quantity, BrandId, TypeId, IsDeleted) " +
+                           "VALUES (@ProductId, @ProductName, @ProductImg, @Quantity, @BrandId, @TypeId, 0)";
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@ProductId", product.ProductId);
                 cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
-                cmd.Parameters.AddWithValue("@Producing", product.Producing);
+                cmd.Parameters.AddWithValue("@ProductImg", product.ProductImg);
                 cmd.Parameters.AddWithValue("@Quantity", product.Quantity);
                 cmd.Parameters.AddWithValue("@BrandId", product.BrandId);
                 cmd.Parameters.AddWithValue("@TypeId", product.TypeId);
@@ -76,7 +76,7 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@ProductId", product.ProductId);
                 cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
-                cmd.Parameters.AddWithValue("@Producing", product.Producing);
+                cmd.Parameters.AddWithValue("@ProductImg", product.ProductImg);
                 cmd.Parameters.AddWithValue("@Quantity", product.Quantity);
                 cmd.Parameters.AddWithValue("@BrandId", product.BrandId);
                 cmd.Parameters.AddWithValue("@TypeId", product.TypeId);
@@ -124,11 +124,11 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ProductId = reader["ProductId"].ToString(),
                         ProductName = reader["ProductName"].ToString(),
-                        Producing = reader["Producing"].ToString(),
-                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        ProductImg = reader["ProductImg"].ToString(),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
                         BrandId = reader["BrandId"].ToString(),
                         TypeId = reader["TypeId"].ToString(),
-                        IDeleted = Convert.ToInt32(reader["IsDeleted"])
+                        IsDeleted = int.Parse(reader["IsDeleted"].ToString())
                     };
                 }
                 reader.Close();
