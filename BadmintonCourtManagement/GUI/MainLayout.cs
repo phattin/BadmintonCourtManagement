@@ -20,11 +20,10 @@ namespace BadmintonCourtManagement.GUI
         private Panel menuPanel, contentPanel;
         public MainLayout(AccountDTO account)
         {
-            AccountDTO accountCurrent = account;
+            this.currentAccount = account;
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             CreateMenuButtons();
-            OpenChildPanel(new ProductGUI(currentAccount));
         }
 
         private void CreateMenuButtons()

@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PermissionGUI));
             draftPanel = new Panel();
+            extraNextButton = new Button();
+            nextButton = new Button();
+            extraPreviousButton = new Button();
+            previousButton = new Button();
             btnInsert = new Label();
             pListBG = new CustomPanel();
             pList = new TableLayoutPanel();
@@ -47,14 +51,76 @@
             // 
             // draftPanel
             // 
+            draftPanel.Controls.Add(extraNextButton);
+            draftPanel.Controls.Add(nextButton);
+            draftPanel.Controls.Add(extraPreviousButton);
+            draftPanel.Controls.Add(previousButton);
             draftPanel.Controls.Add(btnInsert);
             draftPanel.Controls.Add(pListBG);
             draftPanel.Controls.Add(lblTitle);
             draftPanel.Dock = DockStyle.Fill;
             draftPanel.Location = new Point(0, 0);
             draftPanel.Name = "draftPanel";
-            draftPanel.Size = new Size(915, 490);
+            draftPanel.Size = new Size(915, 545);
             draftPanel.TabIndex = 0;
+            // 
+            // extraNextButton
+            // 
+            extraNextButton.Anchor = AnchorStyles.Bottom;
+            extraNextButton.BackColor = Color.Transparent;
+            extraNextButton.Cursor = Cursors.Hand;
+            extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
+            extraNextButton.Location = new Point(549, 489);
+            extraNextButton.Name = "extraNextButton";
+            extraNextButton.Size = new Size(53, 53);
+            extraNextButton.TabIndex = 18;
+            extraNextButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            extraNextButton.UseVisualStyleBackColor = false;
+            extraNextButton.Click += extraNextButton_Click;
+            // 
+            // nextButton
+            // 
+            nextButton.Anchor = AnchorStyles.Bottom;
+            nextButton.BackColor = Color.Transparent;
+            nextButton.Cursor = Cursors.Hand;
+            nextButton.Image = (Image)resources.GetObject("nextButton.Image");
+            nextButton.Location = new Point(474, 489);
+            nextButton.Name = "nextButton";
+            nextButton.Size = new Size(53, 53);
+            nextButton.TabIndex = 17;
+            nextButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            nextButton.UseVisualStyleBackColor = false;
+            nextButton.Click += nextButton_Click;
+            // 
+            // extraPreviousButton
+            // 
+            extraPreviousButton.Anchor = AnchorStyles.Bottom;
+            extraPreviousButton.BackColor = Color.Transparent;
+            extraPreviousButton.Cursor = Cursors.Hand;
+            extraPreviousButton.ForeColor = Color.Transparent;
+            extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
+            extraPreviousButton.Location = new Point(295, 489);
+            extraPreviousButton.Name = "extraPreviousButton";
+            extraPreviousButton.Size = new Size(53, 53);
+            extraPreviousButton.TabIndex = 16;
+            extraPreviousButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            extraPreviousButton.UseVisualStyleBackColor = false;
+            extraPreviousButton.Click += extraPreviousButton_Click;
+            // 
+            // previousButton
+            // 
+            previousButton.Anchor = AnchorStyles.Bottom;
+            previousButton.BackColor = Color.Transparent;
+            previousButton.BackgroundImageLayout = ImageLayout.Stretch;
+            previousButton.Cursor = Cursors.Hand;
+            previousButton.Image = (Image)resources.GetObject("previousButton.Image");
+            previousButton.Location = new Point(369, 489);
+            previousButton.Name = "previousButton";
+            previousButton.Size = new Size(53, 53);
+            previousButton.TabIndex = 15;
+            previousButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            previousButton.UseVisualStyleBackColor = false;
+            previousButton.Click += previousButton_Click;
             // 
             // btnInsert
             // 
@@ -83,7 +149,7 @@
             pListBG.Controls.Add(pFilter);
             pListBG.Location = new Point(31, 113);
             pListBG.Name = "pListBG";
-            pListBG.Size = new Size(848, 336);
+            pListBG.Size = new Size(848, 373);
             pListBG.TabIndex = 6;
             // 
             // pList
@@ -99,7 +165,7 @@
             pList.RowCount = 2;
             pList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             pList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            pList.Size = new Size(804, 175);
+            pList.Size = new Size(804, 250);
             pList.TabIndex = 5;
             pList.Paint += pList_Paint_1;
             // 
@@ -173,7 +239,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(draftPanel);
             Name = "PermissionGUI";
-            Size = new Size(915, 490);
+            Size = new Size(915, 545);
             draftPanel.ResumeLayout(false);
             draftPanel.PerformLayout();
             pListBG.ResumeLayout(false);
@@ -195,5 +261,9 @@
         private PictureBox btnReset;
         private TableLayoutPanel pList;
         private Label btnInsert;
+        private Button previousButton;
+        private Button extraPreviousButton;
+        private Button nextButton;
+        private Button extraNextButton;
     }
 }
