@@ -9,7 +9,7 @@ namespace BadmintonCourtManagement.DAO
         // Lấy tất cả quyền
         public List<PermissionDTO> GetAllPermissions()
         {
-            string query = "SELECT * FROM permission";
+            string query = "SELECT * FROM permission ORDER BY PermissionId";
             List<PermissionDTO> list = new List<PermissionDTO>();
             try
             {
@@ -155,7 +155,7 @@ namespace BadmintonCourtManagement.DAO
 
         public List<PermissionDTO> Search(string keyword)
         {
-            string query = "SELECT * FROM permission WHERE PermissionId LIKE @Keyword OR PermissionName LIKE @Keyword";
+            string query = "SELECT * FROM permission WHERE PermissionId LIKE @Keyword OR PermissionName LIKE @Keyword ORDER BY PermissionId";
             List<PermissionDTO> list = new List<PermissionDTO>();
             try
             {
