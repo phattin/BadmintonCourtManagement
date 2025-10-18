@@ -1,5 +1,6 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using System.Runtime.CompilerServices;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -7,11 +8,18 @@ namespace BadmintonCourtManagement.GUI
     {
         private AccountDTO currentAccount;
         private PermissionBUS permissionBUS = new PermissionBUS();
+        private List<PermissionDTO> currentList = new List<PermissionDTO>();
+        private int currentPage;
+        private int itemsPerPage;
+        private int totalPages;
         public PermissionGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
             this.currentAccount = currentAccount;
-            LoadPermission(permissionBUS.GetAllPermissions());
+            currentPage = 1;
+            itemsPerPage = 8;
+            totalPages = 1;
+            ReloadList();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -21,14 +29,42 @@ namespace BadmintonCourtManagement.GUI
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            LoadPermission(permissionBUS.Search(txtSearch.Text));
+            currentList = permissionBUS.Search(txtSearch.Text);
+            LoadPermission(currentList, 1);
         }
 
-        private void LoadPermission(List<PermissionDTO> danhSachSan)
+        private void LoadPermission(List<PermissionDTO> danhSach, int pageNumber)
         {
+            totalPages = (int)Math.Ceiling((double)danhSach.Count / itemsPerPage);
+            if (totalPages == 0) totalPages = 1;
+            if (totalPages == 1)
+            {
+                previousButton.Visible = false;
+                nextButton.Visible = false;
+                extraPreviousButton.Visible = false;
+                extraNextButton.Visible = false;
+            }
+            else
+            {
+                previousButton.Visible = true;
+                nextButton.Visible = true;
+                extraPreviousButton.Visible = true;
+                extraNextButton.Visible = true;
+            }
+
+            if (pageNumber < 1) pageNumber = 1;
+            if (pageNumber > totalPages) pageNumber = totalPages;
+            currentPage = pageNumber;
+
+            int startIndex = (pageNumber - 1) * itemsPerPage;
+            int endIndex = Math.Min(startIndex + itemsPerPage, danhSach.Count);
+            var pageData = danhSach.GetRange(startIndex, endIndex - startIndex);
+
             pList.Controls.Clear();
             pList.ColumnCount = 4;
             pList.RowCount = 2;
+            pList.ColumnStyles.Clear();
+            pList.RowStyles.Clear();
 
             for (int i = 0; i < 4; i++)
                 pList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
@@ -36,7 +72,7 @@ namespace BadmintonCourtManagement.GUI
                 pList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
             int index = 0;
-            foreach (PermissionDTO permissionDTO in danhSachSan)
+            foreach (PermissionDTO permissionDTO in pageData)
             {
                 var panel = CreateCourtPanel(permissionDTO);
                 int row = index / 4;
@@ -44,6 +80,16 @@ namespace BadmintonCourtManagement.GUI
                 pList.Controls.Add(panel, col, row);
                 index++;
             }
+
+            UpdatePaginationButtons();
+        }
+
+        private void UpdatePaginationButtons()
+        {
+            previousButton.Enabled = currentPage > 1;
+            extraPreviousButton.Enabled = currentPage > 1;
+            nextButton.Enabled = currentPage < totalPages;
+            extraNextButton.Enabled = currentPage < totalPages;
         }
 
         private void pList_Paint(object sender, PaintEventArgs e)
@@ -198,13 +244,36 @@ namespace BadmintonCourtManagement.GUI
 
         private void ReloadList()
         {
-            List<PermissionDTO> pqList = permissionBUS.GetAllPermissions();
-            LoadPermission(pqList);
+            currentList = permissionBUS.GetAllPermissions();
+            LoadPermission(currentList, 1);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            txtSearch.Text = "";
             ReloadList();
+        }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+                LoadPermission(currentList, currentPage - 1);
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+                LoadPermission(currentList, currentPage + 1);
+        }
+
+        private void extraPreviousButton_Click(object sender, EventArgs e)
+        {
+            LoadPermission(currentList, 1);
+        }
+
+        private void extraNextButton_Click(object sender, EventArgs e)
+        {
+            LoadPermission(currentList, totalPages);
         }
     }
 }
