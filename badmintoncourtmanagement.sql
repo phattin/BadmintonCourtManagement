@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2025 at 11:04 AM
+-- Generation Time: Oct 17, 2025 at 02:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -132,7 +132,8 @@ CREATE TABLE `brand` (
 INSERT INTO `brand` (`BrandId`, `BrandName`) VALUES
 ('BR00001', 'Yonex'),
 ('BR00002', 'Victor'),
-('BR00003', 'Li-Ning');
+('BR00003', 'Li-Ning'),
+('BR00004', 'Kumpoo');
 
 -- --------------------------------------------------------
 
@@ -386,16 +387,14 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ProductId`, `ProductName`, `ProductImg`, `Quantity`, `BrandId`, `TypeId`, `IsDeleted`) VALUES
-('PD00001', 'Yonex Astrox 99', '', 12, 'BR00001', 'TP00001', 0),
-('PD00002', 'Yonex Nanoflare 700', '', 15, 'BR00001', 'TP00001', 0),
-('PD00003', 'Victor Thruster K', '', 10, 'BR00002', 'TP00001', 0),
-('PD00004', 'Victor BraveSword 12', '', 8, 'BR00002', 'TP00001', 0),
-('PD00005', 'Li-Ning TurboCharging 75', '', 9, 'BR00003', 'TP00001', 0),
-('PD00006', 'Yonex Aerosensa Feather (12pcs)', '', 50, 'BR00001', 'TP00002', 0),
+('PD00001', 'Yonex Astrox 99', 'yonex-astrox-99_2.png', 12, 'BR00001', 'TP00001', 0),
+('PD00002', 'Yonex Nanoflare 700', 'yonex-nanoflare-700.png', 15, 'BR00001', 'TP00001', 0),
+('PD00003', 'Kumpoo Power Control E88L', 'kumpoo-power-control-e88l.png', 10, 'BR00004', 'TP00001', 0),
+('PD00004', 'Yonex Nanoflare 1000', 'yonex-nanoflare-1000z.png', 8, 'BR00001', 'TP00001', 0),
+('PD00005', 'Yonex Astrox 100 Tour VA', 'yonex-astrox-100-tour-va.png', 9, 'BR00001', 'TP00001', 0),
+('PD00006', 'Yonex Aerosensa Feather (12pcs)', 'yonex-aerosensa-20.png', 50, 'BR00001', 'TP00002', 0),
 ('PD00007', 'Victor Master Shuttle (12pcs)', '', 40, 'BR00002', 'TP00002', 0),
-('PD00008', 'Li-Ning Professional Shuttle (12pcs)', '', 35, 'BR00003', 'TP00002', 0),
-('PD00009', 'Yonex Super Grip', '', 120, 'BR00001', 'TP00003', 0),
-('PD00010', 'Victor Shock Absorb Grip', '', 100, 'BR00002', 'TP00003', 0);
+('PD00008', 'Li-Ning Professional Shuttle (12pcs)', '', 35, 'BR00003', 'TP00002', 0);
 
 -- --------------------------------------------------------
 
