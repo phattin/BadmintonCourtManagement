@@ -24,7 +24,6 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             CreateMenuButtons();
-            OpenChildPanel(new ProductGUI(currentAccount));
         }
 
         private void CreateMenuButtons()
