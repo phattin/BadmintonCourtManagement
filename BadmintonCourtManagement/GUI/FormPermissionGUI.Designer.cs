@@ -105,8 +105,9 @@
             draftPanel.Controls.Add(lblTitle);
             draftPanel.Dock = DockStyle.Fill;
             draftPanel.Location = new Point(0, 0);
+            draftPanel.Margin = new Padding(2, 2, 2, 2);
             draftPanel.Name = "draftPanel";
-            draftPanel.Size = new Size(900, 850);
+            draftPanel.Size = new Size(720, 680);
             draftPanel.TabIndex = 0;
             draftPanel.Paint += draftPanel_Paint;
             // 
@@ -117,11 +118,10 @@
             btnCancel.Cursor = Cursors.Hand;
             btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(483, 778);
-            btnCancel.Margin = new Padding(4, 0, 4, 0);
+            btnCancel.Location = new Point(386, 622);
             btnCancel.Name = "btnCancel";
-            btnCancel.Padding = new Padding(12, 14, 12, 16);
-            btnCancel.Size = new Size(127, 58);
+            btnCancel.Padding = new Padding(10, 11, 10, 13);
+            btnCancel.Size = new Size(102, 46);
             btnCancel.TabIndex = 9;
             btnCancel.Text = "Hủy";
             btnCancel.TextAlign = ContentAlignment.MiddleCenter;
@@ -135,11 +135,10 @@
             btnConfirm.Cursor = Cursors.Hand;
             btnConfirm.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnConfirm.ForeColor = Color.White;
-            btnConfirm.Location = new Point(260, 778);
-            btnConfirm.Margin = new Padding(4, 0, 4, 0);
+            btnConfirm.Location = new Point(208, 622);
             btnConfirm.Name = "btnConfirm";
-            btnConfirm.Padding = new Padding(12, 14, 12, 16);
-            btnConfirm.Size = new Size(123, 58);
+            btnConfirm.Padding = new Padding(10, 11, 10, 13);
+            btnConfirm.Size = new Size(102, 47);
             btnConfirm.TabIndex = 8;
             btnConfirm.Text = "Xác nhận";
             btnConfirm.TextAlign = ContentAlignment.MiddleCenter;
@@ -205,7 +204,8 @@
             tPermission.Controls.Add(label2, 0, 12);
             tPermission.Controls.Add(chbViewBooking, 1, 1);
             tPermission.Controls.Add(chbViewCourt, 1, 2);
-            tPermission.Location = new Point(42, 130);
+            tPermission.Location = new Point(34, 104);
+            tPermission.Margin = new Padding(2, 2, 2, 2);
             tPermission.Name = "tPermission";
             tPermission.RowCount = 13;
             tPermission.RowStyles.Add(new RowStyle(SizeType.Percent, 7.69230747F));
@@ -221,7 +221,7 @@
             tPermission.RowStyles.Add(new RowStyle(SizeType.Percent, 7.69230747F));
             tPermission.RowStyles.Add(new RowStyle(SizeType.Percent, 7.69230747F));
             tPermission.RowStyles.Add(new RowStyle(SizeType.Percent, 7.69230747F));
-            tPermission.Size = new Size(806, 633);
+            tPermission.Size = new Size(645, 506);
             tPermission.TabIndex = 5;
             // 
             // chbViewStatistic
@@ -232,9 +232,10 @@
             chbViewStatistic.BackgroundImageLayout = ImageLayout.None;
             chbViewStatistic.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewStatistic.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewStatistic.Location = new Point(362, 584);
+            chbViewStatistic.Location = new Point(290, 465);
+            chbViewStatistic.Margin = new Padding(2, 2, 2, 2);
             chbViewStatistic.Name = "chbViewStatistic";
-            chbViewStatistic.Size = new Size(40, 40);
+            chbViewStatistic.Size = new Size(32, 32);
             chbViewStatistic.TabIndex = 61;
             chbViewStatistic.Tag = "ViewStatistic";
             chbViewStatistic.UseVisualStyleBackColor = false;
@@ -247,9 +248,10 @@
             chbDeletePermission.BackgroundImageLayout = ImageLayout.None;
             chbDeletePermission.CheckAlign = ContentAlignment.MiddleCenter;
             chbDeletePermission.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbDeletePermission.Location = new Point(724, 532);
+            chbDeletePermission.Location = new Point(579, 421);
+            chbDeletePermission.Margin = new Padding(2, 2, 2, 2);
             chbDeletePermission.Name = "chbDeletePermission";
-            chbDeletePermission.Size = new Size(40, 40);
+            chbDeletePermission.Size = new Size(32, 32);
             chbDeletePermission.TabIndex = 60;
             chbDeletePermission.Tag = "DeletePermission";
             chbDeletePermission.UseVisualStyleBackColor = false;
@@ -262,9 +264,10 @@
             chbUpdatePermission.BackgroundImageLayout = ImageLayout.None;
             chbUpdatePermission.CheckAlign = ContentAlignment.MiddleCenter;
             chbUpdatePermission.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbUpdatePermission.Location = new Point(602, 532);
+            chbUpdatePermission.Location = new Point(482, 421);
+            chbUpdatePermission.Margin = new Padding(2, 2, 2, 2);
             chbUpdatePermission.Name = "chbUpdatePermission";
-            chbUpdatePermission.Size = new Size(40, 40);
+            chbUpdatePermission.Size = new Size(32, 32);
             chbUpdatePermission.TabIndex = 59;
             chbUpdatePermission.Tag = "UpdatePermission";
             chbUpdatePermission.UseVisualStyleBackColor = false;
@@ -277,9 +280,10 @@
             chbInsertPermission.BackgroundImageLayout = ImageLayout.None;
             chbInsertPermission.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertPermission.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertPermission.Location = new Point(482, 532);
+            chbInsertPermission.Location = new Point(386, 421);
+            chbInsertPermission.Margin = new Padding(2, 2, 2, 2);
             chbInsertPermission.Name = "chbInsertPermission";
-            chbInsertPermission.Size = new Size(40, 40);
+            chbInsertPermission.Size = new Size(32, 32);
             chbInsertPermission.TabIndex = 58;
             chbInsertPermission.Tag = "InsertPermission";
             chbInsertPermission.UseVisualStyleBackColor = false;
@@ -292,9 +296,10 @@
             chbViewPermission.BackgroundImageLayout = ImageLayout.None;
             chbViewPermission.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewPermission.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewPermission.Location = new Point(362, 532);
+            chbViewPermission.Location = new Point(290, 421);
+            chbViewPermission.Margin = new Padding(2, 2, 2, 2);
             chbViewPermission.Name = "chbViewPermission";
-            chbViewPermission.Size = new Size(40, 40);
+            chbViewPermission.Size = new Size(32, 32);
             chbViewPermission.TabIndex = 57;
             chbViewPermission.Tag = "ViewPermission";
             chbViewPermission.UseVisualStyleBackColor = false;
@@ -307,9 +312,10 @@
             chbDeleteAccount.BackgroundImageLayout = ImageLayout.None;
             chbDeleteAccount.CheckAlign = ContentAlignment.MiddleCenter;
             chbDeleteAccount.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbDeleteAccount.Location = new Point(724, 484);
+            chbDeleteAccount.Location = new Point(579, 383);
+            chbDeleteAccount.Margin = new Padding(2, 2, 2, 2);
             chbDeleteAccount.Name = "chbDeleteAccount";
-            chbDeleteAccount.Size = new Size(40, 40);
+            chbDeleteAccount.Size = new Size(32, 32);
             chbDeleteAccount.TabIndex = 56;
             chbDeleteAccount.Tag = "DeleteAccount";
             chbDeleteAccount.UseVisualStyleBackColor = false;
@@ -322,9 +328,10 @@
             chbUpdateAccount.BackgroundImageLayout = ImageLayout.None;
             chbUpdateAccount.CheckAlign = ContentAlignment.MiddleCenter;
             chbUpdateAccount.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbUpdateAccount.Location = new Point(602, 484);
+            chbUpdateAccount.Location = new Point(482, 383);
+            chbUpdateAccount.Margin = new Padding(2, 2, 2, 2);
             chbUpdateAccount.Name = "chbUpdateAccount";
-            chbUpdateAccount.Size = new Size(40, 40);
+            chbUpdateAccount.Size = new Size(32, 32);
             chbUpdateAccount.TabIndex = 55;
             chbUpdateAccount.Tag = "UpdateAccount";
             chbUpdateAccount.UseVisualStyleBackColor = false;
@@ -337,9 +344,10 @@
             chbInsertAccount.BackgroundImageLayout = ImageLayout.None;
             chbInsertAccount.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertAccount.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertAccount.Location = new Point(482, 484);
+            chbInsertAccount.Location = new Point(386, 383);
+            chbInsertAccount.Margin = new Padding(2, 2, 2, 2);
             chbInsertAccount.Name = "chbInsertAccount";
-            chbInsertAccount.Size = new Size(40, 40);
+            chbInsertAccount.Size = new Size(32, 32);
             chbInsertAccount.TabIndex = 54;
             chbInsertAccount.Tag = "InsertAccount";
             chbInsertAccount.UseVisualStyleBackColor = false;
@@ -352,9 +360,10 @@
             chbViewAccount.BackgroundImageLayout = ImageLayout.None;
             chbViewAccount.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewAccount.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewAccount.Location = new Point(362, 484);
+            chbViewAccount.Location = new Point(290, 383);
+            chbViewAccount.Margin = new Padding(2, 2, 2, 2);
             chbViewAccount.Name = "chbViewAccount";
-            chbViewAccount.Size = new Size(40, 40);
+            chbViewAccount.Size = new Size(32, 32);
             chbViewAccount.TabIndex = 53;
             chbViewAccount.Tag = "ViewAccount";
             chbViewAccount.UseVisualStyleBackColor = false;
@@ -367,9 +376,10 @@
             DeleteEmployee.BackgroundImageLayout = ImageLayout.None;
             DeleteEmployee.CheckAlign = ContentAlignment.MiddleCenter;
             DeleteEmployee.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            DeleteEmployee.Location = new Point(724, 436);
+            DeleteEmployee.Location = new Point(579, 345);
+            DeleteEmployee.Margin = new Padding(2, 2, 2, 2);
             DeleteEmployee.Name = "DeleteEmployee";
-            DeleteEmployee.Size = new Size(40, 40);
+            DeleteEmployee.Size = new Size(32, 32);
             DeleteEmployee.TabIndex = 52;
             DeleteEmployee.Tag = "DeleteEmployee";
             DeleteEmployee.UseVisualStyleBackColor = false;
@@ -382,9 +392,10 @@
             chbUpdateEmployee.BackgroundImageLayout = ImageLayout.None;
             chbUpdateEmployee.CheckAlign = ContentAlignment.MiddleCenter;
             chbUpdateEmployee.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbUpdateEmployee.Location = new Point(602, 436);
+            chbUpdateEmployee.Location = new Point(482, 345);
+            chbUpdateEmployee.Margin = new Padding(2, 2, 2, 2);
             chbUpdateEmployee.Name = "chbUpdateEmployee";
-            chbUpdateEmployee.Size = new Size(40, 40);
+            chbUpdateEmployee.Size = new Size(32, 32);
             chbUpdateEmployee.TabIndex = 51;
             chbUpdateEmployee.Tag = "UpdateEmployee";
             chbUpdateEmployee.UseVisualStyleBackColor = false;
@@ -397,9 +408,10 @@
             chbInsertEmployee.BackgroundImageLayout = ImageLayout.None;
             chbInsertEmployee.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertEmployee.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertEmployee.Location = new Point(482, 436);
+            chbInsertEmployee.Location = new Point(386, 345);
+            chbInsertEmployee.Margin = new Padding(2, 2, 2, 2);
             chbInsertEmployee.Name = "chbInsertEmployee";
-            chbInsertEmployee.Size = new Size(40, 40);
+            chbInsertEmployee.Size = new Size(32, 32);
             chbInsertEmployee.TabIndex = 50;
             chbInsertEmployee.Tag = "InsertEmployee";
             chbInsertEmployee.UseVisualStyleBackColor = false;
@@ -412,9 +424,10 @@
             chbViewEmployee.BackgroundImageLayout = ImageLayout.None;
             chbViewEmployee.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewEmployee.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewEmployee.Location = new Point(362, 436);
+            chbViewEmployee.Location = new Point(290, 345);
+            chbViewEmployee.Margin = new Padding(2, 2, 2, 2);
             chbViewEmployee.Name = "chbViewEmployee";
-            chbViewEmployee.Size = new Size(40, 40);
+            chbViewEmployee.Size = new Size(32, 32);
             chbViewEmployee.TabIndex = 49;
             chbViewEmployee.Tag = "ViewEmployee";
             chbViewEmployee.UseVisualStyleBackColor = false;
@@ -427,9 +440,10 @@
             chbUpdateCustomer.BackgroundImageLayout = ImageLayout.None;
             chbUpdateCustomer.CheckAlign = ContentAlignment.MiddleCenter;
             chbUpdateCustomer.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbUpdateCustomer.Location = new Point(602, 388);
+            chbUpdateCustomer.Location = new Point(482, 307);
+            chbUpdateCustomer.Margin = new Padding(2, 2, 2, 2);
             chbUpdateCustomer.Name = "chbUpdateCustomer";
-            chbUpdateCustomer.Size = new Size(40, 40);
+            chbUpdateCustomer.Size = new Size(32, 32);
             chbUpdateCustomer.TabIndex = 47;
             chbUpdateCustomer.Tag = "UpdateCustomer";
             chbUpdateCustomer.UseVisualStyleBackColor = false;
@@ -442,9 +456,10 @@
             chbInsertCustomer.BackgroundImageLayout = ImageLayout.None;
             chbInsertCustomer.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertCustomer.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertCustomer.Location = new Point(482, 388);
+            chbInsertCustomer.Location = new Point(386, 307);
+            chbInsertCustomer.Margin = new Padding(2, 2, 2, 2);
             chbInsertCustomer.Name = "chbInsertCustomer";
-            chbInsertCustomer.Size = new Size(40, 40);
+            chbInsertCustomer.Size = new Size(32, 32);
             chbInsertCustomer.TabIndex = 46;
             chbInsertCustomer.Tag = "InsertCustomer";
             chbInsertCustomer.UseVisualStyleBackColor = false;
@@ -457,9 +472,10 @@
             chbViewCustomer.BackgroundImageLayout = ImageLayout.None;
             chbViewCustomer.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewCustomer.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewCustomer.Location = new Point(362, 388);
+            chbViewCustomer.Location = new Point(290, 307);
+            chbViewCustomer.Margin = new Padding(2, 2, 2, 2);
             chbViewCustomer.Name = "chbViewCustomer";
-            chbViewCustomer.Size = new Size(40, 40);
+            chbViewCustomer.Size = new Size(32, 32);
             chbViewCustomer.TabIndex = 45;
             chbViewCustomer.Tag = "ViewCustomer";
             chbViewCustomer.UseVisualStyleBackColor = false;
@@ -472,9 +488,10 @@
             chbDeleteSupplier.BackgroundImageLayout = ImageLayout.None;
             chbDeleteSupplier.CheckAlign = ContentAlignment.MiddleCenter;
             chbDeleteSupplier.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbDeleteSupplier.Location = new Point(724, 340);
+            chbDeleteSupplier.Location = new Point(579, 269);
+            chbDeleteSupplier.Margin = new Padding(2, 2, 2, 2);
             chbDeleteSupplier.Name = "chbDeleteSupplier";
-            chbDeleteSupplier.Size = new Size(40, 40);
+            chbDeleteSupplier.Size = new Size(32, 32);
             chbDeleteSupplier.TabIndex = 44;
             chbDeleteSupplier.Tag = "DeleteSupplier";
             chbDeleteSupplier.UseVisualStyleBackColor = false;
@@ -487,9 +504,10 @@
             chbUpdateSupplier.BackgroundImageLayout = ImageLayout.None;
             chbUpdateSupplier.CheckAlign = ContentAlignment.MiddleCenter;
             chbUpdateSupplier.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbUpdateSupplier.Location = new Point(602, 340);
+            chbUpdateSupplier.Location = new Point(482, 269);
+            chbUpdateSupplier.Margin = new Padding(2, 2, 2, 2);
             chbUpdateSupplier.Name = "chbUpdateSupplier";
-            chbUpdateSupplier.Size = new Size(40, 40);
+            chbUpdateSupplier.Size = new Size(32, 32);
             chbUpdateSupplier.TabIndex = 43;
             chbUpdateSupplier.Tag = "UpdateSupplier";
             chbUpdateSupplier.UseVisualStyleBackColor = false;
@@ -502,9 +520,10 @@
             chbInsertSupplier.BackgroundImageLayout = ImageLayout.None;
             chbInsertSupplier.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertSupplier.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertSupplier.Location = new Point(482, 340);
+            chbInsertSupplier.Location = new Point(386, 269);
+            chbInsertSupplier.Margin = new Padding(2, 2, 2, 2);
             chbInsertSupplier.Name = "chbInsertSupplier";
-            chbInsertSupplier.Size = new Size(40, 40);
+            chbInsertSupplier.Size = new Size(32, 32);
             chbInsertSupplier.TabIndex = 42;
             chbInsertSupplier.Tag = "InsertSupplier";
             chbInsertSupplier.UseVisualStyleBackColor = false;
@@ -517,9 +536,10 @@
             chbViewSupplier.BackgroundImageLayout = ImageLayout.None;
             chbViewSupplier.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewSupplier.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewSupplier.Location = new Point(362, 340);
+            chbViewSupplier.Location = new Point(290, 269);
+            chbViewSupplier.Margin = new Padding(2, 2, 2, 2);
             chbViewSupplier.Name = "chbViewSupplier";
-            chbViewSupplier.Size = new Size(40, 40);
+            chbViewSupplier.Size = new Size(32, 32);
             chbViewSupplier.TabIndex = 41;
             chbViewSupplier.Tag = "ViewSupplier";
             chbViewSupplier.UseVisualStyleBackColor = false;
@@ -532,9 +552,10 @@
             chbDeleteProduct.BackgroundImageLayout = ImageLayout.None;
             chbDeleteProduct.CheckAlign = ContentAlignment.MiddleCenter;
             chbDeleteProduct.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbDeleteProduct.Location = new Point(724, 292);
+            chbDeleteProduct.Location = new Point(579, 231);
+            chbDeleteProduct.Margin = new Padding(2, 2, 2, 2);
             chbDeleteProduct.Name = "chbDeleteProduct";
-            chbDeleteProduct.Size = new Size(40, 40);
+            chbDeleteProduct.Size = new Size(32, 32);
             chbDeleteProduct.TabIndex = 40;
             chbDeleteProduct.Tag = "DeleteProduct";
             chbDeleteProduct.UseVisualStyleBackColor = false;
@@ -547,9 +568,10 @@
             chbUpdateProduct.BackgroundImageLayout = ImageLayout.None;
             chbUpdateProduct.CheckAlign = ContentAlignment.MiddleCenter;
             chbUpdateProduct.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbUpdateProduct.Location = new Point(602, 292);
+            chbUpdateProduct.Location = new Point(482, 231);
+            chbUpdateProduct.Margin = new Padding(2, 2, 2, 2);
             chbUpdateProduct.Name = "chbUpdateProduct";
-            chbUpdateProduct.Size = new Size(40, 40);
+            chbUpdateProduct.Size = new Size(32, 32);
             chbUpdateProduct.TabIndex = 39;
             chbUpdateProduct.Tag = "UpdateProduct";
             chbUpdateProduct.UseVisualStyleBackColor = false;
@@ -562,9 +584,10 @@
             chbInsertProduct.BackgroundImageLayout = ImageLayout.None;
             chbInsertProduct.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertProduct.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertProduct.Location = new Point(482, 292);
+            chbInsertProduct.Location = new Point(386, 231);
+            chbInsertProduct.Margin = new Padding(2, 2, 2, 2);
             chbInsertProduct.Name = "chbInsertProduct";
-            chbInsertProduct.Size = new Size(40, 40);
+            chbInsertProduct.Size = new Size(32, 32);
             chbInsertProduct.TabIndex = 38;
             chbInsertProduct.Tag = "InsertProduct";
             chbInsertProduct.UseVisualStyleBackColor = false;
@@ -577,9 +600,10 @@
             chbViewProduct.BackgroundImageLayout = ImageLayout.None;
             chbViewProduct.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewProduct.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewProduct.Location = new Point(362, 292);
+            chbViewProduct.Location = new Point(290, 231);
+            chbViewProduct.Margin = new Padding(2, 2, 2, 2);
             chbViewProduct.Name = "chbViewProduct";
-            chbViewProduct.Size = new Size(40, 40);
+            chbViewProduct.Size = new Size(32, 32);
             chbViewProduct.TabIndex = 37;
             chbViewProduct.Tag = "ViewProduct";
             chbViewProduct.UseVisualStyleBackColor = false;
@@ -592,9 +616,10 @@
             chbInsertImport.BackgroundImageLayout = ImageLayout.None;
             chbInsertImport.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertImport.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertImport.Location = new Point(482, 244);
+            chbInsertImport.Location = new Point(386, 193);
+            chbInsertImport.Margin = new Padding(2, 2, 2, 2);
             chbInsertImport.Name = "chbInsertImport";
-            chbInsertImport.Size = new Size(40, 40);
+            chbInsertImport.Size = new Size(32, 32);
             chbInsertImport.TabIndex = 34;
             chbInsertImport.Tag = "InsertImport";
             chbInsertImport.UseVisualStyleBackColor = false;
@@ -607,9 +632,10 @@
             chbViewImport.BackgroundImageLayout = ImageLayout.None;
             chbViewImport.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewImport.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewImport.Location = new Point(362, 244);
+            chbViewImport.Location = new Point(290, 193);
+            chbViewImport.Margin = new Padding(2, 2, 2, 2);
             chbViewImport.Name = "chbViewImport";
-            chbViewImport.Size = new Size(40, 40);
+            chbViewImport.Size = new Size(32, 32);
             chbViewImport.TabIndex = 33;
             chbViewImport.Tag = "ViewImport";
             chbViewImport.UseVisualStyleBackColor = false;
@@ -622,9 +648,10 @@
             chbViewBill.BackgroundImageLayout = ImageLayout.None;
             chbViewBill.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewBill.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewBill.Location = new Point(362, 196);
+            chbViewBill.Location = new Point(290, 155);
+            chbViewBill.Margin = new Padding(2, 2, 2, 2);
             chbViewBill.Name = "chbViewBill";
-            chbViewBill.Size = new Size(40, 40);
+            chbViewBill.Size = new Size(32, 32);
             chbViewBill.TabIndex = 29;
             chbViewBill.Tag = "ViewBill";
             chbViewBill.UseVisualStyleBackColor = false;
@@ -637,9 +664,10 @@
             chbInserSell.BackgroundImageLayout = ImageLayout.None;
             chbInserSell.CheckAlign = ContentAlignment.MiddleCenter;
             chbInserSell.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInserSell.Location = new Point(482, 148);
+            chbInserSell.Location = new Point(386, 117);
+            chbInserSell.Margin = new Padding(2, 2, 2, 2);
             chbInserSell.Name = "chbInserSell";
-            chbInserSell.Size = new Size(40, 40);
+            chbInserSell.Size = new Size(32, 32);
             chbInserSell.TabIndex = 26;
             chbInserSell.Tag = "InsertSell";
             chbInserSell.UseVisualStyleBackColor = false;
@@ -652,9 +680,10 @@
             chbViewSell.BackgroundImageLayout = ImageLayout.None;
             chbViewSell.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewSell.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewSell.Location = new Point(362, 148);
+            chbViewSell.Location = new Point(290, 117);
+            chbViewSell.Margin = new Padding(2, 2, 2, 2);
             chbViewSell.Name = "chbViewSell";
-            chbViewSell.Size = new Size(40, 40);
+            chbViewSell.Size = new Size(32, 32);
             chbViewSell.TabIndex = 25;
             chbViewSell.Tag = "ViewSell";
             chbViewSell.UseVisualStyleBackColor = false;
@@ -667,9 +696,10 @@
             chbDeleteCourt.BackgroundImageLayout = ImageLayout.None;
             chbDeleteCourt.CheckAlign = ContentAlignment.MiddleCenter;
             chbDeleteCourt.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbDeleteCourt.Location = new Point(724, 100);
+            chbDeleteCourt.Location = new Point(579, 79);
+            chbDeleteCourt.Margin = new Padding(2, 2, 2, 2);
             chbDeleteCourt.Name = "chbDeleteCourt";
-            chbDeleteCourt.Size = new Size(40, 40);
+            chbDeleteCourt.Size = new Size(32, 32);
             chbDeleteCourt.TabIndex = 24;
             chbDeleteCourt.Tag = "DeleteCourt";
             chbDeleteCourt.UseVisualStyleBackColor = false;
@@ -682,9 +712,10 @@
             chbUpdateCourt.BackgroundImageLayout = ImageLayout.None;
             chbUpdateCourt.CheckAlign = ContentAlignment.MiddleCenter;
             chbUpdateCourt.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbUpdateCourt.Location = new Point(602, 100);
+            chbUpdateCourt.Location = new Point(482, 79);
+            chbUpdateCourt.Margin = new Padding(2, 2, 2, 2);
             chbUpdateCourt.Name = "chbUpdateCourt";
-            chbUpdateCourt.Size = new Size(40, 40);
+            chbUpdateCourt.Size = new Size(32, 32);
             chbUpdateCourt.TabIndex = 23;
             chbUpdateCourt.Tag = "UpdateCourt";
             chbUpdateCourt.UseVisualStyleBackColor = false;
@@ -697,9 +728,10 @@
             chbInsertCourt.BackgroundImageLayout = ImageLayout.None;
             chbInsertCourt.CheckAlign = ContentAlignment.MiddleCenter;
             chbInsertCourt.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbInsertCourt.Location = new Point(482, 100);
+            chbInsertCourt.Location = new Point(386, 79);
+            chbInsertCourt.Margin = new Padding(2, 2, 2, 2);
             chbInsertCourt.Name = "chbInsertCourt";
-            chbInsertCourt.Size = new Size(40, 40);
+            chbInsertCourt.Size = new Size(32, 32);
             chbInsertCourt.TabIndex = 22;
             chbInsertCourt.Tag = "InsertCourt";
             chbInsertCourt.UseVisualStyleBackColor = false;
@@ -712,9 +744,10 @@
             cbInsertBooking.BackgroundImageLayout = ImageLayout.None;
             cbInsertBooking.CheckAlign = ContentAlignment.MiddleCenter;
             cbInsertBooking.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cbInsertBooking.Location = new Point(482, 52);
+            cbInsertBooking.Location = new Point(386, 41);
+            cbInsertBooking.Margin = new Padding(2, 2, 2, 2);
             cbInsertBooking.Name = "cbInsertBooking";
-            cbInsertBooking.Size = new Size(40, 40);
+            cbInsertBooking.Size = new Size(32, 32);
             cbInsertBooking.TabIndex = 18;
             cbInsertBooking.Tag = "InsertBooking";
             cbInsertBooking.UseVisualStyleBackColor = false;
@@ -724,9 +757,10 @@
             lblBooking.Anchor = AnchorStyles.None;
             lblBooking.AutoSize = true;
             lblBooking.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblBooking.Location = new Point(111, 56);
+            lblBooking.Location = new Point(87, 43);
+            lblBooking.Margin = new Padding(2, 0, 2, 0);
             lblBooking.Name = "lblBooking";
-            lblBooking.Size = new Size(100, 32);
+            lblBooking.Size = new Size(84, 28);
             lblBooking.TabIndex = 5;
             lblBooking.Text = "Đặt sân";
             // 
@@ -735,9 +769,10 @@
             lblDelete.Anchor = AnchorStyles.None;
             lblDelete.AutoSize = true;
             lblDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDelete.Location = new Point(715, 8);
+            lblDelete.Location = new Point(571, 5);
+            lblDelete.Margin = new Padding(2, 0, 2, 0);
             lblDelete.Name = "lblDelete";
-            lblDelete.Size = new Size(58, 32);
+            lblDelete.Size = new Size(48, 28);
             lblDelete.TabIndex = 4;
             lblDelete.Text = "Xóa";
             // 
@@ -746,9 +781,10 @@
             lblUpdate.Anchor = AnchorStyles.None;
             lblUpdate.AutoSize = true;
             lblUpdate.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblUpdate.Location = new Point(594, 8);
+            lblUpdate.Location = new Point(474, 5);
+            lblUpdate.Margin = new Padding(2, 0, 2, 0);
             lblUpdate.Name = "lblUpdate";
-            lblUpdate.Size = new Size(56, 32);
+            lblUpdate.Size = new Size(47, 28);
             lblUpdate.TabIndex = 3;
             lblUpdate.Text = "Sửa";
             // 
@@ -757,9 +793,10 @@
             lblInsert.Anchor = AnchorStyles.None;
             lblInsert.AutoSize = true;
             lblInsert.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblInsert.Location = new Point(463, 8);
+            lblInsert.Location = new Point(369, 5);
+            lblInsert.Margin = new Padding(2, 0, 2, 0);
             lblInsert.Name = "lblInsert";
-            lblInsert.Size = new Size(77, 32);
+            lblInsert.Size = new Size(65, 28);
             lblInsert.TabIndex = 2;
             lblInsert.Text = "Thêm";
             // 
@@ -768,9 +805,10 @@
             lblView.Anchor = AnchorStyles.None;
             lblView.AutoSize = true;
             lblView.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblView.Location = new Point(349, 8);
+            lblView.Location = new Point(279, 5);
+            lblView.Margin = new Padding(2, 0, 2, 0);
             lblView.Name = "lblView";
-            lblView.Size = new Size(65, 32);
+            lblView.Size = new Size(54, 28);
             lblView.TabIndex = 1;
             lblView.Text = "Xem";
             // 
@@ -779,9 +817,10 @@
             lblFuctionName.Anchor = AnchorStyles.None;
             lblFuctionName.AutoSize = true;
             lblFuctionName.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblFuctionName.Location = new Point(71, 8);
+            lblFuctionName.Location = new Point(54, 5);
+            lblFuctionName.Margin = new Padding(2, 0, 2, 0);
             lblFuctionName.Name = "lblFuctionName";
-            lblFuctionName.Size = new Size(180, 32);
+            lblFuctionName.Size = new Size(149, 28);
             lblFuctionName.TabIndex = 0;
             lblFuctionName.Text = "Tên chức năng";
             // 
@@ -790,9 +829,10 @@
             lblCourt.Anchor = AnchorStyles.None;
             lblCourt.AutoSize = true;
             lblCourt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblCourt.Location = new Point(87, 104);
+            lblCourt.Location = new Point(67, 81);
+            lblCourt.Margin = new Padding(2, 0, 2, 0);
             lblCourt.Name = "lblCourt";
-            lblCourt.Size = new Size(148, 32);
+            lblCourt.Size = new Size(123, 28);
             lblCourt.TabIndex = 6;
             lblCourt.Text = "Quản lý sân";
             // 
@@ -801,9 +841,10 @@
             lblSell.Anchor = AnchorStyles.None;
             lblSell.AutoSize = true;
             lblSell.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblSell.Location = new Point(100, 152);
+            lblSell.Location = new Point(78, 119);
+            lblSell.Margin = new Padding(2, 0, 2, 0);
             lblSell.Name = "lblSell";
-            lblSell.Size = new Size(121, 32);
+            lblSell.Size = new Size(101, 28);
             lblSell.TabIndex = 7;
             lblSell.Text = "Bán hàng";
             // 
@@ -812,9 +853,10 @@
             lblBill.Anchor = AnchorStyles.None;
             lblBill.AutoSize = true;
             lblBill.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblBill.Location = new Point(37, 200);
+            lblBill.Location = new Point(25, 157);
+            lblBill.Margin = new Padding(2, 0, 2, 0);
             lblBill.Name = "lblBill";
-            lblBill.Size = new Size(247, 32);
+            lblBill.Size = new Size(208, 28);
             lblBill.TabIndex = 8;
             lblBill.Text = "Quản lý hóa đơn đặt";
             // 
@@ -823,9 +865,10 @@
             lblImport.Anchor = AnchorStyles.None;
             lblImport.AutoSize = true;
             lblImport.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblImport.Location = new Point(91, 248);
+            lblImport.Location = new Point(71, 195);
+            lblImport.Margin = new Padding(2, 0, 2, 0);
             lblImport.Name = "lblImport";
-            lblImport.Size = new Size(139, 32);
+            lblImport.Size = new Size(116, 28);
             lblImport.TabIndex = 9;
             lblImport.Text = "Nhập hàng";
             // 
@@ -834,9 +877,10 @@
             lblProduct.Anchor = AnchorStyles.None;
             lblProduct.AutoSize = true;
             lblProduct.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblProduct.Location = new Point(51, 296);
+            lblProduct.Location = new Point(38, 233);
+            lblProduct.Margin = new Padding(2, 0, 2, 0);
             lblProduct.Name = "lblProduct";
-            lblProduct.Size = new Size(219, 32);
+            lblProduct.Size = new Size(182, 28);
             lblProduct.TabIndex = 10;
             lblProduct.Text = "Quản lý sản phẩm";
             // 
@@ -845,9 +889,10 @@
             lblSupplier.Anchor = AnchorStyles.None;
             lblSupplier.AutoSize = true;
             lblSupplier.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblSupplier.Location = new Point(30, 344);
+            lblSupplier.Location = new Point(20, 271);
+            lblSupplier.Margin = new Padding(2, 0, 2, 0);
             lblSupplier.Name = "lblSupplier";
-            lblSupplier.Size = new Size(262, 32);
+            lblSupplier.Size = new Size(217, 28);
             lblSupplier.TabIndex = 11;
             lblSupplier.Text = "Quản lý nhà cung cấp";
             // 
@@ -856,9 +901,10 @@
             lblCustomer.Anchor = AnchorStyles.None;
             lblCustomer.AutoSize = true;
             lblCustomer.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblCustomer.Location = new Point(41, 392);
+            lblCustomer.Location = new Point(29, 309);
+            lblCustomer.Margin = new Padding(2, 0, 2, 0);
             lblCustomer.Name = "lblCustomer";
-            lblCustomer.Size = new Size(239, 32);
+            lblCustomer.Size = new Size(200, 28);
             lblCustomer.TabIndex = 12;
             lblCustomer.Text = "Quản lý khách hàng";
             // 
@@ -867,9 +913,10 @@
             label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label1.Location = new Point(50, 440);
+            label1.Location = new Point(37, 347);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(221, 32);
+            label1.Size = new Size(184, 28);
             label1.TabIndex = 13;
             label1.Text = "Quản lý nhân viên";
             // 
@@ -878,9 +925,10 @@
             lblAccount.Anchor = AnchorStyles.None;
             lblAccount.AutoSize = true;
             lblAccount.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblAccount.Location = new Point(53, 488);
+            lblAccount.Location = new Point(39, 385);
+            lblAccount.Margin = new Padding(2, 0, 2, 0);
             lblAccount.Name = "lblAccount";
-            lblAccount.Size = new Size(215, 32);
+            lblAccount.Size = new Size(180, 28);
             lblAccount.TabIndex = 14;
             lblAccount.Text = "Quản lý tài khoản";
             // 
@@ -889,9 +937,10 @@
             lblPermission.Anchor = AnchorStyles.None;
             lblPermission.AutoSize = true;
             lblPermission.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblPermission.Location = new Point(39, 536);
+            lblPermission.Location = new Point(28, 423);
+            lblPermission.Margin = new Padding(2, 0, 2, 0);
             lblPermission.Name = "lblPermission";
-            lblPermission.Size = new Size(244, 32);
+            lblPermission.Size = new Size(202, 28);
             lblPermission.TabIndex = 15;
             lblPermission.Text = "Quản lý phân quyền";
             // 
@@ -900,9 +949,10 @@
             label2.Anchor = AnchorStyles.None;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label2.Location = new Point(101, 588);
+            label2.Location = new Point(79, 467);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(120, 32);
+            label2.Size = new Size(100, 28);
             label2.TabIndex = 16;
             label2.Text = "Thống kê";
             // 
@@ -914,9 +964,10 @@
             chbViewBooking.BackgroundImageLayout = ImageLayout.None;
             chbViewBooking.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewBooking.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewBooking.Location = new Point(362, 52);
+            chbViewBooking.Location = new Point(290, 41);
+            chbViewBooking.Margin = new Padding(2, 2, 2, 2);
             chbViewBooking.Name = "chbViewBooking";
-            chbViewBooking.Size = new Size(40, 40);
+            chbViewBooking.Size = new Size(32, 32);
             chbViewBooking.TabIndex = 17;
             chbViewBooking.Tag = "ViewBooking";
             chbViewBooking.UseVisualStyleBackColor = false;
@@ -929,9 +980,10 @@
             chbViewCourt.BackgroundImageLayout = ImageLayout.None;
             chbViewCourt.CheckAlign = ContentAlignment.MiddleCenter;
             chbViewCourt.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chbViewCourt.Location = new Point(362, 100);
+            chbViewCourt.Location = new Point(290, 79);
+            chbViewCourt.Margin = new Padding(2, 2, 2, 2);
             chbViewCourt.Name = "chbViewCourt";
-            chbViewCourt.Size = new Size(40, 40);
+            chbViewCourt.Size = new Size(32, 32);
             chbViewCourt.TabIndex = 19;
             chbViewCourt.Tag = "ViewCourt";
             chbViewCourt.UseVisualStyleBackColor = false;
@@ -939,37 +991,41 @@
             // txtPermissionName
             // 
             txtPermissionName.Font = new Font("Segoe UI", 12F);
-            txtPermissionName.Location = new Point(607, 70);
+            txtPermissionName.Location = new Point(486, 56);
+            txtPermissionName.Margin = new Padding(2, 2, 2, 2);
             txtPermissionName.Name = "txtPermissionName";
-            txtPermissionName.Size = new Size(241, 39);
+            txtPermissionName.Size = new Size(194, 34);
             txtPermissionName.TabIndex = 4;
             // 
             // lblPermissionName
             // 
             lblPermissionName.AutoSize = true;
             lblPermissionName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPermissionName.Location = new Point(479, 73);
+            lblPermissionName.Location = new Point(383, 58);
+            lblPermissionName.Margin = new Padding(2, 0, 2, 0);
             lblPermissionName.Name = "lblPermissionName";
-            lblPermissionName.Size = new Size(131, 32);
+            lblPermissionName.Size = new Size(104, 28);
             lblPermissionName.TabIndex = 3;
             lblPermissionName.Text = "Tên quyền:";
             // 
             // txtPermissionId
             // 
             txtPermissionId.Font = new Font("Segoe UI", 12F);
-            txtPermissionId.Location = new Point(170, 67);
+            txtPermissionId.Location = new Point(136, 54);
+            txtPermissionId.Margin = new Padding(2, 2, 2, 2);
             txtPermissionId.Name = "txtPermissionId";
             txtPermissionId.ReadOnly = true;
-            txtPermissionId.Size = new Size(241, 39);
+            txtPermissionId.Size = new Size(194, 34);
             txtPermissionId.TabIndex = 2;
             // 
             // lblPermissionId
             // 
             lblPermissionId.AutoSize = true;
             lblPermissionId.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPermissionId.Location = new Point(42, 70);
+            lblPermissionId.Location = new Point(34, 56);
+            lblPermissionId.Margin = new Padding(2, 0, 2, 0);
             lblPermissionId.Name = "lblPermissionId";
-            lblPermissionId.Size = new Size(127, 32);
+            lblPermissionId.Size = new Size(103, 28);
             lblPermissionId.TabIndex = 1;
             lblPermissionId.Text = "Mã quyền:";
             // 
@@ -977,19 +1033,21 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.Location = new Point(356, 6);
+            lblTitle.Location = new Point(285, 5);
+            lblTitle.Margin = new Padding(2, 0, 2, 0);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(201, 45);
+            lblTitle.Size = new Size(169, 37);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Thêm quyền";
             // 
             // FormPermissionGUI
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(draftPanel);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "FormPermissionGUI";
-            Size = new Size(900, 850);
+            Size = new Size(720, 680);
             draftPanel.ResumeLayout(false);
             draftPanel.PerformLayout();
             tPermission.ResumeLayout(false);

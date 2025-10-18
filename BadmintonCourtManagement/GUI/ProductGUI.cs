@@ -109,7 +109,6 @@ namespace BadmintonCourtManagement.GUI
                 productImage = Properties.Resources.DefaultProductImage;
             }
             // check if productImage is null
-            if (productImage == null)
             {
                 productImage = Properties.Resources.DefaultProductImage;
             }
@@ -267,7 +266,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
+                
         }
 
         private void label1_Click(object sender, EventArgs e)
