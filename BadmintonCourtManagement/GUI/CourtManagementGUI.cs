@@ -17,6 +17,11 @@ namespace BadmintonCourtManagement.GUI
         private AccountDTO currentAccount;
         private CourtBUS courtBUS;
         private BookingBUS bookingBUS;
+        private List<CourtDTO> currentList = new List<CourtDTO>();
+        private int currentPage;
+        private int itemsPerPage;
+        private int totalPages;
+
         public CourtManagementGUI()
         {
             InitializeComponent();
@@ -28,24 +33,19 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
             courtBUS = new CourtBUS();
             bookingBUS = new BookingBUS();
-            List<CourtDTO> courts = courtBUS.GetAllCourts();
-            LoadCourts(courts);
+
+            currentPage = 1;
+            itemsPerPage = 8;
+            totalPages = 1;
+
+            ReloadCourtList();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
+        private void pictureBox1_Click(object sender, EventArgs e) { }
 
-        }
+        private void CourtManagementGUI_Load(object sender, EventArgs e) { }
 
-        private void CourtManagementGUI_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void drPanelCourtMN_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void drPanelCourtMN_Paint(object sender, PaintEventArgs e) { }
 
         private void btncourtDelete_Click(object sender, EventArgs e)
         {
@@ -57,16 +57,45 @@ namespace BadmintonCourtManagement.GUI
             );
             if (result == DialogResult.Yes)
             {
-                // Thực hiện xóa sân
                 MessageBox.Show("Xóa sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void LoadCourts(List<CourtDTO> danhSachSan)
+        private void LoadCourts(List<CourtDTO> danhSachSan, int pageNumber)
         {
+            totalPages = (int)Math.Ceiling((double)danhSachSan.Count / itemsPerPage);
+            if (totalPages == 0) totalPages = 1;
+
+            // Ẩn/hiện nút phân trang
+            if (totalPages == 1)
+            {
+                previousButton.Visible = false;
+                nextButton.Visible = false;
+                extraPreviousButton.Visible = false;
+                extraNextButton.Visible = false;
+            }
+            else
+            {
+                previousButton.Visible = true;
+                nextButton.Visible = true;
+                extraPreviousButton.Visible = true;
+                extraNextButton.Visible = true;
+            }
+
+            if (pageNumber < 1) pageNumber = 1;
+            if (pageNumber > totalPages) pageNumber = totalPages;
+            currentPage = pageNumber;
+
+            int startIndex = (pageNumber - 1) * itemsPerPage;
+            int endIndex = Math.Min(startIndex + itemsPerPage, danhSachSan.Count);
+            var pageData = danhSachSan.GetRange(startIndex, endIndex - startIndex);
+
+            // Hiển thị danh sách sân trong trang hiện tại
             pCourtList.Controls.Clear();
             pCourtList.ColumnCount = 4;
             pCourtList.RowCount = 2;
+            pCourtList.ColumnStyles.Clear();
+            pCourtList.RowStyles.Clear();
 
             for (int i = 0; i < 4; i++)
                 pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
@@ -74,7 +103,7 @@ namespace BadmintonCourtManagement.GUI
                 pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
             int index = 0;
-            foreach (CourtDTO courtDTO in danhSachSan)
+            foreach (CourtDTO courtDTO in pageData)
             {
                 var panel = CreateCourtPanel(courtDTO);
                 int row = index / 4;
@@ -82,14 +111,23 @@ namespace BadmintonCourtManagement.GUI
                 pCourtList.Controls.Add(panel, col, row);
                 index++;
             }
+
+            UpdatePaginationButtons();
+        }
+
+        private void UpdatePaginationButtons()
+        {
+            previousButton.Enabled = currentPage > 1;
+            extraPreviousButton.Enabled = currentPage > 1;
+            nextButton.Enabled = currentPage < totalPages;
+            extraNextButton.Enabled = currentPage < totalPages;
         }
 
         private void ReloadCourtList()
         {
-            List<CourtDTO> danhSachSan = courtBUS.GetAllCourts();
-            LoadCourts(danhSachSan);
+            currentList = courtBUS.GetAllCourts();
+            LoadCourts(currentList, 1);
         }
-
 
         private CustomPanel CreateCourtPanel(CourtDTO courtDTO)
         {
@@ -108,12 +146,11 @@ namespace BadmintonCourtManagement.GUI
                 RowCount = 4
             };
 
-            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));  // Mã sân
-            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));  // Tên sân
-            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));  // Trạng thái
-            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));  // Nút
+            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
 
-            // Label mã sân
             var lblID = new Label
             {
                 Text = courtDTO.CourtId,
@@ -122,7 +159,6 @@ namespace BadmintonCourtManagement.GUI
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            // Label tên sân
             var lblName = new Label
             {
                 Text = "Tên sân: " + courtDTO.CourtName,
@@ -131,7 +167,6 @@ namespace BadmintonCourtManagement.GUI
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            // Label trạng thái
             string statusText = courtDTO.Status == CourtDTO.Option.active ? "Hoạt động" : "Bảo trì";
             var lblStatus = new Label
             {
@@ -142,16 +177,10 @@ namespace BadmintonCourtManagement.GUI
             };
 
             if (courtDTO.Status == CourtDTO.Option.maintenance)
-            {
-                panel.BackColor = Color.FromArgb(255, 176, 163); // màu cam khi bảo trì
-            }
+                panel.BackColor = Color.FromArgb(255, 176, 163);
             else if (courtDTO.Status == CourtDTO.Option.active)
-            {
-                panel.BackColor = Color.FromArgb(200, 250, 214); // xanh lá nhạt
-            }
+                panel.BackColor = Color.FromArgb(200, 250, 214);
 
-
-            // Panel chứa hai nút
             var buttonPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -164,7 +193,6 @@ namespace BadmintonCourtManagement.GUI
                 AutoSizeMode = AutoSizeMode.GrowAndShrink
             };
 
-            // Nút Xóa
             var btnDelete = new Button
             {
                 Text = "Xóa",
@@ -177,7 +205,6 @@ namespace BadmintonCourtManagement.GUI
                 Margin = new Padding(10, 0, 10, 0)
             };
 
-            // Nút Sửa
             var btnEdit = new Button
             {
                 Text = "Sửa",
@@ -190,8 +217,6 @@ namespace BadmintonCourtManagement.GUI
                 Margin = new Padding(10, 0, 10, 0)
             };
 
-            // Sự kiện Xóa
-            // Sự kiện Xóa
             btnDelete.Click += (s, e) =>
             {
                 DialogResult result = MessageBox.Show(
@@ -206,15 +231,14 @@ namespace BadmintonCourtManagement.GUI
                     try
                     {
                         bool isDeleted = courtBUS.DeleteCourt(courtDTO.CourtId);
-
                         if (isDeleted)
                         {
                             MessageBox.Show("Xóa sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            ReloadCourtList(); // Cập nhật lại danh sách
+                            ReloadCourtList();
                         }
                         else
                         {
-                            MessageBox.Show("Không thể xóa sân này (có thể đang được đặt hoặc lỗi cơ sở dữ liệu).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Không thể xóa sân này.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     catch (Exception ex)
@@ -224,8 +248,6 @@ namespace BadmintonCourtManagement.GUI
                 }
             };
 
-
-            // Sự kiện Sửa
             btnEdit.Click += (s, e) =>
             {
                 Form dialog = new Form()
@@ -248,12 +270,9 @@ namespace BadmintonCourtManagement.GUI
                 ReloadCourtList();
             };
 
-
-
             buttonPanel.Controls.Add(btnDelete);
             buttonPanel.Controls.Add(btnEdit);
 
-            // Thêm tất cả control vào TableLayoutPanel
             tlCourt.Controls.Add(lblID, 0, 0);
             tlCourt.Controls.Add(lblName, 0, 1);
             tlCourt.Controls.Add(lblStatus, 0, 2);
@@ -264,16 +283,9 @@ namespace BadmintonCourtManagement.GUI
             return panel;
         }
 
+        private void pCourtList_Paint(object sender, PaintEventArgs e) { }
 
-        private void pCourtList_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void customPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void customPanel1_Paint(object sender, PaintEventArgs e) { }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -294,7 +306,7 @@ namespace BadmintonCourtManagement.GUI
             dialog.Controls.Add(addCourtGUI);
             dialog.ShowDialog();
 
-            ReloadCourtList(); // refresh danh sách sau khi thêm
+            ReloadCourtList();
         }
 
         private void statusFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -307,18 +319,36 @@ namespace BadmintonCourtManagement.GUI
             else if (selectedStatus == "Bảo trì")
                 statusCode = "maintenance";
 
-            List<CourtDTO> filteredCourts = courtBUS.FilterByStatus(statusCode);
-            LoadCourts(filteredCourts);
-        }
-
-        private void customPanel3_Paint(object sender, PaintEventArgs e)
-        {
-
+            currentList = courtBUS.FilterByStatus(statusCode);
+            LoadCourts(currentList, 1);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            LoadCourts(courtBUS.Search(textBox1.Text));
+            currentList = courtBUS.Search(textBox1.Text);
+            LoadCourts(currentList, 1);
+        }
+
+        private void extraPreviousButton_Click(object sender, EventArgs e)
+        {
+            LoadCourts(currentList, 1);
+        }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+                LoadCourts(currentList, currentPage - 1);
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+                LoadCourts(currentList, currentPage + 1);
+        }
+
+        private void extraNextButton_Click(object sender, EventArgs e)
+        {
+            LoadCourts(currentList, totalPages);
         }
     }
 }

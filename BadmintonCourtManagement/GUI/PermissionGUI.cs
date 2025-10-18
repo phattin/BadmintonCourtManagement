@@ -10,7 +10,7 @@ namespace BadmintonCourtManagement.GUI
         private PermissionBUS permissionBUS = new PermissionBUS();
         private List<PermissionDTO> currentList = new List<PermissionDTO>();
         private int currentPage;
-        private int itemsPerPage;
+        private int itemsPerPage;   
         private int totalPages;
         public PermissionGUI(AccountDTO currentAccount)
         {
@@ -18,7 +18,7 @@ namespace BadmintonCourtManagement.GUI
             this.currentAccount = currentAccount;
             currentPage = 1;
             itemsPerPage = 8;
-            totalPages = 1;
+            totalPages = 1; 
             ReloadList();
         }
 
@@ -274,6 +274,16 @@ namespace BadmintonCourtManagement.GUI
         private void extraNextButton_Click(object sender, EventArgs e)
         {
             LoadPermission(currentList, totalPages);
+        }
+
+        private void draftPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pListBG_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
