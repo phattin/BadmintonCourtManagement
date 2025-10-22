@@ -12,86 +12,99 @@ namespace BadmintonCourtManagement.DAO
         {
             public string ProductId { get; set; }
             public string ProductName { get; set; }
-            public int TotalSold { get; set; }
+            public int Quantity { get; set; } // Use Quantity instead of TotalSold
             public double TotalRevenue { get; set; }
         }
 
         // Lấy sản phẩm có số lượng bán chạy cao nhất, theo khoảng thời gian
-        public List<TopSellingProductDTO> GetTopSellingProducts(DateTime startDate, DateTime endDate, int topN, bool sortDescending)
+        public List<TopSellingProductDTO> GetTopSellingProducts(DateTime startDate, DateTime endDate, bool sortDescending, string sortBy = "TotalSold")
         {
+            // Validate sortBy to prevent SQL injection
+            string sortField = sortBy == "TotalRevenue" ? "TotalRevenue" : "TotalSold";
             string sortOrder = sortDescending ? "DESC" : "ASC";
+
+            // Ensure startDate <= endDate
+            if (startDate > endDate)
+            {
+                throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+            }
+
             string query = @"
                 SELECT 
                     p.ProductId, 
                     p.ProductName, 
                     SUM(bpd.Quantity) AS TotalSold,
-                    SUM(bpd.Quantity * bpd.UnitPrice) AS TotalRevenue
+                    SUM(bpd.TotalPrice) AS TotalRevenue
                 FROM billproductdetail bpd
                 JOIN product p ON bpd.ProductId = p.ProductId
                 JOIN billproduct bp ON bpd.BillProductId = bp.BillProductId
                 WHERE bp.DateCreated BETWEEN @StartDate AND @EndDate
                 GROUP BY p.ProductId, p.ProductName
-                ORDER BY TotalSold " + sortOrder + @"
-                LIMIT @TopN";
+                ORDER BY {0} {1}";
+
+            // Use string format to safely insert sortField and sortOrder
+            query = string.Format(query, sortField, sortOrder);
 
             List<TopSellingProductDTO> topProducts = new List<TopSellingProductDTO>();
 
             try
             {
                 db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@StartDate", startDate);
-                cmd.Parameters.AddWithValue("@EndDate", endDate);
-                cmd.Parameters.AddWithValue("@TopN", topN);
-
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
                 {
-                    TopSellingProductDTO product = new TopSellingProductDTO
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@EndDate", endDate);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        ProductId = reader["ProductId"].ToString(),
-                        ProductName = reader["ProductName"].ToString(),
-                        TotalSold = Convert.ToInt32(reader["TotalSold"]),
-                        TotalRevenue = Convert.ToDouble(reader["TotalRevenue"])
-                    };
-                    topProducts.Add(product);
+                        while (reader.Read())
+                        {
+                            TopSellingProductDTO product = new TopSellingProductDTO
+                            {
+                                ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
+                                ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                                Quantity = reader.IsDBNull(reader.GetOrdinal("TotalSold")) ? 0 : Convert.ToInt32(reader["TotalSold"]),
+                                TotalRevenue = reader.IsDBNull(reader.GetOrdinal("TotalRevenue")) ? 0.0 : Convert.ToDouble(reader["TotalRevenue"])
+                            };
+                            topProducts.Add(product);
+                        }
+                    }
                 }
-                reader.Close();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving top selling products: " + ex.Message);
+                // Use consistent error message in Vietnamese
+                throw new Exception($"Lỗi khi lấy danh sách sản phẩm bán chạy: {ex.Message}");
             }
             finally
             {
                 db.CloseConnection();
             }
+
             return topProducts;
         }
 
-        // doanh thu theo khoảng thời gian tiền sân và tiền bán đồ và có kèm theo điều kiện lọc thứ trong tuần
+        // Doanh thu theo khoảng thời gian tiền sân và tiền bán đồ và có kèm theo điều kiện lọc thứ trong tuần
         public class RevenueStatisticsDTO
         {
             public DateTime Date { get; set; }
             public double CourtRevenue { get; set; }
             public double ProductRevenue { get; set; }
-            public double TotalRevenue { get; set; }
+            public double TotalRevenue { get; set; } // Sum of CourtRevenue and ProductRevenue
         }
 
-public List<RevenueStatisticsDTO> GetRevenueStatistics(DateTime startDate, DateTime endDate, int filterDayOfWeek)
+        public List<RevenueStatisticsDTO> GetRevenueStatistics(DateTime startDate, DateTime endDate, int filterDayOfWeek)
         {
-            switch (filterDayOfWeek)
+            // Validate filterDayOfWeek
+            if (filterDayOfWeek < 1 || filterDayOfWeek > 7)
             {
-                case 1: // Chủ nhật
-                case 2: // Thứ hai
-                case 3: // Thứ ba
-                case 4: // Thứ tư
-                case 5: // Thứ năm
-                case 6: // Thứ sáu
-                case 7: // Thứ bảy
-                    break;
-                default:
-                    throw new ArgumentException("filterDayOfWeek phải từ 1 (Chủ nhật) đến 7 (Thứ bảy).");
+                throw new ArgumentException("filterDayOfWeek phải từ 1 (Chủ nhật) đến 7 (Thứ bảy).");
+            }
+
+            // Ensure startDate <= endDate
+            if (startDate > endDate)
+            {
+                throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
             }
 
             string query = @"
@@ -116,27 +129,33 @@ public List<RevenueStatisticsDTO> GetRevenueStatistics(DateTime startDate, DateT
             try
             {
                 db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@StartDate", startDate);
-                cmd.Parameters.AddWithValue("@EndDate", endDate);
-                cmd.Parameters.AddWithValue("@FilterDayOfWeek", filterDayOfWeek);
-
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
                 {
-                    RevenueStatisticsDTO stats = new RevenueStatisticsDTO
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@EndDate", endDate);
+                    cmd.Parameters.AddWithValue("@FilterDayOfWeek", filterDayOfWeek);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        Date = Convert.ToDateTime(reader["Date"]),
-                        CourtRevenue = Convert.ToDouble(reader["CourtRevenue"]),
-                        ProductRevenue = Convert.ToDouble(reader["ProductRevenue"])
-                    };
-                    result.Add(stats);
+                        while (reader.Read())
+                        {
+                            double courtRevenue = Convert.ToDouble(reader["CourtRevenue"]);
+                            double productRevenue = Convert.ToDouble(reader["ProductRevenue"]);
+                            RevenueStatisticsDTO stats = new RevenueStatisticsDTO
+                            {
+                                Date = Convert.ToDateTime(reader["Date"]),
+                                CourtRevenue = courtRevenue,
+                                ProductRevenue = productRevenue,
+                                TotalRevenue = courtRevenue + productRevenue // Calculate TotalRevenue
+                            };
+                            result.Add(stats);
+                        }
+                    }
                 }
-                reader.Close();
             }
             catch (Exception ex)
             {
-                throw new Exception("Lỗi khi lấy thống kê doanh thu: " + ex.Message);
+                throw new Exception($"Lỗi khi lấy thống kê doanh thu: {ex.Message}");
             }
             finally
             {
@@ -146,6 +165,4 @@ public List<RevenueStatisticsDTO> GetRevenueStatistics(DateTime startDate, DateT
             return result;
         }
     }
-
-
 }
