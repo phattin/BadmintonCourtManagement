@@ -120,7 +120,7 @@
             AddButton.BackColor = Color.FromArgb(200, 250, 214);
             AddButton.Cursor = Cursors.Hand;
             AddButton.Dock = DockStyle.Fill;
-            AddButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Button.png");
+            AddButton.Image = Properties.Resources.Button;
             AddButton.Location = new Point(0, 0);
             AddButton.Margin = new Padding(0);
             AddButton.Name = "AddButton";
@@ -143,7 +143,7 @@
             // Picture
             // 
             Picture.Dock = DockStyle.Fill;
-            Picture.Image = Image.FromFile(Application.StartupPath + @"\Img\Picture.png");
+            Picture.Image = Properties.Resources.Picture;
             Picture.Location = new Point(30, 10);
             Picture.Name = "Picture";
             Picture.Size = new Size(167, 104);
@@ -225,7 +225,7 @@
             FilterButton.Cursor = Cursors.Hand;
             FilterButton.Dock = DockStyle.Fill;
             FilterButton.ForeColor = Color.FromArgb(0, 120, 103);
-            FilterButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Filter.png");
+            FilterButton.Image = Properties.Resources.Picture;
             FilterButton.Location = new Point(667, 0);
             FilterButton.Margin = new Padding(30, 0, 30, 0);
             FilterButton.Name = "FilterButton";

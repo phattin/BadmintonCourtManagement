@@ -106,7 +106,7 @@ namespace BadmintonCourtManagement.GUI
             catch (Exception)
             {
                 // Double fallback in case of any file loading issues
-                productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
+                productImage = Properties.Resources.DefaultProductImage;
             }
             // check if productImage is null
             {

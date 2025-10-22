@@ -174,7 +174,7 @@
             // 
             // pictureBox5
             // 
-            pictureBox5.Image = Image.FromFile(Application.StartupPath + @"\Img\X.png");
+            pictureBox5.Image = Properties.Resources.X;
             pictureBox5.Location = new Point(211, 12);
             pictureBox5.Margin = new Padding(4);
             pictureBox5.Name = "pictureBox5";
@@ -321,7 +321,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Image.FromFile(Application.StartupPath + @"\Img\X.png");
+            pictureBox1.Image = Properties.Resources.X;
             pictureBox1.Location = new Point(211, 12);
             pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
@@ -358,7 +358,7 @@
             // 
             // pictureBox6
             // 
-            pictureBox6.Image = Image.FromFile(Application.StartupPath + @"\Img\X.png");
+            pictureBox6.Image = Properties.Resources.X;
             pictureBox6.Location = new Point(211, 12);
             pictureBox6.Margin = new Padding(4);
             pictureBox6.Name = "pictureBox6";
@@ -406,7 +406,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Image = Image.FromFile(Application.StartupPath + @"\Img\X.png");
+            btnDelete.Image = Properties.Resources.X;
             btnDelete.Location = new Point(211, 12);
             btnDelete.Margin = new Padding(4);
             btnDelete.Name = "btnDelete";

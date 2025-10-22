@@ -196,7 +196,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\X.png");
+            btnDelete.Image = Properties.Resources.X;
             btnDelete.Location = new Point(219, 10);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(13, 14);
