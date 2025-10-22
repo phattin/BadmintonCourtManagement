@@ -158,7 +158,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             AddButton.BackColor = Color.FromArgb(200, 250, 214);
             AddButton.Cursor = Cursors.Hand;
             AddButton.Dock = DockStyle.Fill;
-            AddButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Button.png");
+            AddButton.Image = Properties.Resources.Button;
             AddButton.Location = new Point(0, 0);
             AddButton.Margin = new Padding(0);
             AddButton.Name = "AddButton";
@@ -181,7 +181,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // Picture
             // 
             Picture.Dock = DockStyle.Fill;
-            Picture.Image = Image.FromFile(Application.StartupPath + @"\Img\Picture.png");
+            Picture.Image = Properties.Resources.Picture;
             Picture.Location = new Point(30, 10);
             Picture.Name = "Picture";
             Picture.Size = new Size(376, 257);
@@ -313,7 +313,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             FilterButton.Cursor = Cursors.Hand;
             FilterButton.Dock = DockStyle.Fill;
             FilterButton.ForeColor = Color.FromArgb(0, 120, 103);
-            FilterButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Filter.png");
+            FilterButton.Image = Properties.Resources.Filter;
             FilterButton.Location = new Point(1437, 0);
             FilterButton.Margin = new Padding(100, 0, 100, 0);
             FilterButton.Name = "FilterButton";

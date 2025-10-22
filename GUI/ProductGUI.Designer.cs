@@ -232,7 +232,7 @@
             // btnDelete
             // 
             btnDelete.Cursor = Cursors.Hand;
-            btnDelete.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\X.png");
+            btnDelete.Image = Properties.Resources.X;
             btnDelete.Location = new Point(490, 19);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(13, 13);
@@ -259,7 +259,7 @@
             // 
             filterButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             filterButton.Cursor = Cursors.Hand;
-            filterButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Filter.png");
+            filterButton.Image = Properties.Resources.Filter;
             filterButton.Location = new Point(1084, 12);
             filterButton.Margin = new Padding(3, 4, 3, 4);
             filterButton.Name = "filterButton";

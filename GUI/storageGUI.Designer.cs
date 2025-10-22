@@ -236,7 +236,7 @@
             Reset.BackColor = Color.FromArgb(0, 120, 103);
             Reset.Cursor = Cursors.Hand;
             Reset.Dock = DockStyle.Fill;
-            Reset.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Reset.png");
+            Reset.Image = Properties.Resources.Reset;
             Reset.Location = new Point(1494, 10);
             Reset.Margin = new Padding(0);
             Reset.Name = "Reset";
@@ -325,7 +325,7 @@
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
             filterButton.Cursor = Cursors.Hand;
             filterButton.Dock = DockStyle.Fill;
-            filterButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Filter.png");
+            filterButton.Image = Properties.Resources.Filter;
             filterButton.Location = new Point(1356, 10);
             filterButton.Margin = new Padding(0);
             filterButton.Name = "filterButton";
@@ -659,7 +659,7 @@
             NhapHangFilterButton.BackColor = Color.FromArgb(0, 120, 103);
             NhapHangFilterButton.Cursor = Cursors.Hand;
             NhapHangFilterButton.Dock = DockStyle.Fill;
-            NhapHangFilterButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Filter.png");
+            NhapHangFilterButton.Image = Properties.Resources.Filter;
             NhapHangFilterButton.Location = new Point(1502, 10);
             NhapHangFilterButton.Margin = new Padding(0);
             NhapHangFilterButton.Name = "NhapHangFilterButton";

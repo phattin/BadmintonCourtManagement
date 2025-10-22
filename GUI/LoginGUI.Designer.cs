@@ -95,7 +95,7 @@
             // pIconPassword
             // 
             pIconPassword.BackColor = Color.White;
-            pIconPassword.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\lock.png");
+            pIconPassword.Image = Properties.Resources.lockIcon;
             pIconPassword.Location = new Point(14, 4);
             pIconPassword.Margin = new Padding(3, 4, 3, 4);
             pIconPassword.Name = "pIconPassword";
@@ -135,7 +135,7 @@
             // pIconUser
             // 
             pIconUser.BackColor = Color.White;
-            pIconUser.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\user.png"); ;
+            pIconUser.Image = Properties.Resources.user;
             pIconUser.Location = new Point(14, 8);
             pIconUser.Margin = new Padding(3, 4, 3, 4);
             pIconUser.Name = "pIconUser";
@@ -200,7 +200,7 @@
             // 
             // pLogo
             // 
-            pLogo.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\iconcl.png");
+            pLogo.Image = Properties.Resources.iconcl;
             pLogo.Location = new Point(56, 216);
             pLogo.Margin = new Padding(3, 4, 3, 4);
             pLogo.Name = "pLogo";

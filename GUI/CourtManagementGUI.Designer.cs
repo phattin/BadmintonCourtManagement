@@ -169,7 +169,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // btnDelete
             // 
-            btnDelete.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\X.png");
+            btnDelete.Image = Properties.Resources.X;
             btnDelete.Location = new Point(490, 19);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(13, 13);
