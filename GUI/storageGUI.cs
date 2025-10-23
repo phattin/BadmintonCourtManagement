@@ -58,27 +58,24 @@ namespace BadmintonCourtManagement.GUI
                             Label cardBody = new Label();
                             Label cardTitle = new Label();
 
-                            card.AutoSize = true;
+                            card.AutoSize = false;
+                            card.AutoScroll = true;
                             card.BackColor = Color.FromArgb(200, 250, 214);
                             card.Controls.Add(cardButton);
                             card.Controls.Add(cardBody);
                             card.Controls.Add(cardTitle);
                             card.Dock = DockStyle.Fill;
-                            card.Location = new Point(15, 15);
-                            card.Margin = new Padding(15);
+                            card.Margin = new Padding(30);
                             card.Name = "card";
-                            card.Size = new Size(380, 470);
                             card.TabIndex = 0;
 
-                            cardButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                            cardButton.Dock = DockStyle.Top;
                             cardButton.BackColor = Color.Black;
                             cardButton.Cursor = Cursors.Hand;
-                            cardButton.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                            cardButton.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardButton.ForeColor = Color.White;
-                            cardButton.Location = new Point(57, 347);
-                            cardButton.Margin = new Padding(0);
                             cardButton.Name = "cardButton";
-                            cardButton.Size = new Size(258, 70);
+                            cardButton.Size = new Size(258, 60);
                             cardButton.TabIndex = 6;
                             cardButton.Text = "Xem chi tiết";
                             cardButton.UseVisualStyleBackColor = false;
@@ -86,11 +83,10 @@ namespace BadmintonCourtManagement.GUI
                             cardButton.MouseLeave += buttonLeave;
                             cardButton.Click += cardButton_Click;
 
-                            cardBody.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                            cardBody.Font = new Font("Roboto Medium", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-                            cardBody.Location = new Point(3, 111);
+                            cardBody.Dock = DockStyle.Top;
+                            cardBody.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardBody.Name = "cardBody";
-                            cardBody.Size = new Size(374, 220);
+                            cardBody.Size = new Size(374, 180);
                             cardBody.TabIndex = 4;
                             cardBody.Text = "Mã sản phẩm: " + storageList[i].ProductId
                                 + "\r\nSố lượng: " + storageList[i].Quantity
@@ -99,12 +95,10 @@ namespace BadmintonCourtManagement.GUI
                             cardBody.TextAlign = ContentAlignment.MiddleCenter;
                             cardBody.Click += cardBody_Click_1;
 
-                            cardTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                            cardTitle.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-                            cardTitle.Location = new Point(3, 2);
-                            cardTitle.Margin = new Padding(0);
+                            cardTitle.Dock = DockStyle.Top;
+                            cardTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
                             cardTitle.Name = "cardTitle";
-                            cardTitle.Size = new Size(374, 109);
+                            cardTitle.Size = new Size(374, 80);
                             cardTitle.TabIndex = 3;
                             cardTitle.Text = storageList[i].StorageId;
                             cardTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -458,6 +452,16 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void cardList_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void titleText_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NhapHangToolBar_Paint(object sender, PaintEventArgs e)
         {
 
         }

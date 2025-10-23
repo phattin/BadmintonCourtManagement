@@ -63,7 +63,7 @@ namespace BadmintonCourtManagement.DAO
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
-                        Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
+                        Status = reader["Status"].ToString() == "active" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     };
                     storageList.Add(storage);
                 }
@@ -101,7 +101,7 @@ namespace BadmintonCourtManagement.DAO
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
-                        Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
+                        Status = reader["Status"].ToString() == "active" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     });
                 }
                 reader.Close();
@@ -138,7 +138,7 @@ namespace BadmintonCourtManagement.DAO
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
-                        Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
+                        Status = reader["Status"].ToString() == "active" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     });
                 }
                 reader.Close();
@@ -175,7 +175,7 @@ namespace BadmintonCourtManagement.DAO
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
                         CreatedAt = DateTime.Parse(reader["CreatedAt"].ToString()),
-                        Status = reader["Status"].ToString() == "Paid" ? StorageDTO.Option.active : StorageDTO.Option.inactive
+                        Status = reader["Status"].ToString() == "active" ? StorageDTO.Option.active : StorageDTO.Option.inactive
                     };
                 }
                 reader.Close();
