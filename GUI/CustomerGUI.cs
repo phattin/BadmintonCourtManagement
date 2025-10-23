@@ -71,9 +71,9 @@ namespace BadmintonCourtManagement.GUI
                 ShowInTaskbar = false
             };
 
-            // var addCustomerGUI = new AddCustomerGUI();
-            // addCustomerGUI.Dock = DockStyle.Fill;
-            // dialog.Controls.Add(addCustomerGUI);
+            var addCustomerGUI = new FormCustomerGUI("Insert", customerBUS.GetNextId(), currentAccount);
+            addCustomerGUI.Dock = DockStyle.Fill;
+            dialog.Controls.Add(addCustomerGUI);
             dialog.ShowDialog();
             ReloadCustomerList();
         }
@@ -241,10 +241,10 @@ namespace BadmintonCourtManagement.GUI
                     ShowInTaskbar = false
                 };
 
-                // var editCustomerGUI = new EditCustomerGUI(customerDTO);
-                // editCustomerGUI.Dock = DockStyle.Fill;
+                var editCustomerGUI = new FormCustomerGUI("Update", customerDTO.CustomerId, currentAccount);
+                editCustomerGUI.Dock = DockStyle.Fill;
 
-                // dialog.Controls.Add(editCustomerGUI);
+                dialog.Controls.Add(editCustomerGUI);
 
                 dialog.ShowDialog();
 
