@@ -122,7 +122,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Statistics_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Thống kê clicked!");
+            OpenChildPanel(new StatisticGUI(currentAccount));
         }
 
         private void MainLayout_Load(object sender, EventArgs e)
