@@ -41,7 +41,6 @@ namespace BadmintonCourtManagement.BUS
             }
         }
 
-
         public static StorageDTO GetStorageById(string id)
         {
             //return dao.GetStorageListByStorageId(id);

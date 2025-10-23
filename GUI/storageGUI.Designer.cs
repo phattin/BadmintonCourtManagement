@@ -48,37 +48,32 @@
             titlePanel = new Panel();
             titleText = new Label();
             nhapHangPage = new TabPage();
-            HeaderPanel = new TableLayoutPanel();
-            Title = new Label();
-            AddButton = new Button();
-            NhapHangPagePanel = new Panel();
-            NhapHangExtraNext = new Button();
-            NhapHangExtraPrevious = new Button();
-            NhapHangNext = new Button();
-            NhapHangPrevious = new Button();
-            NhapHangCardList = new TableLayoutPanel();
-            NhapHangCard = new Panel();
-            NhapHangButtonCard = new Button();
-            NhapHangBodyCard = new Label();
-            NhapHangTitleCard = new Label();
-            NhapHangToolBar = new TableLayoutPanel();
-            NhapHangEndDate = new DateTimePicker();
-            NhapHangEnd = new Label();
-            NhapHangSearchbar = new TextBox();
-            NhapHangStartDate = new DateTimePicker();
-            NhapHangStart = new Label();
-            NhapHangFilterButton = new Button();
+            supplyPagination = new Panel();
+            supplyExtraNext = new Button();
+            supplyExtraPrevious = new Button();
+            supplyNext = new Button();
+            supplyPrevious = new Button();
+            supplyCardList = new TableLayoutPanel();
+            supplyToolBar = new TableLayoutPanel();
+            supplyReset = new Button();
+            supplyEndDate = new DateTimePicker();
+            supplyEndLabel = new Label();
+            supplySearchBar = new TextBox();
+            supplyStartDate = new DateTimePicker();
+            supplyStartLabel = new Label();
+            supplyFilter = new Button();
+            supplyTitlePanel = new TableLayoutPanel();
+            supplyTitle = new Label();
+            supplyAdd = new Button();
             tabPane.SuspendLayout();
             khoHangPage.SuspendLayout();
             pageButtonPanel.SuspendLayout();
             toolBar.SuspendLayout();
             titlePanel.SuspendLayout();
             nhapHangPage.SuspendLayout();
-            HeaderPanel.SuspendLayout();
-            NhapHangPagePanel.SuspendLayout();
-            NhapHangCardList.SuspendLayout();
-            NhapHangCard.SuspendLayout();
-            NhapHangToolBar.SuspendLayout();
+            supplyPagination.SuspendLayout();
+            supplyToolBar.SuspendLayout();
+            supplyTitlePanel.SuspendLayout();
             SuspendLayout();
             // 
             // tabPane
@@ -86,12 +81,12 @@
             tabPane.Controls.Add(khoHangPage);
             tabPane.Controls.Add(nhapHangPage);
             tabPane.Dock = DockStyle.Fill;
-            tabPane.Font = new Font("Roboto", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            tabPane.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             tabPane.Location = new Point(0, 0);
             tabPane.Margin = new Padding(0);
             tabPane.Name = "tabPane";
             tabPane.SelectedIndex = 0;
-            tabPane.Size = new Size(1653, 1400);
+            tabPane.Size = new Size(1199, 803);
             tabPane.TabIndex = 0;
             // 
             // khoHangPage
@@ -103,26 +98,25 @@
             khoHangPage.Controls.Add(toolBar);
             khoHangPage.Controls.Add(titlePanel);
             khoHangPage.Font = new Font("Roboto Condensed", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            khoHangPage.Location = new Point(4, 48);
+            khoHangPage.Location = new Point(4, 40);
             khoHangPage.Margin = new Padding(0);
             khoHangPage.Name = "khoHangPage";
-            khoHangPage.Size = new Size(1645, 1348);
+            khoHangPage.Size = new Size(1191, 759);
             khoHangPage.TabIndex = 0;
             khoHangPage.Text = "Kho hàng";
             khoHangPage.Click += tabPage1_Click;
             // 
             // pageButtonPanel
             // 
-            pageButtonPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pageButtonPanel.AutoSize = true;
             pageButtonPanel.Controls.Add(extraNextButton);
             pageButtonPanel.Controls.Add(extraPreviousButton);
             pageButtonPanel.Controls.Add(nextButton);
             pageButtonPanel.Controls.Add(previousButton);
-            pageButtonPanel.Location = new Point(0, 1246);
+            pageButtonPanel.Dock = DockStyle.Bottom;
+            pageButtonPanel.Location = new Point(0, 678);
             pageButtonPanel.Margin = new Padding(0);
             pageButtonPanel.Name = "pageButtonPanel";
-            pageButtonPanel.Size = new Size(1642, 102);
+            pageButtonPanel.Size = new Size(1191, 81);
             pageButtonPanel.TabIndex = 3;
             // 
             // extraNextButton
@@ -130,10 +124,13 @@
             extraNextButton.Anchor = AnchorStyles.None;
             extraNextButton.BackColor = Color.Transparent;
             extraNextButton.Cursor = Cursors.Hand;
+            extraNextButton.FlatAppearance.BorderSize = 0;
+            extraNextButton.FlatStyle = FlatStyle.Flat;
             extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
-            extraNextButton.Location = new Point(948, 18);
+            extraNextButton.Location = new Point(697, 13);
+            extraNextButton.Margin = new Padding(2);
             extraNextButton.Name = "extraNextButton";
-            extraNextButton.Size = new Size(75, 69);
+            extraNextButton.Size = new Size(60, 58);
             extraNextButton.TabIndex = 16;
             extraNextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraNextButton.UseVisualStyleBackColor = false;
@@ -144,11 +141,14 @@
             extraPreviousButton.Anchor = AnchorStyles.None;
             extraPreviousButton.BackColor = Color.Transparent;
             extraPreviousButton.Cursor = Cursors.Hand;
+            extraPreviousButton.FlatAppearance.BorderSize = 0;
+            extraPreviousButton.FlatStyle = FlatStyle.Flat;
             extraPreviousButton.ForeColor = Color.Transparent;
             extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
-            extraPreviousButton.Location = new Point(618, 18);
+            extraPreviousButton.Location = new Point(433, 13);
+            extraPreviousButton.Margin = new Padding(0);
             extraPreviousButton.Name = "extraPreviousButton";
-            extraPreviousButton.Size = new Size(75, 69);
+            extraPreviousButton.Size = new Size(60, 58);
             extraPreviousButton.TabIndex = 13;
             extraPreviousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraPreviousButton.UseVisualStyleBackColor = false;
@@ -159,10 +159,13 @@
             nextButton.Anchor = AnchorStyles.None;
             nextButton.BackColor = Color.Transparent;
             nextButton.Cursor = Cursors.Hand;
+            nextButton.FlatAppearance.BorderSize = 0;
+            nextButton.FlatStyle = FlatStyle.Flat;
             nextButton.Image = (Image)resources.GetObject("nextButton.Image");
-            nextButton.Location = new Point(836, 18);
+            nextButton.Location = new Point(607, 13);
+            nextButton.Margin = new Padding(2);
             nextButton.Name = "nextButton";
-            nextButton.Size = new Size(75, 69);
+            nextButton.Size = new Size(60, 58);
             nextButton.TabIndex = 15;
             nextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             nextButton.UseVisualStyleBackColor = false;
@@ -173,10 +176,13 @@
             previousButton.Anchor = AnchorStyles.None;
             previousButton.BackColor = Color.Transparent;
             previousButton.Cursor = Cursors.Hand;
+            previousButton.FlatAppearance.BorderSize = 0;
+            previousButton.FlatStyle = FlatStyle.Flat;
             previousButton.Image = (Image)resources.GetObject("previousButton.Image");
-            previousButton.Location = new Point(731, 18);
+            previousButton.Location = new Point(523, 13);
+            previousButton.Margin = new Padding(2);
             previousButton.Name = "previousButton";
-            previousButton.Size = new Size(75, 69);
+            previousButton.Size = new Size(60, 58);
             previousButton.TabIndex = 14;
             previousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             previousButton.UseVisualStyleBackColor = false;
@@ -184,27 +190,26 @@
             // 
             // cardList
             // 
-            cardList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cardList.AutoSize = true;
+            cardList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cardList.BackColor = Color.FromArgb(239, 248, 230);
             cardList.ColumnCount = 4;
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            cardList.Location = new Point(0, 246);
+            cardList.Font = new Font("Segoe UI", 11F);
+            cardList.Location = new Point(0, 142);
             cardList.Margin = new Padding(0);
             cardList.Name = "cardList";
             cardList.RowCount = 2;
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            cardList.Size = new Size(1642, 1000);
+            cardList.Size = new Size(1191, 536);
             cardList.TabIndex = 2;
             cardList.Paint += cardList_Paint;
             // 
             // toolBar
             // 
-            toolBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             toolBar.BackColor = Color.FromArgb(0, 120, 103);
             toolBar.ColumnCount = 7;
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.6420288F));
@@ -221,13 +226,15 @@
             toolBar.Controls.Add(startDate, 2, 0);
             toolBar.Controls.Add(startText, 1, 0);
             toolBar.Controls.Add(filterButton, 5, 0);
-            toolBar.Location = new Point(0, 100);
+            toolBar.Dock = DockStyle.Top;
+            toolBar.Font = new Font("Segoe UI", 9F);
+            toolBar.Location = new Point(0, 57);
             toolBar.Margin = new Padding(0);
             toolBar.Name = "toolBar";
-            toolBar.Padding = new Padding(10);
+            toolBar.Padding = new Padding(8);
             toolBar.RowCount = 1;
             toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            toolBar.Size = new Size(1642, 143);
+            toolBar.Size = new Size(1191, 85);
             toolBar.TabIndex = 1;
             toolBar.Paint += tableLayoutPanel1_Paint;
             // 
@@ -236,39 +243,42 @@
             Reset.BackColor = Color.FromArgb(0, 120, 103);
             Reset.Cursor = Cursors.Hand;
             Reset.Dock = DockStyle.Fill;
+            Reset.FlatAppearance.BorderSize = 0;
+            Reset.FlatStyle = FlatStyle.Flat;
             Reset.Image = Properties.Resources.Reset;
-            Reset.Location = new Point(1494, 10);
+            Reset.Location = new Point(1081, 8);
             Reset.Margin = new Padding(0);
             Reset.Name = "Reset";
-            Reset.Size = new Size(138, 123);
+            Reset.Size = new Size(102, 69);
             Reset.TabIndex = 5;
             Reset.UseVisualStyleBackColor = false;
             Reset.Click += Reset_Click;
             // 
             // endDate
             // 
-            endDate.Anchor = AnchorStyles.None;
             endDate.Cursor = Cursors.Hand;
+            endDate.CustomFormat = "dd/MM/yyyy";
+            endDate.Dock = DockStyle.Fill;
             endDate.DropDownAlign = LeftRightAlignment.Right;
-            endDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            endDate.Format = DateTimePickerFormat.Short;
-            endDate.Location = new Point(1087, 43);
-            endDate.Margin = new Padding(0, 0, 10, 0);
+            endDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            endDate.Format = DateTimePickerFormat.Custom;
+            endDate.Location = new Point(787, 23);
+            endDate.Margin = new Padding(0, 15, 8, 0);
             endDate.Name = "endDate";
             endDate.ShowUpDown = true;
-            endDate.Size = new Size(259, 56);
+            endDate.Size = new Size(186, 39);
             endDate.TabIndex = 3;
             // 
             // endText
             // 
             endText.AutoSize = true;
             endText.Dock = DockStyle.Fill;
-            endText.Font = new Font("Roboto Condensed", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            endText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             endText.ForeColor = Color.White;
-            endText.Location = new Point(885, 10);
-            endText.Margin = new Padding(10, 0, 0, 0);
+            endText.Location = new Point(642, 8);
+            endText.Margin = new Padding(8, 0, 0, 0);
             endText.Name = "endText";
-            endText.Size = new Size(202, 123);
+            endText.Size = new Size(145, 69);
             endText.TabIndex = 3;
             endText.Text = "Ngày kết thúc:";
             endText.TextAlign = ContentAlignment.MiddleCenter;
@@ -276,45 +286,46 @@
             // 
             // searchBar
             // 
-            searchBar.Anchor = AnchorStyles.None;
             searchBar.Cursor = Cursors.IBeam;
-            searchBar.Font = new Font("Roboto Medium", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            searchBar.Location = new Point(10, 45);
-            searchBar.Margin = new Padding(0, 0, 10, 0);
+            searchBar.Dock = DockStyle.Fill;
+            searchBar.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            searchBar.Location = new Point(8, 23);
+            searchBar.Margin = new Padding(0, 15, 8, 0);
             searchBar.Name = "searchBar";
-            searchBar.PlaceholderText = "value...";
-            searchBar.Size = new Size(387, 52);
+            searchBar.PlaceholderText = "Tìm kiếm...";
+            searchBar.Size = new Size(279, 39);
             searchBar.TabIndex = 1;
             searchBar.TextChanged += textBox1_TextChanged;
             searchBar.KeyDown += searchEnterEvent;
             // 
             // startDate
             // 
-            startDate.Anchor = AnchorStyles.None;
             startDate.Cursor = Cursors.Hand;
+            startDate.CustomFormat = "dd/MM/yyyy";
+            startDate.Dock = DockStyle.Fill;
             startDate.DropDownAlign = LeftRightAlignment.Right;
-            startDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            startDate.Format = DateTimePickerFormat.Short;
-            startDate.Location = new Point(614, 43);
-            startDate.Margin = new Padding(0, 0, 10, 0);
+            startDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            startDate.Format = DateTimePickerFormat.Custom;
+            startDate.Location = new Point(445, 23);
+            startDate.Margin = new Padding(0, 15, 8, 0);
             startDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
             startDate.Name = "startDate";
             startDate.ShowUpDown = true;
-            startDate.Size = new Size(251, 56);
+            startDate.Size = new Size(181, 39);
             startDate.TabIndex = 2;
             startDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             startDate.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // startText
             // 
-            startText.Anchor = AnchorStyles.None;
             startText.AutoSize = true;
-            startText.Font = new Font("Roboto", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            startText.Dock = DockStyle.Fill;
+            startText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             startText.ForeColor = Color.White;
-            startText.Location = new Point(434, 30);
+            startText.Location = new Point(295, 8);
             startText.Margin = new Padding(0);
             startText.Name = "startText";
-            startText.Size = new Size(153, 82);
+            startText.Size = new Size(150, 69);
             startText.TabIndex = 2;
             startText.Text = "Ngày bắt đầu:";
             startText.TextAlign = ContentAlignment.MiddleCenter;
@@ -325,11 +336,13 @@
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
             filterButton.Cursor = Cursors.Hand;
             filterButton.Dock = DockStyle.Fill;
+            filterButton.FlatAppearance.BorderSize = 0;
+            filterButton.FlatStyle = FlatStyle.Flat;
             filterButton.Image = Properties.Resources.Filter;
-            filterButton.Location = new Point(1356, 10);
+            filterButton.Location = new Point(981, 8);
             filterButton.Margin = new Padding(0);
             filterButton.Name = "filterButton";
-            filterButton.Size = new Size(138, 123);
+            filterButton.Size = new Size(100, 69);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
             filterButton.Click += filterButton_Click;
@@ -338,366 +351,348 @@
             // 
             // titlePanel
             // 
-            titlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            titlePanel.AutoSize = true;
             titlePanel.Controls.Add(titleText);
+            titlePanel.Dock = DockStyle.Top;
             titlePanel.Location = new Point(0, 0);
+            titlePanel.Margin = new Padding(2);
             titlePanel.Name = "titlePanel";
-            titlePanel.Size = new Size(1642, 100);
+            titlePanel.Size = new Size(1191, 57);
             titlePanel.TabIndex = 0;
             titlePanel.Paint += panel1_Paint;
             // 
             // titleText
             // 
             titleText.Dock = DockStyle.Fill;
-            titleText.Font = new Font("Roboto", 31.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            titleText.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
             titleText.Location = new Point(0, 0);
             titleText.Margin = new Padding(0);
             titleText.Name = "titleText";
-            titleText.Size = new Size(1642, 100);
+            titleText.Size = new Size(1191, 57);
             titleText.TabIndex = 2;
             titleText.Text = "Kho hàng";
             titleText.TextAlign = ContentAlignment.MiddleLeft;
+            titleText.Click += titleText_Click;
             // 
             // nhapHangPage
             // 
             nhapHangPage.AutoScroll = true;
-            nhapHangPage.Controls.Add(HeaderPanel);
-            nhapHangPage.Controls.Add(NhapHangPagePanel);
-            nhapHangPage.Controls.Add(NhapHangCardList);
-            nhapHangPage.Controls.Add(NhapHangToolBar);
-            nhapHangPage.Location = new Point(4, 48);
+            nhapHangPage.Controls.Add(supplyPagination);
+            nhapHangPage.Controls.Add(supplyCardList);
+            nhapHangPage.Controls.Add(supplyToolBar);
+            nhapHangPage.Controls.Add(supplyTitlePanel);
+            nhapHangPage.Location = new Point(4, 40);
             nhapHangPage.Margin = new Padding(0);
             nhapHangPage.Name = "nhapHangPage";
-            nhapHangPage.Size = new Size(1645, 1348);
+            nhapHangPage.Size = new Size(1191, 759);
             nhapHangPage.TabIndex = 1;
             nhapHangPage.Text = "Nhập hàng";
             nhapHangPage.UseVisualStyleBackColor = true;
             // 
-            // HeaderPanel
+            // supplyPagination
             // 
-            HeaderPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            HeaderPanel.AutoSize = true;
-            HeaderPanel.ColumnCount = 2;
-            HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            HeaderPanel.Controls.Add(Title, 0, 0);
-            HeaderPanel.Controls.Add(AddButton, 1, 0);
-            HeaderPanel.Location = new Point(0, 0);
-            HeaderPanel.Name = "HeaderPanel";
-            HeaderPanel.RowCount = 1;
-            HeaderPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            HeaderPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            HeaderPanel.Size = new Size(1645, 97);
-            HeaderPanel.TabIndex = 5;
+            supplyPagination.Controls.Add(supplyExtraNext);
+            supplyPagination.Controls.Add(supplyExtraPrevious);
+            supplyPagination.Controls.Add(supplyNext);
+            supplyPagination.Controls.Add(supplyPrevious);
+            supplyPagination.Dock = DockStyle.Bottom;
+            supplyPagination.Location = new Point(0, 678);
+            supplyPagination.Margin = new Padding(0);
+            supplyPagination.Name = "supplyPagination";
+            supplyPagination.Size = new Size(1191, 81);
+            supplyPagination.TabIndex = 4;
             // 
-            // Title
+            // supplyExtraNext
             // 
-            Title.Dock = DockStyle.Fill;
-            Title.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Title.Location = new Point(3, 0);
-            Title.Name = "Title";
-            Title.Padding = new Padding(20, 0, 0, 0);
-            Title.Size = new Size(816, 97);
-            Title.TabIndex = 0;
-            Title.Text = "Nhập hàng";
-            Title.TextAlign = ContentAlignment.MiddleLeft;
+            supplyExtraNext.Anchor = AnchorStyles.None;
+            supplyExtraNext.BackColor = Color.Transparent;
+            supplyExtraNext.Cursor = Cursors.Hand;
+            supplyExtraNext.FlatAppearance.BorderSize = 0;
+            supplyExtraNext.FlatStyle = FlatStyle.Flat;
+            supplyExtraNext.Image = (Image)resources.GetObject("supplyExtraNext.Image");
+            supplyExtraNext.Location = new Point(693, 12);
+            supplyExtraNext.Margin = new Padding(2);
+            supplyExtraNext.Name = "supplyExtraNext";
+            supplyExtraNext.Size = new Size(60, 58);
+            supplyExtraNext.TabIndex = 16;
+            supplyExtraNext.TextImageRelation = TextImageRelation.ImageAboveText;
+            supplyExtraNext.UseVisualStyleBackColor = false;
             // 
-            // AddButton
+            // supplyExtraPrevious
             // 
-            AddButton.BackColor = Color.Black;
-            AddButton.Cursor = Cursors.Hand;
-            AddButton.Dock = DockStyle.Right;
-            AddButton.ForeColor = Color.White;
-            AddButton.Location = new Point(1384, 0);
-            AddButton.Margin = new Padding(0, 0, 40, 0);
-            AddButton.Name = "AddButton";
-            AddButton.Size = new Size(221, 97);
-            AddButton.TabIndex = 1;
-            AddButton.Text = "+ Thêm";
-            AddButton.UseVisualStyleBackColor = false;
-            AddButton.Click += AddButton_Click_1;
+            supplyExtraPrevious.Anchor = AnchorStyles.None;
+            supplyExtraPrevious.BackColor = Color.Transparent;
+            supplyExtraPrevious.Cursor = Cursors.Hand;
+            supplyExtraPrevious.FlatAppearance.BorderSize = 0;
+            supplyExtraPrevious.FlatStyle = FlatStyle.Flat;
+            supplyExtraPrevious.ForeColor = Color.Transparent;
+            supplyExtraPrevious.Image = (Image)resources.GetObject("supplyExtraPrevious.Image");
+            supplyExtraPrevious.Location = new Point(435, 12);
+            supplyExtraPrevious.Margin = new Padding(0);
+            supplyExtraPrevious.Name = "supplyExtraPrevious";
+            supplyExtraPrevious.Size = new Size(60, 58);
+            supplyExtraPrevious.TabIndex = 13;
+            supplyExtraPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
+            supplyExtraPrevious.UseVisualStyleBackColor = false;
             // 
-            // NhapHangPagePanel
+            // supplyNext
             // 
-            NhapHangPagePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangPagePanel.AutoSize = true;
-            NhapHangPagePanel.Controls.Add(NhapHangExtraNext);
-            NhapHangPagePanel.Controls.Add(NhapHangExtraPrevious);
-            NhapHangPagePanel.Controls.Add(NhapHangNext);
-            NhapHangPagePanel.Controls.Add(NhapHangPrevious);
-            NhapHangPagePanel.Location = new Point(0, 1246);
-            NhapHangPagePanel.Margin = new Padding(0);
-            NhapHangPagePanel.Name = "NhapHangPagePanel";
-            NhapHangPagePanel.Size = new Size(1645, 102);
-            NhapHangPagePanel.TabIndex = 4;
+            supplyNext.Anchor = AnchorStyles.None;
+            supplyNext.BackColor = Color.Transparent;
+            supplyNext.Cursor = Cursors.Hand;
+            supplyNext.FlatAppearance.BorderSize = 0;
+            supplyNext.FlatStyle = FlatStyle.Flat;
+            supplyNext.Image = (Image)resources.GetObject("supplyNext.Image");
+            supplyNext.Location = new Point(607, 12);
+            supplyNext.Margin = new Padding(2);
+            supplyNext.Name = "supplyNext";
+            supplyNext.Size = new Size(60, 58);
+            supplyNext.TabIndex = 15;
+            supplyNext.TextImageRelation = TextImageRelation.ImageAboveText;
+            supplyNext.UseVisualStyleBackColor = false;
             // 
-            // NhapHangExtraNext
+            // supplyPrevious
             // 
-            NhapHangExtraNext.Anchor = AnchorStyles.None;
-            NhapHangExtraNext.BackColor = Color.Transparent;
-            NhapHangExtraNext.Cursor = Cursors.Hand;
-            NhapHangExtraNext.Image = (Image)resources.GetObject("NhapHangExtraNext.Image");
-            NhapHangExtraNext.Location = new Point(932, 19);
-            NhapHangExtraNext.Name = "NhapHangExtraNext";
-            NhapHangExtraNext.Size = new Size(75, 69);
-            NhapHangExtraNext.TabIndex = 16;
-            NhapHangExtraNext.TextImageRelation = TextImageRelation.ImageAboveText;
-            NhapHangExtraNext.UseVisualStyleBackColor = false;
+            supplyPrevious.Anchor = AnchorStyles.None;
+            supplyPrevious.BackColor = Color.Transparent;
+            supplyPrevious.Cursor = Cursors.Hand;
+            supplyPrevious.FlatAppearance.BorderSize = 0;
+            supplyPrevious.FlatStyle = FlatStyle.Flat;
+            supplyPrevious.Image = (Image)resources.GetObject("supplyPrevious.Image");
+            supplyPrevious.Location = new Point(521, 12);
+            supplyPrevious.Margin = new Padding(2);
+            supplyPrevious.Name = "supplyPrevious";
+            supplyPrevious.Size = new Size(60, 58);
+            supplyPrevious.TabIndex = 14;
+            supplyPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
+            supplyPrevious.UseVisualStyleBackColor = false;
             // 
-            // NhapHangExtraPrevious
+            // supplyCardList
             // 
-            NhapHangExtraPrevious.Anchor = AnchorStyles.None;
-            NhapHangExtraPrevious.BackColor = Color.Transparent;
-            NhapHangExtraPrevious.Cursor = Cursors.Hand;
-            NhapHangExtraPrevious.ForeColor = Color.Transparent;
-            NhapHangExtraPrevious.Image = (Image)resources.GetObject("NhapHangExtraPrevious.Image");
-            NhapHangExtraPrevious.Location = new Point(605, 19);
-            NhapHangExtraPrevious.Name = "NhapHangExtraPrevious";
-            NhapHangExtraPrevious.Size = new Size(75, 69);
-            NhapHangExtraPrevious.TabIndex = 13;
-            NhapHangExtraPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
-            NhapHangExtraPrevious.UseVisualStyleBackColor = false;
+            supplyCardList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            supplyCardList.AutoScroll = true;
+            supplyCardList.BackColor = Color.FromArgb(239, 248, 230);
+            supplyCardList.ColumnCount = 4;
+            supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            supplyCardList.Font = new Font("Segoe UI", 11F);
+            supplyCardList.Location = new Point(0, 142);
+            supplyCardList.Margin = new Padding(0);
+            supplyCardList.Name = "supplyCardList";
+            supplyCardList.RowCount = 2;
+            supplyCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            supplyCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            supplyCardList.Size = new Size(1191, 536);
+            supplyCardList.TabIndex = 3;
             // 
-            // NhapHangNext
+            // supplyToolBar
             // 
-            NhapHangNext.Anchor = AnchorStyles.None;
-            NhapHangNext.BackColor = Color.Transparent;
-            NhapHangNext.Cursor = Cursors.Hand;
-            NhapHangNext.Image = (Image)resources.GetObject("NhapHangNext.Image");
-            NhapHangNext.Location = new Point(823, 19);
-            NhapHangNext.Name = "NhapHangNext";
-            NhapHangNext.Size = new Size(75, 69);
-            NhapHangNext.TabIndex = 15;
-            NhapHangNext.TextImageRelation = TextImageRelation.ImageAboveText;
-            NhapHangNext.UseVisualStyleBackColor = false;
+            supplyToolBar.BackColor = Color.FromArgb(0, 120, 103);
+            supplyToolBar.ColumnCount = 7;
+            supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.5029163F));
+            supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.8008471F));
+            supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.0972042F));
+            supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.0855179F));
+            supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.59355F));
+            supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.521287F));
+            supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.398679F));
+            supplyToolBar.Controls.Add(supplyReset, 6, 0);
+            supplyToolBar.Controls.Add(supplyEndDate, 4, 0);
+            supplyToolBar.Controls.Add(supplyEndLabel, 3, 0);
+            supplyToolBar.Controls.Add(supplySearchBar, 0, 0);
+            supplyToolBar.Controls.Add(supplyStartDate, 2, 0);
+            supplyToolBar.Controls.Add(supplyStartLabel, 1, 0);
+            supplyToolBar.Controls.Add(supplyFilter, 5, 0);
+            supplyToolBar.Dock = DockStyle.Top;
+            supplyToolBar.Font = new Font("Segoe UI", 9F);
+            supplyToolBar.Location = new Point(0, 54);
+            supplyToolBar.Margin = new Padding(0);
+            supplyToolBar.Name = "supplyToolBar";
+            supplyToolBar.Padding = new Padding(8);
+            supplyToolBar.RowCount = 1;
+            supplyToolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            supplyToolBar.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            supplyToolBar.Size = new Size(1191, 88);
+            supplyToolBar.TabIndex = 2;
             // 
-            // NhapHangPrevious
+            // supplyReset
             // 
-            NhapHangPrevious.Anchor = AnchorStyles.None;
-            NhapHangPrevious.BackColor = Color.Transparent;
-            NhapHangPrevious.Cursor = Cursors.Hand;
-            NhapHangPrevious.Image = (Image)resources.GetObject("NhapHangPrevious.Image");
-            NhapHangPrevious.Location = new Point(714, 19);
-            NhapHangPrevious.Name = "NhapHangPrevious";
-            NhapHangPrevious.Size = new Size(75, 69);
-            NhapHangPrevious.TabIndex = 14;
-            NhapHangPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
-            NhapHangPrevious.UseVisualStyleBackColor = false;
+            supplyReset.BackColor = Color.FromArgb(0, 120, 103);
+            supplyReset.Cursor = Cursors.Hand;
+            supplyReset.Dock = DockStyle.Fill;
+            supplyReset.FlatAppearance.BorderSize = 0;
+            supplyReset.FlatStyle = FlatStyle.Flat;
+            supplyReset.Image = Properties.Resources.Reset;
+            supplyReset.Location = new Point(1081, 8);
+            supplyReset.Margin = new Padding(0);
+            supplyReset.Name = "supplyReset";
+            supplyReset.Size = new Size(102, 72);
+            supplyReset.TabIndex = 5;
+            supplyReset.UseVisualStyleBackColor = false;
+            supplyReset.MouseEnter += filterButton_MouseEnter;
+            supplyReset.MouseHover += filterButton_MouseLeave;
             // 
-            // NhapHangCardList
+            // supplyEndDate
             // 
-            NhapHangCardList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangCardList.AutoSize = true;
-            NhapHangCardList.BackColor = Color.FromArgb(239, 248, 230);
-            NhapHangCardList.ColumnCount = 4;
-            NhapHangCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            NhapHangCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            NhapHangCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            NhapHangCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            NhapHangCardList.Controls.Add(NhapHangCard, 0, 0);
-            NhapHangCardList.Location = new Point(0, 222);
-            NhapHangCardList.Margin = new Padding(0);
-            NhapHangCardList.Name = "NhapHangCardList";
-            NhapHangCardList.RowCount = 2;
-            NhapHangCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            NhapHangCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            NhapHangCardList.Size = new Size(1645, 1024);
-            NhapHangCardList.TabIndex = 3;
+            supplyEndDate.Cursor = Cursors.Hand;
+            supplyEndDate.CustomFormat = "dd/MM/yyyy";
+            supplyEndDate.Dock = DockStyle.Fill;
+            supplyEndDate.DropDownAlign = LeftRightAlignment.Right;
+            supplyEndDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            supplyEndDate.Format = DateTimePickerFormat.Custom;
+            supplyEndDate.Location = new Point(787, 23);
+            supplyEndDate.Margin = new Padding(0, 15, 8, 0);
+            supplyEndDate.Name = "supplyEndDate";
+            supplyEndDate.ShowUpDown = true;
+            supplyEndDate.Size = new Size(186, 39);
+            supplyEndDate.TabIndex = 3;
             // 
-            // NhapHangCard
+            // supplyEndLabel
             // 
-            NhapHangCard.AutoSize = true;
-            NhapHangCard.BackColor = Color.FromArgb(200, 250, 214);
-            NhapHangCard.Controls.Add(NhapHangButtonCard);
-            NhapHangCard.Controls.Add(NhapHangBodyCard);
-            NhapHangCard.Controls.Add(NhapHangTitleCard);
-            NhapHangCard.Dock = DockStyle.Fill;
-            NhapHangCard.Location = new Point(15, 15);
-            NhapHangCard.Margin = new Padding(15);
-            NhapHangCard.Name = "NhapHangCard";
-            NhapHangCard.Size = new Size(381, 482);
-            NhapHangCard.TabIndex = 0;
+            supplyEndLabel.AutoSize = true;
+            supplyEndLabel.Dock = DockStyle.Fill;
+            supplyEndLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            supplyEndLabel.ForeColor = Color.White;
+            supplyEndLabel.Location = new Point(642, 8);
+            supplyEndLabel.Margin = new Padding(8, 0, 0, 0);
+            supplyEndLabel.Name = "supplyEndLabel";
+            supplyEndLabel.Size = new Size(145, 72);
+            supplyEndLabel.TabIndex = 3;
+            supplyEndLabel.Text = "Ngày kết thúc:";
+            supplyEndLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // NhapHangButtonCard
+            // supplySearchBar
             // 
-            NhapHangButtonCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangButtonCard.BackColor = Color.Black;
-            NhapHangButtonCard.Cursor = Cursors.Hand;
-            NhapHangButtonCard.Font = new Font("Roboto Condensed", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            NhapHangButtonCard.ForeColor = Color.White;
-            NhapHangButtonCard.Location = new Point(64, 373);
-            NhapHangButtonCard.Margin = new Padding(0);
-            NhapHangButtonCard.Name = "NhapHangButtonCard";
-            NhapHangButtonCard.Size = new Size(252, 74);
-            NhapHangButtonCard.TabIndex = 6;
-            NhapHangButtonCard.Text = "Xem chi tiết";
-            NhapHangButtonCard.UseVisualStyleBackColor = false;
-            NhapHangButtonCard.Click += NhapHangButtonCard_Click_1;
+            supplySearchBar.Cursor = Cursors.IBeam;
+            supplySearchBar.Dock = DockStyle.Fill;
+            supplySearchBar.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            supplySearchBar.Location = new Point(8, 23);
+            supplySearchBar.Margin = new Padding(0, 15, 8, 0);
+            supplySearchBar.Name = "supplySearchBar";
+            supplySearchBar.PlaceholderText = "Tìm kiếm...";
+            supplySearchBar.Size = new Size(279, 39);
+            supplySearchBar.TabIndex = 1;
             // 
-            // NhapHangBodyCard
+            // supplyStartDate
             // 
-            NhapHangBodyCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangBodyCard.Font = new Font("Roboto SemiBold", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangBodyCard.Location = new Point(0, 89);
-            NhapHangBodyCard.Name = "NhapHangBodyCard";
-            NhapHangBodyCard.Size = new Size(379, 284);
-            NhapHangBodyCard.TabIndex = 2;
-            NhapHangBodyCard.Text = "Nhân viên: 0001\r\nNhà cung cấp: 0001\r\nSố lượng: 100\r\nTổng tiền: 10.000.000đ";
-            NhapHangBodyCard.TextAlign = ContentAlignment.MiddleCenter;
+            supplyStartDate.Cursor = Cursors.Hand;
+            supplyStartDate.CustomFormat = "dd/MM/yyyy";
+            supplyStartDate.Dock = DockStyle.Fill;
+            supplyStartDate.DropDownAlign = LeftRightAlignment.Right;
+            supplyStartDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            supplyStartDate.Format = DateTimePickerFormat.Custom;
+            supplyStartDate.Location = new Point(445, 23);
+            supplyStartDate.Margin = new Padding(0, 15, 8, 0);
+            supplyStartDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
+            supplyStartDate.Name = "supplyStartDate";
+            supplyStartDate.ShowUpDown = true;
+            supplyStartDate.Size = new Size(181, 39);
+            supplyStartDate.TabIndex = 2;
+            supplyStartDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             // 
-            // NhapHangTitleCard
+            // supplyStartLabel
             // 
-            NhapHangTitleCard.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangTitleCard.Font = new Font("Roboto", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangTitleCard.Location = new Point(0, 2);
-            NhapHangTitleCard.Margin = new Padding(0);
-            NhapHangTitleCard.Name = "NhapHangTitleCard";
-            NhapHangTitleCard.Size = new Size(379, 87);
-            NhapHangTitleCard.TabIndex = 1;
-            NhapHangTitleCard.Text = "NH0001";
-            NhapHangTitleCard.TextAlign = ContentAlignment.MiddleCenter;
+            supplyStartLabel.AutoSize = true;
+            supplyStartLabel.Dock = DockStyle.Fill;
+            supplyStartLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            supplyStartLabel.ForeColor = Color.White;
+            supplyStartLabel.Location = new Point(295, 8);
+            supplyStartLabel.Margin = new Padding(0);
+            supplyStartLabel.Name = "supplyStartLabel";
+            supplyStartLabel.Size = new Size(150, 72);
+            supplyStartLabel.TabIndex = 2;
+            supplyStartLabel.Text = "Ngày bắt đầu:";
+            supplyStartLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // NhapHangToolBar
+            // supplyFilter
             // 
-            NhapHangToolBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NhapHangToolBar.BackColor = Color.FromArgb(0, 120, 103);
-            NhapHangToolBar.ColumnCount = 6;
-            NhapHangToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 27.0795383F));
-            NhapHangToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.1469336F));
-            NhapHangToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17.78992F));
-            NhapHangToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.4615383F));
-            NhapHangToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.33846F));
-            NhapHangToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.075289F));
-            NhapHangToolBar.Controls.Add(NhapHangEndDate, 4, 0);
-            NhapHangToolBar.Controls.Add(NhapHangEnd, 3, 0);
-            NhapHangToolBar.Controls.Add(NhapHangSearchbar, 0, 0);
-            NhapHangToolBar.Controls.Add(NhapHangStartDate, 2, 0);
-            NhapHangToolBar.Controls.Add(NhapHangStart, 1, 0);
-            NhapHangToolBar.Controls.Add(NhapHangFilterButton, 5, 0);
-            NhapHangToolBar.Location = new Point(0, 100);
-            NhapHangToolBar.Margin = new Padding(0);
-            NhapHangToolBar.Name = "NhapHangToolBar";
-            NhapHangToolBar.Padding = new Padding(10);
-            NhapHangToolBar.RowCount = 1;
-            NhapHangToolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            NhapHangToolBar.Size = new Size(1645, 122);
-            NhapHangToolBar.TabIndex = 2;
+            supplyFilter.BackColor = Color.FromArgb(0, 120, 103);
+            supplyFilter.Cursor = Cursors.Hand;
+            supplyFilter.Dock = DockStyle.Fill;
+            supplyFilter.FlatAppearance.BorderSize = 0;
+            supplyFilter.FlatStyle = FlatStyle.Flat;
+            supplyFilter.Image = Properties.Resources.Filter;
+            supplyFilter.Location = new Point(981, 8);
+            supplyFilter.Margin = new Padding(0);
+            supplyFilter.Name = "supplyFilter";
+            supplyFilter.Size = new Size(100, 72);
+            supplyFilter.TabIndex = 4;
+            supplyFilter.UseVisualStyleBackColor = false;
+            supplyFilter.MouseEnter += filterButton_MouseEnter;
+            supplyFilter.MouseHover += filterButton_MouseLeave;
             // 
-            // NhapHangEndDate
+            // supplyTitlePanel
             // 
-            NhapHangEndDate.Anchor = AnchorStyles.None;
-            NhapHangEndDate.Cursor = Cursors.Hand;
-            NhapHangEndDate.DropDownAlign = LeftRightAlignment.Right;
-            NhapHangEndDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangEndDate.Format = DateTimePickerFormat.Short;
-            NhapHangEndDate.Location = new Point(1214, 33);
-            NhapHangEndDate.Margin = new Padding(0, 0, 10, 0);
-            NhapHangEndDate.Name = "NhapHangEndDate";
-            NhapHangEndDate.ShowUpDown = true;
-            NhapHangEndDate.Size = new Size(268, 56);
-            NhapHangEndDate.TabIndex = 3;
+            supplyTitlePanel.ColumnCount = 2;
+            supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            supplyTitlePanel.Controls.Add(supplyTitle, 0, 0);
+            supplyTitlePanel.Controls.Add(supplyAdd, 1, 0);
+            supplyTitlePanel.Dock = DockStyle.Top;
+            supplyTitlePanel.Location = new Point(0, 0);
+            supplyTitlePanel.Margin = new Padding(0);
+            supplyTitlePanel.Name = "supplyTitlePanel";
+            supplyTitlePanel.RowCount = 1;
+            supplyTitlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            supplyTitlePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            supplyTitlePanel.Size = new Size(1191, 54);
+            supplyTitlePanel.TabIndex = 5;
             // 
-            // NhapHangEnd
+            // supplyTitle
             // 
-            NhapHangEnd.AutoSize = true;
-            NhapHangEnd.Dock = DockStyle.Fill;
-            NhapHangEnd.Font = new Font("Roboto Condensed", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangEnd.ForeColor = Color.White;
-            NhapHangEnd.Location = new Point(979, 10);
-            NhapHangEnd.Margin = new Padding(10, 0, 0, 0);
-            NhapHangEnd.Name = "NhapHangEnd";
-            NhapHangEnd.Size = new Size(225, 102);
-            NhapHangEnd.TabIndex = 3;
-            NhapHangEnd.Text = "Ngày kết thúc:";
-            NhapHangEnd.TextAlign = ContentAlignment.MiddleCenter;
+            supplyTitle.Dock = DockStyle.Fill;
+            supplyTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
+            supplyTitle.Location = new Point(0, 0);
+            supplyTitle.Margin = new Padding(0);
+            supplyTitle.Name = "supplyTitle";
+            supplyTitle.Size = new Size(595, 54);
+            supplyTitle.TabIndex = 3;
+            supplyTitle.Text = "Nhập hàng";
+            supplyTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // NhapHangSearchbar
+            // supplyAdd
             // 
-            NhapHangSearchbar.Anchor = AnchorStyles.None;
-            NhapHangSearchbar.Cursor = Cursors.IBeam;
-            NhapHangSearchbar.Font = new Font("Roboto Medium", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangSearchbar.Location = new Point(24, 35);
-            NhapHangSearchbar.Margin = new Padding(0, 0, 10, 0);
-            NhapHangSearchbar.Name = "NhapHangSearchbar";
-            NhapHangSearchbar.PlaceholderText = "value...";
-            NhapHangSearchbar.Size = new Size(401, 52);
-            NhapHangSearchbar.TabIndex = 1;
-            // 
-            // NhapHangStartDate
-            // 
-            NhapHangStartDate.Anchor = AnchorStyles.None;
-            NhapHangStartDate.Cursor = Cursors.Hand;
-            NhapHangStartDate.DropDownAlign = LeftRightAlignment.Right;
-            NhapHangStartDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangStartDate.Format = DateTimePickerFormat.Short;
-            NhapHangStartDate.Location = new Point(689, 33);
-            NhapHangStartDate.Margin = new Padding(0, 0, 10, 0);
-            NhapHangStartDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
-            NhapHangStartDate.Name = "NhapHangStartDate";
-            NhapHangStartDate.ShowUpDown = true;
-            NhapHangStartDate.Size = new Size(260, 56);
-            NhapHangStartDate.TabIndex = 2;
-            NhapHangStartDate.Value = new DateTime(2025, 10, 1, 0, 0, 0, 0);
-            // 
-            // NhapHangStart
-            // 
-            NhapHangStart.Anchor = AnchorStyles.None;
-            NhapHangStart.AutoSize = true;
-            NhapHangStart.Font = new Font("Roboto", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NhapHangStart.ForeColor = Color.White;
-            NhapHangStart.Location = new Point(450, 40);
-            NhapHangStart.Margin = new Padding(0);
-            NhapHangStart.Name = "NhapHangStart";
-            NhapHangStart.Size = new Size(229, 41);
-            NhapHangStart.TabIndex = 2;
-            NhapHangStart.Text = "Ngày bắt đầu:";
-            NhapHangStart.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // NhapHangFilterButton
-            // 
-            NhapHangFilterButton.BackColor = Color.FromArgb(0, 120, 103);
-            NhapHangFilterButton.Cursor = Cursors.Hand;
-            NhapHangFilterButton.Dock = DockStyle.Fill;
-            NhapHangFilterButton.Image = Properties.Resources.Filter;
-            NhapHangFilterButton.Location = new Point(1502, 10);
-            NhapHangFilterButton.Margin = new Padding(0);
-            NhapHangFilterButton.Name = "NhapHangFilterButton";
-            NhapHangFilterButton.Size = new Size(133, 102);
-            NhapHangFilterButton.TabIndex = 4;
-            NhapHangFilterButton.UseVisualStyleBackColor = false;
-            NhapHangFilterButton.Click += NhapHangFilterButton_Click;
-            NhapHangFilterButton.MouseEnter += filterButton_MouseEnter;
-            NhapHangFilterButton.MouseLeave += filterButton_MouseLeave;
+            supplyAdd.AutoSize = true;
+            supplyAdd.BackColor = Color.Black;
+            supplyAdd.Cursor = Cursors.Hand;
+            supplyAdd.Dock = DockStyle.Right;
+            supplyAdd.ForeColor = Color.White;
+            supplyAdd.Location = new Point(1059, 0);
+            supplyAdd.Margin = new Padding(0, 0, 10, 0);
+            supplyAdd.Name = "supplyAdd";
+            supplyAdd.Size = new Size(122, 54);
+            supplyAdd.TabIndex = 4;
+            supplyAdd.Text = "+ Thêm";
+            supplyAdd.UseVisualStyleBackColor = false;
+            supplyAdd.Click += AddButton_Click;
+            supplyAdd.MouseEnter += buttonEnter;
+            supplyAdd.MouseLeave += buttonLeave;
             // 
             // storageGUI
             // 
-            AutoScaleDimensions = new SizeF(10F, 24F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             AutoSize = true;
             Controls.Add(tabPane);
-            Font = new Font("Roboto Condensed", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new Font("Segoe UI", 9F);
             Margin = new Padding(0);
             Name = "storageGUI";
-            Size = new Size(1653, 1400);
+            Size = new Size(1199, 803);
             Load += storageGUI_Load;
             tabPane.ResumeLayout(false);
             khoHangPage.ResumeLayout(false);
-            khoHangPage.PerformLayout();
             pageButtonPanel.ResumeLayout(false);
             toolBar.ResumeLayout(false);
             toolBar.PerformLayout();
             titlePanel.ResumeLayout(false);
             nhapHangPage.ResumeLayout(false);
-            nhapHangPage.PerformLayout();
-            HeaderPanel.ResumeLayout(false);
-            NhapHangPagePanel.ResumeLayout(false);
-            NhapHangCardList.ResumeLayout(false);
-            NhapHangCardList.PerformLayout();
-            NhapHangCard.ResumeLayout(false);
-            NhapHangToolBar.ResumeLayout(false);
-            NhapHangToolBar.PerformLayout();
+            supplyPagination.ResumeLayout(false);
+            supplyToolBar.ResumeLayout(false);
+            supplyToolBar.PerformLayout();
+            supplyTitlePanel.ResumeLayout(false);
+            supplyTitlePanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -707,7 +702,6 @@
         private TabPage khoHangPage;
         private TabPage nhapHangPage;
         private TableLayoutPanel toolBar;
-        private TextBox searchBar;
         private DateTimePicker startDate;
         private Label startText;
         private Label endText;
@@ -721,26 +715,24 @@
         private Button extraNextButton;
         private Button extraPreviousButton;
         private Button filterButton;
-        private TableLayoutPanel NhapHangToolBar;
-        private DateTimePicker NhapHangEndDate;
-        private Label NhapHangEnd;
-        private TextBox NhapHangSearchbar;
-        private DateTimePicker NhapHangStartDate;
-        private Label NhapHangStart;
-        private Button NhapHangFilterButton;
-        private TableLayoutPanel NhapHangCardList;
-        private Panel NhapHangCard;
-        private Panel NhapHangPagePanel;
-        private Button NhapHangExtraNext;
-        private Button NhapHangExtraPrevious;
-        private Button NhapHangNext;
-        private Button NhapHangPrevious;
-        private Button NhapHangButtonCard;
-        private Label NhapHangBodyCard;
-        private Label NhapHangTitleCard;
-        private TableLayoutPanel HeaderPanel;
-        private Label Title;
-        private Button AddButton;
         private Button Reset;
+        private TextBox searchBar;
+        private TableLayoutPanel supplyCardList;
+        private TableLayoutPanel supplyToolBar;
+        private Button supplyReset;
+        private DateTimePicker supplyEndDate;
+        private Label supplyEndLabel;
+        private TextBox supplySearchBar;
+        private DateTimePicker supplyStartDate;
+        private Label supplyStartLabel;
+        private Button supplyFilter;
+        private Panel supplyPagination;
+        private Button supplyExtraNext;
+        private Button supplyExtraPrevious;
+        private Button supplyNext;
+        private Button supplyPrevious;
+        private TableLayoutPanel supplyTitlePanel;
+        private Label supplyTitle;
+        private Button supplyAdd;
     }
 }

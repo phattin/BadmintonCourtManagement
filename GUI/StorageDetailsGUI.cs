@@ -11,36 +11,37 @@ namespace BadmintonCourtManagement.GUI
             try
             {
                 Random random = new Random();
-                TitleText.Text = "Chi tiết: " + storage.StorageId;
-                ProductID.Text = "Mã sản phẩm: " + storage.ProductId;
-                ProductName.Text = "Tên sản phẩm: " + (random.Next(0, 100) + 1);
-                ProductBrand.Text = "Hãng sản xuất: " + (random.Next(0, 100) + 1);
-                ProductQuantity.Text = "Số lượng: " + storage.Quantity;
-                ProductPrice.Text = "Đơn giá: " + storage.Price;
+                Additional additional = new Additional();
+                TitleText.Text += " " + storage.StorageId;
+                importBillID.Text += " " + storage.ImportBillId;
+                productID.Text += " " + storage.ProductId;
+                quantity.Text += " " + storage.Quantity;
+                price.Text += " " + additional.beautyMoney(storage.Price);
                 storage.CalcTotal();
-                ProductTotal.Text = "Thành tiền: " + storage.TotalPrice;
+                totalPrice.Text += " " + additional.beautyMoney(storage.TotalPrice);
+                date.Text += " " + storage.CreatedAt.ToString("dd/MM/yyyy");
                 string activeIcon = Path.Combine(DefaultPath.ICON_IMG_PATH, "Active.png");
                 string inactiveIcon = Path.Combine(DefaultPath.ICON_IMG_PATH, "Inactive.png");
                 string productImg = Path.Combine(DefaultPath.PRODUCT_IMG_PATH, "Picture.png");
                 if (storage.Status == StorageDTO.Option.active && File.Exists(activeIcon))
                 {
-                    ProductStatus.Text = "Tình trạng: đang hoạt động";
-                    ActiveIcon.Image = Image.FromFile(activeIcon);
+                    status.Text += " đang hoạt động";
+                    status.Image = Image.FromFile(activeIcon);
                 }
                 else if (File.Exists(inactiveIcon))
                 {
-                    ProductStatus.Text = "Tình trạng: ngừng hoạt động";
-                    ActiveIcon.Image = Image.FromFile(inactiveIcon);
+                    status.Text += " ngừng hoạt động";
+                    status.Image = Image.FromFile(inactiveIcon);
                 }
 
                 if (File.Exists(productImg))
                 {
-                    Picture.Image = Image.FromFile(productImg);
+                    productImage.Image = Image.FromFile(productImg);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi xảy ra khi khởi tạo " +  ex.Message
+                MessageBox.Show("Lỗi xảy ra khi khởi tạo " + ex.Message
                     , "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
