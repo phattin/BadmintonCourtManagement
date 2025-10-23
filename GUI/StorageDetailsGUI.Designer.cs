@@ -28,339 +28,239 @@
         /// </summary>
         private void InitializeComponent()
         {
-            MainPanel = new Panel();
-            PicturePanel = new Panel();
-            Picture = new Label();
-            ActiveIconPanel = new Panel();
-            ActiveIcon = new Label();
-            ProductStatusPanel = new Panel();
-            ProductStatus = new Label();
-            ProductTotalPanel = new Panel();
-            ProductTotal = new Label();
-            ProductPricePanel = new Panel();
-            ProductPrice = new Label();
-            ProductQuantityPanel = new Panel();
-            ProductQuantity = new Label();
-            ProductBrandPanel = new Panel();
-            ProductBrand = new Label();
-            ProductNamePanel = new Panel();
-            ProductName = new Label();
-            ProductIDPanel = new Panel();
-            ProductID = new Label();
+            mainPanel = new Panel();
+            bodyPanel = new TableLayoutPanel();
+            infoPanel = new TableLayoutPanel();
+            status = new Label();
+            date = new Label();
+            totalPrice = new Label();
+            price = new Label();
+            quantity = new Label();
+            productID = new Label();
+            importBillID = new Label();
+            productImage = new PictureBox();
             TitlePanel = new Panel();
             TitleText = new Label();
-            MainPanel.SuspendLayout();
-            PicturePanel.SuspendLayout();
-            ActiveIconPanel.SuspendLayout();
-            ProductStatusPanel.SuspendLayout();
-            ProductTotalPanel.SuspendLayout();
-            ProductPricePanel.SuspendLayout();
-            ProductQuantityPanel.SuspendLayout();
-            ProductBrandPanel.SuspendLayout();
-            ProductNamePanel.SuspendLayout();
-            ProductIDPanel.SuspendLayout();
+            mainPanel.SuspendLayout();
+            bodyPanel.SuspendLayout();
+            infoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)productImage).BeginInit();
             TitlePanel.SuspendLayout();
             SuspendLayout();
             // 
-            // MainPanel
+            // mainPanel
             // 
-            MainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            MainPanel.AutoScroll = true;
-            MainPanel.BackColor = Color.FromArgb(200, 250, 214);
-            MainPanel.Controls.Add(PicturePanel);
-            MainPanel.Controls.Add(ActiveIconPanel);
-            MainPanel.Controls.Add(ProductStatusPanel);
-            MainPanel.Controls.Add(ProductTotalPanel);
-            MainPanel.Controls.Add(ProductPricePanel);
-            MainPanel.Controls.Add(ProductQuantityPanel);
-            MainPanel.Controls.Add(ProductBrandPanel);
-            MainPanel.Controls.Add(ProductNamePanel);
-            MainPanel.Controls.Add(ProductIDPanel);
-            MainPanel.Controls.Add(TitlePanel);
-            MainPanel.Location = new Point(61, 59);
-            MainPanel.Margin = new Padding(0);
-            MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(1488, 837);
-            MainPanel.TabIndex = 0;
+            mainPanel.BackColor = Color.FromArgb(239, 248, 230);
+            mainPanel.Controls.Add(bodyPanel);
+            mainPanel.Controls.Add(TitlePanel);
+            mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Location = new Point(35, 39);
+            mainPanel.Margin = new Padding(0);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Size = new Size(976, 493);
+            mainPanel.TabIndex = 0;
             // 
-            // PicturePanel
+            // bodyPanel
             // 
-            PicturePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            PicturePanel.AutoSize = true;
-            PicturePanel.Controls.Add(Picture);
-            PicturePanel.Location = new Point(843, 171);
-            PicturePanel.Name = "PicturePanel";
-            PicturePanel.Size = new Size(592, 604);
-            PicturePanel.TabIndex = 10;
+            bodyPanel.AutoScroll = true;
+            bodyPanel.ColumnCount = 2;
+            bodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            bodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            bodyPanel.Controls.Add(infoPanel, 0, 0);
+            bodyPanel.Controls.Add(productImage, 1, 0);
+            bodyPanel.Dock = DockStyle.Fill;
+            bodyPanel.Location = new Point(0, 83);
+            bodyPanel.Margin = new Padding(0);
+            bodyPanel.Name = "bodyPanel";
+            bodyPanel.Padding = new Padding(20, 0, 2, 20);
+            bodyPanel.RowCount = 1;
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            bodyPanel.Size = new Size(976, 410);
+            bodyPanel.TabIndex = 2;
             // 
-            // Picture
+            // infoPanel
             // 
-            Picture.Dock = DockStyle.Fill;
-            Picture.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Picture.png");
-            Picture.Location = new Point(0, 0);
-            Picture.Margin = new Padding(0);
-            Picture.Name = "Picture";
-            Picture.Size = new Size(592, 604);
-            Picture.TabIndex = 0;
+            infoPanel.ColumnCount = 1;
+            infoPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            infoPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            infoPanel.Controls.Add(status, 0, 6);
+            infoPanel.Controls.Add(date, 0, 5);
+            infoPanel.Controls.Add(totalPrice, 0, 4);
+            infoPanel.Controls.Add(price, 0, 3);
+            infoPanel.Controls.Add(quantity, 0, 2);
+            infoPanel.Controls.Add(productID, 0, 1);
+            infoPanel.Controls.Add(importBillID, 0, 0);
+            infoPanel.Dock = DockStyle.Fill;
+            infoPanel.Location = new Point(23, 3);
+            infoPanel.Name = "infoPanel";
+            infoPanel.RowCount = 7;
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.Size = new Size(471, 384);
+            infoPanel.TabIndex = 0;
             // 
-            // ActiveIconPanel
+            // status
             // 
-            ActiveIconPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ActiveIconPanel.AutoSize = true;
-            ActiveIconPanel.Controls.Add(ActiveIcon);
-            ActiveIconPanel.Location = new Point(723, 718);
-            ActiveIconPanel.Margin = new Padding(0);
-            ActiveIconPanel.Name = "ActiveIconPanel";
-            ActiveIconPanel.Size = new Size(765, 57);
-            ActiveIconPanel.TabIndex = 9;
+            status.Dock = DockStyle.Fill;
+            status.Font = new Font("Segoe UI", 14F);
+            status.Image = Properties.Resources.Active;
+            status.ImageAlign = ContentAlignment.MiddleRight;
+            status.Location = new Point(0, 324);
+            status.Margin = new Padding(0);
+            status.Name = "status";
+            status.Size = new Size(471, 60);
+            status.TabIndex = 6;
+            status.Text = "Tình trạng:";
+            status.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ActiveIcon
+            // date
             // 
-            ActiveIcon.Dock = DockStyle.Left;
-            ActiveIcon.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ActiveIcon.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Active.png");
-            ActiveIcon.ImageAlign = ContentAlignment.MiddleLeft;
-            ActiveIcon.Location = new Point(0, 0);
-            ActiveIcon.Margin = new Padding(0);
-            ActiveIcon.Name = "ActiveIcon";
-            ActiveIcon.Size = new Size(765, 57);
-            ActiveIcon.TabIndex = 0;
-            ActiveIcon.TextAlign = ContentAlignment.MiddleLeft;
+            date.Dock = DockStyle.Fill;
+            date.Font = new Font("Segoe UI", 14F);
+            date.Location = new Point(0, 270);
+            date.Margin = new Padding(0);
+            date.Name = "date";
+            date.Size = new Size(471, 54);
+            date.TabIndex = 5;
+            date.Text = "Ngày nhập:";
+            date.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductStatusPanel
+            // totalPrice
             // 
-            ProductStatusPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductStatusPanel.AutoSize = true;
-            ProductStatusPanel.Controls.Add(ProductStatus);
-            ProductStatusPanel.Location = new Point(125, 718);
-            ProductStatusPanel.Margin = new Padding(0);
-            ProductStatusPanel.Name = "ProductStatusPanel";
-            ProductStatusPanel.Size = new Size(1363, 57);
-            ProductStatusPanel.TabIndex = 8;
+            totalPrice.Dock = DockStyle.Fill;
+            totalPrice.Font = new Font("Segoe UI", 14F);
+            totalPrice.Location = new Point(0, 216);
+            totalPrice.Margin = new Padding(0);
+            totalPrice.Name = "totalPrice";
+            totalPrice.Size = new Size(471, 54);
+            totalPrice.TabIndex = 4;
+            totalPrice.Text = "Tổng tiền:";
+            totalPrice.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductStatus
+            // price
             // 
-            ProductStatus.Dock = DockStyle.Fill;
-            ProductStatus.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductStatus.Location = new Point(0, 0);
-            ProductStatus.Margin = new Padding(0);
-            ProductStatus.Name = "ProductStatus";
-            ProductStatus.Size = new Size(1363, 57);
-            ProductStatus.TabIndex = 0;
-            ProductStatus.Text = "Tình trạng: đang hoạt động";
-            ProductStatus.TextAlign = ContentAlignment.MiddleLeft;
+            price.Dock = DockStyle.Fill;
+            price.Font = new Font("Segoe UI", 14F);
+            price.Location = new Point(0, 162);
+            price.Margin = new Padding(0);
+            price.Name = "price";
+            price.Size = new Size(471, 54);
+            price.TabIndex = 3;
+            price.Text = "Giá:";
+            price.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductTotalPanel
+            // quantity
             // 
-            ProductTotalPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductTotalPanel.AutoSize = true;
-            ProductTotalPanel.Controls.Add(ProductTotal);
-            ProductTotalPanel.Location = new Point(125, 626);
-            ProductTotalPanel.Margin = new Padding(0);
-            ProductTotalPanel.Name = "ProductTotalPanel";
-            ProductTotalPanel.Size = new Size(1363, 57);
-            ProductTotalPanel.TabIndex = 7;
+            quantity.Dock = DockStyle.Fill;
+            quantity.Font = new Font("Segoe UI", 14F);
+            quantity.Location = new Point(0, 108);
+            quantity.Margin = new Padding(0);
+            quantity.Name = "quantity";
+            quantity.Size = new Size(471, 54);
+            quantity.TabIndex = 2;
+            quantity.Text = "Số lượng:";
+            quantity.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductTotal
+            // productID
             // 
-            ProductTotal.Dock = DockStyle.Fill;
-            ProductTotal.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductTotal.Location = new Point(0, 0);
-            ProductTotal.Margin = new Padding(0);
-            ProductTotal.Name = "ProductTotal";
-            ProductTotal.Size = new Size(1363, 57);
-            ProductTotal.TabIndex = 0;
-            ProductTotal.Text = "Thành tiền: 10.000.000đ";
-            ProductTotal.TextAlign = ContentAlignment.MiddleLeft;
+            productID.Dock = DockStyle.Fill;
+            productID.Font = new Font("Segoe UI", 14F);
+            productID.Location = new Point(0, 54);
+            productID.Margin = new Padding(0);
+            productID.Name = "productID";
+            productID.Size = new Size(471, 54);
+            productID.TabIndex = 1;
+            productID.Text = "Mã sản phẩm:";
+            productID.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductPricePanel
+            // importBillID
             // 
-            ProductPricePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductPricePanel.AutoSize = true;
-            ProductPricePanel.Controls.Add(ProductPrice);
-            ProductPricePanel.Location = new Point(125, 540);
-            ProductPricePanel.Margin = new Padding(0);
-            ProductPricePanel.Name = "ProductPricePanel";
-            ProductPricePanel.Size = new Size(1363, 57);
-            ProductPricePanel.TabIndex = 6;
+            importBillID.Dock = DockStyle.Fill;
+            importBillID.Font = new Font("Segoe UI", 14F);
+            importBillID.Location = new Point(0, 0);
+            importBillID.Margin = new Padding(0);
+            importBillID.Name = "importBillID";
+            importBillID.Size = new Size(471, 54);
+            importBillID.TabIndex = 0;
+            importBillID.Text = "Mã hóa đơn nhập:";
+            importBillID.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductPrice
+            // productImage
             // 
-            ProductPrice.Dock = DockStyle.Fill;
-            ProductPrice.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductPrice.Location = new Point(0, 0);
-            ProductPrice.Margin = new Padding(0);
-            ProductPrice.Name = "ProductPrice";
-            ProductPrice.Size = new Size(1363, 57);
-            ProductPrice.TabIndex = 0;
-            ProductPrice.Text = "Đơn giá: 100.000đ";
-            ProductPrice.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductQuantityPanel
-            // 
-            ProductQuantityPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductQuantityPanel.AutoSize = true;
-            ProductQuantityPanel.Controls.Add(ProductQuantity);
-            ProductQuantityPanel.Location = new Point(125, 444);
-            ProductQuantityPanel.Margin = new Padding(0);
-            ProductQuantityPanel.Name = "ProductQuantityPanel";
-            ProductQuantityPanel.Size = new Size(1363, 57);
-            ProductQuantityPanel.TabIndex = 5;
-            // 
-            // ProductQuantity
-            // 
-            ProductQuantity.Dock = DockStyle.Fill;
-            ProductQuantity.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductQuantity.Location = new Point(0, 0);
-            ProductQuantity.Margin = new Padding(0);
-            ProductQuantity.Name = "ProductQuantity";
-            ProductQuantity.Size = new Size(1363, 57);
-            ProductQuantity.TabIndex = 0;
-            ProductQuantity.Text = "Số lượng: 100";
-            ProductQuantity.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductBrandPanel
-            // 
-            ProductBrandPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductBrandPanel.AutoSize = true;
-            ProductBrandPanel.Controls.Add(ProductBrand);
-            ProductBrandPanel.Location = new Point(125, 355);
-            ProductBrandPanel.Margin = new Padding(0);
-            ProductBrandPanel.Name = "ProductBrandPanel";
-            ProductBrandPanel.Size = new Size(1363, 57);
-            ProductBrandPanel.TabIndex = 4;
-            // 
-            // ProductBrand
-            // 
-            ProductBrand.Dock = DockStyle.Fill;
-            ProductBrand.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductBrand.Location = new Point(0, 0);
-            ProductBrand.Margin = new Padding(0);
-            ProductBrand.Name = "ProductBrand";
-            ProductBrand.Size = new Size(1363, 57);
-            ProductBrand.TabIndex = 0;
-            ProductBrand.Text = "Hãng sản xuất: Nike";
-            ProductBrand.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductNamePanel
-            // 
-            ProductNamePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductNamePanel.AutoSize = true;
-            ProductNamePanel.Controls.Add(ProductName);
-            ProductNamePanel.Location = new Point(125, 266);
-            ProductNamePanel.Margin = new Padding(0);
-            ProductNamePanel.Name = "ProductNamePanel";
-            ProductNamePanel.Size = new Size(1363, 57);
-            ProductNamePanel.TabIndex = 3;
-            // 
-            // ProductName
-            // 
-            ProductName.Dock = DockStyle.Fill;
-            ProductName.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductName.Location = new Point(0, 0);
-            ProductName.Margin = new Padding(0);
-            ProductName.Name = "ProductName";
-            ProductName.Size = new Size(1363, 57);
-            ProductName.TabIndex = 0;
-            ProductName.Text = "Tên sản phẩm: Giày thể thao";
-            ProductName.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductIDPanel
-            // 
-            ProductIDPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductIDPanel.AutoSize = true;
-            ProductIDPanel.Controls.Add(ProductID);
-            ProductIDPanel.Location = new Point(125, 171);
-            ProductIDPanel.Margin = new Padding(0);
-            ProductIDPanel.Name = "ProductIDPanel";
-            ProductIDPanel.Size = new Size(1363, 57);
-            ProductIDPanel.TabIndex = 1;
-            // 
-            // ProductID
-            // 
-            ProductID.Dock = DockStyle.Fill;
-            ProductID.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductID.Location = new Point(0, 0);
-            ProductID.Margin = new Padding(0);
-            ProductID.Name = "ProductID";
-            ProductID.Size = new Size(1363, 57);
-            ProductID.TabIndex = 0;
-            ProductID.Text = "Mã sản phẩm: SP0001";
-            ProductID.TextAlign = ContentAlignment.MiddleLeft;
+            productImage.Dock = DockStyle.Fill;
+            productImage.Image = Properties.Resources.Picture;
+            productImage.Location = new Point(527, 30);
+            productImage.Margin = new Padding(30);
+            productImage.Name = "productImage";
+            productImage.Size = new Size(417, 330);
+            productImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            productImage.TabIndex = 1;
+            productImage.TabStop = false;
             // 
             // TitlePanel
             // 
-            TitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TitlePanel.AutoSize = true;
             TitlePanel.Controls.Add(TitleText);
-            TitlePanel.Location = new Point(125, 0);
+            TitlePanel.Dock = DockStyle.Top;
+            TitlePanel.Location = new Point(0, 0);
             TitlePanel.Margin = new Padding(0);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(1363, 94);
-            TitlePanel.TabIndex = 0;
+            TitlePanel.Size = new Size(976, 83);
+            TitlePanel.TabIndex = 1;
             // 
             // TitleText
             // 
             TitleText.Dock = DockStyle.Fill;
-            TitleText.Font = new Font("Roboto", 42F, FontStyle.Bold);
+            TitleText.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             TitleText.Location = new Point(0, 0);
             TitleText.Margin = new Padding(0);
             TitleText.Name = "TitleText";
-            TitleText.Size = new Size(1363, 94);
+            TitleText.Size = new Size(976, 83);
             TitleText.TabIndex = 0;
-            TitleText.Text = "Chi tiết: KH0001";
+            TitleText.Text = "Chi tiết:";
             TitleText.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // StorageDetailsGUI
             // 
-            AutoScaleDimensions = new SizeF(11F, 24F);
+            AutoScaleDimensions = new SizeF(13F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 120, 103);
-            ClientSize = new Size(1613, 955);
-            Controls.Add(MainPanel);
-            Font = new Font("Roboto", 12F);
+            ClientSize = new Size(1046, 571);
+            Controls.Add(mainPanel);
+            Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(4);
+            Margin = new Padding(5);
             MaximizeBox = false;
             Name = "StorageDetailsGUI";
+            Padding = new Padding(35, 39, 35, 39);
             Text = "Chi tiết kho hàng";
-            MainPanel.ResumeLayout(false);
-            MainPanel.PerformLayout();
-            PicturePanel.ResumeLayout(false);
-            ActiveIconPanel.ResumeLayout(false);
-            ProductStatusPanel.ResumeLayout(false);
-            ProductTotalPanel.ResumeLayout(false);
-            ProductPricePanel.ResumeLayout(false);
-            ProductQuantityPanel.ResumeLayout(false);
-            ProductBrandPanel.ResumeLayout(false);
-            ProductNamePanel.ResumeLayout(false);
-            ProductIDPanel.ResumeLayout(false);
+            mainPanel.ResumeLayout(false);
+            bodyPanel.ResumeLayout(false);
+            infoPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)productImage).EndInit();
             TitlePanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel MainPanel;
+        private Panel mainPanel;
         private Panel TitlePanel;
         private Label TitleText;
-        private Panel ProductIDPanel;
-        private Label ProductID;
-        private Panel ProductTotalPanel;
-        private Label ProductTotal;
-        private Panel ProductPricePanel;
-        private Label ProductPrice;
-        private Panel ProductQuantityPanel;
-        private Label ProductQuantity;
-        private Panel ProductBrandPanel;
-        private Label ProductBrand;
-        private Panel ProductNamePanel;
-        private Label ProductName;
-        private Panel ProductStatusPanel;
-        private Label ProductStatus;
-        private Panel ActiveIconPanel;
-        private Label ActiveIcon;
-        private Panel PicturePanel;
-        private Label Picture;
+        private TableLayoutPanel bodyPanel;
+        private TableLayoutPanel infoPanel;
+        private Label status;
+        private Label date;
+        private Label totalPrice;
+        private Label price;
+        private Label quantity;
+        private Label productID;
+        private Label importBillID;
+        private PictureBox productImage;
     }
 }

@@ -196,7 +196,7 @@
         vScAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="NhapHangExtraNext.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="supplyExtraNext.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEcAAABHCAYAAABVsFofAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAA0VJREFUeF7tm7vKFTEUhZeXRvECaqONaKtW1l5eQdQ3sPMRvIAP4KW01sZCFETR
@@ -216,7 +216,7 @@
         5xgaFFBCodCK0j9fyhxSIibjUAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="NhapHangExtraPrevious.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="supplyExtraPrevious.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEcAAABHCAYAAABVsFofAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAA01JREFUeF7tm7mqFjEYhh+XRnEBrbQRsVQbe5dLUNQ7sNJLcAEvwKXTWhsLRRCX
@@ -236,7 +236,7 @@
         9d4ahX3nWw1mCupQurq6/iv9AdTsHEIvIsdrAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="NhapHangNext.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="supplyNext.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEcAAABHCAYAAABVsFofAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAAw1JREFUeF7tm7mqFEEUhj8XEBEVXAL1AfQBNHQJNFXcMiMDFc2M1cRH8BH0BdQn
@@ -255,7 +255,7 @@
         qmSLb5qjK8ihuFyuovQPmYWwwzsUR18AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="NhapHangPrevious.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="supplyPrevious.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEcAAABHCAYAAABVsFofAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAAvhJREFUeF7tnLuqFTEUhj9F0MILeCnUB9AHsNZCa+92VoIo2lmrjY/gK/gC+gbe

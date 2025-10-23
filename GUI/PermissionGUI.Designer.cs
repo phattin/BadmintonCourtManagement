@@ -60,7 +60,7 @@
             draftPanel.Controls.Add(lblTitle);
             draftPanel.Dock = DockStyle.Fill;
             draftPanel.Location = new Point(0, 0);
-            draftPanel.Margin = new Padding(2, 2, 2, 2);
+            draftPanel.Margin = new Padding(2);
             draftPanel.Name = "draftPanel";
             draftPanel.Size = new Size(732, 436);
             draftPanel.TabIndex = 0;
@@ -72,7 +72,7 @@
             extraNextButton.Cursor = Cursors.Hand;
             extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
             extraNextButton.Location = new Point(439, 391);
-            extraNextButton.Margin = new Padding(2, 2, 2, 2);
+            extraNextButton.Margin = new Padding(2);
             extraNextButton.Name = "extraNextButton";
             extraNextButton.Size = new Size(42, 42);
             extraNextButton.TabIndex = 18;
@@ -87,7 +87,7 @@
             nextButton.Cursor = Cursors.Hand;
             nextButton.Image = (Image)resources.GetObject("nextButton.Image");
             nextButton.Location = new Point(379, 391);
-            nextButton.Margin = new Padding(2, 2, 2, 2);
+            nextButton.Margin = new Padding(2);
             nextButton.Name = "nextButton";
             nextButton.Size = new Size(42, 42);
             nextButton.TabIndex = 17;
@@ -103,7 +103,7 @@
             extraPreviousButton.ForeColor = Color.Transparent;
             extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
             extraPreviousButton.Location = new Point(236, 391);
-            extraPreviousButton.Margin = new Padding(2, 2, 2, 2);
+            extraPreviousButton.Margin = new Padding(2);
             extraPreviousButton.Name = "extraPreviousButton";
             extraPreviousButton.Size = new Size(42, 42);
             extraPreviousButton.TabIndex = 16;
@@ -119,7 +119,7 @@
             previousButton.Cursor = Cursors.Hand;
             previousButton.Image = (Image)resources.GetObject("previousButton.Image");
             previousButton.Location = new Point(295, 391);
-            previousButton.Margin = new Padding(2, 2, 2, 2);
+            previousButton.Margin = new Padding(2);
             previousButton.Name = "previousButton";
             previousButton.Size = new Size(42, 42);
             previousButton.TabIndex = 15;
@@ -152,7 +152,7 @@
             pListBG.Controls.Add(pList);
             pListBG.Controls.Add(pFilter);
             pListBG.Location = new Point(25, 90);
-            pListBG.Margin = new Padding(2, 2, 2, 2);
+            pListBG.Margin = new Padding(2);
             pListBG.Name = "pListBG";
             pListBG.Size = new Size(678, 298);
             pListBG.TabIndex = 6;
@@ -166,7 +166,7 @@
             pList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pList.Location = new Point(14, 82);
-            pList.Margin = new Padding(2, 2, 2, 2);
+            pList.Margin = new Padding(2);
             pList.Name = "pList";
             pList.RowCount = 2;
             pList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
@@ -183,7 +183,7 @@
             pFilter.Controls.Add(btnReset);
             pFilter.Controls.Add(pSearch);
             pFilter.Location = new Point(0, 0);
-            pFilter.Margin = new Padding(2, 2, 2, 2);
+            pFilter.Margin = new Padding(2);
             pFilter.Name = "pFilter";
             pFilter.Size = new Size(676, 66);
             pFilter.TabIndex = 0;
@@ -208,7 +208,7 @@
             pSearch.BorderRadius = 40;
             pSearch.Controls.Add(txtSearch);
             pSearch.Location = new Point(28, 10);
-            pSearch.Margin = new Padding(2, 2, 2, 2);
+            pSearch.Margin = new Padding(2);
             pSearch.Name = "pSearch";
             pSearch.Size = new Size(310, 43);
             pSearch.TabIndex = 1;
@@ -219,7 +219,7 @@
             txtSearch.BorderStyle = BorderStyle.None;
             txtSearch.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtSearch.Location = new Point(14, 10);
-            txtSearch.Margin = new Padding(2, 2, 2, 2);
+            txtSearch.Margin = new Padding(2);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Tìm kiếm";
             txtSearch.Size = new Size(279, 25);
@@ -246,7 +246,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(draftPanel);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "PermissionGUI";
             Size = new Size(732, 436);
             draftPanel.ResumeLayout(false);
