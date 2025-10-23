@@ -23,6 +23,9 @@ namespace BadmintonCourtManagement.GUI
             this.currentAccount = currentAccount;
             InitializeComponent();
             statisticalBUS = new StatisticalBUS();
+
+                // Thiết lập cho tab Sân
+    SetupCourtTab();
         }
 
         private void StatisticGUI_Load(object sender, EventArgs e)
@@ -42,10 +45,10 @@ namespace BadmintonCourtManagement.GUI
             dgTopProducts.Columns.Add("TotalRevenue", "Total Revenue");
 
             // Format and set widths
-            dgTopProducts.Columns["ProductId"].Width = 392;
-            dgTopProducts.Columns["ProductName"].Width = 391;
-            dgTopProducts.Columns["Quantity"].Width = 390;
-            dgTopProducts.Columns["TotalRevenue"].Width = 392;
+            dgTopProducts.Columns["ProductId"].Width = 370;
+            dgTopProducts.Columns["ProductName"].Width = 380;
+            dgTopProducts.Columns["Quantity"].Width = 370;
+            dgTopProducts.Columns["TotalRevenue"].Width = 367;
 
             // Optional: format revenue column
             dgTopProducts.Columns["TotalRevenue"].DefaultCellStyle.Format = "C2"; // Currency format
@@ -56,7 +59,11 @@ namespace BadmintonCourtManagement.GUI
             dgTopProducts.Columns["Quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             // Do not fetch initial data here to avoid automatic refresh
+
             isInitializing = false; // Allow button clicks to work after initialization
+
+            // Khởi tạo tab Sân
+            SetupCourtTab();
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -115,6 +122,58 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
+        // Thêm vào cuối constructor hoặc sau InitializeComponent()
+
+            private void SetupCourtTab()
+            {
+                // Thiết lập cột cho dataGridView1
+                dataGridView1.Columns.Clear();
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                dataGridView1.AllowUserToResizeColumns = false;
+
+                dataGridView1.Columns.Add("CourtName", "Tên Sân");
+                dataGridView1.Columns.Add("TotalBookings", "Số Lượt Đặt");
+                dataGridView1.Columns.Add("TotalRevenue", "Tổng Doanh Thu");
+                dataGridView1.Columns.Add("AverageRevenue", "Doanh Thu Trung Bình");
+
+                // Định dạng cột
+                dataGridView1.Columns["CourtName"].Width = 400;
+                dataGridView1.Columns["TotalBookings"].Width = 300;
+                dataGridView1.Columns["TotalRevenue"].Width = 400;
+                dataGridView1.Columns["AverageRevenue"].Width = 387;
+
+                dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Format = "C0";
+                dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Format = "C0";
+                dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dataGridView1.Columns["TotalBookings"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                // Gán sự kiện Click cho label4 (nút Thống Kê ở tab Sân)
+                label4.Click += label4_Click;
+
+                // Tải danh sách sân vào comboBox1 (nếu cần lọc)
+                LoadCourtNames();
+
+                // Đặt giá trị mặc định cho dateTimePicker
+                dateTimePicker3.Value = DateTime.Now.AddDays(-30);
+                dateTimePicker4.Value = DateTime.Now;
+            }
+
+        private void LoadCourtNames()
+        {
+            try
+            {
+                var courts = statisticalBUS.GetCourtRevenue(DateTime.Today.AddDays(-365), DateTime.Today, "", false);
+                var courtNames = courts.Select(c => c.CourtName).Distinct().OrderBy(n => n).ToList();
+                textBox1.Text = "Tất cả các sân";
+            }
+            catch
+            {
+                textBox1.Text = "Tất cả các sân";
+            }
+        }
+        
+
         // Remove automatic refresh from these event handlers
         private void sortFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -130,5 +189,90 @@ namespace BadmintonCourtManagement.GUI
         {
             // No action needed; data will only refresh when the button is clicked
         }
+
+        private void drPanelCourtMN_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void customPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void customPanel7_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label4_Click(object sender, EventArgs e)
+        {
+            DateTime startDate = dateTimePicker3.Value.Date;
+            DateTime endDate = dateTimePicker4.Value.Date;
+
+            if (startDate > endDate)
+            {
+                MessageBox.Show("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string courtNameFilter = textBox1.Text?.ToString() ?? "";
+            if (courtNameFilter == "Tất cả các sân")
+                courtNameFilter = "";
+
+            bool sortDescending = true; // Có thể mở rộng thêm tùy chọn sắp xếp sau
+
+            try
+            {
+                var revenueData = statisticalBUS.GetCourtRevenue(startDate, endDate, courtNameFilter, sortDescending);
+
+                dataGridView1.Rows.Clear();
+                foreach (var item in revenueData)
+                {
+                    dataGridView1.Rows.Add(
+                        item.CourtId,
+                        item.CourtName,
+                        item.TotalRevenue,
+                        item.AverageRevenue
+
+                    );
+                }
+
+                if (revenueData.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu trong khoảng thời gian đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải dữ liệu sân: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon
+
+        .Error);
+            }
+        }
+private void dateTimePicker3_ValueChanged(object sender, EventArgs e)
+{
+    if (!isInitializing) label4_Click(sender, e);
+}
+
+private void dateTimePicker4_ValueChanged(object sender, EventArgs e)
+{
+    if (!isInitializing) label4_Click(sender, e);
+}
+
+private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+{
+    if (!isInitializing) label4_Click(sender, e);
+}
     }
 }
