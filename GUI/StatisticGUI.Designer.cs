@@ -43,18 +43,18 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
-            label4 = new Label();
             label3 = new Label();
             customPanel10 = new CustomPanel();
             dataGridView1 = new DataGridView();
             customPanel4 = new CustomPanel();
+            label4 = new Label();
             customPanel6 = new CustomPanel();
             dateTimePicker3 = new DateTimePicker();
             customPanel7 = new CustomPanel();
-            comboBox1 = new ComboBox();
             label2 = new Label();
             customPanel8 = new CustomPanel();
             dateTimePicker4 = new DateTimePicker();
+            textBox1 = new TextBox();
             customPanel5.SuspendLayout();
             customPanel9.SuspendLayout();
             customPanel2.SuspendLayout();
@@ -253,23 +253,6 @@
             tabPage2.Text = "Sân";
             tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label4
-            // 
-            label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label4.AutoSize = true;
-            label4.BackColor = Color.FromArgb(64, 64, 64);
-            label4.Cursor = Cursors.Hand;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.ForeColor = Color.WhiteSmoke;
-            label4.Location = new Point(1376, 19);
-            label4.Margin = new Padding(4, 0, 4, 0);
-            label4.Name = "label4";
-            label4.Padding = new Padding(15, 10, 15, 10);
-            label4.Size = new Size(153, 52);
-            label4.TabIndex = 6;
-            label4.Text = "Thống Kê";
-            label4.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -309,7 +292,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(2862, 1630);
+            dataGridView1.Size = new Size(1490, 830);
             dataGridView1.TabIndex = 2;
             // 
             // customPanel4
@@ -327,6 +310,23 @@
             customPanel4.Name = "customPanel4";
             customPanel4.Size = new Size(1572, 98);
             customPanel4.TabIndex = 1;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label4.AutoSize = true;
+            label4.BackColor = Color.FromArgb(64, 64, 64);
+            label4.Cursor = Cursors.Hand;
+            label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.WhiteSmoke;
+            label4.Location = new Point(1376, 19);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Padding = new Padding(15, 10, 15, 10);
+            label4.Size = new Size(153, 52);
+            label4.TabIndex = 6;
+            label4.Text = "Thống Kê";
+            label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // customPanel6
             // 
@@ -350,22 +350,12 @@
             // 
             customPanel7.BackColor = Color.White;
             customPanel7.BorderRadius = 10;
-            customPanel7.Controls.Add(comboBox1);
+            customPanel7.Controls.Add(textBox1);
             customPanel7.Location = new Point(876, 29);
             customPanel7.Margin = new Padding(4, 3, 4, 3);
             customPanel7.Name = "customPanel7";
             customPanel7.Size = new Size(273, 40);
             customPanel7.TabIndex = 3;
-            // 
-            // comboBox1
-            // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Số lượng sản phẩm giảm dần", "Số lượng sản phẩm tăng dần", "Doanh thu tăng dần", "Doanh thu giảm dần" });
-            comboBox1.Location = new Point(2, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(268, 33);
-            comboBox1.TabIndex = 3;
             // 
             // label2
             // 
@@ -402,6 +392,19 @@
             dateTimePicker4.Size = new Size(310, 31);
             dateTimePicker4.TabIndex = 1;
             // 
+            // textBox1
+            // 
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.ForeColor = Color.Black;
+            textBox1.Location = new Point(4, 6);
+            textBox1.Margin = new Padding(4);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Value";
+            textBox1.Size = new Size(265, 30);
+            textBox1.TabIndex = 6;
+            // 
             // StatisticGUI
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -431,6 +434,7 @@
             customPanel4.PerformLayout();
             customPanel6.ResumeLayout(false);
             customPanel7.ResumeLayout(false);
+            customPanel7.PerformLayout();
             customPanel8.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -458,10 +462,10 @@
         private CustomPanel customPanel6;
         private DateTimePicker dateTimePicker3;
         private CustomPanel customPanel7;
-        private ComboBox comboBox1;
         private Label label2;
         private CustomPanel customPanel8;
         private DateTimePicker dateTimePicker4;
         private Label label4;
+        private TextBox textBox1;
     }
 }
