@@ -42,10 +42,10 @@ namespace BadmintonCourtManagement.GUI
             dgTopProducts.Columns.Add("TotalRevenue", "Total Revenue");
 
             // Format and set widths
-            dgTopProducts.Columns["ProductId"].Width = 392;
-            dgTopProducts.Columns["ProductName"].Width = 391;
-            dgTopProducts.Columns["Quantity"].Width = 390;
-            dgTopProducts.Columns["TotalRevenue"].Width = 392;
+            dgTopProducts.Columns["ProductId"].Width = 370;
+            dgTopProducts.Columns["ProductName"].Width = 380;
+            dgTopProducts.Columns["Quantity"].Width = 370;
+            dgTopProducts.Columns["TotalRevenue"].Width = 367;
 
             // Optional: format revenue column
             dgTopProducts.Columns["TotalRevenue"].DefaultCellStyle.Format = "C2"; // Currency format
@@ -129,6 +129,36 @@ namespace BadmintonCourtManagement.GUI
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
             // No action needed; data will only refresh when the button is clicked
+        }
+
+        private void drPanelCourtMN_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void customPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void customPanel7_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

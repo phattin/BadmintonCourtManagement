@@ -17,9 +17,9 @@ namespace BadmintonCourtManagement.BUS
         }
 
         // Lấy thống kê doanh thu theo khoảng thời gian và ngày trong tuần
-        public List<StatisticalDAO.RevenueStatisticsDTO> GetRevenueStatistics(DateTime startDate, DateTime endDate, int filterDayOfWeek)
+        public List<StatisticalDAO.CourtRevenueStatisticsDTO> GetCourtRevenueStatistics(DateTime startDate, DateTime endDate, int filterDayOfWeek)
         {
-            return dao.GetRevenueStatistics(startDate, endDate, filterDayOfWeek);
+            return dao.GetCourtRevenueStatistics(startDate, endDate, filterDayOfWeek);
         }
     }
 }

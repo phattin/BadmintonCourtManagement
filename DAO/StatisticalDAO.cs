@@ -84,24 +84,24 @@ namespace BadmintonCourtManagement.DAO
             return topProducts;
         }
 
+
+
+
+
         // Doanh thu theo khoảng thời gian tiền sân và tiền bán đồ và có kèm theo điều kiện lọc thứ trong tuần
-        public class RevenueStatisticsDTO
+        public class CourtRevenueStatisticsDTO
         {
-            public DateTime Date { get; set; }
+            public string CourtName { get; set; }
             public double CourtRevenue { get; set; }
-            public double ProductRevenue { get; set; }
-            public double TotalRevenue { get; set; } // Sum of CourtRevenue and ProductRevenue
         }
 
-        public List<RevenueStatisticsDTO> GetRevenueStatistics(DateTime startDate, DateTime endDate, int filterDayOfWeek)
+        public List<CourtRevenueStatisticsDTO> GetCourtRevenueStatistics(DateTime startDate, DateTime endDate, int filterDayOfWeek)
         {
-            // Validate filterDayOfWeek
-            if (filterDayOfWeek < 1 || filterDayOfWeek > 7)
+            if (filterDayOfWeek < 0 || filterDayOfWeek > 7)
             {
-                throw new ArgumentException("filterDayOfWeek phải từ 1 (Chủ nhật) đến 7 (Thứ bảy).");
+                throw new ArgumentException("filterDayOfWeek phải từ 0 (tất cả ngày) đến 7 (Thứ bảy).");
             }
 
-            // Ensure startDate <= endDate
             if (startDate > endDate)
             {
                 throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
@@ -109,22 +109,19 @@ namespace BadmintonCourtManagement.DAO
 
             string query = @"
                 SELECT 
-                    DATE(bk.StartTime) AS Date,
-                    SUM(bb.TotalPrice) AS CourtRevenue,
-                    COALESCE((
-                        SELECT SUM(bpd.Quantity * bpd.UnitPrice)
-                        FROM billproductdetail bpd
-                        JOIN billproduct bp ON bpd.BillProductId = bp.BillProductId
-                        WHERE DATE(bp.DateCreated) = DATE(bk.StartTime)
-                        AND bp.DateCreated BETWEEN @StartDate AND @EndDate
-                    ), 0) AS ProductRevenue
+                    c.CourtName,
+                    SUM(bb.TotalPrice) AS CourtRevenue
                 FROM booking bk
                 JOIN billbooking bb ON bk.BookingId = bb.BookingId
+                JOIN court c ON bk.CourtId = c.CourtId
                 WHERE bk.StartTime BETWEEN @StartDate AND @EndDate
-                    AND DAYOFWEEK(bk.StartTime) = @FilterDayOfWeek
-                GROUP BY DATE(bk.StartTime)";
+                {0}
+                GROUP BY c.CourtId, c.CourtName";
 
-            List<RevenueStatisticsDTO> result = new List<RevenueStatisticsDTO>();
+            string dayOfWeekCondition = filterDayOfWeek > 0 ? "AND DAYOFWEEK(bk.StartTime) = @FilterDayOfWeek" : "";
+            query = string.Format(query, dayOfWeekCondition);
+
+            List<CourtRevenueStatisticsDTO> result = new List<CourtRevenueStatisticsDTO>();
 
             try
             {
@@ -133,20 +130,19 @@ namespace BadmintonCourtManagement.DAO
                 {
                     cmd.Parameters.AddWithValue("@StartDate", startDate);
                     cmd.Parameters.AddWithValue("@EndDate", endDate);
-                    cmd.Parameters.AddWithValue("@FilterDayOfWeek", filterDayOfWeek);
+                    if (filterDayOfWeek > 0)
+                    {
+                        cmd.Parameters.AddWithValue("@FilterDayOfWeek", filterDayOfWeek);
+                    }
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            double courtRevenue = Convert.ToDouble(reader["CourtRevenue"]);
-                            double productRevenue = Convert.ToDouble(reader["ProductRevenue"]);
-                            RevenueStatisticsDTO stats = new RevenueStatisticsDTO
+                            CourtRevenueStatisticsDTO stats = new CourtRevenueStatisticsDTO
                             {
-                                Date = Convert.ToDateTime(reader["Date"]),
-                                CourtRevenue = courtRevenue,
-                                ProductRevenue = productRevenue,
-                                TotalRevenue = courtRevenue + productRevenue // Calculate TotalRevenue
+                                CourtName = reader["CourtName"].ToString(),
+                                CourtRevenue = Convert.ToDouble(reader["CourtRevenue"])
                             };
                             result.Add(stats);
                         }
@@ -155,7 +151,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi khi lấy thống kê doanh thu: {ex.Message}");
+                throw new Exception($"Lỗi khi lấy thống kê doanh thu sân: {ex.Message}");
             }
             finally
             {
