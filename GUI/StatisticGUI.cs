@@ -165,11 +165,11 @@ namespace BadmintonCourtManagement.GUI
             {
                 var courts = statisticalBUS.GetCourtRevenue(DateTime.Today.AddDays(-365), DateTime.Today, "", false);
                 var courtNames = courts.Select(c => c.CourtName).Distinct().OrderBy(n => n).ToList();
-                textBox1.Text = "Tất cả các sân";
+                textBox1.Text = "";
             }
             catch
             {
-                textBox1.Text = "Tất cả các sân";
+                textBox1.Text = "";
             }
         }
         
@@ -227,7 +227,7 @@ namespace BadmintonCourtManagement.GUI
             }
 
             string courtNameFilter = textBox1.Text?.ToString() ?? "";
-            if (courtNameFilter == "Tất cả các sân")
+            if (courtNameFilter == "")
                 courtNameFilter = "";
 
             bool sortDescending = true; // Có thể mở rộng thêm tùy chọn sắp xếp sau
