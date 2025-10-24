@@ -8,28 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
+namespace GUI
 {
-    public partial class SupplyProductList : UserControl
+    public partial class EmployeeAddGUI : Form
     {
-        public SupplyProductList()
+        public EmployeeAddGUI()
         {
             InitializeComponent();
-        }
-
-        private void FilterButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FilterButton_MouseEnter(object sender, EventArgs e)
-        {
-            filterButton.BackColor = Color.FromArgb(0, 142, 123);
-        }
-
-        private void FilterButton_MouseLeave(object sender, EventArgs e)
-        {
-            filterButton.BackColor = Color.FromArgb(0, 120, 103);
         }
 
         private void buttonEnter(object sender, EventArgs e)

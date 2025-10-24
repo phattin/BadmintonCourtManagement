@@ -29,313 +29,221 @@
         private void InitializeComponent()
         {
             MainPanel = new Panel();
-            PicturePanel = new Panel();
-            Picture = new Label();
-            ActiveIconPanel = new Panel();
-            ActiveIcon = new Label();
-            ProductStatusPanel = new Panel();
-            EmployeeStatus = new Label();
-            ProductTotalPanel = new Panel();
-            EmployeeAccount = new Label();
-            ProductPricePanel = new Panel();
-            EmployeeAddress = new Label();
-            ProductQuantityPanel = new Panel();
-            EmployeeID = new Label();
-            ProductBrandPanel = new Panel();
-            EmployeePhone = new Label();
-            ProductNamePanel = new Panel();
-            EmployeeRole = new Label();
-            ProductIDPanel = new Panel();
-            EmployeeName = new Label();
             TitlePanel = new Panel();
             TitleText = new Label();
+            bodyPanel = new TableLayoutPanel();
+            infoPanel = new TableLayoutPanel();
+            EmployeeName = new Label();
+            EmployeeRole = new Label();
+            EmployeePhone = new Label();
+            EmployeeID = new Label();
+            EmployeeAddress = new Label();
+            EmployeeAccount = new Label();
+            picture = new PictureBox();
+            EmployeeStatus = new Label();
             MainPanel.SuspendLayout();
-            PicturePanel.SuspendLayout();
-            ActiveIconPanel.SuspendLayout();
-            ProductStatusPanel.SuspendLayout();
-            ProductTotalPanel.SuspendLayout();
-            ProductPricePanel.SuspendLayout();
-            ProductQuantityPanel.SuspendLayout();
-            ProductBrandPanel.SuspendLayout();
-            ProductNamePanel.SuspendLayout();
-            ProductIDPanel.SuspendLayout();
             TitlePanel.SuspendLayout();
+            bodyPanel.SuspendLayout();
+            infoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picture).BeginInit();
             SuspendLayout();
             // 
             // MainPanel
             // 
-            MainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             MainPanel.AutoScroll = true;
-            MainPanel.BackColor = Color.FromArgb(200, 250, 214);
-            MainPanel.Controls.Add(PicturePanel);
-            MainPanel.Controls.Add(ActiveIconPanel);
-            MainPanel.Controls.Add(ProductStatusPanel);
-            MainPanel.Controls.Add(ProductTotalPanel);
-            MainPanel.Controls.Add(ProductPricePanel);
-            MainPanel.Controls.Add(ProductQuantityPanel);
-            MainPanel.Controls.Add(ProductBrandPanel);
-            MainPanel.Controls.Add(ProductNamePanel);
-            MainPanel.Controls.Add(ProductIDPanel);
+            MainPanel.BackColor = Color.FromArgb(239, 248, 230);
+            MainPanel.Controls.Add(bodyPanel);
             MainPanel.Controls.Add(TitlePanel);
-            MainPanel.Location = new Point(61, 59);
+            MainPanel.Dock = DockStyle.Fill;
+            MainPanel.Location = new Point(35, 39);
             MainPanel.Margin = new Padding(0);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(1488, 937);
+            MainPanel.Padding = new Padding(20);
+            MainPanel.Size = new Size(940, 525);
             MainPanel.TabIndex = 0;
-            // 
-            // PicturePanel
-            // 
-            PicturePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            PicturePanel.AutoSize = true;
-            PicturePanel.Controls.Add(Picture);
-            PicturePanel.Location = new Point(843, 171);
-            PicturePanel.Name = "PicturePanel";
-            PicturePanel.Size = new Size(592, 735);
-            PicturePanel.TabIndex = 10;
-            // 
-            // Picture
-            // 
-            Picture.Dock = DockStyle.Fill;
-            Picture.Image = Image.FromFile(Application.StartupPath + @"\Img\Employee.png");
-            Picture.Location = new Point(0, 0);
-            Picture.Margin = new Padding(0);
-            Picture.Name = "Picture";
-            Picture.Size = new Size(592, 735);
-            Picture.TabIndex = 0;
-            // 
-            // ActiveIconPanel
-            // 
-            ActiveIconPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ActiveIconPanel.AutoSize = true;
-            ActiveIconPanel.Controls.Add(ActiveIcon);
-            ActiveIconPanel.Location = new Point(723, 849);
-            ActiveIconPanel.Margin = new Padding(0);
-            ActiveIconPanel.Name = "ActiveIconPanel";
-            ActiveIconPanel.Size = new Size(765, 57);
-            ActiveIconPanel.TabIndex = 9;
-            // 
-            // ActiveIcon
-            // 
-            ActiveIcon.Dock = DockStyle.Left;
-            ActiveIcon.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ActiveIcon.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Picture.png");
-            ActiveIcon.ImageAlign = ContentAlignment.MiddleLeft;
-            ActiveIcon.Location = new Point(0, 0);
-            ActiveIcon.Margin = new Padding(0);
-            ActiveIcon.Name = "ActiveIcon";
-            ActiveIcon.Size = new Size(765, 57);
-            ActiveIcon.TabIndex = 0;
-            ActiveIcon.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductStatusPanel
-            // 
-            ProductStatusPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductStatusPanel.AutoSize = true;
-            ProductStatusPanel.Controls.Add(EmployeeStatus);
-            ProductStatusPanel.Location = new Point(125, 849);
-            ProductStatusPanel.Margin = new Padding(0);
-            ProductStatusPanel.Name = "ProductStatusPanel";
-            ProductStatusPanel.Size = new Size(1363, 57);
-            ProductStatusPanel.TabIndex = 8;
-            // 
-            // EmployeeStatus
-            // 
-            EmployeeStatus.Dock = DockStyle.Fill;
-            EmployeeStatus.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeeStatus.Location = new Point(0, 0);
-            EmployeeStatus.Margin = new Padding(0);
-            EmployeeStatus.Name = "EmployeeStatus";
-            EmployeeStatus.Size = new Size(1363, 57);
-            EmployeeStatus.TabIndex = 0;
-            EmployeeStatus.Text = "Tình trạng: đang hoạt động";
-            EmployeeStatus.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductTotalPanel
-            // 
-            ProductTotalPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductTotalPanel.AutoSize = true;
-            ProductTotalPanel.Controls.Add(EmployeeAccount);
-            ProductTotalPanel.Location = new Point(125, 691);
-            ProductTotalPanel.Margin = new Padding(0);
-            ProductTotalPanel.Name = "ProductTotalPanel";
-            ProductTotalPanel.Size = new Size(715, 149);
-            ProductTotalPanel.TabIndex = 7;
-            // 
-            // EmployeeAccount
-            // 
-            EmployeeAccount.Dock = DockStyle.Fill;
-            EmployeeAccount.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeeAccount.Location = new Point(0, 0);
-            EmployeeAccount.Margin = new Padding(0);
-            EmployeeAccount.Name = "EmployeeAccount";
-            EmployeeAccount.Size = new Size(715, 149);
-            EmployeeAccount.TabIndex = 0;
-            EmployeeAccount.Text = "Tên tài khoản: ltttrang@gmail.com";
-            EmployeeAccount.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductPricePanel
-            // 
-            ProductPricePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductPricePanel.AutoSize = true;
-            ProductPricePanel.Controls.Add(EmployeeAddress);
-            ProductPricePanel.Location = new Point(125, 540);
-            ProductPricePanel.Margin = new Padding(0);
-            ProductPricePanel.Name = "ProductPricePanel";
-            ProductPricePanel.Size = new Size(715, 131);
-            ProductPricePanel.TabIndex = 6;
-            // 
-            // EmployeeAddress
-            // 
-            EmployeeAddress.Dock = DockStyle.Fill;
-            EmployeeAddress.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeeAddress.Location = new Point(0, 0);
-            EmployeeAddress.Margin = new Padding(0);
-            EmployeeAddress.Name = "EmployeeAddress";
-            EmployeeAddress.Size = new Size(715, 131);
-            EmployeeAddress.TabIndex = 0;
-            EmployeeAddress.Text = "Địa chỉ: 276 Lò Cao, phường Tân Phú, TPHCM";
-            EmployeeAddress.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductQuantityPanel
-            // 
-            ProductQuantityPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductQuantityPanel.AutoSize = true;
-            ProductQuantityPanel.Controls.Add(EmployeeID);
-            ProductQuantityPanel.Location = new Point(125, 444);
-            ProductQuantityPanel.Margin = new Padding(0);
-            ProductQuantityPanel.Name = "ProductQuantityPanel";
-            ProductQuantityPanel.Size = new Size(1363, 57);
-            ProductQuantityPanel.TabIndex = 5;
-            // 
-            // EmployeeID
-            // 
-            EmployeeID.Dock = DockStyle.Fill;
-            EmployeeID.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeeID.Location = new Point(0, 0);
-            EmployeeID.Margin = new Padding(0);
-            EmployeeID.Name = "EmployeeID";
-            EmployeeID.Size = new Size(1363, 57);
-            EmployeeID.TabIndex = 0;
-            EmployeeID.Text = "CCCD: 123456789";
-            EmployeeID.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductBrandPanel
-            // 
-            ProductBrandPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductBrandPanel.AutoSize = true;
-            ProductBrandPanel.Controls.Add(EmployeePhone);
-            ProductBrandPanel.Location = new Point(125, 355);
-            ProductBrandPanel.Margin = new Padding(0);
-            ProductBrandPanel.Name = "ProductBrandPanel";
-            ProductBrandPanel.Size = new Size(1363, 57);
-            ProductBrandPanel.TabIndex = 4;
-            // 
-            // EmployeePhone
-            // 
-            EmployeePhone.Dock = DockStyle.Fill;
-            EmployeePhone.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeePhone.Location = new Point(0, 0);
-            EmployeePhone.Margin = new Padding(0);
-            EmployeePhone.Name = "EmployeePhone";
-            EmployeePhone.Size = new Size(1363, 57);
-            EmployeePhone.TabIndex = 0;
-            EmployeePhone.Text = "Số điện thoại: 0123456789";
-            EmployeePhone.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductNamePanel
-            // 
-            ProductNamePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductNamePanel.AutoSize = true;
-            ProductNamePanel.Controls.Add(EmployeeRole);
-            ProductNamePanel.Location = new Point(125, 266);
-            ProductNamePanel.Margin = new Padding(0);
-            ProductNamePanel.Name = "ProductNamePanel";
-            ProductNamePanel.Size = new Size(1363, 57);
-            ProductNamePanel.TabIndex = 3;
-            // 
-            // EmployeeRole
-            // 
-            EmployeeRole.Dock = DockStyle.Fill;
-            EmployeeRole.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeeRole.Location = new Point(0, 0);
-            EmployeeRole.Margin = new Padding(0);
-            EmployeeRole.Name = "EmployeeRole";
-            EmployeeRole.Size = new Size(1363, 57);
-            EmployeeRole.TabIndex = 0;
-            EmployeeRole.Text = "Công việc: thu ngân";
-            EmployeeRole.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ProductIDPanel
-            // 
-            ProductIDPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductIDPanel.AutoSize = true;
-            ProductIDPanel.Controls.Add(EmployeeName);
-            ProductIDPanel.Location = new Point(125, 171);
-            ProductIDPanel.Margin = new Padding(0);
-            ProductIDPanel.Name = "ProductIDPanel";
-            ProductIDPanel.Size = new Size(1363, 57);
-            ProductIDPanel.TabIndex = 1;
-            // 
-            // EmployeeName
-            // 
-            EmployeeName.Dock = DockStyle.Fill;
-            EmployeeName.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeeName.Location = new Point(0, 0);
-            EmployeeName.Margin = new Padding(0);
-            EmployeeName.Name = "EmployeeName";
-            EmployeeName.Size = new Size(1363, 57);
-            EmployeeName.TabIndex = 0;
-            EmployeeName.Text = "Tên nhân viên: Lê Thị Thu Trang";
-            EmployeeName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // TitlePanel
             // 
-            TitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TitlePanel.AutoSize = true;
             TitlePanel.Controls.Add(TitleText);
-            TitlePanel.Location = new Point(125, 0);
+            TitlePanel.Dock = DockStyle.Top;
+            TitlePanel.Location = new Point(20, 20);
             TitlePanel.Margin = new Padding(0);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(1363, 94);
+            TitlePanel.Size = new Size(900, 72);
             TitlePanel.TabIndex = 0;
             // 
             // TitleText
             // 
             TitleText.Dock = DockStyle.Fill;
-            TitleText.Font = new Font("Roboto", 42F, FontStyle.Bold);
+            TitleText.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             TitleText.Location = new Point(0, 0);
             TitleText.Margin = new Padding(0);
             TitleText.Name = "TitleText";
-            TitleText.Size = new Size(1363, 94);
+            TitleText.Size = new Size(900, 72);
             TitleText.TabIndex = 0;
             TitleText.Text = "Chi tiết: NV0001";
             TitleText.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // bodyPanel
+            // 
+            bodyPanel.BackColor = Color.FromArgb(200, 250, 214);
+            bodyPanel.ColumnCount = 2;
+            bodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            bodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            bodyPanel.Controls.Add(infoPanel, 0, 0);
+            bodyPanel.Controls.Add(picture, 1, 0);
+            bodyPanel.Dock = DockStyle.Fill;
+            bodyPanel.Location = new Point(20, 92);
+            bodyPanel.Margin = new Padding(0);
+            bodyPanel.Name = "bodyPanel";
+            bodyPanel.Padding = new Padding(10);
+            bodyPanel.RowCount = 1;
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            bodyPanel.Size = new Size(900, 413);
+            bodyPanel.TabIndex = 11;
+            // 
+            // infoPanel
+            // 
+            infoPanel.ColumnCount = 1;
+            infoPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            infoPanel.Controls.Add(EmployeeStatus, 0, 6);
+            infoPanel.Controls.Add(EmployeeAccount, 0, 5);
+            infoPanel.Controls.Add(EmployeeAddress, 0, 4);
+            infoPanel.Controls.Add(EmployeeID, 0, 3);
+            infoPanel.Controls.Add(EmployeePhone, 0, 2);
+            infoPanel.Controls.Add(EmployeeRole, 0, 1);
+            infoPanel.Controls.Add(EmployeeName, 0, 0);
+            infoPanel.Dock = DockStyle.Fill;
+            infoPanel.Location = new Point(13, 13);
+            infoPanel.Name = "infoPanel";
+            infoPanel.RowCount = 7;
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857141F));
+            infoPanel.Size = new Size(434, 387);
+            infoPanel.TabIndex = 0;
+            // 
+            // EmployeeName
+            // 
+            EmployeeName.Dock = DockStyle.Fill;
+            EmployeeName.Font = new Font("Segoe UI", 12F);
+            EmployeeName.Location = new Point(0, 0);
+            EmployeeName.Margin = new Padding(0);
+            EmployeeName.Name = "EmployeeName";
+            EmployeeName.Size = new Size(434, 55);
+            EmployeeName.TabIndex = 1;
+            EmployeeName.Text = "Tên nhân viên: Lê Thị Thu Trang";
+            EmployeeName.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EmployeeRole
+            // 
+            EmployeeRole.Dock = DockStyle.Fill;
+            EmployeeRole.Font = new Font("Segoe UI", 12F);
+            EmployeeRole.Location = new Point(0, 55);
+            EmployeeRole.Margin = new Padding(0);
+            EmployeeRole.Name = "EmployeeRole";
+            EmployeeRole.Size = new Size(434, 55);
+            EmployeeRole.TabIndex = 2;
+            EmployeeRole.Text = "Công việc: Thu ngân";
+            EmployeeRole.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EmployeePhone
+            // 
+            EmployeePhone.Dock = DockStyle.Fill;
+            EmployeePhone.Font = new Font("Segoe UI", 12F);
+            EmployeePhone.Location = new Point(0, 110);
+            EmployeePhone.Margin = new Padding(0);
+            EmployeePhone.Name = "EmployeePhone";
+            EmployeePhone.Size = new Size(434, 55);
+            EmployeePhone.TabIndex = 3;
+            EmployeePhone.Text = "Số điện thoại: 0123456789";
+            EmployeePhone.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EmployeeID
+            // 
+            EmployeeID.Dock = DockStyle.Fill;
+            EmployeeID.Font = new Font("Segoe UI", 12F);
+            EmployeeID.Location = new Point(0, 165);
+            EmployeeID.Margin = new Padding(0);
+            EmployeeID.Name = "EmployeeID";
+            EmployeeID.Size = new Size(434, 55);
+            EmployeeID.TabIndex = 4;
+            EmployeeID.Text = "CCCD: 123456789";
+            EmployeeID.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EmployeeAddress
+            // 
+            EmployeeAddress.Dock = DockStyle.Fill;
+            EmployeeAddress.Font = new Font("Segoe UI", 12F);
+            EmployeeAddress.Location = new Point(0, 220);
+            EmployeeAddress.Margin = new Padding(0);
+            EmployeeAddress.Name = "EmployeeAddress";
+            EmployeeAddress.Size = new Size(434, 55);
+            EmployeeAddress.TabIndex = 5;
+            EmployeeAddress.Text = "Địa chỉ: 27 Mã Lò, Bình Trị, TPHCM";
+            EmployeeAddress.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EmployeeAccount
+            // 
+            EmployeeAccount.Dock = DockStyle.Fill;
+            EmployeeAccount.Font = new Font("Segoe UI", 12F);
+            EmployeeAccount.Location = new Point(0, 275);
+            EmployeeAccount.Margin = new Padding(0);
+            EmployeeAccount.Name = "EmployeeAccount";
+            EmployeeAccount.Size = new Size(434, 55);
+            EmployeeAccount.TabIndex = 6;
+            EmployeeAccount.Text = "Tên tài khoản: ltttrang@gmail.com";
+            EmployeeAccount.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // picture
+            // 
+            picture.Dock = DockStyle.Fill;
+            picture.Image = Properties.Resources.Employee;
+            picture.Location = new Point(490, 10);
+            picture.Margin = new Padding(40, 0, 40, 0);
+            picture.Name = "picture";
+            picture.Size = new Size(360, 393);
+            picture.SizeMode = PictureBoxSizeMode.StretchImage;
+            picture.TabIndex = 1;
+            picture.TabStop = false;
+            // 
+            // EmployeeStatus
+            // 
+            EmployeeStatus.Dock = DockStyle.Fill;
+            EmployeeStatus.Font = new Font("Segoe UI", 12F);
+            EmployeeStatus.Image = Properties.Resources.Active;
+            EmployeeStatus.ImageAlign = ContentAlignment.MiddleRight;
+            EmployeeStatus.Location = new Point(0, 330);
+            EmployeeStatus.Margin = new Padding(0);
+            EmployeeStatus.Name = "EmployeeStatus";
+            EmployeeStatus.Size = new Size(434, 57);
+            EmployeeStatus.TabIndex = 7;
+            EmployeeStatus.Text = "Tình trạng: đang hoạt động";
+            EmployeeStatus.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // EmployeeDetailsGUI
             // 
-            AutoScaleDimensions = new SizeF(11F, 24F);
+            AutoScaleDimensions = new SizeF(13F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 120, 103);
-            ClientSize = new Size(1613, 1055);
+            ClientSize = new Size(1010, 603);
             Controls.Add(MainPanel);
-            Font = new Font("Roboto", 12F);
+            Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(4);
+            Margin = new Padding(5, 5, 5, 5);
             MaximizeBox = false;
             Name = "EmployeeDetailsGUI";
-            Text = "Chi tiết kho hàng";
+            Padding = new Padding(35, 39, 35, 39);
+            Text = "Chi tiết nhân viên";
             MainPanel.ResumeLayout(false);
-            MainPanel.PerformLayout();
-            PicturePanel.ResumeLayout(false);
-            ActiveIconPanel.ResumeLayout(false);
-            ProductStatusPanel.ResumeLayout(false);
-            ProductTotalPanel.ResumeLayout(false);
-            ProductPricePanel.ResumeLayout(false);
-            ProductQuantityPanel.ResumeLayout(false);
-            ProductBrandPanel.ResumeLayout(false);
-            ProductNamePanel.ResumeLayout(false);
-            ProductIDPanel.ResumeLayout(false);
             TitlePanel.ResumeLayout(false);
+            bodyPanel.ResumeLayout(false);
+            infoPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picture).EndInit();
             ResumeLayout(false);
         }
 
@@ -344,23 +252,15 @@
         private Panel MainPanel;
         private Panel TitlePanel;
         private Label TitleText;
-        private Panel ProductIDPanel;
-        private Label EmployeeName;
-        private Panel ProductTotalPanel;
-        private Label EmployeeAccount;
-        private Panel ProductPricePanel;
+        private TableLayoutPanel bodyPanel;
+        private TableLayoutPanel infoPanel;
         private Label EmployeeAddress;
-        private Panel ProductQuantityPanel;
         private Label EmployeeID;
-        private Panel ProductBrandPanel;
         private Label EmployeePhone;
-        private Panel ProductNamePanel;
         private Label EmployeeRole;
-        private Panel ProductStatusPanel;
+        private Label EmployeeName;
+        private Label EmployeeAccount;
+        private PictureBox picture;
         private Label EmployeeStatus;
-        private Panel ActiveIconPanel;
-        private Label ActiveIcon;
-        private Panel PicturePanel;
-        private Label Picture;
     }
 }

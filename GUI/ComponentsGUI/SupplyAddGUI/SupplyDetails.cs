@@ -24,12 +24,12 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 
         private void FilterButton_MouseEnter(object sender, EventArgs e)
         {
-            FilterButton.BackColor = Color.FromArgb(0, 142, 123);
+            filterButton.BackColor = Color.FromArgb(0, 142, 123);
         }
 
         private void FilterButton_MouseLeave(object sender, EventArgs e)
         {
-            FilterButton.BackColor = Color.FromArgb(0, 120, 103);
+            filterButton.BackColor = Color.FromArgb(0, 120, 103);
         }
 
         private void buttonEnter(object sender, EventArgs e)
