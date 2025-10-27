@@ -178,7 +178,7 @@
             cardButton.TabIndex = 6;
             cardButton.Text = "Xem chi tiết";
             cardButton.UseVisualStyleBackColor = false;
-            cardButton.Click += cardButton_Click_1;
+            // cardButton.Click += cardButton_Click_1;
             // 
             // cardBody
             // 
@@ -239,6 +239,7 @@
             btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
             btnDelete.TabIndex = 0;
             btnDelete.TabStop = false;
+	        btnDelete.Click += new EventHandler(btnDelete_Click);
             // 
             // searchBar
             // 
@@ -269,6 +270,7 @@
             filterButton.TabStop = false;
             filterButton.MouseEnter += filterButton_MouseEnter;
             filterButton.MouseLeave += filterButton_MouseLeave;
+	    filterButton.Click += filterButton_Click;
             // 
             // btnAddProduct
             // 
@@ -423,5 +425,6 @@
         private PictureBox btnDelete;
         private TextBox searchBar;
         private Label btnAddProduct;
+
     }
 }

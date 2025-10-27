@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace BadmintonCourtManagement.GUI
 {
     public partial class ProductGUI : UserControl
     {
+        private ProductFilterGUI filter; // AI Generated Code
         public ProductGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
@@ -21,6 +23,27 @@ namespace BadmintonCourtManagement.GUI
             ProductBUS productBUS = new ProductBUS();
             products = productBUS.GetAllProducts();
             LoadProducts(products);
+        }
+        private void SetupFilter(ProductFilterGUI filter)
+        {
+            var brands = LoadBrands();
+            var types = LoadTypes();
+            // MessageBox.Show(brands[0].ToString());
+            // MessageBox.Show(types[0].ToString());
+            filter.InsertData(brands, types);
+        }
+
+        private List<BrandDTO> LoadBrands()
+        {
+            BrandBUS brandBus = new BrandBUS();
+            return brandBus.GetAllBrands();
+        }
+
+
+        private List<TypeProductDTO> LoadTypes()
+        {
+            TypeProductBUS typeBus = new TypeProductBUS();
+            return typeBus.GetAllTypeProducts();
         }
 
         private void LoadProducts(List<ProductDTO> products)
@@ -84,30 +107,18 @@ namespace BadmintonCourtManagement.GUI
 
             // ===== AI Generated =====
 
-            string imageFileName = string.IsNullOrWhiteSpace(productDTO.ProductImg) ? 
+            string imageFileName = string.IsNullOrWhiteSpace(productDTO.ProductImg) ?
                 "DefaultProductImage.jpg" : productDTO.ProductImg;
-            string imagePath = string.Concat("Resources\\Img\\Product\\", imageFileName);
+            string imagePath = string.Concat("Img\\Product\\", imageFileName);
 
             // MessageBox.Show(productDTO.ProductImg);
             // MessageBox.Show(imagePath);
             Image productImage;
             try
             {
-                if (System.IO.File.Exists(imagePath))
-                {
-                    productImage = Image.FromFile(imagePath);
-                }
-                else
-                {
-                    // Fallback to embedded resource
-                    productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
-                }
+                productImage = Image.FromFile(imagePath);
             }
             catch (Exception)
-            {
-                // Double fallback in case of any file loading issues
-                productImage = Properties.Resources.DefaultProductImage;
-            }
             // check if productImage is null
             {
                 productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
@@ -254,6 +265,10 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            searchBar.Clear();
+        }
         private void storageGUI_Load(object sender, EventArgs e)
         {
 
@@ -266,7 +281,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-                
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -340,42 +355,51 @@ namespace BadmintonCourtManagement.GUI
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
         }
 
-        private void cardButton_Click(object sender, EventArgs e)
+        private void filterButton_Click(object sender, EventArgs e)
         {
-            EmployeeDetailsGUI employeeDetail = new EmployeeDetailsGUI();
-            employeeDetail.ShowDialog();
-        }
+            var brands = LoadBrands();
+            var types = LoadTypes();
+            Form dialog = new Form()
+            {
+                Text = string.Empty,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                StartPosition = FormStartPosition.CenterParent,
+                Size = new Size(600, 600),
+                MaximizeBox = false,
+                MinimizeBox = false,
+                ShowInTaskbar = false
+            };
 
-        private void cardTitlePanel_Paint(object sender, PaintEventArgs e)
-        {
+            var filterForm = new ProductFilterGUI { Dock = DockStyle.Fill };
+            filterForm.InsertData(brands, types);
+            filterForm.FilterApplied += criteria =>
+            {
+                ProductBUS productBus = new ProductBUS();
+                // Empty criteria => load all
+                if (string.IsNullOrWhiteSpace(criteria.BrandIds)
+                    && string.IsNullOrWhiteSpace(criteria.TypeIds))
+                {
+                    LoadProducts(productBus.GetAllProducts());
+                    return;
+                }
 
-        }
+                // MessageBox.Show("We are in ProductGUI.cs");
+                // MessageBox.Show(criteria.BrandIds);
+                // MessageBox.Show(criteria.TypeIds);
+                var products = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds);
+                LoadProducts(products);
+            };
+            // SetupFilter(filterForm);
 
-        private void NhapHangFilterButton_Click(object sender, EventArgs e)
-        {
+            // filterForm.FilterApplied += criteria =>
+            // {
+            //     var bus = new ProductBUS();
+            //     var products = bus.GetProductByIds(criteria.BrandIds, criteria.TypeIds);
+            //     LoadProducts(products);
+            // };
 
-        }
-
-        private void NhapHangButtonCard_Click(object sender, EventArgs e)
-        {
-            SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
-            supplyDetails.ShowDialog();
-        }
-
-        private void NhapHangBodyCard_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cardBody_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cardButton_Click_1(object sender, EventArgs e)
-        {
-            EmployeeDetailsGUI employeeDetails = new EmployeeDetailsGUI();
-            employeeDetails.ShowDialog();
+            dialog.Controls.Add(filterForm);
+            dialog.ShowDialog();
         }
     }
 }

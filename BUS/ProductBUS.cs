@@ -14,6 +14,11 @@ namespace BadmintonCourtManagement.BUS
             return dao.GetAllProducts();
         }
 
+        public List<ProductDTO> GetProductByIds(string branchIds, string typeIds)
+        {
+            return dao.GetProductByIds(branchIds, typeIds);
+        }
+
         public ProductDTO GetProductById(string productId)
         {
             return dao.GetProductById(productId);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using BadmintonCourtManagement.DTO;
+using Mysqlx;
 
 namespace BadmintonCourtManagement.DAO
 {
@@ -18,6 +19,48 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new ProductDTO()
+                    {
+                        ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
+                        ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
+                        Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,
+                        BrandId = reader["BrandId"]?.ToString() ?? string.Empty,
+                        TypeId = reader["TypeId"]?.ToString() ?? string.Empty,
+                        IsDeleted = reader["IsDeleted"] != DBNull.Value ? Convert.ToInt32(reader["IsDeleted"]) : 0
+                    });
+                }
+                reader.Close();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return list;
+        }
+
+        public List<ProductDTO> GetProductByIds(string brandIds, string typeIds)
+        {
+            var whereClauses = new List<string> { "IsDeleted = 0" };
+            if (brandIds != "")
+            {
+                whereClauses.Add($"BrandId in ({brandIds})");
+            }
+            if (typeIds != "")
+            {
+                whereClauses.Add($"TypeId in ({typeIds})");
+            }
+            string query = $"SELECT * FROM product WHERE {string.Join(" AND ", whereClauses)}";
+            List<ProductDTO> list = new List<ProductDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                // cmd.Parameters.AddWithValue("@BrandIds", brandIds);
+                // cmd.Parameters.AddWithValue("@TypeIds", typeIds);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
