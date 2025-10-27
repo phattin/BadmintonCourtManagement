@@ -16,13 +16,15 @@ namespace BadmintonCourtManagement.GUI
     public partial class ProductGUI : UserControl
     {
         private ProductFilterGUI filter; // AI Generated Code
+        List<ProductDTO> productList;
         public ProductGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
-            List<ProductDTO> products = new List<ProductDTO>();
+            productList = new List<ProductDTO>();
             ProductBUS productBUS = new ProductBUS();
-            products = productBUS.GetAllProducts();
-            LoadProducts(products);
+            productList = productBUS.GetAllProducts();
+            LoadProducts(productList);
+            searchBar.KeyDown += searchEnterEvent;
         }
         private void SetupFilter(ProductFilterGUI filter)
         {
@@ -46,7 +48,7 @@ namespace BadmintonCourtManagement.GUI
             return typeBus.GetAllTypeProducts();
         }
 
-        private void LoadProducts(List<ProductDTO> products)
+        private void LoadProducts(List<ProductDTO> productList)
         {
             int panelWidth = pProductList.Width;
             int panelHeight = pProductList.Height;
@@ -64,7 +66,7 @@ namespace BadmintonCourtManagement.GUI
                 pProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
             int index = 0;
-            foreach (ProductDTO productDTO in products)
+            foreach (ProductDTO productDTO in productList)
             {
                 var panel = CreateProductPanel(productDTO);
                 int row = index / 4;
@@ -246,6 +248,30 @@ namespace BadmintonCourtManagement.GUI
             return panel;
         }
 
+        private void searchEnterEvent(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                search(searchBar.Text.ToString());
+            }
+        }
+
+        private void search(string text)
+        {
+            try
+            {
+                ProductBUS productBus = new ProductBUS();
+                LoadProducts(productBus.GetProductByName(text));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message + "\n",
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
 
         private void buttonEnter(object sender, EventArgs e)
         {
@@ -269,11 +295,6 @@ namespace BadmintonCourtManagement.GUI
         {
             searchBar.Clear();
         }
-        private void storageGUI_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
@@ -290,11 +311,6 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -377,26 +393,16 @@ namespace BadmintonCourtManagement.GUI
                 ProductBUS productBus = new ProductBUS();
                 // Empty criteria => load all
                 if (string.IsNullOrWhiteSpace(criteria.BrandIds)
-                    && string.IsNullOrWhiteSpace(criteria.TypeIds))
+                    && string.IsNullOrWhiteSpace(criteria.TypeIds)
+                    && !criteria.OnlyStock)
                 {
                     LoadProducts(productBus.GetAllProducts());
                     return;
                 }
 
-                // MessageBox.Show("We are in ProductGUI.cs");
-                // MessageBox.Show(criteria.BrandIds);
-                // MessageBox.Show(criteria.TypeIds);
-                var products = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds);
-                LoadProducts(products);
+                var productList = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds, criteria.OnlyStock);
+                LoadProducts(productList);
             };
-            // SetupFilter(filterForm);
-
-            // filterForm.FilterApplied += criteria =>
-            // {
-            //     var bus = new ProductBUS();
-            //     var products = bus.GetProductByIds(criteria.BrandIds, criteria.TypeIds);
-            //     LoadProducts(products);
-            // };
 
             dialog.Controls.Add(filterForm);
             dialog.ShowDialog();

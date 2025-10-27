@@ -40,14 +40,6 @@ namespace BadmintonCourtManagement.GUI
             // Get all selected brands and types
             int checkedBrandCount = brand_listBox.CheckedItems.Count;
             int checkedItemCount = category_listBox.CheckedItems.Count;
-
-            // if (checkedBrandCount == 0 && checkedItemCount == 0)
-            // {
-            //     FilterApplied?.Invoke(new ProductFilterCriteria());
-            //     FindForm()?.Close();
-            //     return;
-            // }
-
             var selectedBrandIds = checkedBrandCount > 0
                 ? brand_listBox.CheckedItems.Cast<BrandDTO>().Select(b => b.BrandId)
                 : Enumerable.Empty<string>();
@@ -56,25 +48,6 @@ namespace BadmintonCourtManagement.GUI
                 ? category_listBox.CheckedItems.Cast<TypeProductDTO>().Select(t => t.TypeProductId)
                 : Enumerable.Empty<string>();
 
-            /*
-            var selectedBrandItems = checkedBrandCount > 0
-                ? brand_listBox.CheckedItems.Cast<BrandDTO>()
-                : brand_listBox.Items.Cast<BrandDTO>();
-
-            var selectedTypeItems = checkedItemCount > 0
-                ? category_listBox.CheckedItems.Cast<TypeProductDTO>()
-                : category_listBox.Items.Cast<TypeProductDTO>();
-
-            var selectedBrandIds = selectedBrandItems
-                .Select(b => b.BrandId.ToString())
-                // .Where(s => !string.IsNullOrWhiteSpace(s))
-                .Distinct();
-
-            var selectedTypeIds = selectedTypeItems
-                .Select(t => t.TypeProductId.ToString())
-                // .Where(s => !string.IsNullOrWhiteSpace(s))
-                .Distinct();
-            */
 
             List<string> brandId = new List<string>();
             foreach (string b in selectedBrandIds)
@@ -90,17 +63,13 @@ namespace BadmintonCourtManagement.GUI
 
             string brandIdString = string.Join(",", brandId);
             string typeIdString = string.Join(",", typeId);
-
-            // MessageBox.Show("We are in ProductFilterGUI.cs");
-            // MessageBox.Show(brandIdString);
-            // MessageBox.Show(typeIdString);
-
             bool onlyStock = checkBox_onlyStock.Checked;
 
             FilterApplied?.Invoke(new ProductFilterCriteria
             {
                 BrandIds = brandIdString,
-                TypeIds = typeIdString
+                TypeIds = typeIdString,
+		OnlyStock = onlyStock
             });
             FindForm()?.Close();
         }
@@ -116,7 +85,6 @@ namespace BadmintonCourtManagement.GUI
                 category_listBox.SetItemChecked(i, false);
 
             FilterApplied?.Invoke(new ProductFilterCriteria());
-            // FindForm()?.Close();
         }
 
         private void buttonLeave(object sender, EventArgs e)
@@ -153,76 +121,6 @@ namespace BadmintonCourtManagement.GUI
     {
         public string BrandIds { get; set; } = "";
         public string TypeIds { get; set; } = "";
+	public bool OnlyStock {get; set;} = false;
     }
 }
-
-
-/* using BadmintonCourtManagement.DTO;
-
-namespace BadmintonCourtManagement.GUI
-{
-    public partial class ProductFilterGUI : UserControl
-    {
-
-        // Expose one event with the current criteria
-        public event Action<ProductFilterCriteria> FilterApplied;
-        
-	private ProductFilterCriteria CollectCriteria()
-        {
-            var selectedBrandIds = clbBrands.CheckedItems.Cast<object>()
-                .Select(o => o is BrandDTO b ? b.BrandId : GetValueMember(clbBrands, o))
-                .Where(id => !string.IsNullOrWhiteSpace(id))
-                .Distinct()
-                .ToList();
-
-            var selectedTypeIds = clbTypes.CheckedItems.Cast<object>()
-                .Select(o => o is TypeProductDTO t ? t.TypeProductId : GetValueMember(clbTypes, o))
-                .Where(id => !string.IsNullOrWhiteSpace(id))
-                .Distinct()
-                .ToList();
-
-            return new ProductFilterCriteria
-            {
-                BrandIds = selectedBrandIds,
-                TypeIds = selectedTypeIds,
-                InStockOnly = chkInStock.Checked
-            };
-        }
-
-        private static string GetValueMember(CheckedListBox clb, object item)
-        {
-            var prop = clb.ValueMember;
-            if (string.IsNullOrEmpty(prop)) return item?.ToString();
-            var pi = item?.GetType().GetProperty(prop);
-            return pi?.GetValue(item)?.ToString();
-        }
-
-        private void RaiseApply()
-        {
-            FilterApplied?.Invoke(CollectCriteria());
-        }
-
-        private void ClearAndApply()
-        {
-            chkInStock.Checked = false;
-
-            for (int i = 0; i < clbBrands.Items.Count; i++)
-                clbBrands.SetItemChecked(i, false);
-
-            for (int i = 0; i < clbTypes.Items.Count; i++)
-                clbTypes.SetItemChecked(i, false);
-
-            RaiseApply();
-        }
-    }
-
-    // Simple criteria object (no price for now)
-    public class ProductFilterCriteria
-    {
-        public List<string> BrandIds { get; set; } = new();
-        public List<string> TypeIds { get; set; } = new();
-        public bool InStockOnly { get; set; }
-    }
-}
-
-*/

@@ -254,7 +254,7 @@
             searchBar.PlaceholderText = "value...";
             searchBar.Size = new Size(510, 20);
             searchBar.TabIndex = 1;
-            searchBar.TextChanged += textBox1_TextChanged;
+            // searchBar.TextChanged += searchEnterEvent;
             // 
             // filterButton
             // 
@@ -425,6 +425,5 @@
         private PictureBox btnDelete;
         private TextBox searchBar;
         private Label btnAddProduct;
-
     }
 }

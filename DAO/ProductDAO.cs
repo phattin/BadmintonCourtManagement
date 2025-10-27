@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using BadmintonCourtManagement.DTO;
 using Mysqlx;
+using System.Data.SqlTypes;
 
 namespace BadmintonCourtManagement.DAO
 {
@@ -35,6 +37,16 @@ namespace BadmintonCourtManagement.DAO
                 }
                 reader.Close();
             }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
             finally
             {
                 db.CloseConnection();
@@ -42,9 +54,12 @@ namespace BadmintonCourtManagement.DAO
             return list;
         }
 
-        public List<ProductDTO> GetProductByIds(string brandIds, string typeIds)
+        public List<ProductDTO> GetProductByIds(string brandIds, string typeIds, bool onlyStock)
         {
             var whereClauses = new List<string> { "IsDeleted = 0" };
+	    if (onlyStock) {
+		    whereClauses.Add($"Quantity > 0");
+	    }
             if (brandIds != "")
             {
                 whereClauses.Add($"BrandId in ({brandIds})");
@@ -77,6 +92,16 @@ namespace BadmintonCourtManagement.DAO
                 }
                 reader.Close();
             }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
             finally
             {
                 db.CloseConnection();
@@ -102,6 +127,16 @@ namespace BadmintonCourtManagement.DAO
                 int result = cmd.ExecuteNonQuery();
                 return result > 0;
             }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
             finally
             {
                 db.CloseConnection();
@@ -126,6 +161,16 @@ namespace BadmintonCourtManagement.DAO
                 int result = cmd.ExecuteNonQuery();
                 return result > 0;
             }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
             finally
             {
                 db.CloseConnection();
@@ -143,6 +188,16 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@ProductId", productId);
                 int result = cmd.ExecuteNonQuery();
                 return result > 0;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
             }
             finally
             {
@@ -165,16 +220,26 @@ namespace BadmintonCourtManagement.DAO
                 {
                     product = new ProductDTO()
                     {
-                        ProductId = reader["ProductId"].ToString(),
-                        ProductName = reader["ProductName"].ToString(),
-                        ProductImg = reader["ProductImg"].ToString(),
-                        Quantity = int.Parse(reader["Quantity"].ToString()),
-                        BrandId = reader["BrandId"].ToString(),
-                        TypeId = reader["TypeId"].ToString(),
-                        IsDeleted = int.Parse(reader["IsDeleted"].ToString())
-                    };
+                        ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
+                        ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
+                        Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,  // FIXED
+                        BrandId = reader["BrandId"]?.ToString() ?? string.Empty,
+                        TypeId = reader["TypeId"]?.ToString() ?? string.Empty,
+                        IsDeleted = reader["IsDeleted"] != DBNull.Value ? Convert.ToInt32(reader["IsDeleted"]) : 0  // FIXED
+                   };
                 }
                 reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
             }
             finally
             {
@@ -182,5 +247,49 @@ namespace BadmintonCourtManagement.DAO
             }
             return product;
         }
+
+        public List<ProductDTO> GetProductByName(string productName)
+        {
+            string query = "SELECT * FROM product WHERE ProductName LIKE @ProductName AND IsDeleted = 0";
+            List<ProductDTO> productList = new List<ProductDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@ProductName", "%" + productName + "%");
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    productList.Add(new ProductDTO
+                    {
+                        ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
+                        ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
+                        Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,  // FIXED
+                        BrandId = reader["BrandId"]?.ToString() ?? string.Empty,
+                        TypeId = reader["TypeId"]?.ToString() ?? string.Empty,
+                        IsDeleted = reader["IsDeleted"] != DBNull.Value ? Convert.ToInt32(reader["IsDeleted"]) : 0  // FIXED
+                    });
+                }
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductDAO\n" + ex);
+            }
+
+            finally
+            {
+                db.CloseConnection();
+            }
+            return productList;
+        }
+
     }
 }
