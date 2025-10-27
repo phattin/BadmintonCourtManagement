@@ -24,8 +24,8 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
             statisticalBUS = new StatisticalBUS();
 
-                // Thiết lập cho tab Sân
-    SetupCourtTab();
+            // Thiết lập cho tab Sân
+            SetupCourtTab();
         }
 
         private void StatisticGUI_Load(object sender, EventArgs e)
@@ -124,40 +124,40 @@ namespace BadmintonCourtManagement.GUI
 
         // Thêm vào cuối constructor hoặc sau InitializeComponent()
 
-            private void SetupCourtTab()
-            {
-                // Thiết lập cột cho dataGridView1
-                dataGridView1.Columns.Clear();
-                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-                dataGridView1.AllowUserToResizeColumns = false;
+        private void SetupCourtTab()
+        {
+            // Thiết lập cột cho dataGridView1
+            dataGridView1.Columns.Clear();
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            dataGridView1.AllowUserToResizeColumns = false;
 
-                dataGridView1.Columns.Add("CourtName", "Tên Sân");
-                dataGridView1.Columns.Add("TotalBookings", "Số Lượt Đặt");
-                dataGridView1.Columns.Add("TotalRevenue", "Tổng Doanh Thu");
-                dataGridView1.Columns.Add("AverageRevenue", "Doanh Thu Trung Bình");
+            dataGridView1.Columns.Add("CourtName", "Tên Sân");
+            dataGridView1.Columns.Add("TotalBookings", "Số Lượt Đặt");
+            dataGridView1.Columns.Add("TotalRevenue", "Tổng Doanh Thu");
+            dataGridView1.Columns.Add("AverageRevenue", "Doanh Thu Trung Bình");
 
-                // Định dạng cột
-                dataGridView1.Columns["CourtName"].Width = 400;
-                dataGridView1.Columns["TotalBookings"].Width = 300;
-                dataGridView1.Columns["TotalRevenue"].Width = 400;
-                dataGridView1.Columns["AverageRevenue"].Width = 387;
+            // Định dạng cột
+            dataGridView1.Columns["CourtName"].Width = 400;
+            dataGridView1.Columns["TotalBookings"].Width = 300;
+            dataGridView1.Columns["TotalRevenue"].Width = 400;
+            dataGridView1.Columns["AverageRevenue"].Width = 387;
 
-                dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Format = "C0";
-                dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Format = "C0";
-                dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                dataGridView1.Columns["TotalBookings"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Format = "C0";
+            dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Format = "C0";
+            dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridView1.Columns["TotalBookings"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                // Gán sự kiện Click cho label4 (nút Thống Kê ở tab Sân)
-                label4.Click += label4_Click;
+            // Gán sự kiện Click cho label4 (nút Thống Kê ở tab Sân)
+            label4.Click += label4_Click;
 
-                // Tải danh sách sân vào comboBox1 (nếu cần lọc)
-                LoadCourtNames();
+            // Tải danh sách sân vào comboBox1 (nếu cần lọc)
+            LoadCourtNames();
 
-                // Đặt giá trị mặc định cho dateTimePicker
-                dateTimePicker3.Value = DateTime.Now.AddDays(-30);
-                dateTimePicker4.Value = DateTime.Now;
-            }
+            // Đặt giá trị mặc định cho dateTimePicker
+            dateTimePicker3.Value = DateTime.Now.AddDays(-30);
+            dateTimePicker4.Value = DateTime.Now;
+        }
 
         private void LoadCourtNames()
         {
@@ -172,7 +172,7 @@ namespace BadmintonCourtManagement.GUI
                 textBox1.Text = "";
             }
         }
-        
+
 
         // Remove automatic refresh from these event handlers
         private void sortFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -260,19 +260,39 @@ namespace BadmintonCourtManagement.GUI
         .Error);
             }
         }
-private void dateTimePicker3_ValueChanged(object sender, EventArgs e)
-{
-    if (!isInitializing) label4_Click(sender, e);
-}
+        private void dateTimePicker3_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isInitializing) label4_Click(sender, e);
+        }
 
-private void dateTimePicker4_ValueChanged(object sender, EventArgs e)
-{
-    if (!isInitializing) label4_Click(sender, e);
-}
+        private void dateTimePicker4_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isInitializing) label4_Click(sender, e);
+        }
 
-private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-{
-    if (!isInitializing) label4_Click(sender, e);
-}
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!isInitializing) label4_Click(sender, e);
+        }
+
+        private void customPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void customPanel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void sortFieldComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void customPanel10_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
