@@ -89,6 +89,7 @@
             extraNextButton.TabIndex = 16;
             extraNextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraNextButton.UseVisualStyleBackColor = false;
+	    extraNextButton.Click += extraNextButton_Click;
             // 
             // extraPreviousButton
             // 
@@ -103,6 +104,7 @@
             extraPreviousButton.TabIndex = 13;
             extraPreviousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraPreviousButton.UseVisualStyleBackColor = false;
+	    extraPreviousButton.Click +=  extraPreviousButton_Click;
             // 
             // nextButton
             // 
@@ -116,6 +118,7 @@
             nextButton.TabIndex = 15;
             nextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             nextButton.UseVisualStyleBackColor = false;
+	    nextButton.Click +=  nextButton_Click;
             // 
             // previousButton
             // 
@@ -129,6 +132,7 @@
             previousButton.TabIndex = 14;
             previousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             previousButton.UseVisualStyleBackColor = false;
+	    previousButton.Click +=  previousButton_Click;
             // 
             // cardList
             // 

@@ -16,7 +16,10 @@ namespace BadmintonCourtManagement.GUI
     public partial class ProductGUI : UserControl
     {
         private ProductFilterGUI filter; // AI Generated Code
-        List<ProductDTO> productList;
+        private List<ProductDTO> productList;
+        private int page = 0;
+        private int itemPerPage = 8;
+
         public ProductGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
@@ -26,14 +29,14 @@ namespace BadmintonCourtManagement.GUI
             LoadProducts(productList);
             searchBar.KeyDown += searchEnterEvent;
         }
-        private void SetupFilter(ProductFilterGUI filter)
-        {
-            var brands = LoadBrands();
-            var types = LoadTypes();
-            // MessageBox.Show(brands[0].ToString());
-            // MessageBox.Show(types[0].ToString());
-            filter.InsertData(brands, types);
-        }
+        // private void SetupFilter(ProductFilterGUI filter)
+        // {
+        //     var brands = LoadBrands();
+        //     var types = LoadTypes();
+        //     // MessageBox.Show(brands[0].ToString());
+        //     // MessageBox.Show(types[0].ToString());
+        //     filter.InsertData(brands, types);
+        // }
 
         private List<BrandDTO> LoadBrands()
         {
@@ -50,6 +53,28 @@ namespace BadmintonCourtManagement.GUI
 
         private void LoadProducts(List<ProductDTO> productList)
         {
+            // Dispose old images before clearing
+            foreach (Control ctrl in pProductList.Controls)
+            {
+                if (ctrl is CustomPanel panel)
+                {
+                    foreach (Control child in panel.Controls)
+                    {
+                        if (child is TableLayoutPanel tlp)
+                        {
+                            foreach (Control innerCtrl in tlp.Controls)
+                            {
+                                if (innerCtrl is PictureBox pb)
+                                {
+                                    pb.Image?.Dispose();
+                                }
+                            }
+                        }
+                    }
+                }
+                ctrl.Dispose();
+            }
+
             int panelWidth = pProductList.Width;
             int panelHeight = pProductList.Height;
             pProductList.Controls.Clear();
@@ -65,14 +90,26 @@ namespace BadmintonCourtManagement.GUI
             for (int j = 0; j < rows; j++)
                 pProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
-            int index = 0;
-            foreach (ProductDTO productDTO in productList)
+            int index = page * itemPerPage;
+            /*
+                        foreach (ProductDTO productDTO in productList)
+                        {
+                            var panel = CreateProductPanel(productDTO);
+                            int row = index / 4;
+                            int col = index % 4;
+                            pProductList.Controls.Add(panel, col, row);
+                            index++;
+                        }
+            */
+            for (int i = index; i < index + itemPerPage; i++)
             {
-                var panel = CreateProductPanel(productDTO);
-                int row = index / 4;
-                int col = index % 4;
-                pProductList.Controls.Add(panel, col, row);
-                index++;
+                if (i < productList.Count && i >= 0)
+                {
+                    var panel = CreateProductPanel(productList[i]);
+                    int row = (i - index) / 4;  // FIXED: was using index instead of (i - index)
+                    int col = (i - index) % 4;  // FIXED: was using index instead of (i - index)
+                    pProductList.Controls.Add(panel, col, row);
+                }
             }
         }
 
@@ -109,33 +146,85 @@ namespace BadmintonCourtManagement.GUI
 
             // ===== AI Generated =====
 
-            string imageFileName = string.IsNullOrWhiteSpace(productDTO.ProductImg) ?
-                "DefaultProductImage.jpg" : productDTO.ProductImg;
-            string imagePath = string.Concat("Img\\Product\\", imageFileName);
-
-            // MessageBox.Show(productDTO.ProductImg);
-            // MessageBox.Show(imagePath);
-            Image productImage;
-            try
-            {
-                productImage = Image.FromFile(imagePath);
-            }
-            catch (Exception)
-            // check if productImage is null
-            {
-                productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
-            }
-
-            Bitmap resizedImage = new Bitmap(productImage, new Size(300, 300));
-
             var pictureBox = new PictureBox
             {
-                Image = (Image)resizedImage ?? productImage,
+                // Image = (Image)resizedImage ?? productImage,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Dock = DockStyle.Top,
                 Margin = new Padding(10),
                 Size = new Size(300, 300)
             };
+
+            try
+            {
+                // string imageFileName = productDTO.ProductImg;
+                string imageFileName = "DefaultProductImage.jpg";                
+                string imagePath = string.Concat("Img\\Product\\", imageFileName);
+
+                // MessageBox.Show(productDTO.ProductImg);
+                // MessageBox.Show(imagePath);
+
+                if (File.Exists(imagePath))
+                {
+                    using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+                    {
+                        using (Image original = Image.FromStream(fs))
+                        {
+                            // Create a completely independent bitmap copy
+                            var resized = new Bitmap(300, 300);
+                            using (var graphics = Graphics.FromImage(resized))
+                            {
+                                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                graphics.DrawImage(original, 0, 0, 300, 300);
+                            }
+                            pictureBox.Image = resized;
+                        }
+
+                    }
+                }
+                else
+                {
+                    string defaultPath = "Img\\Product\\DefaultProductImage.jpg";
+                    // string defaultPath = Path.Combine(Application.StartupPath, "Img", "Product", "DefaultProductImage.jpg");
+                    if (File.Exists(defaultPath))
+                    {
+                        using (var fs = new FileStream(defaultPath, FileMode.Open, FileAccess.Read))
+                        {
+                            using (Image original = Image.FromStream(fs))
+                            {
+                                var resized = new Bitmap(300, 300);
+                                using (var graphics = Graphics.FromImage(resized))
+                                {
+                                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                    graphics.DrawImage(original, 0, 0, 300, 300);
+                                }
+                                pictureBox.Image = resized;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
+            // Image productImage;
+            // try
+            // {
+            //     productImage = Image.FromFile(imagePath);
+            // }
+            // catch (Exception ex)
+            // // check if productImage is null
+            // {
+            //     // productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
+            //     productImage = Image.FromFile("Img\\Product\\DefaultProductImage.jpg");
+            //     throw new Exception(ex.Message);
+            // }
+
+            // Bitmap resizedImage = new Bitmap(productImage, new Size(300, 300));
+
 
             // ===== AI Generated =====
 
@@ -248,6 +337,36 @@ namespace BadmintonCourtManagement.GUI
             return panel;
         }
 
+        // Pagination buttons
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            page--;
+            if (page < 0) page = 0;
+            LoadProducts(productList);
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            page++;
+            if (page > (int)Math.Ceiling((double)productList.Count() / 8) - 1)
+                page = (int)Math.Ceiling((double)productList.Count() / 8) - 1;
+            LoadProducts(productList);
+        }
+
+        private void extraPreviousButton_Click(object sender, EventArgs e)
+        {
+            page = 0;
+            LoadProducts(productList);
+        }
+
+        private void extraNextButton_Click(object sender, EventArgs e)
+        {
+            page = (int)Math.Ceiling((double)productList.Count() / 8) - 1;
+            if (page < 0) page = 0;
+            LoadProducts(productList);
+        }
+
+        // Search function
         private void searchEnterEvent(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -261,7 +380,8 @@ namespace BadmintonCourtManagement.GUI
             try
             {
                 ProductBUS productBus = new ProductBUS();
-                LoadProducts(productBus.GetProductByName(text));
+                productList = productBus.GetProductByName(text);
+                LoadProducts(productList);
             }
             catch (Exception ex)
             {
@@ -396,11 +516,14 @@ namespace BadmintonCourtManagement.GUI
                     && string.IsNullOrWhiteSpace(criteria.TypeIds)
                     && !criteria.OnlyStock)
                 {
-                    LoadProducts(productBus.GetAllProducts());
+                    productList = productBus.GetAllProducts();
+                    page = 0;
+                    LoadProducts(productList);
                     return;
                 }
 
-                var productList = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds, criteria.OnlyStock);
+                productList = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds, criteria.OnlyStock);
+                page = 0;
                 LoadProducts(productList);
             };
 
