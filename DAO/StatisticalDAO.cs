@@ -92,81 +92,91 @@ namespace BadmintonCourtManagement.DAO
             public string CourtId { get; set; }
             public string CourtName { get; set; }
             public double TotalRevenue { get; set; }
-            public double AverageRevenue { get; set; } 
+            public double BookingCount { get; set; } 
         }
 
         // Lấy doanh thu của sân theo khoảng thời gian, với tùy chọn lọc tên sân và sắp xếp
-        public List<CourtRevenueDTO> GetCourtRevenue(DateTime startDate, DateTime endDate, string courtNameFilter = null, bool sortDescending = true)
-        {
-            // Ensure startDate <= endDate
-            if (startDate > endDate)
-            {
-                throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
-            }
+public List<CourtRevenueDTO> GetCourtRevenue(DateTime startDate, DateTime endDate, string courtNameFilter = null, bool sortDescending = true)
+{
+    if (startDate > endDate)
+        throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
 
-            string query = @"
-                SELECT 
-                    c.CourtId, 
-                    c.CourtName, 
-                    COALESCE(SUM(bb.TotalPrice), 0) AS TotalRevenue
-                FROM 
-                    court c
-                LEFT JOIN 
-                    booking b ON c.CourtId = b.CourtId
-                LEFT JOIN 
-                    billbooking bb ON b.BookingId = bb.BookingId
-                WHERE 
-                    b.StartTime >= @StartDate 
-                    AND b.StartTime <= @EndDate";
+    string query = @"
+        SELECT 
+            c.CourtId,
+            c.CourtName,
+            COALESCE(SUM(p.Price * TIMESTAMPDIFF(HOUR, b.StartTime, b.EndTime)), 0) AS TotalRevenue,
+            COUNT(b.BookingId) AS BookingCount
+        FROM 
+            court c
+        LEFT JOIN 
+            booking b ON c.CourtId = b.CourtId 
+            AND b.StartTime >= @StartDate 
+            AND b.StartTime < @EndDatePlusOne
+        LEFT JOIN 
+            pricerule p ON 
+                (p.StartDate IS NULL OR b.StartTime >= p.StartDate)
+                AND (p.EndDate IS NULL OR b.StartTime < p.EndDate)
+                AND TIME(b.StartTime) >= p.StartTime
+                AND TIME(b.StartTime) < p.EndTime
+                AND (
+                    (p.EndType = 'Weekday' AND WEEKDAY(b.StartTime) BETWEEN 0 AND 4)
+                    OR (p.EndType = 'Weekend' AND WEEKDAY(b.StartTime) IN (5,6))
+                    OR p.EndType = 'Holiday'
+                )
+                AND p.Status = 'Đang áp dụng'
+        WHERE 
+            1=1";
+
+    if (!string.IsNullOrEmpty(courtNameFilter))
+    {
+        query += " AND c.CourtName LIKE @CourtNameFilter";
+    }
+
+    query += @"
+        GROUP BY c.CourtId, c.CourtName
+        ORDER BY TotalRevenue " + (sortDescending ? "DESC" : "ASC");
+
+    var courtRevenues = new List<CourtRevenueDTO>();
+
+    try
+    {
+        db.OpenConnection();
+        using (var cmd = new MySqlCommand(query, db.Connection))
+        {
+            cmd.Parameters.AddWithValue("@StartDate", startDate);
+            cmd.Parameters.AddWithValue("@EndDatePlusOne", endDate.AddDays(1));
 
             if (!string.IsNullOrEmpty(courtNameFilter))
+                cmd.Parameters.AddWithValue("@CourtNameFilter", $"%{courtNameFilter}%");
+
+            using (var reader = cmd.ExecuteReader())
             {
-                query += " AND c.CourtName LIKE @CourtName";
-            }
-
-            query += " GROUP BY c.CourtId, c.CourtName";
-            query += " ORDER BY TotalRevenue " + (sortDescending ? "DESC" : "ASC");
-
-            List<CourtRevenueDTO> courtRevenues = new List<CourtRevenueDTO>();
-
-            try
-            {
-                db.OpenConnection();
-                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
+                while (reader.Read())
                 {
-                    cmd.Parameters.AddWithValue("@StartDate", startDate);
-                    cmd.Parameters.AddWithValue("@EndDate", endDate.AddDays(1).AddSeconds(-1)); // Include full endDate
-
-                    if (!string.IsNullOrEmpty(courtNameFilter))
+                    var court = new CourtRevenueDTO
                     {
-                        cmd.Parameters.AddWithValue("@CourtName", "%" + courtNameFilter + "%");
-                    }
+                        CourtId = reader["CourtId"]?.ToString() ?? string.Empty,
+                        CourtName = reader["CourtName"]?.ToString() ?? string.Empty,
+                        TotalRevenue =  Convert.ToDouble(reader["TotalRevenue"]),
+                        BookingCount = Convert.ToInt32(reader["BookingCount"])
+                    };
 
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            CourtRevenueDTO court = new CourtRevenueDTO
-                            {
-                                CourtId = reader["CourtId"]?.ToString() ?? string.Empty,
-                                CourtName = reader["CourtName"]?.ToString() ?? string.Empty,
-                                TotalRevenue = reader.IsDBNull(reader.GetOrdinal("TotalRevenue")) ? 0.0 : Convert.ToDouble(reader["TotalRevenue"])
-                            };
-                            courtRevenues.Add(court);
-                        }
-                    }
+                    courtRevenues.Add(court);
                 }
             }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi khi lấy doanh thu sân: {ex.Message}");
-            }
-            finally
-            {
-                db.CloseConnection();
-            }
-
-            return courtRevenues;
         }
+    }
+    catch (Exception ex)
+    {
+        throw new Exception($"Lỗi khi lấy doanh thu sân: {ex.Message}", ex);
+    }
+    finally
+    {
+        db.CloseConnection();
+    }
+
+    return courtRevenues;
+}
     }
 }

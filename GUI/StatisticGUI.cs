@@ -134,18 +134,18 @@ namespace BadmintonCourtManagement.GUI
             dataGridView1.Columns.Add("CourtName", "Tên Sân");
             dataGridView1.Columns.Add("TotalBookings", "Số Lượt Đặt");
             dataGridView1.Columns.Add("TotalRevenue", "Tổng Doanh Thu");
-            dataGridView1.Columns.Add("AverageRevenue", "Doanh Thu Trung Bình");
+            dataGridView1.Columns.Add("BookingCount", "Số lần đặt sân");
 
             // Định dạng cột
             dataGridView1.Columns["CourtName"].Width = 400;
             dataGridView1.Columns["TotalBookings"].Width = 300;
             dataGridView1.Columns["TotalRevenue"].Width = 400;
-            dataGridView1.Columns["AverageRevenue"].Width = 387;
+            dataGridView1.Columns["BookingCount"].Width = 387;
 
             dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Format = "C0";
-            dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Format = "C0";
+            // dataGridView1.Columns["BookingCount"].DefaultCellStyle.Format = "C0";
             dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridView1.Columns["AverageRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridView1.Columns["BookingCount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dataGridView1.Columns["TotalBookings"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             // Gán sự kiện Click cho label4 (nút Thống Kê ở tab Sân)
@@ -243,7 +243,7 @@ namespace BadmintonCourtManagement.GUI
                         item.CourtId,
                         item.CourtName,
                         item.TotalRevenue,
-                        item.AverageRevenue
+                        item.BookingCount
 
                     );
                 }
