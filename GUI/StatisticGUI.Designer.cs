@@ -1,4 +1,5 @@
-﻿namespace BadmintonCourtManagement.GUI
+﻿using System.Windows.Forms.DataVisualization.Charting;
+namespace BadmintonCourtManagement.GUI
 {
     partial class StatisticGUI
     {
@@ -28,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            lblSummaryTitle = new Label();
             sortFieldComboBox = new ComboBox();
             dateTimePicker2 = new DateTimePicker();
             customPanel2 = new CustomPanel();
@@ -53,6 +55,7 @@
             label5 = new Label();
             customPanel10 = new CustomPanel();
             dataGridView1 = new DataGridView();
+            tabPage3 = new TabPage();
             customPanel2.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             customPanel1.SuspendLayout();
@@ -202,6 +205,7 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage3);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -388,6 +392,138 @@
             dataGridView1.Size = new Size(1290, 500);
             dataGridView1.TabIndex = 2;
             // 
+            // tabPage3
+            // 
+            tabPage3.Location = new Point(4, 34);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(3);
+            tabPage3.Size = new Size(1504, 703);
+            tabPage3.TabIndex = 1;
+            tabPage3.Text = "tabPage3";
+            tabPage3.UseVisualStyleBackColor = true;
+            tabPage3.Controls.Add(customPanelSummary);
+            tabPage3.Controls.Add(panelSummaryHeader);
+            tabPage3.Text = "Tổng Quan";
+
+            // 
+            // customPanelSummary
+            // 
+            customPanelSummary = new CustomPanel();
+            customPanelSummary.BackColor = Color.FromArgb(239, 248, 230);
+            customPanelSummary.BorderRadius = 20;
+            customPanelSummary.Dock = DockStyle.Fill;
+            customPanelSummary.Location = new Point(70, 84);
+            customPanelSummary.Name = "customPanelSummary";
+            customPanelSummary.Padding = new Padding(40, 20, 40, 20);
+            customPanelSummary.Size = new Size(1364, 619);
+            customPanelSummary.TabIndex = 3;
+
+            // 
+            // panelSummaryHeader
+            // 
+            panelSummaryHeader = new Panel();
+            panelSummaryHeader.Controls.Add(lblSummaryTitle);
+            panelSummaryHeader.Dock = DockStyle.Top;
+            panelSummaryHeader.Location = new Point(70, 0);
+            panelSummaryHeader.Name = "panelSummaryHeader";
+            panelSummaryHeader.Size = new Size(1364, 84);
+            panelSummaryHeader.TabIndex = 7;
+
+            // 
+            // lblSummaryTitle
+            // 
+    
+        lblSummaryTitle.BackColor = Color.White;
+            lblSummaryTitle.Dock = DockStyle.Top;
+            lblSummaryTitle.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            lblSummaryTitle.ForeColor = Color.Black;
+            lblSummaryTitle.Location = new Point(0, 0);
+            lblSummaryTitle.Name = "lblSummaryTitle";
+            lblSummaryTitle.Padding = new Padding(10);
+            lblSummaryTitle.Size = new Size(1364, 84);
+            lblSummaryTitle.Text = "Tổng Quan Doanh Thu";
+            lblSummaryTitle.TextAlign = ContentAlignment.MiddleLeft;
+
+            // 
+            // dtpSummaryStart
+            // 
+            dtpSummaryStart = new DateTimePicker();
+            dtpSummaryStart.Location = new Point(35, 35);
+            dtpSummaryStart.Margin = new Padding(35, 10, 30, 0);
+            dtpSummaryStart.Name = "dtpSummaryStart";
+            dtpSummaryStart.Size = new Size(310, 31);
+            dtpSummaryStart.TabIndex = 1;
+
+            // 
+            // dtpSummaryEnd
+            // 
+            dtpSummaryEnd = new DateTimePicker();
+            dtpSummaryEnd.Location = new Point(385, 35);
+            dtpSummaryEnd.Margin = new Padding(10, 10, 0, 0);
+            dtpSummaryEnd.Name = "dtpSummaryEnd";
+            dtpSummaryEnd.Size = new Size(310, 31);
+            dtpSummaryEnd.TabIndex = 1;
+
+            // 
+            // lblGenerateSummary
+            // 
+            lblGenerateSummary = new Label();
+            lblGenerateSummary.BackColor = Color.FromArgb(64, 64, 64);
+            lblGenerateSummary.Cursor = Cursors.Hand;
+            lblGenerateSummary.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblGenerateSummary.ForeColor = Color.WhiteSmoke;
+            lblGenerateSummary.Location = new Point(240, 66);
+            lblGenerateSummary.Margin = new Padding(240, 0, 10, 10);
+            lblGenerateSummary.Name = "lblGenerateSummary";
+            lblGenerateSummary.Padding = new Padding(15, 0, 15, 0);
+            lblGenerateSummary.Size = new Size(153, 37);
+            lblGenerateSummary.TabIndex = 4;
+            lblGenerateSummary.Text = "Thống Kê";
+            lblGenerateSummary.TextAlign = ContentAlignment.MiddleCenter;
+
+            // 
+            // chartPie
+            // 
+            chartPie = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            chartPie.Location = new Point(40, 120);
+            chartPie.Name = "chartPie";
+            chartPie.Size = new Size(600, 400);
+            chartPie.TabIndex = 0;
+            chartPie.Text = "chartPie";
+            chartPie.ChartAreas.Add("ChartArea");
+            chartPie.Series.Add("RevenueSeries");
+            chartPie.Series["RevenueSeries"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            chartPie.Series["RevenueSeries"].IsValueShownAsLabel = true;
+            chartPie.Series["RevenueSeries"]["PieLabelStyle"] = "Outside";
+            chartPie.Legends.Add("Legend");
+            chartPie.Legends["Legend"].Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Right;
+
+            // 
+            // lblCourtRevenue, lblProductRevenue, ...
+            // 
+            lblCourtRevenue = CreateSummaryLabel("Doanh thu sân:", 700, 150);
+            lblProductRevenue = CreateSummaryLabel("Doanh thu bán đồ:", 700, 200);
+            lblTotalRevenue = CreateSummaryLabel("Tổng doanh thu:", 700, 250);
+            lblCourtPercent = CreateSummaryLabel("Tỷ lệ sân:", 700, 320);
+            lblProductPercent = CreateSummaryLabel("Tỷ lệ đồ:", 700, 370);
+
+            customPanelSummary.Controls.Add(chartPie);
+            customPanelSummary.Controls.Add(dtpSummaryStart);
+            customPanelSummary.Controls.Add(dtpSummaryEnd);
+            customPanelSummary.Controls.Add(lblGenerateSummary);
+            customPanelSummary.Controls.Add(lblCourtRevenue);
+            customPanelSummary.Controls.Add(lblProductRevenue);
+            customPanelSummary.Controls.Add(lblTotalRevenue);
+            customPanelSummary.Controls.Add(lblCourtPercent);
+            customPanelSummary.Controls.Add(lblProductPercent);
+
+            // Thêm vào panelSummaryHeader
+    panelSummaryHeader.Controls.Add(lblSummaryTitle);
+
+            // Thêm vào tabPage3
+            tabPage3.Controls.Add(customPanelSummary);
+            tabPage3.Controls.Add(panelSummaryHeader);
+            // 
             // StatisticGUI
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -443,5 +579,32 @@
         private Panel panel2;
         private Label label5;
         private FlowLayoutPanel flowLayoutPanel2;
+        private TabPage tabPage3;
+        CustomPanel customPanelSummary;
+        Panel panelSummaryHeader;
+
+        private Label lblSummaryTitle;
+        DateTimePicker dtpSummaryStart;
+        DateTimePicker dtpSummaryEnd;
+        Label lblGenerateSummary;
+        Label lblCourtRevenue;
+        Label lblProductRevenue;
+        Label lblTotalRevenue;
+        Label lblCourtPercent;
+        Label lblProductPercent;
+        System.Windows.Forms.DataVisualization.Charting.Chart chartPie;
+
+        private Label CreateSummaryLabel(string text, int x, int y)
+        {
+            var label = new Label
+            {
+                AutoSize = true,
+                Font = new Font("Segoe UI", 12F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(0, 120, 103),
+                Location = new Point(x, y),
+                Text = text
+            };
+            return label;
+        }
     }
 }

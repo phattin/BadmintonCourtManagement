@@ -4,12 +4,14 @@ using System.Windows.Forms;
 using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
 using BadmintonCourtManagement.DAO;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BadmintonCourtManagement.GUI
 {
     public partial class StatisticGUI : UserControl
     {
-        private AccountDTO currentAccount;
+        
+                private AccountDTO currentAccount;
         private StatisticalBUS statisticalBUS;
         private bool isInitializing = true; // Flag to prevent auto-refresh during initialization
 
@@ -64,6 +66,7 @@ namespace BadmintonCourtManagement.GUI
 
             // Khởi tạo tab Sân
             SetupCourtTab();
+            SetupSummaryTab();
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -172,6 +175,68 @@ namespace BadmintonCourtManagement.GUI
                 textBox1.Text = "";
             }
         }
+
+        private void SetupSummaryTab()
+{
+    // Thiết lập ngày mặc định
+    dtpSummaryStart.Value = DateTime.Now.AddDays(-30);
+    dtpSummaryEnd.Value = DateTime.Now;
+
+    // Gán sự kiện
+    lblGenerateSummary.Click += lblGenerateSummary_Click;
+    dtpSummaryStart.ValueChanged += (s, e) => { if (!isInitializing) LoadRevenueSummary(); };
+    dtpSummaryEnd.ValueChanged += (s, e) => { if (!isInitializing) LoadRevenueSummary(); };
+
+    // Load lần đầu
+    LoadRevenueSummary();
+}
+
+private void LoadRevenueSummary()
+{
+    DateTime start = dtpSummaryStart.Value.Date;
+    DateTime end = dtpSummaryEnd.Value.Date;
+
+    if (start > end)
+    {
+        MessageBox.Show("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+    }
+
+    try
+    {
+        var summary = statisticalBUS.GetRevenueSummary(start, end);
+
+        // Cập nhật số liệu
+        lblCourtRevenue.Text = $"Doanh thu sân: {summary.CourtRevenue:C0}";
+        lblProductRevenue.Text = $"Doanh thu bán đồ: {summary.ProductRevenue:C0}";
+        lblTotalRevenue.Text = $"Tổng doanh thu: {summary.TotalRevenue:C0}";
+        lblCourtPercent.Text = $"Tỷ lệ sân: {summary.CourtPercentage}%";
+        lblProductPercent.Text = $"Tỷ lệ đồ: {summary.ProductPercentage}%";
+
+        // Cập nhật biểu đồ
+        chartPie.Series["RevenueSeries"].Points.Clear();
+        if (summary.TotalRevenue > 0)
+        {
+            chartPie.Series["RevenueSeries"].Points.AddXY("Sân", summary.CourtRevenue);
+            chartPie.Series["RevenueSeries"].Points.AddXY("Bán đồ", summary.ProductRevenue);
+            chartPie.Series["RevenueSeries"].Points[0].Label = $"{summary.CourtPercentage}%";
+            chartPie.Series["RevenueSeries"].Points[1].Label = $"{summary.ProductPercentage}%";
+        }
+        else
+        {
+            chartPie.Series["RevenueSeries"].Points.AddXY("Không có dữ liệu", 1);
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
+
+private void lblGenerateSummary_Click(object sender, EventArgs e)
+{
+    LoadRevenueSummary();
+}
 
 
         // Remove automatic refresh from these event handlers

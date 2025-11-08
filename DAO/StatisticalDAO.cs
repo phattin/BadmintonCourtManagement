@@ -96,12 +96,12 @@ namespace BadmintonCourtManagement.DAO
         }
 
         // Lấy doanh thu của sân theo khoảng thời gian, với tùy chọn lọc tên sân và sắp xếp
-public List<CourtRevenueDTO> GetCourtRevenue(DateTime startDate, DateTime endDate, string courtNameFilter = null, bool sortDescending = true)
-{
-    if (startDate > endDate)
-        throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+        public List<CourtRevenueDTO> GetCourtRevenue(DateTime startDate, DateTime endDate, string courtNameFilter = null, bool sortDescending = true)
+        {
+            if (startDate > endDate)
+                throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
 
-    string query = @"
+            string query = @"
         SELECT 
             c.CourtId,
             c.CourtName,
@@ -128,55 +128,142 @@ public List<CourtRevenueDTO> GetCourtRevenue(DateTime startDate, DateTime endDat
         WHERE 
             1=1";
 
-    if (!string.IsNullOrEmpty(courtNameFilter))
-    {
-        query += " AND c.CourtName LIKE @CourtNameFilter";
-    }
+            if (!string.IsNullOrEmpty(courtNameFilter))
+            {
+                query += " AND c.CourtName LIKE @CourtNameFilter";
+            }
 
-    query += @"
+            query += @"
         GROUP BY c.CourtId, c.CourtName
         ORDER BY TotalRevenue " + (sortDescending ? "DESC" : "ASC");
 
-    var courtRevenues = new List<CourtRevenueDTO>();
+            var courtRevenues = new List<CourtRevenueDTO>();
 
-    try
-    {
-        db.OpenConnection();
-        using (var cmd = new MySqlCommand(query, db.Connection))
-        {
-            cmd.Parameters.AddWithValue("@StartDate", startDate);
-            cmd.Parameters.AddWithValue("@EndDatePlusOne", endDate.AddDays(1));
-
-            if (!string.IsNullOrEmpty(courtNameFilter))
-                cmd.Parameters.AddWithValue("@CourtNameFilter", $"%{courtNameFilter}%");
-
-            using (var reader = cmd.ExecuteReader())
+            try
             {
-                while (reader.Read())
+                db.OpenConnection();
+                using (var cmd = new MySqlCommand(query, db.Connection))
                 {
-                    var court = new CourtRevenueDTO
-                    {
-                        CourtId = reader["CourtId"]?.ToString() ?? string.Empty,
-                        CourtName = reader["CourtName"]?.ToString() ?? string.Empty,
-                        TotalRevenue =  Convert.ToDouble(reader["TotalRevenue"]),
-                        BookingCount = Convert.ToInt32(reader["BookingCount"])
-                    };
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@EndDatePlusOne", endDate.AddDays(1));
 
-                    courtRevenues.Add(court);
+                    if (!string.IsNullOrEmpty(courtNameFilter))
+                        cmd.Parameters.AddWithValue("@CourtNameFilter", $"%{courtNameFilter}%");
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var court = new CourtRevenueDTO
+                            {
+                                CourtId = reader["CourtId"]?.ToString() ?? string.Empty,
+                                CourtName = reader["CourtName"]?.ToString() ?? string.Empty,
+                                TotalRevenue = Convert.ToDouble(reader["TotalRevenue"]),
+                                BookingCount = Convert.ToInt32(reader["BookingCount"])
+                            };
+
+                            courtRevenues.Add(court);
+                        }
+                    }
                 }
             }
-        }
-    }
-    catch (Exception ex)
-    {
-        throw new Exception($"Lỗi khi lấy doanh thu sân: {ex.Message}", ex);
-    }
-    finally
-    {
-        db.CloseConnection();
-    }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy doanh thu sân: {ex.Message}", ex);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
 
-    return courtRevenues;
-}
+            return courtRevenues;
+        }
+        public class RevenueSummaryDTO
+        {
+            public double CourtRevenue { get; set; }
+            public double ProductRevenue { get; set; }
+            public double TotalRevenue { get; set; }
+            public double CourtPercentage { get; set; }
+            public double ProductPercentage { get; set; }
+        }
+
+
+        public RevenueSummaryDTO GetRevenueSummary(DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+                throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+
+            var summary = new RevenueSummaryDTO();
+
+            try
+            {
+                db.OpenConnection();
+
+                // === 1. Tính doanh thu sân (từ booking + pricerule) ===
+                string courtQuery = @"
+            SELECT COALESCE(SUM(p.Price * TIMESTAMPDIFF(HOUR, b.StartTime, b.EndTime)), 0) AS CourtRevenue
+            FROM booking b
+            LEFT JOIN pricerule p ON 
+                (p.StartDate IS NULL OR b.StartTime >= p.StartDate)
+                AND (p.EndDate IS NULL OR b.StartTime < p.EndDate)
+                AND TIME(b.StartTime) >= p.StartTime
+                AND TIME(b.StartTime) < p.EndTime
+                AND (
+                    (p.EndType = 'Weekday' AND WEEKDAY(b.StartTime) BETWEEN 0 AND 4)
+                    OR (p.EndType = 'Weekend' AND WEEKDAY(b.StartTime) IN (5,6))
+                    OR p.EndType = 'Holiday'
+                )
+                AND p.Status = 'Đang áp dụng'
+            WHERE b.StartTime >= @StartDate AND b.StartTime < @EndDatePlusOne";
+
+                // === 2. Tính doanh thu bán đồ (từ billproduct WHERE Status = 'paid') ===
+                string productQuery = @"
+            SELECT COALESCE(SUM(TotalPrice), 0) AS ProductRevenue
+            FROM billproduct
+            WHERE DateCreated >= @StartDate 
+              AND DateCreated < @EndDatePlusOne
+              AND Status = 'paid'";
+
+                double courtRevenue = 0;
+                double productRevenue = 0;
+
+                // Thực thi query sân
+                using (var cmd = new MySqlCommand(courtQuery, db.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@EndDatePlusOne", endDate.AddDays(1));
+                    courtRevenue = Convert.ToDouble(cmd.ExecuteScalar());
+                }
+
+                // Thực thi query đồ
+                using (var cmd = new MySqlCommand(productQuery, db.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@EndDatePlusOne", endDate.AddDays(1));
+                    productRevenue = Convert.ToDouble(cmd.ExecuteScalar());
+                }
+
+                // Tính tổng + %
+                double total = courtRevenue + productRevenue;
+
+                summary.CourtRevenue = courtRevenue;
+                summary.ProductRevenue = productRevenue;
+                summary.TotalRevenue = total;
+                summary.CourtPercentage = total > 0 ? Math.Round((courtRevenue / total) * 100, 2) : 0;
+                summary.ProductPercentage = total > 0 ? Math.Round((productRevenue / total) * 100, 2) : 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi tính tổng doanh thu: {ex.Message}", ex);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return summary;
+        }
+
+
     }
 }
