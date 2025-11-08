@@ -1,5 +1,6 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using GUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -144,87 +145,133 @@ namespace BadmintonCourtManagement.GUI
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            // ===== AI Generated =====
+            /*
+            // My version of loading the image
+            string imagePath = string.Concat("Img\\Product\\", productDTO.ProductImg ?? "DefaultProductImage.jpg");
+            var pictureBox = new PictureBox{
+                Image = Image.FromFile(imagePath),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Margin = new Padding(10),
+                Size = new Size(300,300)
+            };
+            */
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRoot = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\"));
+            string imagePath = Path.Combine(projectRoot, "Img", "Product", productDTO.ProductImg ?? "DefaultProductImage.jpg");
+
+            if (!File.Exists(imagePath))
+            {
+                imagePath = Path.Combine(projectRoot, "Img", "Product", "DefaultProductImage.jpg");
+            }
+            Console.WriteLine(imagePath);
+
+            byte[] imageData = File.ReadAllBytes(imagePath);
+            if (imageData.Length == 0)
+            {
+                throw new Exception($"Image file {imagePath} is empty");
+            }
+            Image img;
+            using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+            {
+                img = Image.FromStream(stream);
+            }
 
             var pictureBox = new PictureBox
             {
-                // Image = (Image)resizedImage ?? productImage,
+                Image = new Bitmap(img), // copies the image so we can close the file
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Top,
                 Margin = new Padding(10),
-                Size = new Size(300, 300)
+                Size = new Size(300, 300),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
             };
 
-            try
-            {
-                // string imageFileName = productDTO.ProductImg;
-                string imageFileName = "DefaultProductImage.jpg";                
-                string imagePath = string.Concat("Img\\Product\\", imageFileName);
+            // ===== AI Generated =====
 
-                // MessageBox.Show(productDTO.ProductImg);
-                // MessageBox.Show(imagePath);
+            /*
 
-                if (File.Exists(imagePath))
+                var pictureBox = new PictureBox
                 {
-                    using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                    {
-                        using (Image original = Image.FromStream(fs))
-                        {
-                            // Create a completely independent bitmap copy
-                            var resized = new Bitmap(300, 300);
-                            using (var graphics = Graphics.FromImage(resized))
-                            {
-                                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                                graphics.DrawImage(original, 0, 0, 300, 300);
-                            }
-                            pictureBox.Image = resized;
-                        }
+                    // Image = (Image)resizedImage ?? productImage,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Dock = DockStyle.Top,
+                    Margin = new Padding(10),
+                    Size = new Size(300, 300)
+                };
 
-                    }
-                }
-                else
+                try
                 {
-                    string defaultPath = "Img\\Product\\DefaultProductImage.jpg";
-                    // string defaultPath = Path.Combine(Application.StartupPath, "Img", "Product", "DefaultProductImage.jpg");
-                    if (File.Exists(defaultPath))
+                    string imageFileName = productDTO.ProductImg;
+                    // string imageFileName = "DefaultProductImage.jpg"; 
+                    string imagePath = string.Concat("Img\\Product\\", imageFileName);
+
+                    // MessageBox.Show(productDTO.ProductImg);
+                    // MessageBox.Show(imagePath);
+
+                    if (File.Exists(imagePath))
                     {
-                        using (var fs = new FileStream(defaultPath, FileMode.Open, FileAccess.Read))
+                        using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
                         {
                             using (Image original = Image.FromStream(fs))
                             {
+                                // Create a completely independent bitmap copy
                                 var resized = new Bitmap(300, 300);
                                 using (var graphics = Graphics.FromImage(resized))
                                 {
                                     graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                                     graphics.DrawImage(original, 0, 0, 300, 300);
                                 }
-                                pictureBox.Image = resized;
+                    pictureBox.Image = (Bitmap)resized.Clone();
+                    resized.Dispose();
+                                // pictureBox.Image = resized;
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        string defaultPath = "Img\\Product\\DefaultProductImage.jpg";
+                        // string defaultPath = Path.Combine(Application.StartupPath, "Img", "Product", "DefaultProductImage.jpg");
+                        if (File.Exists(defaultPath))
+                        {
+                            using (var fs = new FileStream(defaultPath, FileMode.Open, FileAccess.Read))
+                            {
+                                using (Image original = Image.FromStream(fs))
+                                {
+                                    var resized = new Bitmap(300, 300);
+                                    using (var graphics = Graphics.FromImage(resized))
+                                    {
+                                        graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                                        graphics.DrawImage(original, 0, 0, 300, 300);
+                                    }
+                                    // pictureBox.Image = resized;
+                    pictureBox.Image = (Bitmap)resized.Clone();
+                    resized.Dispose();
+                                }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
 
 
-            // Image productImage;
-            // try
-            // {
-            //     productImage = Image.FromFile(imagePath);
-            // }
-            // catch (Exception ex)
-            // // check if productImage is null
-            // {
-            //     // productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
-            //     productImage = Image.FromFile("Img\\Product\\DefaultProductImage.jpg");
-            //     throw new Exception(ex.Message);
-            // }
+                // Image productImage;
+                // try
+                // {
+                //     productImage = Image.FromFile(imagePath);
+                // }
+                // catch (Exception ex)
+                // // check if productImage is null
+                // {
+                //     // productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
+                //     productImage = Image.FromFile("Img\\Product\\DefaultProductImage.jpg");
+                //     throw new Exception(ex.Message);
+                // }
 
-            // Bitmap resizedImage = new Bitmap(productImage, new Size(300, 300));
-
+                // Bitmap resizedImage = new Bitmap(productImage, new Size(300, 300));
+            */
 
             // ===== AI Generated =====
 
@@ -528,6 +575,46 @@ namespace BadmintonCourtManagement.GUI
             };
 
             dialog.Controls.Add(filterForm);
+            dialog.ShowDialog();
+        }
+
+        private void btnAddProduct_Click(object sender, EventArgs e)
+        {
+            var brands = LoadBrands();
+            var types = LoadTypes();
+            Form dialog = new Form()
+            {
+                Text = string.Empty,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                StartPosition = FormStartPosition.CenterParent,
+                Size = new Size(483, 600),
+                MaximizeBox = false,
+                MinimizeBox = false,
+                ShowInTaskbar = false
+            };
+
+            var insertForm = new ProductInsertGUI { Dock = DockStyle.Fill };
+            insertForm.InsertData(brands, types);
+            //insertForm.FilterApplied += criteria =>
+            //{
+            //    ProductBUS productBus = new ProductBUS();
+            //    // Empty criteria => load all
+            //    if (string.IsNullOrWhiteSpace(criteria.BrandIds)
+            //        && string.IsNullOrWhiteSpace(criteria.TypeIds)
+            //        && !criteria.OnlyStock)
+            //    {
+            //        productList = productBus.GetAllProducts();
+            //        page = 0;
+            //        LoadProducts(productList);
+            //        return;
+            //    }
+
+            //    productList = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds, criteria.OnlyStock);
+            //    page = 0;
+            //    LoadProducts(productList);
+            //};
+
+            dialog.Controls.Add(insertForm);
             dialog.ShowDialog();
         }
     }

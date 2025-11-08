@@ -140,10 +140,10 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutBackground = new TableLayoutPanel();
             title_productFilter = new Label();
             tableLayout_storeItem = new TableLayoutPanel();
+            brand_listBox = new CheckedListBox();
             lbl_brand = new Label();
             lbl_category = new Label();
-            lbl_priceRange = new Label();
-            brand_listBox = new CheckedListBox();
+            lbl_onlyStock = new Label();
             category_listBox = new CheckedListBox();
             saveBtn = new Label();
             resetBtn = new Label();
@@ -194,11 +194,12 @@ namespace BadmintonCourtManagement.GUI
             tableLayout_storeItem.Controls.Add(brand_listBox, 1, 0);
             tableLayout_storeItem.Controls.Add(lbl_brand, 0, 0);
             tableLayout_storeItem.Controls.Add(lbl_category, 0, 1);
-            tableLayout_storeItem.Controls.Add(lbl_priceRange, 0, 2);
+            tableLayout_storeItem.Controls.Add(lbl_onlyStock, 0, 2);
             tableLayout_storeItem.Controls.Add(category_listBox, 1, 1);
             tableLayout_storeItem.Controls.Add(saveBtn, 0, 3);
             tableLayout_storeItem.Controls.Add(resetBtn, 1, 3);
             tableLayout_storeItem.Controls.Add(checkBox_onlyStock, 1, 2);
+            tableLayout_storeItem.ForeColor = Color.Black;
             tableLayout_storeItem.Location = new Point(33, 135);
             tableLayout_storeItem.Margin = new Padding(3, 50, 3, 70);
             tableLayout_storeItem.Name = "tableLayout_storeItem";
@@ -209,6 +210,18 @@ namespace BadmintonCourtManagement.GUI
             tableLayout_storeItem.RowStyles.Add(new RowStyle());
             tableLayout_storeItem.Size = new Size(427, 306);
             tableLayout_storeItem.TabIndex = 2;
+            // 
+            // brand_listBox
+            // 
+            brand_listBox.BackColor = Color.White;
+            brand_listBox.BorderStyle = BorderStyle.None;
+            brand_listBox.Dock = DockStyle.Fill;
+            brand_listBox.FormattingEnabled = true;
+            brand_listBox.IntegralHeight = false;
+            brand_listBox.Location = new Point(216, 3);
+            brand_listBox.Name = "brand_listBox";
+            brand_listBox.Size = new Size(208, 81);
+            brand_listBox.TabIndex = 1;
             // 
             // lbl_brand
             // 
@@ -234,28 +247,16 @@ namespace BadmintonCourtManagement.GUI
             lbl_category.TabIndex = 0;
             lbl_category.Text = "Thể loại: ";
             // 
-            // lbl_priceRange
+            // lbl_onlyStock
             // 
-            lbl_priceRange.AutoSize = true;
-            lbl_priceRange.FlatStyle = FlatStyle.Flat;
-            lbl_priceRange.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_priceRange.Location = new Point(3, 174);
-            lbl_priceRange.Name = "lbl_priceRange";
-            lbl_priceRange.Size = new Size(207, 28);
-            lbl_priceRange.TabIndex = 0;
-            lbl_priceRange.Text = "Chỉ xem hàng tồn kho: ";
-            // 
-            // brand_listBox
-            // 
-            brand_listBox.BackColor = Color.White;
-            brand_listBox.BorderStyle = BorderStyle.None;
-            brand_listBox.Dock = DockStyle.Fill;
-            brand_listBox.FormattingEnabled = true;
-            brand_listBox.IntegralHeight = false;
-            brand_listBox.Location = new Point(216, 3);
-            brand_listBox.Name = "brand_listBox";
-            brand_listBox.Size = new Size(208, 81);
-            brand_listBox.TabIndex = 1;
+            lbl_onlyStock.AutoSize = true;
+            lbl_onlyStock.FlatStyle = FlatStyle.Flat;
+            lbl_onlyStock.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbl_onlyStock.Location = new Point(3, 174);
+            lbl_onlyStock.Name = "lbl_onlyStock";
+            lbl_onlyStock.Size = new Size(207, 28);
+            lbl_onlyStock.TabIndex = 0;
+            lbl_onlyStock.Text = "Chỉ xem hàng tồn kho: ";
             // 
             // category_listBox
             // 
@@ -336,7 +337,7 @@ namespace BadmintonCourtManagement.GUI
         private TableLayoutPanel tableLayout_storeItem;
         private Label lbl_brand;
         private Label lbl_category;
-        private Label lbl_priceRange;
+        private Label lbl_onlyStock;
         private CheckedListBox brand_listBox;
         private CheckedListBox category_listBox;
         private Label saveBtn;

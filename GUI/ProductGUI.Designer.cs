@@ -61,6 +61,7 @@
             titlePanel.SuspendLayout();
             bigPanel.SuspendLayout();
             bodyPanel.SuspendLayout();
+            productListPanel.SuspendLayout();
             SuspendLayout();
             // 
             // pageButtonPanel
@@ -80,7 +81,7 @@
             // extraNextButton
             // 
             extraNextButton.Anchor = AnchorStyles.None;
-            extraNextButton.BackColor = Color.Transparent;
+            extraNextButton.BackColor = Color.White;
             extraNextButton.Cursor = Cursors.Hand;
             extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
             extraNextButton.Location = new Point(756, 17);
@@ -89,14 +90,14 @@
             extraNextButton.TabIndex = 16;
             extraNextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraNextButton.UseVisualStyleBackColor = false;
-	    extraNextButton.Click += extraNextButton_Click;
+            extraNextButton.Click += extraNextButton_Click;
             // 
             // extraPreviousButton
             // 
             extraPreviousButton.Anchor = AnchorStyles.None;
-            extraPreviousButton.BackColor = Color.Transparent;
+            extraPreviousButton.BackColor = Color.White;
             extraPreviousButton.Cursor = Cursors.Hand;
-            extraPreviousButton.ForeColor = Color.Transparent;
+            extraPreviousButton.ForeColor = Color.White;
             extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
             extraPreviousButton.Location = new Point(426, 17);
             extraPreviousButton.Name = "extraPreviousButton";
@@ -104,12 +105,12 @@
             extraPreviousButton.TabIndex = 13;
             extraPreviousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraPreviousButton.UseVisualStyleBackColor = false;
-	    extraPreviousButton.Click +=  extraPreviousButton_Click;
+            extraPreviousButton.Click += extraPreviousButton_Click;
             // 
             // nextButton
             // 
             nextButton.Anchor = AnchorStyles.None;
-            nextButton.BackColor = Color.Transparent;
+            nextButton.BackColor = Color.White;
             nextButton.Cursor = Cursors.Hand;
             nextButton.Image = (Image)resources.GetObject("nextButton.Image");
             nextButton.Location = new Point(644, 17);
@@ -118,12 +119,12 @@
             nextButton.TabIndex = 15;
             nextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             nextButton.UseVisualStyleBackColor = false;
-	    nextButton.Click +=  nextButton_Click;
+            nextButton.Click += nextButton_Click;
             // 
             // previousButton
             // 
             previousButton.Anchor = AnchorStyles.None;
-            previousButton.BackColor = Color.Transparent;
+            previousButton.BackColor = Color.White;
             previousButton.Cursor = Cursors.Hand;
             previousButton.Image = (Image)resources.GetObject("previousButton.Image");
             previousButton.Location = new Point(539, 17);
@@ -132,7 +133,7 @@
             previousButton.TabIndex = 14;
             previousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             previousButton.UseVisualStyleBackColor = false;
-	    previousButton.Click +=  previousButton_Click;
+            previousButton.Click += previousButton_Click;
             // 
             // cardList
             // 
@@ -145,7 +146,7 @@
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.Controls.Add(card, 0, 0);
-            cardList.Location = new Point(0, 246);
+            cardList.Location = new Point(0, 186);
             cardList.Margin = new Padding(0);
             cardList.Name = "cardList";
             cardList.RowCount = 2;
@@ -182,7 +183,6 @@
             cardButton.TabIndex = 6;
             cardButton.Text = "Xem chi tiết";
             cardButton.UseVisualStyleBackColor = false;
-            // cardButton.Click += cardButton_Click_1;
             // 
             // cardBody
             // 
@@ -214,11 +214,11 @@
             toolBar.BorderRadius = 20;
             toolBar.Controls.Add(searchPanel);
             toolBar.Controls.Add(filterButton);
-            toolBar.Location = new Point(0, 0);
+            toolBar.Location = new Point(3, 4);
             toolBar.Margin = new Padding(3, 4, 3, 4);
             toolBar.Name = "toolBar";
-            toolBar.Padding = new Padding(10);
-            toolBar.Size = new Size(1146, 73);
+            toolBar.Padding = new Padding(5);
+            toolBar.Size = new Size(1140, 71);
             toolBar.TabIndex = 1;
             toolBar.Paint += tableLayoutPanel1_Paint;
             // 
@@ -243,7 +243,7 @@
             btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
             btnDelete.TabIndex = 0;
             btnDelete.TabStop = false;
-	        btnDelete.Click += new EventHandler(btnDelete_Click);
+            btnDelete.Click += btnDelete_Click;
             // 
             // searchBar
             // 
@@ -258,23 +258,22 @@
             searchBar.PlaceholderText = "value...";
             searchBar.Size = new Size(510, 20);
             searchBar.TabIndex = 1;
-            // searchBar.TextChanged += searchEnterEvent;
             // 
             // filterButton
             // 
             filterButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             filterButton.Cursor = Cursors.Hand;
             filterButton.Image = Properties.Resources.Filter;
-            filterButton.Location = new Point(1084, 12);
+            filterButton.Location = new Point(1078, 12);
             filterButton.Margin = new Padding(3, 4, 3, 4);
             filterButton.Name = "filterButton";
             filterButton.Size = new Size(48, 41);
             filterButton.SizeMode = PictureBoxSizeMode.StretchImage;
             filterButton.TabIndex = 1;
             filterButton.TabStop = false;
+            filterButton.Click += filterButton_Click;
             filterButton.MouseEnter += filterButton_MouseEnter;
             filterButton.MouseLeave += filterButton_MouseLeave;
-	    filterButton.Click += filterButton_Click;
             // 
             // btnAddProduct
             // 
@@ -291,6 +290,7 @@
             btnAddProduct.TabIndex = 2;
             btnAddProduct.Text = "Thêm SP";
             btnAddProduct.TextAlign = ContentAlignment.MiddleCenter;
+            btnAddProduct.Click += btnAddProduct_Click;
             // 
             // titlePanel
             // 
@@ -306,7 +306,7 @@
             // titleText
             // 
             titleText.AutoSize = true;
-            titleText.BackColor = Color.Transparent;
+            titleText.BackColor = Color.White;
             titleText.Font = new Font("Segoe UI Semibold", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             titleText.ForeColor = Color.Black;
             titleText.Location = new Point(53, 15);
@@ -335,14 +335,15 @@
             bodyPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             bodyPanel.BackColor = Color.FromArgb(239, 248, 230);
             bodyPanel.ColumnCount = 1;
-            bodyPanel.RowCount = 2;
-            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 90F));
+            bodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             bodyPanel.Controls.Add(toolBar);
             bodyPanel.Controls.Add(productListPanel);
             bodyPanel.Location = new Point(56, 79);
             bodyPanel.Margin = new Padding(3, 4, 3, 4);
             bodyPanel.Name = "bodyPanel";
+            bodyPanel.RowCount = 2;
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 85F));
             bodyPanel.Size = new Size(1146, 527);
             bodyPanel.TabIndex = 0;
             // 
@@ -350,28 +351,30 @@
             // 
             productListPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             productListPanel.AutoScroll = true;
-            productListPanel.Size = new Size(927, 370);
-            // productListPanel.Location = new Point(43, 101);
-            productListPanel.Location = new Point(38, 76);
-            productListPanel.Margin = new Padding(2, 4, 2, 4);
+            productListPanel.BackColor = Color.FromArgb(239, 248, 230);
             productListPanel.Controls.Add(pProductList);
-            productListPanel.BackColor = Color.Transparent;
-            //
+            productListPanel.Location = new Point(2, 83);
+            productListPanel.Margin = new Padding(2, 4, 2, 4);
+            productListPanel.Name = "productListPanel";
+            productListPanel.Size = new Size(1142, 440);
+            productListPanel.TabIndex = 2;
+            // 
             // pProductList
-            //
-            // pProductList.AutoScroll = true;
-            pProductList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            // 
             pProductList.ColumnCount = 4;
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pProductList.Dock = DockStyle.Fill;
+            pProductList.Location = new Point(0, 0);
             pProductList.Margin = new Padding(2);
             pProductList.Name = "pProductList";
             pProductList.RowCount = 2;
             pProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             pProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            pProductList.Dock = DockStyle.Fill;
+            pProductList.Size = new Size(1142, 440);
+            pProductList.TabIndex = 0;
             // 
             // ProductGUI
             // 
@@ -396,6 +399,7 @@
             bigPanel.ResumeLayout(false);
             bigPanel.PerformLayout();
             bodyPanel.ResumeLayout(false);
+            productListPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
