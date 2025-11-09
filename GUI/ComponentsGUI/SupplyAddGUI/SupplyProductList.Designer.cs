@@ -30,26 +30,22 @@
         {
             TitlePanel = new Panel();
             Title = new Label();
-            Body = new Panel();
-            ListPanel = new TableLayoutPanel();
-            AddPanel = new Panel();
-            AddButton = new Button();
-            PicturePanel = new Panel();
-            Picture = new PictureBox();
-            BodyPanel = new TableLayoutPanel();
-            ProductName = new Label();
-            ProductID = new Label();
-            SearchPanel = new TableLayoutPanel();
-            SearchBar = new TextBox();
-            FilterButton = new Button();
+            toolBar = new TableLayoutPanel();
+            searchBar = new TextBox();
+            filterButton = new Button();
+            CardListPanel = new TableLayoutPanel();
+            cardPanel = new TableLayoutPanel();
+            picture = new PictureBox();
+            infoPanel = new TableLayoutPanel();
+            productID = new Label();
+            importDetailID = new Label();
+            delete = new Button();
             TitlePanel.SuspendLayout();
-            Body.SuspendLayout();
-            ListPanel.SuspendLayout();
-            AddPanel.SuspendLayout();
-            PicturePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Picture).BeginInit();
-            BodyPanel.SuspendLayout();
-            SearchPanel.SuspendLayout();
+            toolBar.SuspendLayout();
+            CardListPanel.SuspendLayout();
+            cardPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picture).BeginInit();
+            infoPanel.SuspendLayout();
             SuspendLayout();
             // 
             // TitlePanel
@@ -59,221 +55,226 @@
             TitlePanel.Location = new Point(0, 0);
             TitlePanel.Margin = new Padding(0);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(786, 95);
-            TitlePanel.TabIndex = 0;
+            TitlePanel.Size = new Size(702, 80);
+            TitlePanel.TabIndex = 1;
             // 
             // Title
             // 
             Title.Dock = DockStyle.Fill;
-            Title.Font = new Font("Roboto", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Title.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             Title.Location = new Point(0, 0);
+            Title.Margin = new Padding(4, 0, 4, 0);
             Title.Name = "Title";
-            Title.Size = new Size(786, 95);
+            Title.Size = new Size(702, 80);
             Title.TabIndex = 0;
             Title.Text = "Danh sách sản phẩm";
             Title.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // Body
+            // toolBar
             // 
-            Body.Controls.Add(ListPanel);
-            Body.Controls.Add(SearchPanel);
-            Body.Dock = DockStyle.Fill;
-            Body.Location = new Point(0, 95);
-            Body.Name = "Body";
-            Body.Size = new Size(786, 926);
-            Body.TabIndex = 1;
+            toolBar.BackColor = Color.FromArgb(0, 120, 103);
+            toolBar.ColumnCount = 2;
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 88.27107F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.7289314F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.Controls.Add(searchBar, 0, 0);
+            toolBar.Controls.Add(filterButton, 1, 0);
+            toolBar.Dock = DockStyle.Top;
+            toolBar.Location = new Point(0, 80);
+            toolBar.Margin = new Padding(0);
+            toolBar.Name = "toolBar";
+            toolBar.Padding = new Padding(12, 13, 12, 13);
+            toolBar.RowCount = 1;
+            toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            toolBar.Size = new Size(702, 86);
+            toolBar.TabIndex = 4;
             // 
-            // ListPanel
+            // searchBar
             // 
-            ListPanel.AutoScroll = true;
-            ListPanel.BackColor = Color.FromArgb(239, 248, 230);
-            ListPanel.ColumnCount = 3;
-            ListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.8804073F));
-            ListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55.0890579F));
-            ListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.0305347F));
-            ListPanel.Controls.Add(AddPanel, 2, 0);
-            ListPanel.Controls.Add(PicturePanel, 0, 0);
-            ListPanel.Controls.Add(BodyPanel, 1, 0);
-            ListPanel.Dock = DockStyle.Fill;
-            ListPanel.Location = new Point(0, 86);
-            ListPanel.Margin = new Padding(0);
-            ListPanel.Name = "ListPanel";
-            ListPanel.RowCount = 2;
-            ListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 164F));
-            ListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            ListPanel.Size = new Size(786, 840);
-            ListPanel.TabIndex = 1;
+            searchBar.Cursor = Cursors.IBeam;
+            searchBar.Dock = DockStyle.Fill;
+            searchBar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            searchBar.Location = new Point(12, 28);
+            searchBar.Margin = new Padding(0, 15, 0, 0);
+            searchBar.Name = "searchBar";
+            searchBar.PlaceholderText = "Tìm kiếm...";
+            searchBar.Size = new Size(598, 34);
+            searchBar.TabIndex = 1;
             // 
-            // AddPanel
+            // filterButton
             // 
-            AddPanel.BackColor = Color.FromArgb(200, 250, 214);
-            AddPanel.Controls.Add(AddButton);
-            AddPanel.Dock = DockStyle.Fill;
-            AddPanel.Location = new Point(660, 20);
-            AddPanel.Margin = new Padding(0, 20, 0, 20);
-            AddPanel.Name = "AddPanel";
-            AddPanel.Size = new Size(126, 124);
-            AddPanel.TabIndex = 2;
+            filterButton.BackColor = Color.FromArgb(0, 120, 103);
+            filterButton.Cursor = Cursors.Hand;
+            filterButton.Dock = DockStyle.Fill;
+            filterButton.FlatAppearance.BorderSize = 0;
+            filterButton.FlatStyle = FlatStyle.Flat;
+            filterButton.Image = Properties.Resources.Filter;
+            filterButton.Location = new Point(610, 13);
+            filterButton.Margin = new Padding(0);
+            filterButton.Name = "filterButton";
+            filterButton.Size = new Size(80, 60);
+            filterButton.TabIndex = 4;
+            filterButton.UseVisualStyleBackColor = false;
+            filterButton.MouseEnter += FilterButton_MouseEnter;
+            filterButton.MouseLeave += FilterButton_MouseLeave;
             // 
-            // AddButton
+            // CardListPanel
             // 
-            AddButton.BackColor = Color.FromArgb(200, 250, 214);
-            AddButton.Cursor = Cursors.Hand;
-            AddButton.Dock = DockStyle.Fill;
-            AddButton.Image = Properties.Resources.Button;
-            AddButton.Location = new Point(0, 0);
-            AddButton.Margin = new Padding(0);
-            AddButton.Name = "AddButton";
-            AddButton.Size = new Size(126, 124);
-            AddButton.TabIndex = 0;
-            AddButton.UseVisualStyleBackColor = false;
+            CardListPanel.AutoSize = true;
+            CardListPanel.BackColor = Color.FromArgb(239, 248, 230);
+            CardListPanel.ColumnCount = 1;
+            CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            CardListPanel.Controls.Add(cardPanel, 0, 0);
+            CardListPanel.Dock = DockStyle.Top;
+            CardListPanel.Location = new Point(0, 166);
+            CardListPanel.Margin = new Padding(0);
+            CardListPanel.Name = "CardListPanel";
+            CardListPanel.RowCount = 6;
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            CardListPanel.Size = new Size(702, 1554);
+            CardListPanel.TabIndex = 5;
             // 
-            // PicturePanel
+            // cardPanel
             // 
-            PicturePanel.BackColor = Color.FromArgb(200, 250, 214);
-            PicturePanel.Controls.Add(Picture);
-            PicturePanel.Dock = DockStyle.Fill;
-            PicturePanel.Location = new Point(0, 20);
-            PicturePanel.Margin = new Padding(0, 20, 0, 20);
-            PicturePanel.Name = "PicturePanel";
-            PicturePanel.Padding = new Padding(30, 10, 30, 10);
-            PicturePanel.Size = new Size(227, 124);
-            PicturePanel.TabIndex = 0;
+            cardPanel.BackColor = Color.FromArgb(200, 250, 214);
+            cardPanel.ColumnCount = 3;
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.0044861F));
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 49.5035477F));
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17.5886517F));
+            cardPanel.Controls.Add(picture, 0, 0);
+            cardPanel.Controls.Add(infoPanel, 1, 0);
+            cardPanel.Controls.Add(delete, 2, 0);
+            cardPanel.Dock = DockStyle.Fill;
+            cardPanel.Location = new Point(20, 20);
+            cardPanel.Margin = new Padding(20);
+            cardPanel.Name = "cardPanel";
+            cardPanel.Padding = new Padding(10);
+            cardPanel.RowCount = 1;
+            cardPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            cardPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            cardPanel.Size = new Size(662, 219);
+            cardPanel.TabIndex = 0;
             // 
-            // Picture
+            // picture
             // 
-            Picture.Dock = DockStyle.Fill;
-            Picture.Image = Properties.Resources.Picture;
-            Picture.Location = new Point(30, 10);
-            Picture.Name = "Picture";
-            Picture.Size = new Size(167, 104);
-            Picture.SizeMode = PictureBoxSizeMode.StretchImage;
-            Picture.TabIndex = 0;
-            Picture.TabStop = false;
+            picture.Dock = DockStyle.Fill;
+            picture.Image = Properties.Resources.Picture;
+            picture.Location = new Point(10, 10);
+            picture.Margin = new Padding(0, 0, 40, 0);
+            picture.Name = "picture";
+            picture.Size = new Size(171, 199);
+            picture.SizeMode = PictureBoxSizeMode.StretchImage;
+            picture.TabIndex = 0;
+            picture.TabStop = false;
             // 
-            // BodyPanel
+            // infoPanel
             // 
-            BodyPanel.BackColor = Color.FromArgb(200, 250, 214);
-            BodyPanel.ColumnCount = 1;
-            BodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            BodyPanel.Controls.Add(ProductName, 0, 1);
-            BodyPanel.Controls.Add(ProductID, 0, 0);
-            BodyPanel.Dock = DockStyle.Fill;
-            BodyPanel.Location = new Point(227, 20);
-            BodyPanel.Margin = new Padding(0, 20, 0, 20);
-            BodyPanel.Name = "BodyPanel";
-            BodyPanel.RowCount = 2;
-            BodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            BodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            BodyPanel.Size = new Size(433, 124);
-            BodyPanel.TabIndex = 3;
+            infoPanel.ColumnCount = 1;
+            infoPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            infoPanel.Controls.Add(productID, 0, 1);
+            infoPanel.Controls.Add(importDetailID, 0, 0);
+            infoPanel.Dock = DockStyle.Fill;
+            infoPanel.Location = new Point(221, 10);
+            infoPanel.Margin = new Padding(0);
+            infoPanel.Name = "infoPanel";
+            infoPanel.RowCount = 2;
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            infoPanel.Size = new Size(317, 199);
+            infoPanel.TabIndex = 1;
             // 
-            // ProductName
+            // productID
             // 
-            ProductName.Dock = DockStyle.Fill;
-            ProductName.Font = new Font("Roboto Medium", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductName.Location = new Point(3, 62);
-            ProductName.Name = "ProductName";
-            ProductName.Size = new Size(427, 62);
-            ProductName.TabIndex = 1;
-            ProductName.Text = "Tên sản phẩm: Giày thể thao";
-            ProductName.TextAlign = ContentAlignment.MiddleLeft;
+            productID.Dock = DockStyle.Fill;
+            productID.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            productID.Location = new Point(0, 99);
+            productID.Margin = new Padding(0);
+            productID.Name = "productID";
+            productID.Size = new Size(317, 100);
+            productID.TabIndex = 5;
+            productID.Text = "Tên sản phẩm:";
+            productID.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductID
+            // importDetailID
             // 
-            ProductID.Dock = DockStyle.Fill;
-            ProductID.Font = new Font("Roboto Medium", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductID.Location = new Point(3, 0);
-            ProductID.Name = "ProductID";
-            ProductID.Size = new Size(427, 62);
-            ProductID.TabIndex = 0;
-            ProductID.Text = "Mã sản phẩm: SP0001";
-            ProductID.TextAlign = ContentAlignment.MiddleLeft;
+            importDetailID.Dock = DockStyle.Fill;
+            importDetailID.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            importDetailID.Location = new Point(0, 0);
+            importDetailID.Margin = new Padding(0);
+            importDetailID.Name = "importDetailID";
+            importDetailID.Size = new Size(317, 99);
+            importDetailID.TabIndex = 0;
+            importDetailID.Text = "Mã sản phẩm:";
+            importDetailID.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // SearchPanel
+            // delete
             // 
-            SearchPanel.AutoSize = true;
-            SearchPanel.BackColor = Color.FromArgb(0, 120, 103);
-            SearchPanel.ColumnCount = 2;
-            SearchPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 81.04326F));
-            SearchPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.9567432F));
-            SearchPanel.Controls.Add(SearchBar, 0, 0);
-            SearchPanel.Controls.Add(FilterButton, 1, 0);
-            SearchPanel.Dock = DockStyle.Top;
-            SearchPanel.Location = new Point(0, 0);
-            SearchPanel.Name = "SearchPanel";
-            SearchPanel.RowCount = 1;
-            SearchPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            SearchPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            SearchPanel.Size = new Size(786, 86);
-            SearchPanel.TabIndex = 0;
-            // 
-            // SearchBar
-            // 
-            SearchBar.Dock = DockStyle.Fill;
-            SearchBar.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SearchBar.Location = new Point(15, 15);
-            SearchBar.Margin = new Padding(15);
-            SearchBar.Name = "SearchBar";
-            SearchBar.PlaceholderText = "value...";
-            SearchBar.Size = new Size(607, 56);
-            SearchBar.TabIndex = 0;
-            // 
-            // FilterButton
-            // 
-            FilterButton.BackColor = Color.FromArgb(0, 120, 103);
-            FilterButton.Cursor = Cursors.Hand;
-            FilterButton.Dock = DockStyle.Fill;
-            FilterButton.ForeColor = Color.FromArgb(0, 120, 103);
-            FilterButton.Image = Properties.Resources.Picture;
-            FilterButton.Location = new Point(667, 0);
-            FilterButton.Margin = new Padding(30, 0, 30, 0);
-            FilterButton.Name = "FilterButton";
-            FilterButton.Size = new Size(89, 86);
-            FilterButton.TabIndex = 1;
-            FilterButton.UseVisualStyleBackColor = false;
-            FilterButton.Click += FilterButton_Click;
-            FilterButton.MouseEnter += FilterButton_MouseEnter;
-            FilterButton.MouseLeave += FilterButton_MouseLeave;
+            delete.BackColor = Color.Black;
+            delete.Dock = DockStyle.Fill;
+            delete.FlatAppearance.BorderSize = 0;
+            delete.FlatStyle = FlatStyle.Flat;
+            delete.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            delete.ForeColor = Color.White;
+            delete.Location = new Point(548, 70);
+            delete.Margin = new Padding(10, 60, 10, 60);
+            delete.Name = "delete";
+            delete.Size = new Size(94, 79);
+            delete.TabIndex = 2;
+            delete.Text = "Thêm";
+            delete.UseVisualStyleBackColor = false;
+            delete.MouseEnter += buttonEnter;
+            delete.MouseLeave += buttonLeave;
             // 
             // SupplyProductList
             // 
             AutoScaleDimensions = new SizeF(33F, 68F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(Body);
+            AutoScroll = true;
+            Controls.Add(CardListPanel);
+            Controls.Add(toolBar);
             Controls.Add(TitlePanel);
             Font = new Font("Roboto Medium", 34.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Margin = new Padding(0);
             Name = "SupplyProductList";
-            Size = new Size(786, 1021);
+            Size = new Size(702, 1021);
             TitlePanel.ResumeLayout(false);
-            Body.ResumeLayout(false);
-            Body.PerformLayout();
-            ListPanel.ResumeLayout(false);
-            AddPanel.ResumeLayout(false);
-            PicturePanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Picture).EndInit();
-            BodyPanel.ResumeLayout(false);
-            SearchPanel.ResumeLayout(false);
-            SearchPanel.PerformLayout();
+            toolBar.ResumeLayout(false);
+            toolBar.PerformLayout();
+            CardListPanel.ResumeLayout(false);
+            cardPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picture).EndInit();
+            infoPanel.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Panel TitlePanel;
         private Label Title;
-        private Panel Body;
-        private TableLayoutPanel SearchPanel;
-        private TextBox SearchBar;
-        private Button FilterButton;
-        private TableLayoutPanel ListPanel;
-        private Panel PicturePanel;
-        private Panel AddPanel;
-        private PictureBox Picture;
-        private Button AddButton;
-        private TableLayoutPanel BodyPanel;
-        private Label ProductName;
-        private Label ProductID;
+        private TableLayoutPanel toolBar;
+        private TextBox searchBar;
+        private Button filterButton;
+        private TableLayoutPanel CardListPanel;
+        private TableLayoutPanel cardPanel;
+        private PictureBox picture;
+        private TableLayoutPanel infoPanel;
+        private Label productID;
+        private Label importDetailID;
+        private Button delete;
     }
 }

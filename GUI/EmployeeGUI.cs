@@ -1,4 +1,5 @@
 ﻿using BadmintonCourtManagement.DTO;
+using GUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -114,12 +115,12 @@ namespace BadmintonCourtManagement.GUI
 
         private void filterButton_MouseEnter(object sender, EventArgs e)
         {
-            filterButton.BackColor = Color.FromArgb(0, 142, 123);
+            filter.BackColor = Color.FromArgb(0, 142, 123);
         }
 
         private void filterButton_MouseLeave(object sender, EventArgs e)
         {
-            filterButton.BackColor = Color.FromArgb(0, 120, 103);
+            filter.BackColor = Color.FromArgb(0, 120, 103);
         }
 
         private void cardButton_Click(object sender, EventArgs e)
@@ -158,6 +159,12 @@ namespace BadmintonCourtManagement.GUI
         {
             EmployeeDetailsGUI employeeDetails = new EmployeeDetailsGUI();
             employeeDetails.ShowDialog();
+        }
+
+        private void add_Click(object sender, EventArgs e)
+        {
+            EmployeeAddGUI employeeAdd = new EmployeeAddGUI();
+            employeeAdd.ShowDialog();
         }
     }
 }
