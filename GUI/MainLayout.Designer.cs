@@ -28,7 +28,7 @@
             menuPanel.Dock = DockStyle.Left;
             menuPanel.Location = new Point(0, 0);
             menuPanel.Name = "menuPanel";
-            menuPanel.Size = new Size(166, 719);
+            menuPanel.Size = new Size(200, 719);
             menuPanel.TabIndex = 1;
             menuPanel.Paint += menuPanel_Paint;
             // 

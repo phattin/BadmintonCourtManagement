@@ -16,9 +16,9 @@ namespace BadmintonCourtManagement.GUI
         {
             NormalColor = Color.FromArgb(239, 248, 230),
             SelectedColor = Color.FromArgb(200, 250, 214),
-            NormalFont = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0),
-            SelectedFont = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0),
-            Height = 43,
+            NormalFont = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
+            SelectedFont = new Font("Segoe UI Semibold", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
+            Height = 50,
             Dock = DockStyle.Top
         };
 
