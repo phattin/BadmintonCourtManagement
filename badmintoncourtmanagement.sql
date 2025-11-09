@@ -63,12 +63,14 @@ CREATE TABLE `billbooking` (
 --
 
 CREATE TABLE `billimportproductdetail` (
+  `ImportBillDetailId` varchar(10) NOT NULL,
   `ImportBillId` varchar(10) NOT NULL,
   `ProductId` varchar(10) NOT NULL,
   `Quantity` int(11) NOT NULL,
   `Price` double NOT NULL,
   `TotalPrice` double NOT NULL,
-  `Status` enum('paid','unpaid') DEFAULT NULL
+  `CreatedAt` datetime DEFAULT current_timestamp(),
+  `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

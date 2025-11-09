@@ -30,17 +30,17 @@
         {
             MainPanel = new Panel();
             CardListPanel = new TableLayoutPanel();
-            Picture = new PictureBox();
-            BodyCardPanel = new Panel();
-            SupplyTotal = new Label();
-            ProductPrice = new Label();
-            ProductQuantity = new Label();
-            ProductName = new Label();
-            ProductID = new Label();
-            SupplyDetailsID = new Label();
-            StatusCardPanel = new Panel();
-            SupplyDetailsStatus = new Label();
-            StatusText = new Label();
+            cardPanel = new TableLayoutPanel();
+            picture = new PictureBox();
+            infoPanel = new TableLayoutPanel();
+            productID = new Label();
+            totalPrice = new Label();
+            price = new Label();
+            quantity = new Label();
+            importDetailID = new Label();
+            additionPanel = new TableLayoutPanel();
+            status = new Label();
+            createAt = new Label();
             toolBar = new TableLayoutPanel();
             endDate = new DateTimePicker();
             endText = new Label();
@@ -56,9 +56,10 @@
             Title = new Label();
             MainPanel.SuspendLayout();
             CardListPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Picture).BeginInit();
-            BodyCardPanel.SuspendLayout();
-            StatusCardPanel.SuspendLayout();
+            cardPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picture).BeginInit();
+            infoPanel.SuspendLayout();
+            additionPanel.SuspendLayout();
             toolBar.SuspendLayout();
             SupplyActivePanel.SuspendLayout();
             SupplyStatusPanel.SuspendLayout();
@@ -67,7 +68,6 @@
             // 
             // MainPanel
             // 
-            MainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             MainPanel.AutoScroll = true;
             MainPanel.BackColor = Color.FromArgb(239, 248, 230);
             MainPanel.Controls.Add(CardListPanel);
@@ -75,182 +75,201 @@
             MainPanel.Controls.Add(SupplyActivePanel);
             MainPanel.Controls.Add(SupplyStatusPanel);
             MainPanel.Controls.Add(TitlePanel);
-            MainPanel.Location = new Point(54, 54);
+            MainPanel.Dock = DockStyle.Fill;
+            MainPanel.Location = new Point(35, 39);
             MainPanel.Margin = new Padding(0);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(1539, 950);
+            MainPanel.Size = new Size(1102, 617);
             MainPanel.TabIndex = 0;
             // 
             // CardListPanel
             // 
-            CardListPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            CardListPanel.AutoScroll = true;
             CardListPanel.AutoSize = true;
             CardListPanel.BackColor = Color.FromArgb(239, 248, 230);
-            CardListPanel.ColumnCount = 3;
-            CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            CardListPanel.Controls.Add(Picture, 0, 0);
-            CardListPanel.Controls.Add(BodyCardPanel, 1, 0);
-            CardListPanel.Controls.Add(StatusCardPanel, 2, 0);
-            CardListPanel.Location = new Point(0, 335);
+            CardListPanel.ColumnCount = 1;
+            CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            CardListPanel.Controls.Add(cardPanel, 0, 0);
+            CardListPanel.Dock = DockStyle.Top;
+            CardListPanel.Location = new Point(0, 225);
             CardListPanel.Margin = new Padding(0);
             CardListPanel.Name = "CardListPanel";
-            CardListPanel.RowCount = 2;
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            CardListPanel.Size = new Size(1539, 768);
+            CardListPanel.RowCount = 6;
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            CardListPanel.Size = new Size(1081, 1554);
             CardListPanel.TabIndex = 4;
             // 
-            // Picture
+            // cardPanel
             // 
-            Picture.BackColor = Color.FromArgb(200, 250, 214);
-            Picture.Dock = DockStyle.Fill;
-            Picture.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Picture.png");
-            Picture.Location = new Point(20, 20);
-            Picture.Margin = new Padding(20, 20, 0, 20);
-            Picture.Name = "Picture";
-            Picture.Size = new Size(287, 344);
-            Picture.SizeMode = PictureBoxSizeMode.StretchImage;
-            Picture.TabIndex = 0;
-            Picture.TabStop = false;
+            cardPanel.BackColor = Color.FromArgb(200, 250, 214);
+            cardPanel.ColumnCount = 3;
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            cardPanel.Controls.Add(picture, 0, 0);
+            cardPanel.Controls.Add(infoPanel, 1, 0);
+            cardPanel.Controls.Add(additionPanel, 2, 0);
+            cardPanel.Dock = DockStyle.Fill;
+            cardPanel.Location = new Point(20, 20);
+            cardPanel.Margin = new Padding(20);
+            cardPanel.Name = "cardPanel";
+            cardPanel.Padding = new Padding(10);
+            cardPanel.RowCount = 1;
+            cardPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            cardPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            cardPanel.Size = new Size(1041, 219);
+            cardPanel.TabIndex = 0;
             // 
-            // BodyCardPanel
+            // picture
             // 
-            BodyCardPanel.AutoSize = true;
-            BodyCardPanel.BackColor = Color.FromArgb(200, 250, 214);
-            BodyCardPanel.Controls.Add(SupplyTotal);
-            BodyCardPanel.Controls.Add(ProductPrice);
-            BodyCardPanel.Controls.Add(ProductQuantity);
-            BodyCardPanel.Controls.Add(ProductName);
-            BodyCardPanel.Controls.Add(ProductID);
-            BodyCardPanel.Controls.Add(SupplyDetailsID);
-            BodyCardPanel.Dock = DockStyle.Fill;
-            BodyCardPanel.Location = new Point(307, 20);
-            BodyCardPanel.Margin = new Padding(0, 20, 0, 20);
-            BodyCardPanel.Name = "BodyCardPanel";
-            BodyCardPanel.Padding = new Padding(25, 10, 10, 10);
-            BodyCardPanel.Size = new Size(615, 344);
-            BodyCardPanel.TabIndex = 1;
+            picture.Dock = DockStyle.Fill;
+            picture.Image = Properties.Resources.Picture;
+            picture.Location = new Point(50, 10);
+            picture.Margin = new Padding(40, 0, 40, 0);
+            picture.Name = "picture";
+            picture.Size = new Size(260, 199);
+            picture.SizeMode = PictureBoxSizeMode.StretchImage;
+            picture.TabIndex = 0;
+            picture.TabStop = false;
             // 
-            // SupplyTotal
+            // infoPanel
             // 
-            SupplyTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            SupplyTotal.Font = new Font("Roboto Medium", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SupplyTotal.Location = new Point(28, 280);
-            SupplyTotal.Margin = new Padding(0);
-            SupplyTotal.Name = "SupplyTotal";
-            SupplyTotal.Size = new Size(565, 54);
-            SupplyTotal.TabIndex = 5;
-            SupplyTotal.Text = "Thành tiền: 10.000.000đ";
-            SupplyTotal.TextAlign = ContentAlignment.MiddleLeft;
+            infoPanel.ColumnCount = 1;
+            infoPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            infoPanel.Controls.Add(productID, 0, 1);
+            infoPanel.Controls.Add(totalPrice, 0, 4);
+            infoPanel.Controls.Add(price, 0, 3);
+            infoPanel.Controls.Add(quantity, 0, 2);
+            infoPanel.Controls.Add(importDetailID, 0, 0);
+            infoPanel.Dock = DockStyle.Fill;
+            infoPanel.Location = new Point(350, 10);
+            infoPanel.Margin = new Padding(0);
+            infoPanel.Name = "infoPanel";
+            infoPanel.RowCount = 5;
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            infoPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            infoPanel.Size = new Size(340, 199);
+            infoPanel.TabIndex = 1;
             // 
-            // ProductPrice
+            // productID
             // 
-            ProductPrice.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductPrice.Font = new Font("Roboto Medium", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductPrice.Location = new Point(28, 226);
-            ProductPrice.Margin = new Padding(0);
-            ProductPrice.Name = "ProductPrice";
-            ProductPrice.Size = new Size(565, 54);
-            ProductPrice.TabIndex = 4;
-            ProductPrice.Text = "Đơn giá: 100.000đ";
-            ProductPrice.TextAlign = ContentAlignment.MiddleLeft;
+            productID.Dock = DockStyle.Fill;
+            productID.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            productID.Location = new Point(0, 39);
+            productID.Margin = new Padding(0);
+            productID.Name = "productID";
+            productID.Size = new Size(340, 39);
+            productID.TabIndex = 5;
+            productID.Text = "Mã sản phẩm:";
+            productID.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductQuantity
+            // totalPrice
             // 
-            ProductQuantity.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductQuantity.Font = new Font("Roboto Medium", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductQuantity.Location = new Point(28, 172);
-            ProductQuantity.Margin = new Padding(0);
-            ProductQuantity.Name = "ProductQuantity";
-            ProductQuantity.Size = new Size(565, 54);
-            ProductQuantity.TabIndex = 3;
-            ProductQuantity.Text = "Số lượng: 100";
-            ProductQuantity.TextAlign = ContentAlignment.MiddleLeft;
+            totalPrice.Dock = DockStyle.Fill;
+            totalPrice.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            totalPrice.Location = new Point(0, 156);
+            totalPrice.Margin = new Padding(0);
+            totalPrice.Name = "totalPrice";
+            totalPrice.Size = new Size(340, 43);
+            totalPrice.TabIndex = 4;
+            totalPrice.Text = "Tổng tiền:";
+            totalPrice.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductName
+            // price
             // 
-            ProductName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductName.Font = new Font("Roboto Medium", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductName.Location = new Point(28, 118);
-            ProductName.Margin = new Padding(0);
-            ProductName.Name = "ProductName";
-            ProductName.Size = new Size(565, 54);
-            ProductName.TabIndex = 2;
-            ProductName.Text = "Tên sản phẩm: Giày thể thao";
-            ProductName.TextAlign = ContentAlignment.MiddleLeft;
+            price.Dock = DockStyle.Fill;
+            price.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            price.Location = new Point(0, 117);
+            price.Margin = new Padding(0);
+            price.Name = "price";
+            price.Size = new Size(340, 39);
+            price.TabIndex = 3;
+            price.Text = "Giá:";
+            price.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductID
+            // quantity
             // 
-            ProductID.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ProductID.Font = new Font("Roboto Medium", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProductID.Location = new Point(28, 64);
-            ProductID.Margin = new Padding(0);
-            ProductID.Name = "ProductID";
-            ProductID.Size = new Size(565, 54);
-            ProductID.TabIndex = 1;
-            ProductID.Text = "Mã sản phẩm: 0001";
-            ProductID.TextAlign = ContentAlignment.MiddleLeft;
+            quantity.Dock = DockStyle.Fill;
+            quantity.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            quantity.Location = new Point(0, 78);
+            quantity.Margin = new Padding(0);
+            quantity.Name = "quantity";
+            quantity.Size = new Size(340, 39);
+            quantity.TabIndex = 2;
+            quantity.Text = "Số lượng:";
+            quantity.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // SupplyDetailsID
+            // importDetailID
             // 
-            SupplyDetailsID.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            SupplyDetailsID.Font = new Font("Roboto Medium", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SupplyDetailsID.Location = new Point(28, 10);
-            SupplyDetailsID.Margin = new Padding(0);
-            SupplyDetailsID.Name = "SupplyDetailsID";
-            SupplyDetailsID.Size = new Size(565, 54);
-            SupplyDetailsID.TabIndex = 0;
-            SupplyDetailsID.Text = "Mã chi tiết nhập hàng: CTNH0001";
-            SupplyDetailsID.TextAlign = ContentAlignment.MiddleLeft;
+            importDetailID.Dock = DockStyle.Fill;
+            importDetailID.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            importDetailID.Location = new Point(0, 0);
+            importDetailID.Margin = new Padding(0);
+            importDetailID.Name = "importDetailID";
+            importDetailID.Size = new Size(340, 39);
+            importDetailID.TabIndex = 0;
+            importDetailID.Text = "Mã CT đơn nhập:";
+            importDetailID.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // StatusCardPanel
+            // additionPanel
             // 
-            StatusCardPanel.AutoSize = true;
-            StatusCardPanel.BackColor = Color.FromArgb(200, 250, 214);
-            StatusCardPanel.Controls.Add(SupplyDetailsStatus);
-            StatusCardPanel.Controls.Add(StatusText);
-            StatusCardPanel.Dock = DockStyle.Fill;
-            StatusCardPanel.Location = new Point(922, 20);
-            StatusCardPanel.Margin = new Padding(0, 20, 20, 20);
-            StatusCardPanel.Name = "StatusCardPanel";
-            StatusCardPanel.Padding = new Padding(10);
-            StatusCardPanel.Size = new Size(597, 344);
-            StatusCardPanel.TabIndex = 2;
+            additionPanel.ColumnCount = 1;
+            additionPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            additionPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            additionPanel.Controls.Add(status, 0, 1);
+            additionPanel.Controls.Add(createAt, 0, 0);
+            additionPanel.Dock = DockStyle.Fill;
+            additionPanel.Location = new Point(690, 10);
+            additionPanel.Margin = new Padding(0);
+            additionPanel.Name = "additionPanel";
+            additionPanel.RowCount = 2;
+            additionPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            additionPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            additionPanel.Size = new Size(341, 199);
+            additionPanel.TabIndex = 2;
             // 
-            // SupplyDetailsStatus
+            // status
             // 
-            SupplyDetailsStatus.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SupplyDetailsStatus.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Active.png");
-            SupplyDetailsStatus.ImageAlign = ContentAlignment.MiddleLeft;
-            SupplyDetailsStatus.Location = new Point(409, 10);
-            SupplyDetailsStatus.Name = "SupplyDetailsStatus";
-            SupplyDetailsStatus.Size = new Size(184, 54);
-            SupplyDetailsStatus.TabIndex = 2;
-            SupplyDetailsStatus.TextAlign = ContentAlignment.MiddleLeft;
+            status.Dock = DockStyle.Fill;
+            status.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            status.Location = new Point(10, 99);
+            status.Margin = new Padding(10, 0, 0, 0);
+            status.Name = "status";
+            status.Size = new Size(331, 100);
+            status.TabIndex = 2;
+            status.Text = "Tình trạng:";
+            status.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // StatusText
+            // createAt
             // 
-            StatusText.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            StatusText.Font = new Font("Roboto Medium", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            StatusText.Location = new Point(23, 10);
-            StatusText.Margin = new Padding(0);
-            StatusText.Name = "StatusText";
-            StatusText.Size = new Size(561, 54);
-            StatusText.TabIndex = 1;
-            StatusText.Text = "Tình trạng: Đang hoạt động";
-            StatusText.TextAlign = ContentAlignment.MiddleLeft;
+            createAt.Dock = DockStyle.Fill;
+            createAt.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            createAt.Location = new Point(10, 0);
+            createAt.Margin = new Padding(10, 0, 0, 0);
+            createAt.Name = "createAt";
+            createAt.Size = new Size(331, 99);
+            createAt.TabIndex = 1;
+            createAt.Text = "Ngày nhập:";
+            createAt.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // toolBar
             // 
-            toolBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             toolBar.BackColor = Color.FromArgb(0, 120, 103);
             toolBar.ColumnCount = 6;
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 27.0795383F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.1469336F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17.78992F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.0964994F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17.7861881F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.4615383F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.33846F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.075289F));
@@ -260,68 +279,71 @@
             toolBar.Controls.Add(startDate, 2, 0);
             toolBar.Controls.Add(startText, 1, 0);
             toolBar.Controls.Add(filterButton, 5, 0);
-            toolBar.Location = new Point(0, 192);
+            toolBar.Dock = DockStyle.Top;
+            toolBar.Location = new Point(0, 139);
             toolBar.Margin = new Padding(0);
             toolBar.Name = "toolBar";
-            toolBar.Padding = new Padding(10);
+            toolBar.Padding = new Padding(12, 13, 12, 13);
             toolBar.RowCount = 1;
             toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            toolBar.Size = new Size(1539, 143);
+            toolBar.Size = new Size(1081, 86);
             toolBar.TabIndex = 3;
             // 
             // endDate
             // 
-            endDate.Anchor = AnchorStyles.None;
             endDate.Cursor = Cursors.Hand;
+            endDate.CustomFormat = "dd/MM/yyyy";
+            endDate.Dock = DockStyle.Fill;
             endDate.DropDownAlign = LeftRightAlignment.Right;
-            endDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            endDate.Format = DateTimePickerFormat.Short;
-            endDate.Location = new Point(1125, 43);
-            endDate.Margin = new Padding(0, 0, 10, 0);
+            endDate.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            endDate.Format = DateTimePickerFormat.Custom;
+            endDate.Location = new Point(788, 28);
+            endDate.Margin = new Padding(0, 15, 12, 0);
             endDate.Name = "endDate";
             endDate.ShowUpDown = true;
-            endDate.Size = new Size(267, 56);
+            endDate.Size = new Size(182, 34);
             endDate.TabIndex = 3;
             // 
             // endText
             // 
             endText.AutoSize = true;
             endText.Dock = DockStyle.Fill;
-            endText.Font = new Font("Roboto Condensed", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            endText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             endText.ForeColor = Color.White;
-            endText.Location = new Point(916, 10);
-            endText.Margin = new Padding(10, 0, 0, 0);
+            endText.Location = new Point(647, 13);
+            endText.Margin = new Padding(12, 0, 0, 0);
             endText.Name = "endText";
-            endText.Size = new Size(209, 123);
+            endText.Size = new Size(141, 60);
             endText.TabIndex = 3;
             endText.Text = "Ngày kết thúc:";
             endText.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // searchBar
             // 
-            searchBar.Anchor = AnchorStyles.None;
             searchBar.Cursor = Cursors.IBeam;
-            searchBar.Font = new Font("Roboto Medium", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            searchBar.Location = new Point(10, 45);
-            searchBar.Margin = new Padding(0, 0, 10, 0);
+            searchBar.Dock = DockStyle.Fill;
+            searchBar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            searchBar.Location = new Point(12, 28);
+            searchBar.Margin = new Padding(0, 15, 15, 0);
             searchBar.Name = "searchBar";
-            searchBar.PlaceholderText = "value...";
-            searchBar.Size = new Size(400, 52);
+            searchBar.PlaceholderText = "Tìm kiếm...";
+            searchBar.Size = new Size(271, 34);
             searchBar.TabIndex = 1;
             // 
             // startDate
             // 
-            startDate.Anchor = AnchorStyles.None;
             startDate.Cursor = Cursors.Hand;
+            startDate.CustomFormat = "dd/MM/yyyy";
+            startDate.Dock = DockStyle.Top;
             startDate.DropDownAlign = LeftRightAlignment.Right;
-            startDate.Font = new Font("Roboto Medium", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            startDate.Format = DateTimePickerFormat.Short;
-            startDate.Location = new Point(636, 43);
-            startDate.Margin = new Padding(0, 0, 10, 0);
+            startDate.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            startDate.Format = DateTimePickerFormat.Custom;
+            startDate.Location = new Point(447, 28);
+            startDate.Margin = new Padding(0, 15, 12, 0);
             startDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
             startDate.Name = "startDate";
             startDate.ShowUpDown = true;
-            startDate.Size = new Size(259, 56);
+            startDate.Size = new Size(176, 34);
             startDate.TabIndex = 2;
             startDate.Value = new DateTime(2025, 10, 1, 0, 0, 0, 0);
             // 
@@ -329,12 +351,12 @@
             // 
             startText.Anchor = AnchorStyles.None;
             startText.AutoSize = true;
-            startText.Font = new Font("Roboto", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            startText.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             startText.ForeColor = Color.White;
-            startText.Location = new Point(452, 30);
+            startText.Location = new Point(299, 29);
             startText.Margin = new Padding(0);
             startText.Name = "startText";
-            startText.Size = new Size(153, 82);
+            startText.Size = new Size(146, 28);
             startText.TabIndex = 2;
             startText.Text = "Ngày bắt đầu:";
             startText.TextAlign = ContentAlignment.MiddleCenter;
@@ -344,11 +366,13 @@
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
             filterButton.Cursor = Cursors.Hand;
             filterButton.Dock = DockStyle.Fill;
-            filterButton.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Filter.png");
-            filterButton.Location = new Point(1403, 10);
+            filterButton.FlatAppearance.BorderSize = 0;
+            filterButton.FlatStyle = FlatStyle.Flat;
+            filterButton.Image = Properties.Resources.Filter;
+            filterButton.Location = new Point(982, 13);
             filterButton.Margin = new Padding(0);
             filterButton.Name = "filterButton";
-            filterButton.Size = new Size(126, 123);
+            filterButton.Size = new Size(87, 60);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
             filterButton.MouseEnter += filterButton_MouseEnter;
@@ -359,87 +383,91 @@
             SupplyActivePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             SupplyActivePanel.AutoSize = true;
             SupplyActivePanel.Controls.Add(SupplyActive);
-            SupplyActivePanel.Location = new Point(637, 98);
+            SupplyActivePanel.Location = new Point(753, 127);
             SupplyActivePanel.Margin = new Padding(0);
             SupplyActivePanel.Name = "SupplyActivePanel";
-            SupplyActivePanel.Size = new Size(878, 76);
+            SupplyActivePanel.Size = new Size(321, 98);
             SupplyActivePanel.TabIndex = 2;
             // 
             // SupplyActive
             // 
             SupplyActive.Dock = DockStyle.Fill;
             SupplyActive.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SupplyActive.Image = Image.FromFile(Application.StartupPath + @"\Img\Icon\Active.png");
             SupplyActive.ImageAlign = ContentAlignment.MiddleLeft;
             SupplyActive.Location = new Point(0, 0);
+            SupplyActive.Margin = new Padding(4, 0, 4, 0);
             SupplyActive.Name = "SupplyActive";
-            SupplyActive.Size = new Size(878, 76);
+            SupplyActive.Size = new Size(321, 98);
             SupplyActive.TabIndex = 0;
             SupplyActive.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // SupplyStatusPanel
             // 
-            SupplyStatusPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            SupplyStatusPanel.AutoSize = true;
             SupplyStatusPanel.Controls.Add(SupplyStatus);
-            SupplyStatusPanel.Location = new Point(45, 98);
+            SupplyStatusPanel.Dock = DockStyle.Top;
+            SupplyStatusPanel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            SupplyStatusPanel.Location = new Point(0, 80);
             SupplyStatusPanel.Margin = new Padding(0);
             SupplyStatusPanel.Name = "SupplyStatusPanel";
-            SupplyStatusPanel.Size = new Size(1470, 76);
+            SupplyStatusPanel.Size = new Size(1081, 59);
             SupplyStatusPanel.TabIndex = 1;
             // 
             // SupplyStatus
             // 
             SupplyStatus.Dock = DockStyle.Fill;
-            SupplyStatus.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SupplyStatus.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             SupplyStatus.Location = new Point(0, 0);
+            SupplyStatus.Margin = new Padding(4, 0, 4, 0);
             SupplyStatus.Name = "SupplyStatus";
-            SupplyStatus.Size = new Size(1470, 76);
+            SupplyStatus.Size = new Size(1081, 59);
             SupplyStatus.TabIndex = 0;
             SupplyStatus.Text = "Tình trạng: đang hoạt động";
             SupplyStatus.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // TitlePanel
             // 
-            TitlePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TitlePanel.AutoSize = true;
             TitlePanel.Controls.Add(Title);
-            TitlePanel.Location = new Point(45, 0);
+            TitlePanel.Dock = DockStyle.Top;
+            TitlePanel.Location = new Point(0, 0);
             TitlePanel.Margin = new Padding(0);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(1470, 98);
+            TitlePanel.Size = new Size(1081, 80);
             TitlePanel.TabIndex = 0;
             // 
             // Title
             // 
             Title.Dock = DockStyle.Fill;
-            Title.Font = new Font("Roboto", 36F, FontStyle.Bold);
+            Title.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             Title.Location = new Point(0, 0);
+            Title.Margin = new Padding(4, 0, 4, 0);
             Title.Name = "Title";
-            Title.Size = new Size(1470, 98);
+            Title.Size = new Size(1081, 80);
             Title.TabIndex = 0;
             Title.Text = "Chi tiết: NH0001";
             Title.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // SupplyDetailsGUI
             // 
-            AutoScaleDimensions = new SizeF(11F, 24F);
+            AutoScaleDimensions = new SizeF(13F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 120, 103);
-            ClientSize = new Size(1649, 1055);
+            ClientSize = new Size(1172, 695);
             Controls.Add(MainPanel);
-            Font = new Font("Roboto", 12F);
-            Margin = new Padding(4, 3, 4, 3);
+            Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(5, 4, 5, 4);
+            MaximizeBox = false;
             Name = "SupplyDetailsGUI";
+            Padding = new Padding(35, 39, 35, 39);
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Chi tiết đơn hàng nhập";
             MainPanel.ResumeLayout(false);
             MainPanel.PerformLayout();
             CardListPanel.ResumeLayout(false);
-            CardListPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Picture).EndInit();
-            BodyCardPanel.ResumeLayout(false);
-            StatusCardPanel.ResumeLayout(false);
+            cardPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picture).EndInit();
+            infoPanel.ResumeLayout(false);
+            additionPanel.ResumeLayout(false);
             toolBar.ResumeLayout(false);
             toolBar.PerformLayout();
             SupplyActivePanel.ResumeLayout(false);
@@ -465,16 +493,16 @@
         private Label startText;
         private Button filterButton;
         private TableLayoutPanel CardListPanel;
-        private PictureBox Picture;
-        private Panel BodyCardPanel;
-        private Label SupplyDetailsID;
-        private Label ProductID;
-        private Label ProductName;
-        private Label SupplyTotal;
-        private Label ProductPrice;
-        private Label ProductQuantity;
-        private Panel StatusCardPanel;
-        private Label SupplyDetailsStatus;
-        private Label StatusText;
+        private TableLayoutPanel cardPanel;
+        private PictureBox picture;
+        private TableLayoutPanel infoPanel;
+        private TableLayoutPanel additionPanel;
+        private Label totalPrice;
+        private Label price;
+        private Label quantity;
+        private Label importDetailID;
+        private Label productID;
+        private Label status;
+        private Label createAt;
     }
 }

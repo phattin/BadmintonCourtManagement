@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             mainPanel = new Panel();
             bodyPanel = new TableLayoutPanel();
             infoPanel = new TableLayoutPanel();
@@ -41,6 +42,7 @@
             productImage = new PictureBox();
             TitlePanel = new Panel();
             TitleText = new Label();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             mainPanel.SuspendLayout();
             bodyPanel.SuspendLayout();
             infoPanel.SuspendLayout();
@@ -225,6 +227,12 @@
             TitleText.Text = "Chi tiết:";
             TitleText.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // StorageDetailsGUI
             // 
             AutoScaleDimensions = new SizeF(13F, 31F);
@@ -262,5 +270,6 @@
         private Label productID;
         private Label importBillID;
         private PictureBox productImage;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }
