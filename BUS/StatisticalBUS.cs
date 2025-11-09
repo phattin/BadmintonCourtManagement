@@ -17,9 +17,14 @@ namespace BadmintonCourtManagement.BUS
         }
 
         // Lấy thống kê doanh thu theo khoảng thời gian và ngày trong tuần
-        public List<StatisticalDAO.CourtRevenueDTO> GetCourtRevenue(DateTime startDate, DateTime endDate, string courtNameFilter , bool sortDescending = true)
+        public List<StatisticalDAO.CourtRevenueDTO> GetCourtRevenue(DateTime startDate, DateTime endDate, string courtNameFilter, bool sortDescending = true)
         {
-            return dao.GetCourtRevenue(startDate, endDate, courtNameFilter,sortDescending);
+            return dao.GetCourtRevenue(startDate, endDate, courtNameFilter, sortDescending);
+        }
+        public StatisticalDAO.RevenueSummaryDTO GetRevenueSummary(DateTime startDate, DateTime endDate)
+        {
+            return dao.GetRevenueSummary(startDate,endDate);
         }
     }
+        
 }

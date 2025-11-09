@@ -19,6 +19,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+     <PackageReference Include="WinForms.DataVisualization" Version="1.1.10.0" />
   </ItemGroup>
 
   <ItemGroup>
