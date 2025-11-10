@@ -126,43 +126,49 @@ namespace GUI
         private void saveBtn_Click(object sender, EventArgs e)
         {
             string productName = txt_productName.Text;
-            var checkedBrand = brand_listBox.CheckedItems.Cast<object>().ToList();
-            string productBrand = checkedBrand[0].ToString();
-            var checkedCategory = brand_listBox.CheckedItems.Cast<object>().ToList();
-            string productCategory = checkedCategory[0].ToString();
+            var selectedBrand = brand_listBox.CheckedItems.Cast<BrandDTO>().FirstOrDefault();
+            var selectedType = category_listBox.CheckedItems.Cast<TypeProductDTO>().FirstOrDefault();
+            if (selectedBrand == null || selectedType == null)
+            {
+                MessageBox.Show("Vui lòng chọn thương hiệu và loại sản phẩm.");
+                return;
+            }
+
+            string brandId = selectedBrand.BrandId;
+            string typeId = selectedType.TypeProductId;
             string imgName = lbl_image.Text;
 
             // find typeId
-            TypeProductBUS typeProductBUS = new TypeProductBUS();
-            List<TypeProductDTO> typeProductDTOs = typeProductBUS.GetAllTypeProducts();
+            // TypeProductBUS typeProductBUS = new TypeProductBUS();
+            // List<TypeProductDTO> typeProductDTOs = typeProductBUS.GetAllTypeProducts();
 
-            foreach (var type in typeProductDTOs) {
-                if (type.TypeProductName == productCategory) { 
-                    productCategory = type.TypeProductId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
-                    break;
-                }
-            }
+            // foreach (var type in typeProductDTOs) {
+            //     if (type.TypeProductName == productCategory) { 
+            //         productCategory = type.TypeProductId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
+            //         break;
+            //     }
+            // }
 
-            // find brandId
-            BrandBUS brandBUS = new BrandBUS();
-            List<BrandDTO> brandDTOs = brandBUS.GetAllBrands();
+            // // find brandId
+            // BrandBUS brandBUS = new BrandBUS();
+            // List<BrandDTO> brandDTOs = brandBUS.GetAllBrands();
 
-            foreach (var brand in brandDTOs)
-            {
-                if (brand.BrandName == productBrand)
-                {
-                    productBrand = brand.BrandId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
-                    break;
-                }
-            }
+            // foreach (var brand in brandDTOs)
+            // {
+            //     if (brand.BrandName == productBrand)
+            //     {
+            //         productBrand = brand.BrandId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
+            //         break;
+            //     }
+            // }
 
             // set productId
             ProductBUS productBUS = new ProductBUS();
             List<ProductDTO> products = productBUS.GetAllProducts();
             string productId = GenerateNextProductId(products);
 
-            ProductDTO productDTO = new ProductDTO(productId, productName, imgName, 0, productBrand, productCategory, 0);
-            MessageBox.Show($"Id: {productId} \nName: {productName} \nimgName: {imgName} \n brandId: {productBrand} \ntypeId: {productCategory}");
+            ProductDTO productDTO = new ProductDTO(productId, productName, imgName, 0, brandId, typeId, 0);
+            MessageBox.Show($"Id: {productId} \nName: {productName} \nimgName: {imgName} \n brandId: {brandId} \ntypeId: {typeId}");
             bool status = productBUS.InsertProduct(productDTO);
             if (!status)
             {
