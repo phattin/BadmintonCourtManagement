@@ -18,17 +18,53 @@ namespace GUI
         {
             InitializeComponent();
         }
-        public void InsertData(List<BrandDTO> brands, List<TypeProductDTO> types)
+       public void InsertData(List<BrandDTO> brands, List<TypeProductDTO> types)
         {
-            // AI Generated code
-            brand_listBox.DataSource = brands?.ToList() ?? new List<BrandDTO>();
-            brand_listBox.DisplayMember = nameof(BrandDTO.BrandName);
-            brand_listBox.ValueMember = nameof(BrandDTO.BrandId);
+            // Xóa nội dung cũ của panel
+            brandPanel.Controls.Clear();
+            categoryPanel.Controls.Clear();
+            selectedBrandRadio = null;
+            selectedCategoryRadio = null;
 
-            category_listBox.DataSource = types?.ToList() ?? new List<TypeProductDTO>();
-            category_listBox.DisplayMember = nameof(TypeProductDTO.TypeProductName);
-            category_listBox.ValueMember = nameof(TypeProductDTO.TypeProductId);
-            // End of AI Generated code
+            // Tạo RadioButton cho Thương hiệu
+            if (brands != null)
+            {
+                foreach (var brand in brands)
+                {
+                    var radio = new RadioButton
+                    {
+                        Text = brand.BrandName,
+                        Tag = brand.BrandId,
+                        AutoSize = true,
+                        Margin = new Padding(0, 0, 0, 5)
+                    };
+                    radio.CheckedChanged += (s, e) =>
+                    {
+                        if (radio.Checked) selectedBrandRadio = radio;
+                    };
+                    brandPanel.Controls.Add(radio);
+                }
+            }
+
+            // Tạo RadioButton cho Loại sản phẩm
+            if (types != null)
+            {
+                foreach (var type in types)
+                {
+                    var radio = new RadioButton
+                    {
+                        Text = type.TypeProductName,
+                        Tag = type.TypeProductId,
+                        AutoSize = true,
+                        Margin = new Padding(0, 0, 0, 5)
+                    };
+                    radio.CheckedChanged += (s, e) =>
+                    {
+                        if (radio.Checked) selectedCategoryRadio = radio;
+                    };
+                    categoryPanel.Controls.Add(radio);
+                }
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -123,63 +159,58 @@ namespace GUI
 
         }
 
-        private void saveBtn_Click(object sender, EventArgs e)
+       private void saveBtn_Click(object sender, EventArgs e)
         {
-            string productName = txt_productName.Text;
-            var selectedBrand = brand_listBox.CheckedItems.Cast<BrandDTO>().FirstOrDefault();
-            var selectedType = category_listBox.CheckedItems.Cast<TypeProductDTO>().FirstOrDefault();
-            if (selectedBrand == null || selectedType == null)
+            string productName = txt_productName.Text.Trim();
+            if (string.IsNullOrEmpty(productName))
+            {
+                MessageBox.Show("Vui lòng nhập tên sản phẩm.");
+                return;
+            }
+
+            if (selectedBrandRadio == null || selectedCategoryRadio == null)
             {
                 MessageBox.Show("Vui lòng chọn thương hiệu và loại sản phẩm.");
                 return;
             }
 
-            string brandId = selectedBrand.BrandId;
-            string typeId = selectedType.TypeProductId;
+            string brandId = selectedBrandRadio.Tag.ToString();
+            string typeId = selectedCategoryRadio.Tag.ToString();
             string imgName = lbl_image.Text;
 
-            // find typeId
-            // TypeProductBUS typeProductBUS = new TypeProductBUS();
-            // List<TypeProductDTO> typeProductDTOs = typeProductBUS.GetAllTypeProducts();
-
-            // foreach (var type in typeProductDTOs) {
-            //     if (type.TypeProductName == productCategory) { 
-            //         productCategory = type.TypeProductId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
-            //         break;
-            //     }
-            // }
-
-            // // find brandId
-            // BrandBUS brandBUS = new BrandBUS();
-            // List<BrandDTO> brandDTOs = brandBUS.GetAllBrands();
-
-            // foreach (var brand in brandDTOs)
-            // {
-            //     if (brand.BrandName == productBrand)
-            //     {
-            //         productBrand = brand.BrandId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
-            //         break;
-            //     }
-            // }
-
-            // set productId
+            // Tạo ID sản phẩm
             ProductBUS productBUS = new ProductBUS();
             List<ProductDTO> products = productBUS.GetAllProducts();
             string productId = GenerateNextProductId(products);
 
             ProductDTO productDTO = new ProductDTO(productId, productName, imgName, 0, brandId, typeId, 0);
-            MessageBox.Show($"Id: {productId} \nName: {productName} \nimgName: {imgName} \n brandId: {brandId} \ntypeId: {typeId}");
+            
             bool status = productBUS.InsertProduct(productDTO);
             if (!status)
             {
                 MessageBox.Show("Thêm sản phẩm không thành công");
-            } 
+            }
             else
             {
                 MessageBox.Show("Thêm sản phẩm thành công");
+                // Reset form nếu cần
+                ResetForm();
             }
         }
+        private void ResetForm()
+        {
+            txt_productName.Clear();
+            lbl_image.Text = "";
+            selectedBrandRadio = null;
+            selectedCategoryRadio = null;
+            foreach (RadioButton rb in brandPanel.Controls) rb.Checked = false;
+            foreach (RadioButton rb in categoryPanel.Controls) rb.Checked = false;
+        }
 
+        private void resetBtn_Click(object sender, EventArgs e)
+        {
+            ResetForm();
+        }
         private string GenerateNextProductId(List<ProductDTO> products)
         {
             const string prefix = "PD";
