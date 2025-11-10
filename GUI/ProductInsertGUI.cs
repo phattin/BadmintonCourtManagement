@@ -1,4 +1,5 @@
 ﻿using BadmintonCourtManagement.DTO;
+using BadmintonCourtManagement.BUS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,6 +46,24 @@ namespace GUI
 
         }
 
+        private void buttonLeave(object sender, EventArgs e)
+        {
+            Label btn = sender as Label;
+            if (btn != null)
+            {
+                btn.BackColor = Color.FromArgb(60, 60, 60);
+            }
+        }
+
+        private void buttonEnter(object sender, EventArgs e)
+        {
+            Label btn = sender as Label;
+            if (btn != null)
+            {
+                btn.BackColor = Color.Black;
+            }
+        }
+
         private void chooseImgBtn_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
@@ -63,10 +82,11 @@ namespace GUI
 
                     // Define the destination folder relative to the application's executable
                     string appDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                    MessageBox.Show(appDirectory);
                     // Navigate up to the project folder and then to your Img folder
                     // This might need adjustment based on your project structure.
                     // A common structure is bin/Debug, so you might go up two levels.
-                    string destFolder = Path.Combine(appDirectory, @"..\..\GUI\Img\Product");
+                    string destFolder = Path.Combine(appDirectory, @"..\..\..\Img\Product");
 
                     // Ensure the destination directory exists
                     if (!Directory.Exists(destFolder))
@@ -79,6 +99,8 @@ namespace GUI
 
                     // Copy the file to the destination, with the option to overwrite
                     File.Copy(sourceFilePath, destFilePath, true);
+
+                    lbl_image.Text = fileName;
 
                     // Now 'destFilePath' holds the path to the copied image within your project structure.
                     // You can store this path in a database or use it to display the image.
@@ -99,6 +121,84 @@ namespace GUI
         private void brand_listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void saveBtn_Click(object sender, EventArgs e)
+        {
+            string productName = txt_productName.Text;
+            var checkedBrand = brand_listBox.CheckedItems.Cast<object>().ToList();
+            string productBrand = checkedBrand[0].ToString();
+            var checkedCategory = brand_listBox.CheckedItems.Cast<object>().ToList();
+            string productCategory = checkedCategory[0].ToString();
+            string imgName = lbl_image.Text;
+
+            // find typeId
+            TypeProductBUS typeProductBUS = new TypeProductBUS();
+            List<TypeProductDTO> typeProductDTOs = typeProductBUS.GetAllTypeProducts();
+
+            foreach (var type in typeProductDTOs) {
+                if (type.TypeProductName == productCategory) { 
+                    productCategory = type.TypeProductId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
+                    break;
+                }
+            }
+
+            // find brandId
+            BrandBUS brandBUS = new BrandBUS();
+            List<BrandDTO> brandDTOs = brandBUS.GetAllBrands();
+
+            foreach (var brand in brandDTOs)
+            {
+                if (brand.BrandName == productBrand)
+                {
+                    productBrand = brand.BrandId.ToString(); // error: show ProductDTO.BrandId or something instead of just string id
+                    break;
+                }
+            }
+
+            // set productId
+            ProductBUS productBUS = new ProductBUS();
+            List<ProductDTO> products = productBUS.GetAllProducts();
+            string productId = GenerateNextProductId(products);
+
+            ProductDTO productDTO = new ProductDTO(productId, productName, imgName, 0, productBrand, productCategory, 0);
+            MessageBox.Show($"Id: {productId} \nName: {productName} \nimgName: {imgName} \n brandId: {productBrand} \ntypeId: {productCategory}");
+            bool status = productBUS.InsertProduct(productDTO);
+            if (!status)
+            {
+                MessageBox.Show("Thêm sản phẩm không thành công");
+            } 
+            else
+            {
+                MessageBox.Show("Thêm sản phẩm thành công");
+            }
+        }
+
+        private string GenerateNextProductId(List<ProductDTO> products)
+        {
+            const string prefix = "PD";
+            const int digits = 5;
+
+            if (products == null || products.Count == 0)
+                return prefix + 1.ToString($"D{digits}");
+
+            int maxNumber = 0;
+            foreach (var p in products)
+            {
+                if (p == null || string.IsNullOrEmpty(p.ProductId))
+                    continue;
+
+                if (!p.ProductId.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                string numericPart = p.ProductId.Substring(prefix.Length);
+                if (int.TryParse(numericPart, out int n))
+                {
+                    if (n > maxNumber) maxNumber = n;
+                }
+            }
+
+            return prefix + (maxNumber + 1).ToString($"D{digits}");
         }
     }
 }
