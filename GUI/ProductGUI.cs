@@ -145,16 +145,6 @@ namespace BadmintonCourtManagement.GUI
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            /*
-            // My version of loading the image
-            string imagePath = string.Concat("Img\\Product\\", productDTO.ProductImg ?? "DefaultProductImage.jpg");
-            var pictureBox = new PictureBox{
-                Image = Image.FromFile(imagePath),
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Margin = new Padding(10),
-                Size = new Size(300,300)
-            };
-            */
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string projectRoot = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\"));
             string imagePath = Path.Combine(projectRoot, "Img", "Product", productDTO.ProductImg ?? "DefaultProductImage.jpg");
@@ -184,96 +174,6 @@ namespace BadmintonCourtManagement.GUI
                 Size = new Size(300, 300),
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
             };
-
-            // ===== AI Generated =====
-
-            /*
-
-                var pictureBox = new PictureBox
-                {
-                    // Image = (Image)resizedImage ?? productImage,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Dock = DockStyle.Top,
-                    Margin = new Padding(10),
-                    Size = new Size(300, 300)
-                };
-
-                try
-                {
-                    string imageFileName = productDTO.ProductImg;
-                    // string imageFileName = "DefaultProductImage.jpg"; 
-                    string imagePath = string.Concat("Img\\Product\\", imageFileName);
-
-                    // MessageBox.Show(productDTO.ProductImg);
-                    // MessageBox.Show(imagePath);
-
-                    if (File.Exists(imagePath))
-                    {
-                        using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                        {
-                            using (Image original = Image.FromStream(fs))
-                            {
-                                // Create a completely independent bitmap copy
-                                var resized = new Bitmap(300, 300);
-                                using (var graphics = Graphics.FromImage(resized))
-                                {
-                                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                                    graphics.DrawImage(original, 0, 0, 300, 300);
-                                }
-                    pictureBox.Image = (Bitmap)resized.Clone();
-                    resized.Dispose();
-                                // pictureBox.Image = resized;
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        string defaultPath = "Img\\Product\\DefaultProductImage.jpg";
-                        // string defaultPath = Path.Combine(Application.StartupPath, "Img", "Product", "DefaultProductImage.jpg");
-                        if (File.Exists(defaultPath))
-                        {
-                            using (var fs = new FileStream(defaultPath, FileMode.Open, FileAccess.Read))
-                            {
-                                using (Image original = Image.FromStream(fs))
-                                {
-                                    var resized = new Bitmap(300, 300);
-                                    using (var graphics = Graphics.FromImage(resized))
-                                    {
-                                        graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                                        graphics.DrawImage(original, 0, 0, 300, 300);
-                                    }
-                                    // pictureBox.Image = resized;
-                    pictureBox.Image = (Bitmap)resized.Clone();
-                    resized.Dispose();
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
-
-
-                // Image productImage;
-                // try
-                // {
-                //     productImage = Image.FromFile(imagePath);
-                // }
-                // catch (Exception ex)
-                // // check if productImage is null
-                // {
-                //     // productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
-                //     productImage = Image.FromFile("Img\\Product\\DefaultProductImage.jpg");
-                //     throw new Exception(ex.Message);
-                // }
-
-                // Bitmap resizedImage = new Bitmap(productImage, new Size(300, 300));
-            */
-
-            // ===== AI Generated =====
 
             // Label tên sản phẩm
             var lblName = new Label
@@ -587,7 +487,7 @@ namespace BadmintonCourtManagement.GUI
                 Text = string.Empty,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 StartPosition = FormStartPosition.CenterParent,
-                Size = new Size(483, 600),
+                Size = new Size(600, 650),
                 MaximizeBox = false,
                 MinimizeBox = false,
                 ShowInTaskbar = false
