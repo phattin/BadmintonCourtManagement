@@ -65,7 +65,6 @@
             tableLayoutBackground.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutBackground.RowStyles.Add(new RowStyle(SizeType.Percent, 90F));
             tableLayoutBackground.Size = new Size(483, 640);
-            tableLayoutBackground.TabIndex = 0;
             // 
             // title_productInsert
             // 
@@ -76,7 +75,6 @@
             title_productInsert.Location = new Point(3, 0);
             title_productInsert.Name = "title_productInsert";
             title_productInsert.Size = new Size(477, 64);
-            title_productInsert.TabIndex = 3;
             title_productInsert.Text = "Thêm sản phẩm";
             title_productInsert.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -110,7 +108,6 @@
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 13F));
             tableLayout_storeItem.Size = new Size(427, 456);
-            tableLayout_storeItem.TabIndex = 2;
             tableLayout_storeItem.Paint += tableLayout_storeItem_Paint;
             // 
             // saveBtn
@@ -124,7 +121,7 @@
             saveBtn.Name = "saveBtn";
             saveBtn.Padding = new Padding(20, 10, 20, 10);
             saveBtn.Size = new Size(78, 43);
-            saveBtn.TabIndex = 8;
+            saveBtn.TabIndex = 5;
             saveBtn.Text = "Lưu";
             saveBtn.TextAlign = ContentAlignment.MiddleCenter;
             saveBtn.Click += saveBtn_Click;
@@ -142,7 +139,7 @@
             resetBtn.Name = "resetBtn";
             resetBtn.Padding = new Padding(20, 10, 20, 10);
             resetBtn.Size = new Size(91, 43);
-            resetBtn.TabIndex = 9;
+            resetBtn.TabIndex = 6;
             resetBtn.Text = "Reset";
             resetBtn.TextAlign = ContentAlignment.MiddleCenter;
             resetBtn.MouseEnter += buttonEnter;
@@ -157,7 +154,6 @@
             lbl_image.Margin = new Padding(0, 0, 0, 10);
             lbl_image.Name = "lbl_image";
             lbl_image.Size = new Size(186, 41);
-            lbl_image.TabIndex = 10;
             // 
             // category_listBox
             // 
@@ -169,7 +165,7 @@
             category_listBox.Location = new Point(195, 193);
             category_listBox.Name = "category_listBox";
             category_listBox.Size = new Size(229, 85);
-            category_listBox.TabIndex = 5;
+            category_listBox.TabIndex = 3;
             // 
             // lbl_category
             // 
@@ -180,7 +176,6 @@
             lbl_category.Location = new Point(3, 190);
             lbl_category.Name = "lbl_category";
             lbl_category.Size = new Size(186, 31);
-            lbl_category.TabIndex = 4;
             lbl_category.Text = "Thể loại: ";
             // 
             // brand_listBox
@@ -193,7 +188,7 @@
             brand_listBox.Location = new Point(195, 48);
             brand_listBox.Name = "brand_listBox";
             brand_listBox.Size = new Size(229, 139);
-            brand_listBox.TabIndex = 3;
+            brand_listBox.TabIndex = 2;
             brand_listBox.SelectedIndexChanged += brand_listBox_SelectedIndexChanged;
             // 
             // lbl_brand
@@ -206,7 +201,6 @@
             lbl_brand.Name = "lbl_brand";
             lbl_brand.Padding = new Padding(0, 0, 0, 10);
             lbl_brand.Size = new Size(186, 41);
-            lbl_brand.TabIndex = 2;
             lbl_brand.Text = "Thương hiệu: ";
             // 
             // lblProductName
@@ -219,7 +213,6 @@
             lblProductName.Name = "lblProductName";
             lblProductName.Padding = new Padding(0, 0, 0, 10);
             lblProductName.Size = new Size(186, 41);
-            lblProductName.TabIndex = 0;
             lblProductName.Text = "Tên sản phẩm:";
             lblProductName.Click += label1_Click;
             // 
@@ -242,7 +235,6 @@
             label1.Name = "label1";
             label1.Padding = new Padding(0, 0, 0, 10);
             label1.Size = new Size(186, 41);
-            label1.TabIndex = 6;
             label1.Text = "Chọn ảnh: ";
             label1.Click += label1_Click_1;
             // 
@@ -257,7 +249,7 @@
             chooseImgBtn.Name = "chooseImgBtn";
             chooseImgBtn.Padding = new Padding(20, 10, 20, 10);
             chooseImgBtn.Size = new Size(125, 43);
-            chooseImgBtn.TabIndex = 7;
+            chooseImgBtn.TabIndex = 4;
             chooseImgBtn.Text = "Chọn ảnh";
             chooseImgBtn.TextAlign = ContentAlignment.MiddleCenter;
             chooseImgBtn.Click += chooseImgBtn_Click;
