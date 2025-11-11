@@ -41,6 +41,7 @@ namespace BadmintonCourtManagement.GUI
             picProduct = new PictureBox();
             btnSave = new Button();
             btnCancel = new Button();
+            btnChooseImage = new Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picProduct).BeginInit();
             SuspendLayout();
@@ -61,6 +62,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.Controls.Add(picProduct, 0, 4);
             tableLayoutPanel1.Controls.Add(btnSave, 0, 5);
             tableLayoutPanel1.Controls.Add(btnCancel, 1, 5);
+            tableLayoutPanel1.Controls.Add(btnChooseImage, 1, 4);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(4, 5, 4, 5);
@@ -70,7 +72,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 90F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 78F));
             tableLayoutPanel1.Size = new Size(730, 518);
             tableLayoutPanel1.TabIndex = 0;
@@ -175,7 +177,7 @@ namespace BadmintonCourtManagement.GUI
             picProduct.Location = new Point(4, 253);
             picProduct.Margin = new Padding(4, 5, 4, 5);
             picProduct.Name = "picProduct";
-            picProduct.Size = new Size(180, 182);
+            picProduct.Size = new Size(180, 80);
             picProduct.SizeMode = PictureBoxSizeMode.Zoom;
             picProduct.TabIndex = 12;
             picProduct.TabStop = false;
@@ -187,7 +189,7 @@ namespace BadmintonCourtManagement.GUI
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(4, 445);
+            btnSave.Location = new Point(4, 343);
             btnSave.Margin = new Padding(4, 5, 4, 5);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(180, 68);
@@ -203,13 +205,30 @@ namespace BadmintonCourtManagement.GUI
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(192, 445);
+            btnCancel.Location = new Point(192, 343);
             btnCancel.Margin = new Padding(4, 5, 4, 5);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(534, 68);
             btnCancel.TabIndex = 14;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // btnChooseImage
+            // 
+            btnChooseImage.BackColor = Color.FromArgb(0, 123, 255);
+            btnChooseImage.FlatAppearance.BorderSize = 0;
+            btnChooseImage.FlatStyle = FlatStyle.Flat;
+            btnChooseImage.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnChooseImage.ForeColor = Color.White;
+            btnChooseImage.Location = new Point(192, 253);
+            btnChooseImage.Margin = new Padding(4, 5, 4, 5);
+            btnChooseImage.Name = "btnChooseImage";
+            btnChooseImage.Size = new Size(534, 50);
+            btnChooseImage.TabIndex = 15;
+            btnChooseImage.Text = "Chọn ảnh";
+            btnChooseImage.UseVisualStyleBackColor = false;
+            btnChooseImage.Click += btnChooseImage_Click;
             // 
             // ProductUpdateGUI
             // 
@@ -244,5 +263,6 @@ namespace BadmintonCourtManagement.GUI
         private System.Windows.Forms.PictureBox picProduct;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnChooseImage;
     }
 }
