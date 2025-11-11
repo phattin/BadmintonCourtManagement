@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            categoryComboBox = new ComboBox();
+            brandComboBox = new ComboBox();
             components = new System.ComponentModel.Container();
             tableLayoutBackground = new TableLayoutPanel();
             title_productInsert = new Label();
@@ -40,8 +42,8 @@
             lblProductName = new Label();
             txt_productName = new TextBox();
             label1 = new Label();
-            brandPanel = new FlowLayoutPanel();
-            categoryPanel = new FlowLayoutPanel();
+            // brandPanel = new FlowLayoutPanel();
+            // categoryPanel = new FlowLayoutPanel();
             chooseImgBtn = new Label();
             errorProvider1 = new ErrorProvider(components);
             tableLayoutBackground.SuspendLayout();
@@ -96,8 +98,8 @@
             tableLayout_storeItem.Controls.Add(lblProductName, 0, 0);
             tableLayout_storeItem.Controls.Add(txt_productName, 1, 0);
             tableLayout_storeItem.Controls.Add(label1, 0, 3);
-            tableLayout_storeItem.Controls.Add(brandPanel, 1, 1);
-            tableLayout_storeItem.Controls.Add(categoryPanel, 1, 2);
+            // tableLayout_storeItem.Controls.Add(brandComboBox, 1, 1);
+            // tableLayout_storeItem.Controls.Add(categoryComboBox, 1, 2);
             tableLayout_storeItem.Controls.Add(chooseImgBtn, 1, 3);
             tableLayout_storeItem.Controls.Add(resetBtn, 1, 5);
             tableLayout_storeItem.ForeColor = Color.Black;
@@ -113,7 +115,6 @@
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 12.9824562F));
             tableLayout_storeItem.Size = new Size(574, 570);
             tableLayout_storeItem.TabIndex = 1;
-            tableLayout_storeItem.Paint += tableLayout_storeItem_Paint;
             // 
             // saveBtn
             // 
@@ -131,8 +132,6 @@
             saveBtn.Text = "Lưu";
             saveBtn.TextAlign = ContentAlignment.MiddleCenter;
             saveBtn.Click += saveBtn_Click;
-            saveBtn.MouseEnter += buttonEnter;
-            saveBtn.MouseLeave += buttonLeave;
             // 
             // resetBtn
             // 
@@ -149,8 +148,6 @@
             resetBtn.TabIndex = 6;
             resetBtn.Text = "Reset";
             resetBtn.TextAlign = ContentAlignment.MiddleCenter;
-            resetBtn.MouseEnter += buttonEnter;
-            resetBtn.MouseLeave += buttonLeave;
             // 
             // lbl_image
             // 
@@ -203,7 +200,6 @@
             lblProductName.Size = new Size(260, 50);
             lblProductName.TabIndex = 10;
             lblProductName.Text = "Tên sản phẩm:";
-            lblProductName.Click += label1_Click;
             // 
             // txt_productName
             // 
@@ -228,29 +224,30 @@
             label1.Size = new Size(260, 50);
             label1.TabIndex = 11;
             label1.Text = "Chọn ảnh: ";
-            label1.Click += label1_Click_1;
             // 
-            // brandPanel
+            // brandComboBox
             // 
-            brandPanel.AutoSize = true;
-            brandPanel.FlowDirection = FlowDirection.TopDown;
-            brandPanel.Location = new Point(272, 63);
-            brandPanel.Margin = new Padding(4);
-            brandPanel.Name = "brandPanel";
-            brandPanel.Size = new Size(0, 0);
-            brandPanel.TabIndex = 2;
-            brandPanel.WrapContents = false;
+            this.brandComboBox = new ComboBox();
+            brandComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            brandComboBox.FormattingEnabled = true;
+            brandComboBox.Location = new Point(272, 63);
+            brandComboBox.Margin = new Padding(4);
+            brandComboBox.Name = "brandComboBox";
+            brandComboBox.Size = new Size(264, 33);
+            brandComboBox.TabIndex = 12;
             // 
-            // categoryPanel
+            // categoryComboBox
             // 
-            categoryPanel.AutoSize = true;
-            categoryPanel.FlowDirection = FlowDirection.TopDown;
-            categoryPanel.Location = new Point(272, 240);
-            categoryPanel.Margin = new Padding(4);
-            categoryPanel.Name = "categoryPanel";
-            categoryPanel.Size = new Size(0, 0);
-            categoryPanel.TabIndex = 3;
-            categoryPanel.WrapContents = false;
+            this.categoryComboBox = new ComboBox();
+            categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            categoryComboBox.FormattingEnabled = true;
+            categoryComboBox.Location = new Point(272, 240);
+            categoryComboBox.Margin = new Padding(4);
+            categoryComboBox.Name = "categoryComboBox";
+            categoryComboBox.Size = new Size(264, 33);
+            categoryComboBox.TabIndex = 13;
+            tableLayout_storeItem.Controls.Add(brandComboBox, 1, 1);
+            tableLayout_storeItem.Controls.Add(categoryComboBox, 1, 2);
             // 
             // chooseImgBtn
             // 
@@ -268,8 +265,6 @@
             chooseImgBtn.Text = "Chọn ảnh";
             chooseImgBtn.TextAlign = ContentAlignment.MiddleCenter;
             chooseImgBtn.Click += chooseImgBtn_Click;
-            chooseImgBtn.MouseEnter += buttonEnter;
-            chooseImgBtn.MouseLeave += buttonLeave;
             // 
             // errorProvider1
             // 
@@ -302,10 +297,12 @@
         // private CheckedListBox brand_listBox;
         private Label lbl_category;
         // private CheckedListBox category_listBox;
-        private FlowLayoutPanel brandPanel;
-        private FlowLayoutPanel categoryPanel;
-        private RadioButton selectedBrandRadio;
-        private RadioButton selectedCategoryRadio;
+        // private FlowLayoutPanel brandPanel;
+        // private FlowLayoutPanel categoryPanel;
+        // private RadioButton selectedBrandRadio;
+        // private RadioButton selectedCategoryRadio;
+        private ComboBox brandComboBox;
+        private ComboBox categoryComboBox;
         private Label label1;
         private Label chooseImgBtn;
         private Label saveBtn;
