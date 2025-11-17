@@ -74,7 +74,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 90F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 78F));
-            tableLayoutPanel1.Size = new Size(730, 518);
+            tableLayoutPanel1.Size = new Size(730, 418);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -237,7 +237,7 @@ namespace BadmintonCourtManagement.GUI
             Controls.Add(tableLayoutPanel1);
             Margin = new Padding(4, 5, 4, 5);
             Name = "ProductUpdateGUI";
-            Size = new Size(730, 518);
+            Size = new Size(730, 418);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picProduct).EndInit();
