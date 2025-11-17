@@ -1,5 +1,6 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using GUI.ComponentsGUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,27 +54,28 @@ namespace BadmintonCourtManagement.GUI
                     {
                         if (i <= storageList.Count() - 1 && i >= 0)
                         {
-                            Panel card = new Panel();
-                            Button cardButton = new Button();
+                            CustomPanel card = new CustomPanel();
+                            RoundedButton cardButton = new RoundedButton();
                             Label cardBody = new Label();
                             Label cardTitle = new Label();
 
                             card.AutoSize = false;
+                            card.BorderRadius = 20;
                             card.AutoScroll = true;
                             card.BackColor = Color.FromArgb(200, 250, 214);
                             card.Controls.Add(cardButton);
                             card.Controls.Add(cardBody);
                             card.Controls.Add(cardTitle);
                             card.Dock = DockStyle.Fill;
-                            card.Margin = new Padding(30);
+                            card.Padding = new Padding(20,10,20,10);
                             card.Name = "card";
                             card.TabIndex = 0;
 
                             cardButton.Dock = DockStyle.Top;
-                            cardButton.BackColor = Color.Black;
+                            cardButton.BackgroundColor = Color.Black;
                             cardButton.Cursor = Cursors.Hand;
                             cardButton.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-                            cardButton.ForeColor = Color.White;
+                            cardButton.TextColor = Color.White;
                             cardButton.Name = "cardButton";
                             cardButton.Size = new Size(258, 60);
                             cardButton.TabIndex = 6;
@@ -300,19 +302,19 @@ namespace BadmintonCourtManagement.GUI
         // các hàm tạm
         private void buttonEnter(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
+            RoundedButton btn = sender as RoundedButton;
             if (btn != null)
             {
-                btn.BackColor = Color.FromArgb(60, 60, 60);
+                btn.BackgroundColor = Color.FromArgb(60, 60, 60);
             }
         }
 
         private void buttonLeave(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
+            RoundedButton btn = sender as RoundedButton;
             if (btn != null)
             {
-                btn.BackColor = Color.Black;
+                btn.BackgroundColor = Color.Black;
             }
         }
 

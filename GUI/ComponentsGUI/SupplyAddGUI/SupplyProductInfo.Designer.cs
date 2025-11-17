@@ -1,4 +1,6 @@
-﻿namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
+﻿using GUI.ComponentsGUI;
+
+namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 {
     partial class SupplyProductInfo
     {
@@ -30,11 +32,11 @@
         {
             TitlePanel = new Panel();
             Title = new Label();
-            Body = new Panel();
-            SubBody = new Panel();
+            Body = new CustomPanel();
+            SubBody = new CustomPanel();
             ButtonPanel = new Panel();
-            AddButton = new Button();
-            InputPanel = new TableLayoutPanel();
+            AddButton = new RoundedButton();
+            InputPanel = new RoundedTableLayoutPanel();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
@@ -81,6 +83,7 @@
             // Body
             // 
             Body.BackColor = Color.FromArgb(0, 120, 103);
+            Body.BorderRadius = 20;
             Body.Controls.Add(SubBody);
             Body.Dock = DockStyle.Top;
             Body.Location = new Point(0, 76);
@@ -93,6 +96,7 @@
             // SubBody
             // 
             SubBody.BackColor = Color.FromArgb(200, 250, 214);
+            SubBody.BorderRadius = 20;
             SubBody.Controls.Add(ButtonPanel);
             SubBody.Controls.Add(InputPanel);
             SubBody.Controls.Add(InfoPanel);
@@ -111,23 +115,29 @@
             ButtonPanel.Location = new Point(20, 481);
             ButtonPanel.Margin = new Padding(0);
             ButtonPanel.Name = "ButtonPanel";
-            ButtonPanel.Padding = new Padding(150, 4, 150, 4);
+            ButtonPanel.Padding = new Padding(180, 4, 180, 4);
             ButtonPanel.Size = new Size(726, 90);
             ButtonPanel.TabIndex = 2;
             // 
             // AddButton
             // 
             AddButton.BackColor = Color.Black;
+            AddButton.BackgroundColor = Color.Black;
+            AddButton.BorderColor = Color.PaleVioletRed;
+            AddButton.BorderRadius = 20;
+            AddButton.BorderSize = 0;
             AddButton.Cursor = Cursors.Hand;
             AddButton.Dock = DockStyle.Fill;
+            AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             AddButton.ForeColor = Color.White;
-            AddButton.Location = new Point(150, 4);
+            AddButton.Location = new Point(180, 4);
             AddButton.Margin = new Padding(0);
             AddButton.Name = "AddButton";
-            AddButton.Size = new Size(426, 82);
+            AddButton.Size = new Size(366, 82);
             AddButton.TabIndex = 0;
             AddButton.Text = "+ Thêm";
+            AddButton.TextColor = Color.White;
             AddButton.UseVisualStyleBackColor = false;
             AddButton.MouseEnter += buttonEnter;
             AddButton.MouseLeave += buttonLeave;
@@ -135,6 +145,7 @@
             // InputPanel
             // 
             InputPanel.BackColor = Color.FromArgb(0, 120, 103);
+            InputPanel.BorderRadius = 20;
             InputPanel.ColumnCount = 2;
             InputPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.03303F));
             InputPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 66.9669647F));
@@ -343,11 +354,11 @@
 
         private Panel TitlePanel;
         private Label Title;
-        private Panel Body;
-        private Panel SubBody;
+        private CustomPanel Body;
+        private CustomPanel SubBody;
         private TableLayoutPanel InfoPanel;
         private Label ProductID;
-        private TableLayoutPanel InputPanel;
+        private RoundedTableLayoutPanel InputPanel;
         private Label ProductBrand;
         private Label ProductType;
         private Label ProductName;
@@ -360,6 +371,6 @@
         private TextBox textBox3;
         private TextBox textBox2;
         private TextBox textBox1;
-        private Button AddButton;
+        private RoundedButton AddButton;
     }
 }

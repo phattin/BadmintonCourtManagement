@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using GUI.ComponentsGUI;
+using System.Windows.Forms;
 
 namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 {
@@ -32,8 +33,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         {
             Body = new Panel();
             MainPanel = new Panel();
-            CardListPanel = new TableLayoutPanel();
-            cardPanel = new TableLayoutPanel();
+            CardListPanel = new RoundedTableLayoutPanel();
+            cardPanel = new RoundedTableLayoutPanel();
             picture = new PictureBox();
             infoPanel = new TableLayoutPanel();
             productID = new Label();
@@ -41,8 +42,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             price = new Label();
             quantity = new Label();
             importDetailID = new Label();
-            delete = new Button();
-            toolBar = new TableLayoutPanel();
+            delete = new RoundedButton();
+            toolBar = new RoundedTableLayoutPanel();
             searchBar = new TextBox();
             filterButton = new Button();
             SupplyActivePanel = new Panel();
@@ -89,6 +90,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // 
             CardListPanel.AutoSize = true;
             CardListPanel.BackColor = Color.FromArgb(239, 248, 230);
+            CardListPanel.BorderRadius = 20;
             CardListPanel.ColumnCount = 1;
             CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             CardListPanel.Controls.Add(cardPanel, 0, 0);
@@ -112,6 +114,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // cardPanel
             // 
             cardPanel.BackColor = Color.FromArgb(200, 250, 214);
+            cardPanel.BorderRadius = 20;
             cardPanel.ColumnCount = 3;
             cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.0044861F));
             cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55.9641266F));
@@ -228,6 +231,11 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // delete
             // 
             delete.BackColor = Color.Black;
+            delete.BackgroundColor = Color.Black;
+            delete.BorderColor = Color.PaleVioletRed;
+            delete.BorderRadius = 20;
+            delete.BorderSize = 0;
+            delete.Cursor = Cursors.Hand;
             delete.Dock = DockStyle.Fill;
             delete.FlatAppearance.BorderSize = 0;
             delete.FlatStyle = FlatStyle.Flat;
@@ -239,6 +247,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             delete.Size = new Size(103, 79);
             delete.TabIndex = 2;
             delete.Text = "Xóa";
+            delete.TextColor = Color.White;
             delete.UseVisualStyleBackColor = false;
             delete.MouseEnter += buttonEnter;
             delete.MouseLeave += buttonLeave;
@@ -246,6 +255,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // toolBar
             // 
             toolBar.BackColor = Color.FromArgb(0, 120, 103);
+            toolBar.BorderRadius = 20;
             toolBar.ColumnCount = 2;
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 88.27107F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.7289314F));
@@ -366,8 +376,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         #endregion
         private Panel Body;
         private Panel MainPanel;
-        private TableLayoutPanel CardListPanel;
-        private TableLayoutPanel cardPanel;
+        private RoundedTableLayoutPanel CardListPanel;
+        private RoundedTableLayoutPanel cardPanel;
         private PictureBox picture;
         private TableLayoutPanel infoPanel;
         private Label productID;
@@ -375,13 +385,13 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         private Label price;
         private Label quantity;
         private Label importDetailID;
-        private TableLayoutPanel toolBar;
+        private RoundedTableLayoutPanel toolBar;
         private TextBox searchBar;
         private Button filterButton;
         private Panel SupplyActivePanel;
         private Label SupplyActive;
         private Panel TitlePanel;
         private Label Title;
-        private Button delete;
+        private RoundedButton delete;
     }
 }
