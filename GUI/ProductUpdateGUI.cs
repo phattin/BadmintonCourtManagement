@@ -127,7 +127,7 @@ namespace BadmintonCourtManagement.GUI
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png";
-            fileDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Img\Product");
+            fileDialog.InitialDirectory = Path.Combine(Application.StartupPath, "BadmintonCourtManagement\\GUI\\Img\\Product");
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -136,7 +136,7 @@ namespace BadmintonCourtManagement.GUI
                     string sourceFilePath = fileDialog.FileName;
                     string fileName = fileDialog.SafeFileName;
 
-                    string destFolder = Path.Combine(Application.StartupPath, @"Img\Product");
+                    string destFolder = Path.Combine(Application.StartupPath, @"..\..\..\Img\Product");
                     if (!Directory.Exists(destFolder))
                         Directory.CreateDirectory(destFolder);
 
