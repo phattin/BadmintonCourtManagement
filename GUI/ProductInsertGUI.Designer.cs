@@ -28,28 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             categoryComboBox = new ComboBox();
             brandComboBox = new ComboBox();
-            components = new System.ComponentModel.Container();
             tableLayoutBackground = new TableLayoutPanel();
             title_productInsert = new Label();
             tableLayout_storeItem = new TableLayoutPanel();
             saveBtn = new Label();
-            resetBtn = new Label();
             lbl_image = new Label();
             lbl_category = new Label();
             lbl_brand = new Label();
             lblProductName = new Label();
             txt_productName = new TextBox();
             label1 = new Label();
-            // brandPanel = new FlowLayoutPanel();
-            // categoryPanel = new FlowLayoutPanel();
             chooseImgBtn = new Label();
+            resetBtn = new Label();
             errorProvider1 = new ErrorProvider(components);
             tableLayoutBackground.SuspendLayout();
             tableLayout_storeItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
+            // 
+            // categoryComboBox
+            // 
+            categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            categoryComboBox.FormattingEnabled = true;
+            categoryComboBox.Location = new Point(272, 171);
+            categoryComboBox.Margin = new Padding(4);
+            categoryComboBox.Name = "categoryComboBox";
+            categoryComboBox.Size = new Size(264, 33);
+            categoryComboBox.TabIndex = 13;
+            // 
+            // brandComboBox
+            // 
+            brandComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            brandComboBox.FormattingEnabled = true;
+            brandComboBox.Location = new Point(272, 63);
+            brandComboBox.Margin = new Padding(4);
+            brandComboBox.Name = "brandComboBox";
+            brandComboBox.Size = new Size(264, 33);
+            brandComboBox.TabIndex = 12;
             // 
             // tableLayoutBackground
             // 
@@ -98,19 +116,19 @@
             tableLayout_storeItem.Controls.Add(lblProductName, 0, 0);
             tableLayout_storeItem.Controls.Add(txt_productName, 1, 0);
             tableLayout_storeItem.Controls.Add(label1, 0, 3);
-            // tableLayout_storeItem.Controls.Add(brandComboBox, 1, 1);
-            // tableLayout_storeItem.Controls.Add(categoryComboBox, 1, 2);
             tableLayout_storeItem.Controls.Add(chooseImgBtn, 1, 3);
             tableLayout_storeItem.Controls.Add(resetBtn, 1, 5);
+            tableLayout_storeItem.Controls.Add(brandComboBox, 1, 1);
+            tableLayout_storeItem.Controls.Add(categoryComboBox, 1, 2);
             tableLayout_storeItem.ForeColor = Color.Black;
             tableLayout_storeItem.Location = new Point(15, 142);
             tableLayout_storeItem.Margin = new Padding(4, 62, 4, 88);
             tableLayout_storeItem.Name = "tableLayout_storeItem";
             tableLayout_storeItem.RowCount = 6;
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 10.3508768F));
-            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 31.0526314F));
-            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 32.63158F));
-            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 11.4035091F));
+            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 18.9473686F));
+            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 44.5614052F));
+            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 11.5789471F));
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 1.40350878F));
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 12.9824562F));
             tableLayout_storeItem.Size = new Size(574, 570);
@@ -133,22 +151,6 @@
             saveBtn.TextAlign = ContentAlignment.MiddleCenter;
             saveBtn.Click += saveBtn_Click;
             // 
-            // resetBtn
-            // 
-            resetBtn.Anchor = AnchorStyles.None;
-            resetBtn.AutoSize = true;
-            resetBtn.BackColor = Color.FromArgb(64, 64, 64);
-            resetBtn.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            resetBtn.ForeColor = Color.White;
-            resetBtn.Location = new Point(364, 505);
-            resetBtn.Margin = new Padding(4, 0, 4, 0);
-            resetBtn.Name = "resetBtn";
-            resetBtn.Padding = new Padding(25, 12, 25, 12);
-            resetBtn.Size = new Size(113, 54);
-            resetBtn.TabIndex = 6;
-            resetBtn.Text = "Reset";
-            resetBtn.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // lbl_image
             // 
             lbl_image.Anchor = AnchorStyles.Top;
@@ -166,7 +168,7 @@
             lbl_category.AutoSize = true;
             lbl_category.FlatStyle = FlatStyle.Flat;
             lbl_category.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_category.Location = new Point(4, 236);
+            lbl_category.Location = new Point(4, 167);
             lbl_category.Margin = new Padding(4, 0, 4, 0);
             lbl_category.Name = "lbl_category";
             lbl_category.Size = new Size(260, 38);
@@ -217,37 +219,13 @@
             label1.AutoSize = true;
             label1.FlatStyle = FlatStyle.Flat;
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(4, 422);
+            label1.Location = new Point(4, 421);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Padding = new Padding(0, 0, 0, 12);
             label1.Size = new Size(260, 50);
             label1.TabIndex = 11;
             label1.Text = "Chọn ảnh: ";
-            // 
-            // brandComboBox
-            // 
-            this.brandComboBox = new ComboBox();
-            brandComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            brandComboBox.FormattingEnabled = true;
-            brandComboBox.Location = new Point(272, 63);
-            brandComboBox.Margin = new Padding(4);
-            brandComboBox.Name = "brandComboBox";
-            brandComboBox.Size = new Size(264, 33);
-            brandComboBox.TabIndex = 12;
-            // 
-            // categoryComboBox
-            // 
-            this.categoryComboBox = new ComboBox();
-            categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            categoryComboBox.FormattingEnabled = true;
-            categoryComboBox.Location = new Point(272, 240);
-            categoryComboBox.Margin = new Padding(4);
-            categoryComboBox.Name = "categoryComboBox";
-            categoryComboBox.Size = new Size(264, 33);
-            categoryComboBox.TabIndex = 13;
-            tableLayout_storeItem.Controls.Add(brandComboBox, 1, 1);
-            tableLayout_storeItem.Controls.Add(categoryComboBox, 1, 2);
             // 
             // chooseImgBtn
             // 
@@ -256,7 +234,7 @@
             chooseImgBtn.BackColor = Color.FromArgb(64, 64, 64);
             chooseImgBtn.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             chooseImgBtn.ForeColor = Color.White;
-            chooseImgBtn.Location = new Point(344, 422);
+            chooseImgBtn.Location = new Point(344, 421);
             chooseImgBtn.Margin = new Padding(4, 0, 4, 0);
             chooseImgBtn.Name = "chooseImgBtn";
             chooseImgBtn.Padding = new Padding(25, 12, 25, 12);
@@ -265,6 +243,22 @@
             chooseImgBtn.Text = "Chọn ảnh";
             chooseImgBtn.TextAlign = ContentAlignment.MiddleCenter;
             chooseImgBtn.Click += chooseImgBtn_Click;
+            // 
+            // resetBtn
+            // 
+            resetBtn.Anchor = AnchorStyles.None;
+            resetBtn.AutoSize = true;
+            resetBtn.BackColor = Color.FromArgb(64, 64, 64);
+            resetBtn.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            resetBtn.ForeColor = Color.White;
+            resetBtn.Location = new Point(364, 505);
+            resetBtn.Margin = new Padding(4, 0, 4, 0);
+            resetBtn.Name = "resetBtn";
+            resetBtn.Padding = new Padding(25, 12, 25, 12);
+            resetBtn.Size = new Size(113, 54);
+            resetBtn.TabIndex = 6;
+            resetBtn.Text = "Reset";
+            resetBtn.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // errorProvider1
             // 

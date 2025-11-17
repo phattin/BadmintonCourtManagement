@@ -121,59 +121,39 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
+   
+        
         private void btnChooseImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png";
-            fileDialog.InitialDirectory = "BadmintonCourtManagement\\GUI\\Img\\Product";
+            fileDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Img\Product");
 
-                if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
                 {
-                    try
-                    {
-                    // The full path of the user's selected file
                     string sourceFilePath = fileDialog.FileName;
-
-                    // The name of the file, without the path
                     string fileName = fileDialog.SafeFileName;
 
-                    // Define the destination folder relative to the application's executable
-                    string appDirectory = Path.GetDirectoryName(Application.ExecutablePath);
-                    MessageBox.Show(appDirectory);
-                    // Navigate up to the project folder and then to your Img folder
-                    // This might need adjustment based on your project structure.
-                    // A common structure is bin/Debug, so you might go up two levels.
-                    string destFolder = Path.Combine(appDirectory, @"..\..\..\Img\Product");
-
-                    // Ensure the destination directory exists
+                    string destFolder = Path.Combine(Application.StartupPath, @"Img\Product");
                     if (!Directory.Exists(destFolder))
-                    {
                         Directory.CreateDirectory(destFolder);
-                    }
 
-                    // Construct the full destination path
                     string destFilePath = Path.Combine(destFolder, fileName);
+                    File.Copy(sourceFilePath, destFilePath, true);
 
-                        // Copy ảnh vào thư mục project
-                        File.Copy(sourceFilePath, destFilePath, true);
-
-                    // Cập nhật biến lưu tên ảnh mới
                     _newImageName = fileName;
-
-                        // Hiển thị ảnh mới ngay lập tức
-                        using (var stream = new FileStream(destFilePath, FileMode.Open, FileAccess.Read))
+                    using (var stream = new FileStream(destFilePath, FileMode.Open, FileAccess.Read))
                         {
                             picProduct.Image = Image.FromStream(stream);
                         }
-
-                        MessageBox.Show("Đã chọn ảnh: " + fileName, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Lỗi khi lưu ảnh: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
                 }
-            
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi lưu ảnh: " + ex.Message);
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
