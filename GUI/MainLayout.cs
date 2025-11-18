@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using GUI;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -18,12 +19,22 @@ namespace BadmintonCourtManagement.GUI
         private UserControl currentPanel;
         private MenuManager menuManager;
         private Panel menuPanel, contentPanel;
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
         public MainLayout(AccountDTO account)
         {
             this.currentAccount = account;
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByPermissionId(currentAccount.PermissionId);
+            List<PermissionDetailDTO> viewPermissions = new List<PermissionDetailDTO>();
+            foreach (var detail in permissionDetails)
+            {
+                if (detail.Option == "View")
+                {
+                    viewPermissions.Add(detail);
+                }
+            }
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            CreateMenuButtons();
+            CreateMenuButtons1(viewPermissions);
         }
 
         private void CreateMenuButtons()
@@ -35,15 +46,81 @@ namespace BadmintonCourtManagement.GUI
                 { "Phân quyền", Permission_Click },
                 { "Tài khoản", Account_Click },
                 { "Nhân viên", Employee_Click },
-                {"Sản phẩm", Product_Click},
+                { "Sản phẩm", Product_Click},
                 { "Hóa đơn", Bill_Click },
                 { "Bán hàng", Sell_Click },
                 { "Kho và Nhập hàng", Storage_Click },
                 { "Quản lý sân", ManageCourts_Click },
+                { "Giá sân", PriceRule_Click },
                 { "Đặt sân", BookCourt_Click },
                 { "Thống kê", Statistics_Click }
             };
 
+            menuManager.CreateMenuButtons(menuPanel, menuItems);
+        }
+
+        private void CreateMenuButtons1(List<PermissionDetailDTO> viewPermissions)
+        {
+            menuManager = new MenuManager();
+            var menuItems = new Dictionary<string, EventHandler>();
+
+            foreach (var p in viewPermissions)
+            {
+                switch (p.FunctionId)
+                {
+                    case "F01":
+                        menuItems.Add("Đặt sân", BookCourt_Click);
+                        break;
+
+                    case "F02":
+                        menuItems.Add("Quản lý sân", ManageCourts_Click);
+                        break;
+
+                    case "F03":
+                        menuItems.Add("Bán hàng", Sell_Click);
+                        break;
+
+                    case "F04":
+                        menuItems.Add("Hóa đơn", Bill_Click);
+                        break;
+
+                    case "F05":
+                        menuItems.Add("Kho và Nhập hàng", Storage_Click);
+                        break;
+
+                    case "F06":
+                        menuItems.Add("Sản phẩm", Product_Click);
+                        break;
+
+                    case "F07":
+                        menuItems.Add("Quản lý nhà cung cấp", Supplier_Click);
+                        break;
+
+                    case "F08":
+                        menuItems.Add("Khách hàng", Customers_Click);
+                        break;
+
+                    case "F09":
+                        menuItems.Add("Nhân viên", Employee_Click);
+                        break;
+
+                    case "F10":
+                        menuItems.Add("Tài khoản", Account_Click);
+                        break;
+
+                    case "F11":
+                        menuItems.Add("Phân quyền", Permission_Click);
+                        break;
+
+                    case "F12":
+                        menuItems.Add("Thống kê", Statistics_Click);
+                        break;
+
+                    case "F13":
+                        menuItems.Add("Giá sân", PriceRule_Click);
+                        break;
+                }
+            }
             menuManager.CreateMenuButtons(menuPanel, menuItems);
         }
 
@@ -81,6 +158,11 @@ namespace BadmintonCourtManagement.GUI
             MessageBox.Show("Hóa đơn clicked!");
         }
 
+        private void Supplier_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Nhà cung cấp clicked!");
+        }
+
         private void Sell_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Bán hàng clicked!");
@@ -97,6 +179,11 @@ namespace BadmintonCourtManagement.GUI
         {
             OpenChildPanel(new CourtManagementGUI(currentAccount));
             //MessageBox.Show("Quản lý sân clicked!");
+        }
+
+        private void PriceRule_Click(object sender, EventArgs e)
+        {
+            OpenChildPanel(new PriceRuleGUI(currentAccount));
         }
 
         private void Customers_Click(object sender, EventArgs e)
