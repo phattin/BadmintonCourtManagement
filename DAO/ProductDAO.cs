@@ -146,8 +146,8 @@ namespace BadmintonCourtManagement.DAO
         // update
         public bool UpdateProduct(ProductDTO product)
         {
-            string query = "UPDATE product SET ProductName = @ProductName, Producing = @Producing, Quantity = @Quantity, " +
-                           "BrandId = @BrandId, TypeId = @TypeId WHERE ProductId = @ProductId AND IsDeleted = 0";
+            string query = "UPDATE product SET ProductName = @ProductName, ProductId = @ProductId, Quantity = @Quantity, " +
+                           "BrandId = @BrandId, TypeId = @TypeId, ProductImg = @ProductImg WHERE ProductId = @ProductId AND IsDeleted = 0";
             try
             {
                 db.OpenConnection();

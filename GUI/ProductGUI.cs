@@ -249,29 +249,31 @@ namespace BadmintonCourtManagement.GUI
             // };
 
             // Sự kiện Sửa
-            // btnEdit.Click += (s, e) =>
-            // {
-            //     Form dialog = new Form()
-            //     {
-            //         Text = string.Empty, // bỏ tiêu đề
-            //         FormBorderStyle = FormBorderStyle.FixedDialog,
-            //         StartPosition = FormStartPosition.CenterParent,
-            //         Size = new Size(450, 450),
-            //         MaximizeBox = false,
-            //         MinimizeBox = false,
-            //         ShowInTaskbar = false
-            //     };
+            btnEdit.Click += (s, e) =>
+            {
+                var brands = LoadBrands();
+                var types = LoadTypes();
 
-            //     var editCourtGUI = new EditCourtGUI(courtDTO);
-            //     editCourtGUI.Dock = DockStyle.Fill;
+                Form dialog = new Form()
+                {
+                    Text = "Sửa sản phẩm",
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent,
+                    Size = new Size(600, 700),
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    ShowInTaskbar = false
+                };
 
-            //     dialog.Controls.Add(editCourtGUI);
+                var updateForm = new ProductUpdateGUI { Dock = DockStyle.Fill };
+                updateForm.LoadProduct(productDTO, brands, types);
 
-            //     dialog.ShowDialog();
+                dialog.Controls.Add(updateForm);
+                dialog.ShowDialog();
 
-            //     ReloadCourtList(); // reload danh sách sau khi đóng dialog
-            // };
-
+                // Sau khi đóng form sửa → reload danh sách
+                ReloadProductList();
+            };
 
             buttonPanel.Controls.Add(btnDetail);
             buttonPanel.Controls.Add(btnEdit);
@@ -285,6 +287,13 @@ namespace BadmintonCourtManagement.GUI
             panel.Controls.Add(tlProduct);
 
             return panel;
+        }
+        private void ReloadProductList()
+        {
+            ProductBUS productBus = new ProductBUS();
+            productList = productBus.GetAllProducts();
+            page = 0;
+            LoadProducts(productList);
         }
 
         // Pagination buttons
