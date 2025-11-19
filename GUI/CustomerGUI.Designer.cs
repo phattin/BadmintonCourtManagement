@@ -212,7 +212,7 @@
             this.paginationPanel.BackColor = Color.FromArgb(239, 248, 230);
             this.paginationPanel.Controls.Add(this.btnExtraPrevious);
             this.paginationPanel.Controls.Add(this.btnPrevious);
-            this.paginationPanel.Controls.Add(this.lblPageInfo);
+            // this.paginationPanel.Controls.Add(this.lblPageInfo);
             this.paginationPanel.Controls.Add(this.btnNext);
             this.paginationPanel.Controls.Add(this.btnExtraNext);
 

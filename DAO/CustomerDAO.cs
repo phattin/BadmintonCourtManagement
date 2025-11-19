@@ -212,5 +212,26 @@ namespace BadmintonCourtManagement.DAO
             }
             return nextId;
         } 
+        public bool IsPhoneExists(string phone)
+        {
+            string query = "SELECT COUNT(*) FROM customer WHERE Phone = @Phone AND IsDeleted = 0";
+            int count = 0;
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Phone", phone);
+                count = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error checking phone existence: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return count > 0;
+        }
     }
 }

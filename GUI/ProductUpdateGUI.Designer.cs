@@ -184,7 +184,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // btnSave
             // 
-            btnSave.BackColor = Color.FromArgb(0, 142, 123);
+            btnSave.BackColor = Color.FromArgb(64, 64, 64);
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -200,7 +200,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // btnCancel
             // 
-            btnCancel.BackColor = Color.FromArgb(220, 53, 69);
+            btnCancel.BackColor = Color.FromArgb(64, 64, 64);
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -216,7 +216,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // btnChooseImage
             // 
-            btnChooseImage.BackColor = Color.FromArgb(0, 123, 255);
+            btnChooseImage.BackColor = Color.FromArgb(64, 64, 64);
             btnChooseImage.FlatAppearance.BorderSize = 0;
             btnChooseImage.FlatStyle = FlatStyle.Flat;
             btnChooseImage.Font = new Font("Segoe UI", 10F, FontStyle.Bold);

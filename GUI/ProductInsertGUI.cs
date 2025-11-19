@@ -66,6 +66,7 @@ namespace GUI
                     File.Copy(sourceFilePath, destFilePath, true);
 
                     lbl_image.Text = fileName;
+                    lbl_image.ForeColor = Color.Green;
                 }
                 catch (Exception ex)
                 {
@@ -159,6 +160,11 @@ namespace GUI
             public string? Value { get; set; }
 
             public override string ToString() => Text ?? "";
+        }
+
+        private void tableLayout_storeItem_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

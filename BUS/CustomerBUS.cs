@@ -57,5 +57,9 @@ namespace BadmintonCourtManagement.BUS
         {
             return dao.GetNextId();
         }
+        public bool IsPhoneExists(string phone)
+        {
+            return dao.IsPhoneExists(phone);
+        }
     }
 }
