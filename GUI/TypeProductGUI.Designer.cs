@@ -1,6 +1,6 @@
-﻿namespace BadmintonCourtManagement.GUI
+namespace BadmintonCourtManagement.GUI
 {
-    partial class CustomerGUI
+    partial class TypeProductGUI
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(storageGUI));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(storageGUI));
             lblTitle = new Label();
             customPanel1 = new CustomPanel();
             pCustomerList = new TableLayoutPanel();
@@ -59,7 +59,7 @@
             lblTitle.Padding = new Padding(12, 14, 12, 14);
             lblTitle.Size = new Size(340, 73);
             lblTitle.TabIndex = 5;
-            lblTitle.Text = "Quản lý khách hàng";
+            lblTitle.Text = "Quản lý loại sản phẩm";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             lblTitle.UseWaitCursor = true;
             // 
@@ -116,7 +116,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
+            // pictureBox1.Click += pictureBox1_Click;
             // 
             // customPanel3
             // 
@@ -151,7 +151,7 @@
             txtSearch.Margin = new Padding(4, 4, 4, 4);
             txtSearch.Multiline = true;
             txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "Tìm kiếm khách hàng";
+            txtSearch.PlaceholderText = "Tìm kiếm loại sản phẩm";
             txtSearch.Size = new Size(588, 30);
             txtSearch.TabIndex = 0;
             txtSearch.TextChanged += txtSearch_TextChanged;
@@ -165,7 +165,7 @@
             drPanelCustomer.Dock = DockStyle.Fill;
             drPanelCustomer.Location = new Point(0, 0);
             drPanelCustomer.Margin = new Padding(4, 4, 4, 4);
-            drPanelCustomer.Name = "drPanelCustomer";
+            drPanelCustomer.Name = "lblAddTypeProduct";
             drPanelCustomer.Size = new Size(1554, 958);
             drPanelCustomer.TabIndex = 0;
             // 
@@ -179,13 +179,13 @@
             lblAddCustomer.ForeColor = Color.White;
             lblAddCustomer.Location = new Point(1264, 19);
             lblAddCustomer.Margin = new Padding(4, 0, 4, 0);
-            lblAddCustomer.Name = "lblAddCustomer";
+            lblAddCustomer.Name = "lblAddTypeProduct";
+            lblAddCustomer.Text = "Thêm loại sản phẩm";
             lblAddCustomer.Padding = new Padding(12, 14, 12, 16);
             lblAddCustomer.Size = new Size(238, 62);
             lblAddCustomer.TabIndex = 7;
-            lblAddCustomer.Text = "Thêm khách hàng";
             lblAddCustomer.TextAlign = ContentAlignment.MiddleCenter;
-            lblAddCustomer.Click += lblAddCustomer_Click;
+            lblAddCustomer.Click += lblAddTypeProduct_Click;
             // 
             // CustomerGUI
             // 
@@ -194,82 +194,76 @@
             BackColor = Color.White;
             Controls.Add(drPanelCustomer);
             Margin = new Padding(4, 5, 4, 5);
-            Name = "CustomerGUI";
+            Name = "TypeProductGUI";
             Size = new Size(1554, 958);
-            Load += CustomerGUI_Load;
+            Load += TypeProducrGUI_Load;
             // 
             // paginationPanel
             // 
-            this.paginationPanel = new Panel();
-            this.btnExtraPrevious = new Button();
-            this.btnPrevious = new Button();
-            this.btnNext = new Button();
-            this.btnExtraNext = new Button();
-            this.lblPageInfo = new Label();
-
-            this.paginationPanel.Dock = DockStyle.Bottom;
-            this.paginationPanel.Height = 81;
-            this.paginationPanel.BackColor = Color.FromArgb(239, 248, 230);
-            this.paginationPanel.Controls.Add(this.btnExtraPrevious);
-            this.paginationPanel.Controls.Add(this.btnPrevious);
+            paginationPanel = new Panel();
+            btnExtraPrevious = new Button();
+            btnPrevious = new Button();
+            btnNext = new Button();
+            btnExtraNext = new Button();
+            lblPageInfo = new Label();
+            paginationPanel.Dock = DockStyle.Bottom;
+            paginationPanel.Height = 81;
+            paginationPanel.BackColor = Color.FromArgb(239, 248, 230);
+            paginationPanel.Controls.Add(btnExtraPrevious);
+            paginationPanel.Controls.Add(btnPrevious);
             // this.paginationPanel.Controls.Add(this.lblPageInfo);
-            this.paginationPanel.Controls.Add(this.btnNext);
-            this.paginationPanel.Controls.Add(this.btnExtraNext);
-
+            paginationPanel.Controls.Add(btnNext);
+            paginationPanel.Controls.Add(btnExtraNext);
             // Nút << (Trang đầu)
-            this.btnExtraPrevious.Anchor = AnchorStyles.None;
-            this.btnExtraPrevious.BackColor = Color.Transparent;
-            this.btnExtraPrevious.Cursor = Cursors.Hand;
-            this.btnExtraPrevious.FlatAppearance.BorderSize = 0;
-            this.btnExtraPrevious.FlatStyle = FlatStyle.Flat;
-            this.btnExtraPrevious.Image = (Image)resources.GetObject("extraPreviousButton.Image");
-            this.btnExtraPrevious.Location = new Point(433, 13);
-            this.btnExtraPrevious.Size = new Size(60, 58);
-            this.btnExtraPrevious.TabIndex = 13;
-            this.btnExtraPrevious.UseVisualStyleBackColor = false;
-            this.btnExtraPrevious.Click += btnExtraPrevious_Click;
-
+            btnExtraPrevious.Anchor = AnchorStyles.None;
+            btnExtraPrevious.BackColor = Color.Transparent;
+            btnExtraPrevious.Cursor = Cursors.Hand;
+            btnExtraPrevious.FlatAppearance.BorderSize = 0;
+            btnExtraPrevious.FlatStyle = FlatStyle.Flat;
+            btnExtraPrevious.Image = (Image)resources.GetObject("extraPreviousButton.Image");
+            btnExtraPrevious.Location = new Point(433, 13);
+            btnExtraPrevious.Size = new Size(60, 58);
+            btnExtraPrevious.TabIndex = 13;
+            btnExtraPrevious.UseVisualStyleBackColor = false;
+            btnExtraPrevious.Click += btnExtraPrevious_Click;
             // Nút < (Trang trước)
-            this.btnPrevious.Anchor = AnchorStyles.None;
-            this.btnPrevious.BackColor = Color.Transparent;
-            this.btnPrevious.Cursor = Cursors.Hand;
-            this.btnPrevious.FlatAppearance.BorderSize = 0;
-            this.btnPrevious.FlatStyle = FlatStyle.Flat;
-            this.btnPrevious.Image = (Image)resources.GetObject("previousButton.Image");
-            this.btnPrevious.Location = new Point(523, 13);
-            this.btnPrevious.Size = new Size(60, 58);
-            this.btnPrevious.TabIndex = 14;
-            this.btnPrevious.UseVisualStyleBackColor = false;
-            this.btnPrevious.Click += btnPrevious_Click;
-            
+            btnPrevious.Anchor = AnchorStyles.None;
+            btnPrevious.BackColor = Color.Transparent;
+            btnPrevious.Cursor = Cursors.Hand;
+            btnPrevious.FlatAppearance.BorderSize = 0;
+            btnPrevious.FlatStyle = FlatStyle.Flat;
+            btnPrevious.Image = (Image)resources.GetObject("previousButton.Image");
+            btnPrevious.Location = new Point(523, 13);
+            btnPrevious.Size = new Size(60, 58);
+            btnPrevious.TabIndex = 14;
+            btnPrevious.UseVisualStyleBackColor = false;
+            btnPrevious.Click += btnPrevious_Click;
             // Nút > (Trang sau)
-            this.btnNext.Anchor = AnchorStyles.None;
-            this.btnNext.BackColor = Color.Transparent;
-            this.btnNext.Cursor = Cursors.Hand;
-            this.btnNext.FlatAppearance.BorderSize = 0;
-            this.btnNext.FlatStyle = FlatStyle.Flat;
-            this.btnNext.Image = (Image)resources.GetObject("nextButton.Image");
-            this.btnNext.Location = new Point(607, 13);
-            this.btnNext.Size = new Size(60, 58);
-            this.btnNext.TabIndex = 15;
-            this.btnNext.UseVisualStyleBackColor = false;
-            this.btnNext.Click += btnNext_Click;
-
+            btnNext.Anchor = AnchorStyles.None;
+            btnNext.BackColor = Color.Transparent;
+            btnNext.Cursor = Cursors.Hand;
+            btnNext.FlatAppearance.BorderSize = 0;
+            btnNext.FlatStyle = FlatStyle.Flat;
+            btnNext.Image = (Image)resources.GetObject("nextButton.Image");
+            btnNext.Location = new Point(607, 13);
+            btnNext.Size = new Size(60, 58);
+            btnNext.TabIndex = 15;
+            btnNext.UseVisualStyleBackColor = false;
+            btnNext.Click += btnNext_Click;
             // Nút >> (Trang cuối)
-            this.btnExtraNext.Anchor = AnchorStyles.None;
-            this.btnExtraNext.BackColor = Color.Transparent;
-            this.btnExtraNext.Cursor = Cursors.Hand;
-            this.btnExtraNext.FlatAppearance.BorderSize = 0;
-            this.btnExtraNext.FlatStyle = FlatStyle.Flat;
-            this.btnExtraNext.Image = (Image)resources.GetObject("extraNextButton.Image");
-            this.btnExtraNext.Location = new Point(697, 13);
-            this.btnExtraNext.Size = new Size(60, 58);
-            this.btnExtraNext.TabIndex = 16;
-            this.btnExtraNext.UseVisualStyleBackColor = false;
-            this.btnExtraNext.Click += btnExtraNext_Click;
-
+            btnExtraNext.Anchor = AnchorStyles.None;
+            btnExtraNext.BackColor = Color.Transparent;
+            btnExtraNext.Cursor = Cursors.Hand;
+            btnExtraNext.FlatAppearance.BorderSize = 0;
+            btnExtraNext.FlatStyle = FlatStyle.Flat;
+            btnExtraNext.Image = (Image)resources.GetObject("extraNextButton.Image");
+            btnExtraNext.Location = new Point(697, 13);
+            btnExtraNext.Size = new Size(60, 58);
+            btnExtraNext.TabIndex = 16;
+            btnExtraNext.UseVisualStyleBackColor = false;
+            btnExtraNext.Click += btnExtraNext_Click;
             // Thêm paginationPanel vào customPanel1 (chứa pCustomerList)
-            this.customPanel1.Controls.Add(this.paginationPanel);
+            customPanel1.Controls.Add(paginationPanel);
             customPanel1.ResumeLayout(false);
             customPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

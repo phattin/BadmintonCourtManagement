@@ -56,7 +56,7 @@ namespace BadmintonCourtManagement.GUI
                 var allCustomers = customerBUS.GetAllCustomers(); // Lấy toàn bộ danh sách khách hàng
 
                 if (allCustomers == null || !allCustomers.Any())
-                    return "CUS0001";
+                    return "CU0001";
 
                 // Lọc các ID hợp lệ có dạng CUSxxxx
                 var validIds = allCustomers
@@ -106,7 +106,7 @@ namespace BadmintonCourtManagement.GUI
             }
 
             // Kiểm tra trùng số điện thoại (trừ chính nó khi Update)
-            var existing = customerBUS.GetCustomerById(phone);
+            var existing = customerBUS.GetCustomerByPhone(phone);
             if (existing != null && existing.CustomerId != customerId)
             {
                 MessageBox.Show("Số điện thoại này đã được sử dụng bởi khách hàng khác.", "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Warning);

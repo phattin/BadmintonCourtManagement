@@ -41,7 +41,8 @@ namespace BadmintonCourtManagement.GUI
                 { "Kho và Nhập hàng", Storage_Click },
                 { "Quản lý sân", ManageCourts_Click },
                 { "Đặt sân", BookCourt_Click },
-                { "Thống kê", Statistics_Click }
+                { "Thống kê", Statistics_Click },
+                { "Loại sản phẩm", TypeProduct_Click }
             };
 
             menuManager.CreateMenuButtons(menuPanel, menuItems);
@@ -124,6 +125,10 @@ namespace BadmintonCourtManagement.GUI
         {
             OpenChildPanel(new StatisticGUI(currentAccount));
         }
+        private void TypeProduct_Click(object sender, EventArgs e)
+        {
+            OpenChildPanel(new TypeProductGUI(currentAccount));
+        }
 
         private void MainLayout_Load(object sender, EventArgs e)
         {
@@ -139,5 +144,6 @@ namespace BadmintonCourtManagement.GUI
         {
 
         }
+
     }
 }
