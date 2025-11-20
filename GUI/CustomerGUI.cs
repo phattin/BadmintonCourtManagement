@@ -17,6 +17,12 @@ namespace BadmintonCourtManagement.GUI
         private AccountDTO currentAccount;
         private CustomerBUS customerBUS;
 
+        // Biến phân trang
+        private int page = 0;
+        private const int itemPerPage = 8; // 2 hàng x 4 cột = 8 khách hàng/trang
+        private int totalPages = 0;
+        private List<CustomerDTO> currentCustomerList; // Danh sách hiện tại (tìm kiếm hoặc tất cả)
+
         public CustomerGUI()
         {
             InitializeComponent();
@@ -28,6 +34,7 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
             customerBUS = new CustomerBUS();
             LoadCustomers(customerBUS.GetAllCustomers());
+            
         }
 
         private void CustomerGUI_Load(object sender, EventArgs e)
@@ -38,6 +45,7 @@ namespace BadmintonCourtManagement.GUI
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             string searchText = txtSearch.Text.Trim();
+            page = 0; // Reset trang khi tìm kiếm
             if (string.IsNullOrEmpty(searchText))
             {
                 LoadCustomers(customerBUS.GetAllCustomers());
@@ -50,7 +58,9 @@ namespace BadmintonCourtManagement.GUI
 
         private void btnClearSearch_Click(object sender, EventArgs e)
         {
-            txtSearch.Text = string.Empty;
+           txtSearch.Text = string.Empty;
+            page = 0;
+            LoadCustomers(customerBUS.GetAllCustomers());
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -80,29 +90,50 @@ namespace BadmintonCourtManagement.GUI
 
         private void LoadCustomers(List<CustomerDTO> danhSachKhachHang)
         {
+            currentCustomerList = danhSachKhachHang ?? new List<CustomerDTO>();
+            totalPages = (int)Math.Ceiling((double)currentCustomerList.Count / itemPerPage);
+            if (totalPages == 0) totalPages = 1;
+            if (page >= totalPages) page = totalPages - 1;
+            if (page < 0) page = 0;
+
             pCustomerList.Controls.Clear();
+            pCustomerList.RowCount = 2; // Luôn 2 hàng
             pCustomerList.ColumnCount = 4;
-            pCustomerList.RowCount = (int)Math.Ceiling(danhSachKhachHang.Count / 4.0);
+            pCustomerList.Height = customPanel1.Height - paginationPanel.Height - customPanel2.Height - 40; // Adjust height to account for pagination
+
+            // Xóa style cũ
+            pCustomerList.ColumnStyles.Clear();
+            pCustomerList.RowStyles.Clear();
 
             for (int i = 0; i < 4; i++)
                 pCustomerList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
 
-            for (int j = 0; j < pCustomerList.RowCount; j++)
-                pCustomerList.RowStyles.Add(new RowStyle(SizeType.Percent, 100F / pCustomerList.RowCount));
+            for (int j = 0; j < 2; j++)
+                pCustomerList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
-            int index = 0;
-            foreach (CustomerDTO customerDTO in danhSachKhachHang)
+            int startIndex = page * itemPerPage;
+            int endIndex = Math.Min(startIndex + itemPerPage, currentCustomerList.Count);
+
+            for (int i = startIndex; i < endIndex; i++)
             {
+                var customerDTO = currentCustomerList[i];
                 var panel = CreateCustomerPanel(customerDTO);
-                int row = index / 4;
-                int col = index % 4;
+                int row = (i - startIndex) / 4;
+                int col = (i - startIndex) % 4;
                 pCustomerList.Controls.Add(panel, col, row);
-                index++;
             }
+
+            // Position pagination panel
+            paginationPanel.Location = new Point(0, customPanel1.Height - paginationPanel.Height);
+            paginationPanel.Width = customPanel1.Width;
+            
+            // Cập nhật phân trang
+            UpdatePaginationInfo();
         }
 
         private void ReloadCustomerList()
         {
+            page = 0; // Reset về trang đầu
             LoadCustomers(customerBUS.GetAllCustomers());
         }
 
@@ -264,5 +295,64 @@ namespace BadmintonCourtManagement.GUI
 
             return panel;
         }
+
+        private void UpdatePaginationInfo()
+        {
+            // lblPageInfo.Text = $"Trang {page + 1} / {totalPages}";
+
+            // Center the pagination controls
+            int totalWidth = 400; // Total width of all controls
+            int startX = (paginationPanel.Width - totalWidth) / 2;
+            
+            btnExtraPrevious.Location = new Point(startX, 13);
+            btnPrevious.Location = new Point(startX + 70, 13);
+            lblPageInfo.Location = new Point(startX + 140, 28);
+            btnNext.Location = new Point(startX + 260, 13);
+            btnExtraNext.Location = new Point(startX + 330, 13);
+
+            // Update button states
+            btnExtraPrevious.Enabled = page > 0;
+            btnPrevious.Enabled = page > 0;
+            btnNext.Enabled = page < totalPages - 1;
+            btnExtraNext.Enabled = page < totalPages - 1;
+        }
+
+        private void btnExtraPrevious_Click(object sender, EventArgs e)
+        {
+            if (page != 0)
+            {
+                page = 0;
+                LoadCustomers(currentCustomerList);
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (page > 0)
+            {
+                page--;
+                LoadCustomers(currentCustomerList);
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (page < totalPages - 1)
+            {
+                page++;
+                LoadCustomers(currentCustomerList);
+            }
+        }
+
+        private void btnExtraNext_Click(object sender, EventArgs e)
+        {
+            if (page != totalPages - 1)
+            {
+                page = totalPages - 1;
+                LoadCustomers(currentCustomerList);
+            }
+        }
+
+        
     }
 }
