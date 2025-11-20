@@ -53,31 +53,41 @@ namespace BadmintonCourtManagement.GUI
         {
             try
             {
-                var allCustomers = customerBUS.GetAllCustomers(); // Lấy toàn bộ danh sách khách hàng
-
+                var allCustomers = customerBUS.GetAllCustomers();
                 if (allCustomers == null || !allCustomers.Any())
                     return "CU0001";
 
-                // Lọc các ID hợp lệ có dạng CUSxxxx
-                var validIds = allCustomers
-                    .Select(c => c.CustomerId)
-                    .Where(id => id != null && id.StartsWith("CU") && id.Length == 7)
-                    .Select(id => id.Substring(3)) // Lấy phần số: "0001"
-                    .Where(numStr => int.TryParse(numStr, out _))
-                    .Select(numStr => int.Parse(numStr))
+                // Chuẩn hóa: chấp nhận cả "CU" và "CUS" để tránh lỗi dữ liệu cũ
+                var validNumbers = allCustomers
+                    .Where(c => c.CustomerId != null)
+                    .Select(c => c.CustomerId.Trim().ToUpper())
+                    .Where(id => id.StartsWith("CU") && id.Length >= 4) // ít nhất CU + số
+                    .Select(id => 
+                    {
+                        string numPart = id.StartsWith("CU") ? id.Substring(3) : id.Substring(2);
+                        return int.TryParse(numPart, out int num) ? num : -1;
+                    })
+                    .Where(num => num >= 0)
                     .ToList();
 
-                if (!validIds.Any())
-                    return "CU0001";
-
-                int maxNumber = validIds.Max();
-                int nextNumber = maxNumber + 1;
+                int nextNumber;
+                if (!validNumbers.Any())
+                {
+                    nextNumber = 1;
+                }
+                else
+                {
+                    int max = validNumbers.Max();
+                    nextNumber = max + 1;
+                }
 
                 return $"CU{nextNumber:0000}";
             }
-            catch
+            catch (Exception ex)
             {
-                // Nếu có lỗi (ví dụ DB chưa sẵn sàng), trả về tạm thời
+                // Log lỗi nếu cần
+                MessageBox.Show("Lỗi tạo mã khách hàng tự động: " + ex.Message);
+                // Vẫn trả về mã tạm dựa trên thời gian để không crash
                 return "CU" + DateTime.Now.ToString("yyyyMMddHHmmss");
             }
         }

@@ -84,7 +84,7 @@ namespace BadmintonCourtManagement.GUI
             pCustomerList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pCustomerList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pCustomerList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pCustomerList.Location = new Point(54, 126);
+            pCustomerList.Location = new Point(54, 100);
             pCustomerList.Margin = new Padding(2);
             pCustomerList.Name = "pCustomerList";
             pCustomerList.RowCount = 2;

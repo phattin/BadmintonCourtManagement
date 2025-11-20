@@ -66,10 +66,8 @@ namespace BadmintonCourtManagement.GUI
                 ShowInTaskbar = false
             };
 
-            // var formTypeProduct = new FormTypeProductGUI("Insert", typeProductBUS.GetNextId(), currentAccount);
-            // formTypeProduct.Dock = DockStyle.Fill;
-            // dialog.Controls.Add(formTypeProduct);
-            dialog.ShowDialog();
+            var formTypeProduct = new FormTypeProduct("Insert", null, currentAccount);
+            formTypeProduct.ShowDialog();
             ReloadTypeProductList();
         }
 
@@ -238,11 +236,10 @@ namespace BadmintonCourtManagement.GUI
                     ShowInTaskbar = false
                 };
 
-                // var form = new FormTypeProductGUI("Update", dto.TypeProductId, currentAccount);
-                // form.Dock = DockStyle.Fill;
-                // dialog.Controls.Add(form);
-                dialog.ShowDialog();
-                ReloadTypeProductList();
+            // Trong btnEdit.Click
+            var form = new FormTypeProduct("Update", dto.TypeProductId, currentAccount);
+            form.ShowDialog();
+            ReloadTypeProductList();
             };
 
             buttonPanel.Controls.Add(btnDelete);
