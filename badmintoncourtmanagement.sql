@@ -82,7 +82,7 @@ CREATE TABLE `billimportproductdetail` (
 CREATE TABLE `billproduct` (
   `BillProductId` varchar(10) NOT NULL,
   `EmployeeId` varchar(10) NOT NULL,
-  `CustomerId` varchar(10) NOT NULL,
+  `CustomerId` varchar(10) DEFAULT NULL,
   `TotalPrice` double NOT NULL,
   `DateCreated` datetime NOT NULL,
   `Status` enum('paid','unpaid') DEFAULT NULL
