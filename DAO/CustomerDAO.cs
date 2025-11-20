@@ -212,5 +212,42 @@ namespace BadmintonCourtManagement.DAO
             }
             return nextId;
         } 
+       public CustomerDTO GetCustomerByPhone(string phone)
+        {
+            string query = "SELECT CustomerId, CustomerName, Phone, IsDeleted " +
+                        "FROM customer WHERE Phone = @Phone AND IsDeleted = 0";
+            
+            CustomerDTO customer = null;
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Phone", phone);
+                
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        customer = new CustomerDTO
+                        {
+                            CustomerId = reader["CustomerId"].ToString(),
+                            CustomerName = reader["CustomerName"].ToString(),
+                            CustomerPhone = reader["Phone"].ToString(),
+                            IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving customer by phone: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            
+            return customer; // trả về null nếu không tìm thấy
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 90F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 78F));
-            tableLayoutPanel1.Size = new Size(730, 518);
+            tableLayoutPanel1.Size = new Size(730, 418);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -184,7 +184,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // btnSave
             // 
-            btnSave.BackColor = Color.FromArgb(0, 142, 123);
+            btnSave.BackColor = Color.FromArgb(64, 64, 64);
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -200,7 +200,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // btnCancel
             // 
-            btnCancel.BackColor = Color.FromArgb(220, 53, 69);
+            btnCancel.BackColor = Color.FromArgb(64, 64, 64);
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -216,7 +216,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // btnChooseImage
             // 
-            btnChooseImage.BackColor = Color.FromArgb(0, 123, 255);
+            btnChooseImage.BackColor = Color.FromArgb(64, 64, 64);
             btnChooseImage.FlatAppearance.BorderSize = 0;
             btnChooseImage.FlatStyle = FlatStyle.Flat;
             btnChooseImage.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -237,7 +237,7 @@ namespace BadmintonCourtManagement.GUI
             Controls.Add(tableLayoutPanel1);
             Margin = new Padding(4, 5, 4, 5);
             Name = "ProductUpdateGUI";
-            Size = new Size(730, 518);
+            Size = new Size(730, 418);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picProduct).EndInit();
