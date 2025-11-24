@@ -226,6 +226,7 @@
             TitleText.TabIndex = 0;
             TitleText.Text = "Chi tiết:";
             TitleText.TextAlign = ContentAlignment.MiddleLeft;
+            TitleText.Click += TitleText_Click;
             // 
             // contextMenuStrip1
             // 
@@ -246,6 +247,7 @@
             MaximizeBox = false;
             Name = "StorageDetailsGUI";
             Padding = new Padding(35, 39, 35, 39);
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Chi tiết kho hàng";
             mainPanel.ResumeLayout(false);
             bodyPanel.ResumeLayout(false);
