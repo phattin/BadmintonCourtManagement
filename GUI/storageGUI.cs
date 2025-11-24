@@ -1,6 +1,7 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
 using GUI.ComponentsGUI;
+using GUI.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -85,6 +86,7 @@ namespace BadmintonCourtManagement.GUI
                             cardButton.MouseLeave += buttonLeave;
                             cardButton.Click += cardButton_Click;
 
+                            Additional additional = new Additional();
                             cardBody.Dock = DockStyle.Top;
                             cardBody.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardBody.Name = "cardBody";
@@ -92,7 +94,7 @@ namespace BadmintonCourtManagement.GUI
                             cardBody.TabIndex = 4;
                             cardBody.Text = "Mã sản phẩm: " + storageList[i].ProductId
                                 + "\r\nSố lượng: " + storageList[i].Quantity
-                                + "\r\nGiá: " + storageList[i].Price + "đ"
+                                + "\r\nGiá: " + additional.beautyMoney(storageList[i].Price)
                                 + "\r\nNgày: " + storageList[i].CreatedAt.ToString("dd/MM/yyyy");
                             cardBody.TextAlign = ContentAlignment.MiddleCenter;
                             cardBody.Click += cardBody_Click_1;
