@@ -152,8 +152,6 @@ namespace BadmintonCourtManagement.GUI
             statusFilter.Name = "statusFilter";
             statusFilter.Size = new Size(170, 28);
             statusFilter.TabIndex = 3;
-            statusFilter.SelectedIndex = 2; // vì "Tất cả" là phần tử thứ 3 trong danh sách (bắt đầu từ 0)
-
             statusFilter.SelectedIndexChanged += statusFilter_SelectedIndexChanged;
             // 
             // customPanel3
@@ -183,10 +181,9 @@ namespace BadmintonCourtManagement.GUI
             textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox1.ForeColor = Color.Black;
             textBox1.Location = new Point(14, 13);
-            textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Value";
-            textBox1.Size = new Size(454, 24);
+            textBox1.Size = new Size(454, 20);
             textBox1.TabIndex = 0;
             textBox1.TextChanged += textBox1_TextChanged;
             // 

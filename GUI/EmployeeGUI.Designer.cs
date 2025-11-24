@@ -36,20 +36,15 @@
             btnAdd = new Label();
             customPanel1 = new CustomPanel();
             pEmployeeList = new TableLayoutPanel();
-            lblTitle = new Label();
-            customPanel3 = new CustomPanel();
-            textBox1 = new TextBox();
-            btnDelete = new PictureBox();
-            customPanel4 = new CustomPanel();
-            statusFilter = new ComboBox();
-            pictureBox1 = new PictureBox();
             customPanel2 = new CustomPanel();
+            customPanel3 = new CustomPanel();
+            //btnDelete = new PictureBox();
+            textBox1 = new TextBox();
+            lblTitle = new Label();
             customPanel1.SuspendLayout();
-            customPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
-            customPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             customPanel2.SuspendLayout();
+            customPanel3.SuspendLayout();
+            //((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
             SuspendLayout();
             // 
             // extraNextButton
@@ -157,6 +152,53 @@
             pEmployeeList.Size = new Size(927, 329);
             pEmployeeList.TabIndex = 1;
             // 
+            // customPanel2
+            // 
+            customPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
+            customPanel2.BorderRadius = 20;
+            customPanel2.Controls.Add(customPanel3);
+            customPanel2.Location = new Point(0, 0);
+            customPanel2.Name = "customPanel2";
+            customPanel2.Size = new Size(1003, 55);
+            customPanel2.TabIndex = 0;
+            customPanel2.Paint += customPanel2_Paint;
+            // 
+            // customPanel3
+            // 
+            customPanel3.BackColor = Color.White;
+            customPanel3.BorderRadius = 30;
+            //customPanel3.Controls.Add(btnDelete);
+            customPanel3.Controls.Add(textBox1);
+            customPanel3.Location = new Point(13, 9);
+            customPanel3.Margin = new Padding(3, 2, 3, 2);
+            customPanel3.Name = "customPanel3";
+            customPanel3.Size = new Size(455, 38);
+            customPanel3.TabIndex = 1;
+            // 
+            // btnDelete
+            // 
+            //btnDelete.Image = Properties.Resources.X;
+            //btnDelete.Location = new Point(429, 14);
+            //btnDelete.Margin = new Padding(3, 2, 3, 2);
+            //btnDelete.Name = "btnDelete";
+            //btnDelete.Size = new Size(11, 10);
+            //btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
+            //btnDelete.TabIndex = 1;
+            //btnDelete.TabStop = false;
+            // 
+            // textBox1
+            // 
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.ForeColor = Color.Black;
+            textBox1.Location = new Point(12, 10);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Value";
+            textBox1.Size = new Size(397, 20);
+            textBox1.TabIndex = 0;
+            // 
             // lblTitle
             // 
             lblTitle.AutoSize = true;
@@ -172,89 +214,6 @@
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             lblTitle.UseWaitCursor = true;
             // 
-            // customPanel3
-            // 
-            customPanel3.BackColor = Color.White;
-            customPanel3.BorderRadius = 30;
-            customPanel3.Controls.Add(btnDelete);
-            customPanel3.Controls.Add(textBox1);
-            customPanel3.Location = new Point(13, 9);
-            customPanel3.Margin = new Padding(3, 2, 3, 2);
-            customPanel3.Name = "customPanel3";
-            customPanel3.Size = new Size(455, 38);
-            customPanel3.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(12, 10);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Value";
-            textBox1.Size = new Size(397, 18);
-            textBox1.TabIndex = 0;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Image = Properties.Resources.X;
-            btnDelete.Location = new Point(429, 14);
-            btnDelete.Margin = new Padding(3, 2, 3, 2);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(11, 10);
-            btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
-            btnDelete.TabIndex = 1;
-            btnDelete.TabStop = false;
-            // 
-            // customPanel4
-            // 
-            customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            customPanel4.BackColor = Color.White;
-            customPanel4.BorderRadius = 10;
-            customPanel4.Controls.Add(statusFilter);
-            customPanel4.Location = new Point(1573, 16);
-            customPanel4.Margin = new Padding(3, 2, 3, 2);
-            customPanel4.Name = "customPanel4";
-            customPanel4.Size = new Size(149, 23);
-            customPanel4.TabIndex = 2;
-            // 
-            // statusFilter
-            // 
-            statusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
-            statusFilter.FormattingEnabled = true;
-            statusFilter.Items.AddRange(new object[] { "Hoạt động", "Bảo trì", "Tất cả" });
-            statusFilter.Location = new Point(0, 0);
-            statusFilter.Name = "statusFilter";
-            statusFilter.Size = new Size(149, 33);
-            statusFilter.TabIndex = 3;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(1751, 9);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(36, 35);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 3;
-            pictureBox1.TabStop = false;
-            // 
-            // customPanel2
-            // 
-            customPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
-            customPanel2.BorderRadius = 20;
-            customPanel2.Controls.Add(pictureBox1);
-            customPanel2.Controls.Add(customPanel4);
-            customPanel2.Controls.Add(customPanel3);
-            customPanel2.Location = new Point(0, 0);
-            customPanel2.Name = "customPanel2";
-            customPanel2.Size = new Size(1003, 55);
-            customPanel2.TabIndex = 0;
-            customPanel2.Paint += customPanel2_Paint;
-            // 
             // EmployeeGUI
             // 
             AutoScaleDimensions = new SizeF(12F, 25F);
@@ -266,7 +225,7 @@
             Controls.Add(nextButton);
             Controls.Add(extraPreviousButton);
             Controls.Add(previousButton);
-            Controls.Add(btnAdd);
+            //Controls.Add(btnAdd);
             Controls.Add(customPanel1);
             Controls.Add(lblTitle);
             Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -274,12 +233,10 @@
             Name = "EmployeeGUI";
             Size = new Size(1088, 574);
             customPanel1.ResumeLayout(false);
+            customPanel2.ResumeLayout(false);
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
-            customPanel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            customPanel2.ResumeLayout(false);
+            //((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -295,11 +252,8 @@
         private TableLayoutPanel pEmployeeList;
         private Label lblTitle;
         private CustomPanel customPanel2;
-        private PictureBox pictureBox1;
-        private CustomPanel customPanel4;
-        private ComboBox statusFilter;
         private CustomPanel customPanel3;
-        private PictureBox btnDelete;
+        //private PictureBox btnDelete;
         private TextBox textBox1;
     }
 }

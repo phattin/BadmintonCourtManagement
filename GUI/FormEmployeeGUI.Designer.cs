@@ -14,7 +14,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (components != null))      
             {
                 components.Dispose();
             }
@@ -54,6 +54,7 @@
             EmployeeID.TabIndex = 17;
             EmployeeID.Text = "E00001";
             EmployeeID.UseCompatibleTextRendering = true;
+            EmployeeID.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // lblEmployeeID
             // 
@@ -65,12 +66,13 @@
             lblEmployeeID.TabIndex = 16;
             lblEmployeeID.Text = "Mã nhân viên";
             lblEmployeeID.UseCompatibleTextRendering = true;
+            lblEmployeeID.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // btnCancel
             // 
             btnCancel.BackColor = Color.DimGray;
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(203, 406);
+            btnCancel.Location = new Point(203, 440); // Moved further down
             btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(93, 30);
@@ -78,19 +80,21 @@
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
+            btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             // 
             // btnAccept
             // 
             btnAccept.BackColor = Color.IndianRed;
             btnAccept.ForeColor = Color.White;
-            btnAccept.Location = new Point(74, 406);
+            btnAccept.Location = new Point(74, 440); // Moved further down      
             btnAccept.Margin = new Padding(3, 2, 3, 2);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(93, 30);
+            btnAccept.Size = new Size(93,30);
             btnAccept.TabIndex = 14;
             btnAccept.Text = "Xác nhận";
             btnAccept.UseVisualStyleBackColor = false;
             btnAccept.Click += btnAccept_Click;
+            btnAccept.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             // 
             // txtEmployeeName
             // 
@@ -100,6 +104,7 @@
             txtEmployeeName.Name = "txtEmployeeName";
             txtEmployeeName.Size = new Size(183, 22);
             txtEmployeeName.TabIndex = 12;
+            txtEmployeeName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             // 
             // lblEmployeeSDT
             // 
@@ -111,6 +116,7 @@
             lblEmployeeSDT.TabIndex = 11;
             lblEmployeeSDT.Text = "Số điện thoại";
             lblEmployeeSDT.UseCompatibleTextRendering = true;
+            lblEmployeeSDT.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // lblEmployeeName
             // 
@@ -122,6 +128,7 @@
             lblEmployeeName.TabIndex = 10;
             lblEmployeeName.Text = "Tên nhân viên";
             lblEmployeeName.UseCompatibleTextRendering = true;
+            lblEmployeeName.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // Title
             // 
@@ -133,6 +140,7 @@
             Title.TabIndex = 9;
             Title.Text = "Sửa nhân viên";
             Title.UseCompatibleTextRendering = true;
+            Title.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             // 
             // txtEmployeeAddress
             // 
@@ -142,6 +150,7 @@
             txtEmployeeAddress.Name = "txtEmployeeAddress";
             txtEmployeeAddress.Size = new Size(183, 22);
             txtEmployeeAddress.TabIndex = 20;
+            txtEmployeeAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             // 
             // lblEmployeeRole
             // 
@@ -153,6 +162,7 @@
             lblEmployeeRole.TabIndex = 19;
             lblEmployeeRole.Text = "Vai trò";
             lblEmployeeRole.UseCompatibleTextRendering = true;
+            lblEmployeeRole.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // lblEmployeeAddress
             // 
@@ -164,6 +174,7 @@
             lblEmployeeAddress.TabIndex = 18;
             lblEmployeeAddress.Text = "Địa chỉ";
             lblEmployeeAddress.UseCompatibleTextRendering = true;
+            lblEmployeeAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             // 
             // txtEmployeeSDT
             // 
@@ -173,6 +184,7 @@
             txtEmployeeSDT.Name = "txtEmployeeSDT";
             txtEmployeeSDT.Size = new Size(183, 22);
             txtEmployeeSDT.TabIndex = 21;
+            txtEmployeeSDT.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             // 
             // RoleOption
             // 
@@ -182,6 +194,7 @@
             RoleOption.Name = "RoleOption";
             RoleOption.Size = new Size(183, 23);
             RoleOption.TabIndex = 22;
+            RoleOption.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             // 
             // FormEmployeeGUI
             // 
