@@ -185,7 +185,9 @@ INSERT INTO `brand` (`BrandId`, `BrandName`) VALUES
 ('BR00001', 'Yonex'),
 ('BR00002', 'Victor'),
 ('BR00003', 'Li-Ning'),
-('BR00004', 'Kumpoo');
+('BR00004', 'Kumpoo'),
+('BR00005', 'Mizuno'),
+('BR00006', 'Adidas');
 
 -- --------------------------------------------------------
 
@@ -468,10 +470,15 @@ INSERT INTO `product` (`ProductId`, `ProductName`, `ProductImg`, `Quantity`, `Br
 ('PD00002', 'Yonex Nanoflare 700', 'yonex-nanoflare-700.png', 15, 'BR00001', 'TP00001', 0),
 ('PD00003', 'Kumpoo Power Control E88L', 'kumpoo-power-control-e88l.png', 10, 'BR00004', 'TP00001', 0),
 ('PD00004', 'Yonex Nanoflare 1000', 'yonex-nanoflare-1000z.png', 8, 'BR00001', 'TP00001', 0),
-('PD00005', 'Yonex Astrox 100 Tour VA', 'yonex-astrox-100-tour-va.png', 9, 'BR00001', 'TP00001', 0),
+('PD00005', 'Yonex Astrox 100 Tour VA', 'yonex-astrox-100-tour-va.png', 0, 'BR00001', 'TP00001', 0),
 ('PD00006', 'Yonex Aerosensa Feather (12pcs)', 'yonex-aerosensa-20.png', 50, 'BR00001', 'TP00002', 0),
-('PD00007', 'Victor Master Shuttle (12pcs)', '', 40, 'BR00002', 'TP00002', 0),
-('PD00008', 'Li-Ning Professional Shuttle (12pcs)', '', 35, 'BR00003', 'TP00002', 0);
+('PD00007', 'Yonex Voltric Z Force II LCW Limited', 'yonex-voltric-z-force-ii-lcw-limited.jpg', 40, 'BR00001', 'TP00001', 0),
+('PD00008', 'Yonex Doura 10', 'yonex-doura-10.png', 35, 'BR00001', 'TP00001', 0),
+('PD00009', 'Yonex ArcSaber 11', 'yonex-arcsaber-11.jpg', 0, 'BR00001', 'TP00001', 0),
+('PD00010', 'Lining Woods N90 III', 'lining-woods-n90-iii.png', 0, 'BR00003', 'TP00001', 0),
+('PD00011', 'Lining Aeronaut 6000', 'lining-aeronaut-6000.jpg', 0, 'BR00003', 'TP00001', 0),
+('PD00012', 'Mizuno Fortius 10 Power', 'mizuno-fortius-10-power.jpg', 0, 'BR00005', 'TP00001', 0),
+('PD00013', 'Adidas Spieler Grip', 'adidas-spieler-grip.jpg', 0, 'BR00006', 'TP00003', 0);
 
 -- --------------------------------------------------------
 

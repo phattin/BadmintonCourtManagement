@@ -1,11 +1,13 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using GUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,17 +16,66 @@ namespace BadmintonCourtManagement.GUI
 {
     public partial class ProductGUI : UserControl
     {
+        private ProductFilterGUI filter; // AI Generated Code
+        private List<ProductDTO> productList;
+        private int page = 0;
+        private int itemPerPage = 8;
+
         public ProductGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
-            List<ProductDTO> products = new List<ProductDTO>();
+            productList = new List<ProductDTO>();
             ProductBUS productBUS = new ProductBUS();
-            products = productBUS.GetAllProducts();
-            LoadProducts(products);
+            productList = productBUS.GetAllProducts();
+            LoadProducts(productList);
+            searchBar.KeyDown += searchEnterEvent;
+        }
+        // private void SetupFilter(ProductFilterGUI filter)
+        // {
+        //     var brands = LoadBrands();
+        //     var types = LoadTypes();
+        //     // MessageBox.Show(brands[0].ToString());
+        //     // MessageBox.Show(types[0].ToString());
+        //     filter.InsertData(brands, types);
+        // }
+
+        private List<BrandDTO> LoadBrands()
+        {
+            BrandBUS brandBus = new BrandBUS();
+            return brandBus.GetAllBrands();
         }
 
-        private void LoadProducts(List<ProductDTO> products)
+
+        private List<TypeProductDTO> LoadTypes()
         {
+            TypeProductBUS typeBus = new TypeProductBUS();
+            return typeBus.GetAllTypeProducts();
+        }
+
+        private void LoadProducts(List<ProductDTO> productList)
+        {
+            // Dispose old images before clearing
+            foreach (Control ctrl in pProductList.Controls)
+            {
+                if (ctrl is CustomPanel panel)
+                {
+                    foreach (Control child in panel.Controls)
+                    {
+                        if (child is TableLayoutPanel tlp)
+                        {
+                            foreach (Control innerCtrl in tlp.Controls)
+                            {
+                                if (innerCtrl is PictureBox pb)
+                                {
+                                    pb.Image?.Dispose();
+                                }
+                            }
+                        }
+                    }
+                }
+                ctrl.Dispose();
+            }
+
             int panelWidth = pProductList.Width;
             int panelHeight = pProductList.Height;
             pProductList.Controls.Clear();
@@ -40,14 +91,26 @@ namespace BadmintonCourtManagement.GUI
             for (int j = 0; j < rows; j++)
                 pProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
-            int index = 0;
-            foreach (ProductDTO productDTO in products)
+            int index = page * itemPerPage;
+            /*
+                        foreach (ProductDTO productDTO in productList)
+                        {
+                            var panel = CreateProductPanel(productDTO);
+                            int row = index / 4;
+                            int col = index % 4;
+                            pProductList.Controls.Add(panel, col, row);
+                            index++;
+                        }
+            */
+            for (int i = index; i < index + itemPerPage; i++)
             {
-                var panel = CreateProductPanel(productDTO);
-                int row = index / 4;
-                int col = index % 4;
-                pProductList.Controls.Add(panel, col, row);
-                index++;
+                if (i < productList.Count && i >= 0)
+                {
+                    var panel = CreateProductPanel(productList[i]);
+                    int row = (i - index) / 4;  // FIXED: was using index instead of (i - index)
+                    int col = (i - index) % 4;  // FIXED: was using index instead of (i - index)
+                    pProductList.Controls.Add(panel, col, row);
+                }
             }
         }
 
@@ -82,49 +145,35 @@ namespace BadmintonCourtManagement.GUI
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            // ===== AI Generated =====
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRoot = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\"));
+            string imagePath = Path.Combine(projectRoot, "Img", "Product", productDTO.ProductImg ?? "DefaultProductImage.jpg");
 
-            string imageFileName = string.IsNullOrWhiteSpace(productDTO.ProductImg) ? 
-                "DefaultProductImage.jpg" : productDTO.ProductImg;
-            string imagePath = string.Concat("Resources\\Img\\Product\\", imageFileName);
+            if (!File.Exists(imagePath))
+            {
+                imagePath = Path.Combine(projectRoot, "Img", "Product", "DefaultProductImage.jpg");
+            }
+            Console.WriteLine(imagePath);
 
-            // MessageBox.Show(productDTO.ProductImg);
-            // MessageBox.Show(imagePath);
-            Image productImage;
-            try
+            byte[] imageData = File.ReadAllBytes(imagePath);
+            if (imageData.Length == 0)
             {
-                if (System.IO.File.Exists(imagePath))
-                {
-                    productImage = Image.FromFile(imagePath);
-                }
-                else
-                {
-                    // Fallback to embedded resource
-                    productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
-                }
+                throw new Exception($"Image file {imagePath} is empty");
             }
-            catch (Exception)
+            Image img;
+            using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
             {
-                // Double fallback in case of any file loading issues
-                productImage = Properties.Resources.DefaultProductImage;
+                img = Image.FromStream(stream);
             }
-            // check if productImage is null
-            {
-                productImage = Image.FromFile(Application.StartupPath + @"\Img\Product\DefaultProductImage.jpg");
-            }
-
-            Bitmap resizedImage = new Bitmap(productImage, new Size(300, 300));
 
             var pictureBox = new PictureBox
             {
-                Image = (Image)resizedImage ?? productImage,
+                Image = new Bitmap(img), // copies the image so we can close the file
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Top,
                 Margin = new Padding(10),
-                Size = new Size(300, 300)
+                Size = new Size(300, 300),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
             };
-
-            // ===== AI Generated =====
 
             // Label tên sản phẩm
             var lblName = new Label
@@ -197,29 +246,31 @@ namespace BadmintonCourtManagement.GUI
             // };
 
             // Sự kiện Sửa
-            // btnEdit.Click += (s, e) =>
-            // {
-            //     Form dialog = new Form()
-            //     {
-            //         Text = string.Empty, // bỏ tiêu đề
-            //         FormBorderStyle = FormBorderStyle.FixedDialog,
-            //         StartPosition = FormStartPosition.CenterParent,
-            //         Size = new Size(450, 450),
-            //         MaximizeBox = false,
-            //         MinimizeBox = false,
-            //         ShowInTaskbar = false
-            //     };
+            btnEdit.Click += (s, e) =>
+            {
+                var brands = LoadBrands();
+                var types = LoadTypes();
 
-            //     var editCourtGUI = new EditCourtGUI(courtDTO);
-            //     editCourtGUI.Dock = DockStyle.Fill;
+                Form dialog = new Form()
+                {
+                    Text = "Sửa sản phẩm",
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent,
+                    Size = new Size(600, 700),
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    ShowInTaskbar = false
+                };
 
-            //     dialog.Controls.Add(editCourtGUI);
+                var updateForm = new ProductUpdateGUI { Dock = DockStyle.Fill };
+                updateForm.LoadProduct(productDTO, brands, types);
 
-            //     dialog.ShowDialog();
+                dialog.Controls.Add(updateForm);
+                dialog.ShowDialog();
 
-            //     ReloadCourtList(); // reload danh sách sau khi đóng dialog
-            // };
-
+                // Sau khi đóng form sửa → reload danh sách
+                ReloadProductList();
+            };
 
             buttonPanel.Controls.Add(btnDetail);
             buttonPanel.Controls.Add(btnEdit);
@@ -233,6 +284,68 @@ namespace BadmintonCourtManagement.GUI
             panel.Controls.Add(tlProduct);
 
             return panel;
+        }
+        private void ReloadProductList()
+        {
+            ProductBUS productBus = new ProductBUS();
+            productList = productBus.GetAllProducts();
+            page = 0;
+            LoadProducts(productList);
+        }
+
+        // Pagination buttons
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            page--;
+            if (page < 0) page = 0;
+            LoadProducts(productList);
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            page++;
+            if (page > (int)Math.Ceiling((double)productList.Count() / 8) - 1)
+                page = (int)Math.Ceiling((double)productList.Count() / 8) - 1;
+            LoadProducts(productList);
+        }
+
+        private void extraPreviousButton_Click(object sender, EventArgs e)
+        {
+            page = 0;
+            LoadProducts(productList);
+        }
+
+        private void extraNextButton_Click(object sender, EventArgs e)
+        {
+            page = (int)Math.Ceiling((double)productList.Count() / 8) - 1;
+            if (page < 0) page = 0;
+            LoadProducts(productList);
+        }
+
+        // Search function
+        private void searchEnterEvent(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                search(searchBar.Text.ToString());
+            }
+        }
+
+        private void search(string text)
+        {
+            try
+            {
+                ProductBUS productBus = new ProductBUS();
+                productList = productBus.GetProductByName(text);
+                LoadProducts(productList);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message + "\n",
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
 
@@ -254,11 +367,10 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
-        private void storageGUI_Load(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-
+            searchBar.Clear();
         }
-
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
@@ -266,7 +378,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-                
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -275,11 +387,6 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -340,42 +447,84 @@ namespace BadmintonCourtManagement.GUI
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
         }
 
-        private void cardButton_Click(object sender, EventArgs e)
+        private void filterButton_Click(object sender, EventArgs e)
         {
-            EmployeeDetailsGUI employeeDetail = new EmployeeDetailsGUI();
-            employeeDetail.ShowDialog();
+            var brands = LoadBrands();
+            var types = LoadTypes();
+            Form dialog = new Form()
+            {
+                Text = string.Empty,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                StartPosition = FormStartPosition.CenterParent,
+                Size = new Size(600, 600),
+                MaximizeBox = false,
+                MinimizeBox = false,
+                ShowInTaskbar = false
+            };
+
+            var filterForm = new ProductFilterGUI { Dock = DockStyle.Fill };
+            filterForm.InsertData(brands, types);
+            filterForm.FilterApplied += criteria =>
+            {
+                ProductBUS productBus = new ProductBUS();
+                // Empty criteria => load all
+                if (string.IsNullOrWhiteSpace(criteria.BrandIds)
+                    && string.IsNullOrWhiteSpace(criteria.TypeIds)
+                    && !criteria.OnlyStock)
+                {
+                    productList = productBus.GetAllProducts();
+                    page = 0;
+                    LoadProducts(productList);
+                    return;
+                }
+
+                productList = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds, criteria.OnlyStock);
+                page = 0;
+                LoadProducts(productList);
+            };
+
+            dialog.Controls.Add(filterForm);
+            dialog.ShowDialog();
         }
 
-        private void cardTitlePanel_Paint(object sender, PaintEventArgs e)
+        private void btnAddProduct_Click(object sender, EventArgs e)
         {
+            var brands = LoadBrands();
+            var types = LoadTypes();
+            Form dialog = new Form()
+            {
+                Text = string.Empty,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                StartPosition = FormStartPosition.CenterParent,
+                Size = new Size(600, 700),
+                MaximizeBox = false,
+                MinimizeBox = false,
+                ShowInTaskbar = false
+            };
 
-        }
+            var insertForm = new ProductInsertGUI { Dock = DockStyle.Fill };
+            insertForm.InsertData(brands, types);
+            //insertForm.FilterApplied += criteria =>
+            //{
+            //    ProductBUS productBus = new ProductBUS();
+            //    // Empty criteria => load all
+            //    if (string.IsNullOrWhiteSpace(criteria.BrandIds)
+            //        && string.IsNullOrWhiteSpace(criteria.TypeIds)
+            //        && !criteria.OnlyStock)
+            //    {
+            //        productList = productBus.GetAllProducts();
+            //        page = 0;
+            //        LoadProducts(productList);
+            //        return;
+            //    }
 
-        private void NhapHangFilterButton_Click(object sender, EventArgs e)
-        {
+            //    productList = productBus.GetProductByIds(criteria.BrandIds, criteria.TypeIds, criteria.OnlyStock);
+            //    page = 0;
+            //    LoadProducts(productList);
+            //};
 
-        }
-
-        private void NhapHangButtonCard_Click(object sender, EventArgs e)
-        {
-            SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
-            supplyDetails.ShowDialog();
-        }
-
-        private void NhapHangBodyCard_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cardBody_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cardButton_Click_1(object sender, EventArgs e)
-        {
-            EmployeeDetailsGUI employeeDetails = new EmployeeDetailsGUI();
-            employeeDetails.ShowDialog();
+            dialog.Controls.Add(insertForm);
+            dialog.ShowDialog();
         }
     }
 }
