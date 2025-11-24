@@ -56,6 +56,14 @@ CREATE TABLE `billbooking` (
   `PrePayment` double DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `billbooking` (`BillBookingId`, `EmployeeId`, `CustomerId`, `BookingId`, `TotalPrice`, `PrePayment`) VALUES
+('BB00001', 'EM00001', 'CU00001', 'BK00001', 120000, 60000),
+('BB00002', 'EM00001', 'CU00002', 'BK00002', 160000, 80000),
+('BB00003', 'EM00001', 'CU00003', 'BK00003', 180000, 90000),
+('BB00004', 'EM00001', 'CU00004', 'BK00004', 120000, 60000),
+('BB00005', 'EM00001', 'CU00005', 'BK00005', 160000, 80000);
+
+
 -- --------------------------------------------------------
 
 --
@@ -73,6 +81,17 @@ CREATE TABLE `billimportproductdetail` (
   `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `billimportproductdetail` (`ImportBillDetailId`, `ImportBillId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `Status`) VALUES
+('IBD001', 'IB00001', 'PD00001', 10, 300000, 3000000, 'active'),
+('IBD002', 'IB00001', 'PD00006', 20, 50000, 1000000, 'active'),
+
+('IBD003', 'IB00002', 'PD00002', 8, 350000, 2800000, 'active'),
+('IBD004', 'IB00002', 'PD00007', 15, 40000, 600000, 'active'),
+
+('IBD005', 'IB00003', 'PD00003', 5, 450000, 2250000, 'active'),
+('IBD006', 'IB00003', 'PD00008', 12, 60000, 720000, 'active');
+
+
 -- --------------------------------------------------------
 
 --
@@ -88,6 +107,14 @@ CREATE TABLE `billproduct` (
   `Status` enum('paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `CustomerId`, `TotalPrice`, `DateCreated`, `Status`) VALUES
+('BP00001', 'EM00001', 'CU00001', 600000, '2025-10-17 09:00:00', 'paid'),
+('BP00002', 'EM00001', 'CU00002', 450000, '2025-10-17 11:00:00', 'paid'),
+('BP00003', 'EM00001', 'CU00003', 350000, '2025-10-17 13:30:00', 'unpaid'),
+('BP00004', 'EM00001', 'CU00004', 900000, '2025-10-18 09:45:00', 'paid'),
+('BP00005', 'EM00001', 'CU00005', 250000, '2025-10-18 15:10:00', 'paid');
+
+
 -- --------------------------------------------------------
 
 --
@@ -102,6 +129,21 @@ CREATE TABLE `billproductdetail` (
   `TotalPrice` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `billproductdetail` (`BillProductId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`) VALUES
+('BP00001', 'PD00001', 1, 300000, 300000),
+('BP00001', 'PD00006', 6, 50000, 300000),
+
+('BP00002', 'PD00002', 1, 350000, 350000),
+('BP00002', 'PD00007', 2, 50000, 100000),
+
+('BP00003', 'PD00003', 1, 350000, 350000),
+
+('BP00004', 'PD00001', 2, 300000, 600000),
+('BP00004', 'PD00006', 6, 50000, 300000),
+
+('BP00005', 'PD00008', 5, 50000, 250000);
+
+
 -- --------------------------------------------------------
 
 --
@@ -115,6 +157,14 @@ CREATE TABLE `booking` (
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `booking` (`BookingId`, `CourtId`, `Status`, `StartTime`, `EndTime`) VALUES
+('BK00001', 'CO00001', 'successful', '2025-10-17 08:00:00', '2025-10-17 10:00:00'),
+('BK00002', 'CO00002', 'successful', '2025-10-17 10:00:00', '2025-10-17 12:00:00'),
+('BK00003', 'CO00003', 'played',     '2025-10-17 12:00:00', '2025-10-17 14:00:00'),
+('BK00004', 'CO00004', 'successful', '2025-10-18 08:00:00', '2025-10-18 10:00:00'),
+('BK00005', 'CO00005', 'played',     '2025-10-18 14:00:00', '2025-10-18 16:00:00');
+
 
 -- --------------------------------------------------------
 
@@ -178,6 +228,14 @@ CREATE TABLE `customer` (
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `customer` (`CustomerId`, `CustomerName`, `Phone`, `IsDeleted`) VALUES
+('CU00001', 'Nguyễn Văn A', '0901000001', 0),
+('CU00002', 'Trần Thị B', '0901000002', 0),
+('CU00003', 'Lê Văn C', '0901000003', 0),
+('CU00004', 'Phạm Thị D', '0901000004', 0),
+('CU00005', 'Hoàng Văn E', '0901000005', 0);
+
+
 -- --------------------------------------------------------
 
 --
@@ -192,6 +250,10 @@ CREATE TABLE `employee` (
   `Username` varchar(30) NOT NULL,
   `RoleId` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `employee` (`EmployeeId`, `EmployeeName`, `Phone`, `Address`, `Username`, `RoleId`) VALUES
+('EM00001', 'Admin', '0900000001', 'HCM', 'admin', 'R00001');
+
 
 -- --------------------------------------------------------
 
@@ -236,6 +298,12 @@ CREATE TABLE `importbill` (
   `Status` enum('pending','delivered') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `importbill` (`ImportBillId`, `EmployeeId`, `SupplierId`, `TotalPrice`, `Status`) VALUES
+('IB00001', 'EM00001', 'SPU00001', 5000000, 'delivered'),
+('IB00002', 'EM00001', 'SPU00002', 3500000, 'delivered'),
+('IB00003', 'EM00001', 'SPU00003', 4200000, 'delivered');
+
+
 -- --------------------------------------------------------
 
 --
@@ -250,6 +318,13 @@ CREATE TABLE `payment` (
   `AmountPaid` double NOT NULL,
   `RemainingAmount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `payment` (`PaymentId`, `BillProductId`, `PaymentMethod`, `TimePayment`, `AmountPaid`, `RemainingAmount`) VALUES
+('PAY001', 'BP00001', 'Cash', '2025-10-17 09:10:00', 600000, 0),
+('PAY002', 'BP00002', 'Banking', '2025-10-17 11:20:00', 450000, 0),
+('PAY003', 'BP00004', 'Cash', '2025-10-18 09:50:00', 900000, 0),
+('PAY004', 'BP00005', 'Banking', '2025-10-18 15:30:00', 250000, 0);
+
 
 -- --------------------------------------------------------
 
@@ -416,6 +491,11 @@ CREATE TABLE `role` (
   `RoleName` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `role` (`RoleId`, `RoleName`) VALUES
+('R00001', 'Quản lý'),
+('R00002', 'Nhân viên');
+
+
 -- --------------------------------------------------------
 
 --
@@ -433,6 +513,30 @@ CREATE TABLE `storage` (
   `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `storage` (`StorageId`, `ImportBillId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `Status`) VALUES
+('KH001', 'IB00001', 'PD00001', 10, 300000, 3000000, 'active'),
+('KH002', 'IB00001', 'PD00006', 20, 50000, 1000000, 'active'),
+('KH003', 'IB00001', 'PD00002', 8, 350000, 2800000, 'active'),
+('KH004', 'IB00001', 'PD00007', 15, 40000, 600000, 'active'),
+('KH005', 'IB00001', 'PD00003', 5, 450000, 2250000, 'active'),
+('KH006', 'IB00001', 'PD00008', 12, 60000, 720000, 'active'),
+('KH007', 'IB00001', 'PD00004', 9, 320000, 2880000, 'active'),
+('KH008', 'IB00001', 'PD00005', 7, 400000, 2800000, 'active'),
+('KH009', 'IB00001', 'PD00001', 15, 300000, 4500000, 'active'),
+('KH010', 'IB00001', 'PD00006', 25, 50000, 1250000, 'active'),
+('KH011', 'IB00001', 'PD00002', 10, 350000, 3500000, 'active'),
+('KH012', 'IB00001', 'PD00007', 18, 40000, 720000, 'active'),
+('KH013', 'IB00001', 'PD00003', 6, 450000, 2700000, 'active'),
+('KH014', 'IB00001', 'PD00008', 14, 60000, 840000, 'active'),
+('KH015', 'IB00001', 'PD00004', 8, 320000, 2560000, 'active'),
+('KH016', 'IB00001', 'PD00005', 10, 400000, 4000000, 'active'),
+('KH017', 'IB00001', 'PD00001', 12, 300000, 3600000, 'active'),
+('KH018', 'IB00001', 'PD00006', 22, 50000, 1100000, 'active'),
+('KH019', 'IB00001', 'PD00002', 7, 350000, 2450000, 'active'),
+('KH020', 'IB00001', 'PD00007', 16, 40000, 640000, 'active');
+
+
+
 -- --------------------------------------------------------
 
 --
@@ -446,6 +550,12 @@ CREATE TABLE `supplier` (
   `Address` varchar(255) DEFAULT NULL,
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `supplier` (`SupplierId`, `SupplierName`, `Email`, `Address`, `IsDeleted`) VALUES
+('SPU00001', 'Yonex Supplier', 'yonex@supplier.com', 'Tokyo', 0),
+('SPU00002', 'Victor Supplier', 'victor@supplier.com', 'Taipei', 0),
+('SPU00003', 'Li-Ning Supplier', 'lining@supplier.com', 'Beijing', 0);
+
 
 -- --------------------------------------------------------
 
