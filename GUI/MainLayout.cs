@@ -85,7 +85,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Sell_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Bán hàng clicked!");
+            OpenChildPanel(new ProductSaleGUI(currentAccount));
         }
 
         // Event handlers for menu buttons

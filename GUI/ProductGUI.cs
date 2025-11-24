@@ -29,6 +29,7 @@ namespace BadmintonCourtManagement.GUI
             productList = productBUS.GetAllProducts();
             LoadProducts(productList);
             searchBar.KeyDown += searchEnterEvent;
+            this.Resize += ProductGUI_Resize;
         }
         // private void SetupFilter(ProductFilterGUI filter)
         // {
@@ -191,7 +192,7 @@ namespace BadmintonCourtManagement.GUI
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoSize = true,
-                Anchor = AnchorStyles.None,
+                Anchor = AnchorStyles.Bottom,
                 Padding = new Padding(0, 5, 0, 5),
                 Margin = new Padding(0),
                 AutoSizeMode = AutoSizeMode.GrowAndShrink
@@ -207,7 +208,8 @@ namespace BadmintonCourtManagement.GUI
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
-                Margin = new Padding(10, 0, 10, 0)
+                Margin = new Padding(10, 0, 10, 0),
+                Anchor = AnchorStyles.Bottom
             };
 
             // Nút Sửa
@@ -220,7 +222,8 @@ namespace BadmintonCourtManagement.GUI
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
-                Margin = new Padding(10, 0, 10, 0)
+                Margin = new Padding(10, 0, 10, 0),
+                Anchor = AnchorStyles.Bottom
             };
 
             // Sự kiện Detail
@@ -522,6 +525,52 @@ namespace BadmintonCourtManagement.GUI
 
             dialog.Controls.Add(insertForm);
             dialog.ShowDialog();
+        }
+
+        private void ProductGUI_Resize(object sender, EventArgs e)
+        {
+            int threshold = 1200; // Hide images when width < 800px
+            bool showImages = this.Width >= threshold && this.Height >= threshold-300;
+            
+            foreach (Control ctrl in pProductList.Controls)
+            {
+                if (ctrl is CustomPanel panel)
+                {
+                    foreach (Control child in panel.Controls)
+                    {
+                        if (child is TableLayoutPanel tlp)
+                        {
+                            if (tlp.RowStyles.Count >= 4)
+                            {
+                                if (showImages)
+                                {
+                                    // Show images - original layout
+                                    tlp.RowStyles[0].Height = 10F;  // ID row
+                                    tlp.RowStyles[1].Height = 65F;  // Image row
+                                    tlp.RowStyles[2].Height = 15F;  // Name row
+                                    tlp.RowStyles[3].Height = 10F;  // Button row
+                                }
+                                else
+                                {
+                                    // Hide images - collapse image row
+                                    tlp.RowStyles[0].Height = 20F;  // ID row (more space)
+                                    tlp.RowStyles[1].Height = 0F;   // Image row (hidden)
+                                    tlp.RowStyles[2].Height = 60F;  // Name row (more space)
+                                    tlp.RowStyles[3].Height = 20F;  // Button row (more space)
+                                }
+                            }
+                            foreach (Control innerCtrl in tlp.Controls)
+                            {
+                                if (innerCtrl is PictureBox pb)
+                                {
+                                    pb.Visible = showImages;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
