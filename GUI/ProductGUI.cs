@@ -227,26 +227,21 @@ namespace BadmintonCourtManagement.GUI
             };
 
             // Sự kiện Detail
-            // btnDetail.Click += (s, e) =>
-            // {
-            //     Form detailForm = new Form()
-            //     {
-            //         Text = "Chi tiết sản phẩm",
-            //         Size = new Size(400, 300),
-            //         StartPosition = FormStartPosition.CenterParent
-            //     };
-
-            //     var lblDetail = new Label()
-            //     {
-            //         Text = $"Mã sản phẩm: {courtDTO.CourtId}\nTên sản phẩm: {courtDTO.CourtName}",
-            //         Dock = DockStyle.Fill,
-            //         Font = new Font("Segoe UI", 12, FontStyle.Regular),
-            //         TextAlign = ContentAlignment.MiddleCenter
-            //     };
-
-            //     detailForm.Controls.Add(lblDetail);
-            //     detailForm.ShowDialog();
-            // };
+            btnDetail.Click += (s, e) =>
+            {
+                // Open the ProductDetailsGUI form modally with the selected product
+                try
+                {
+                    using (var details = new ProductDetailsGUI(productDTO))
+                    {
+                        details.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi hiển thị chi tiết sản phẩm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
 
             // Sự kiện Sửa
             btnEdit.Click += (s, e) =>
@@ -259,13 +254,15 @@ namespace BadmintonCourtManagement.GUI
                     Text = "Sửa sản phẩm",
                     FormBorderStyle = FormBorderStyle.FixedDialog,
                     StartPosition = FormStartPosition.CenterParent,
-                    Size = new Size(600, 700),
+                    Size = new Size(600, 500),
                     MaximizeBox = false,
                     MinimizeBox = false,
                     ShowInTaskbar = false
                 };
 
-                var updateForm = new ProductUpdateGUI { Dock = DockStyle.Fill };
+                var updateForm = new ProductUpdateGUI { 
+                    Dock = DockStyle.Fill
+                };
                 updateForm.LoadProduct(productDTO, brands, types);
 
                 dialog.Controls.Add(updateForm);

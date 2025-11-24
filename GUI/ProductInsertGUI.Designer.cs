@@ -127,12 +127,13 @@
             tableLayout_storeItem.RowCount = 6;
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 10.3508768F));
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 18.9473686F));
-            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 44.5614052F));
-            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 11.5789471F));
-            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 1.40350878F));
+            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 33.85965F));
+            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 13.333333F));
+            tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 10.3508768F));
             tableLayout_storeItem.RowStyles.Add(new RowStyle(SizeType.Percent, 12.9824562F));
             tableLayout_storeItem.Size = new Size(574, 570);
             tableLayout_storeItem.TabIndex = 1;
+            tableLayout_storeItem.Paint += tableLayout_storeItem_Paint;
             // 
             // saveBtn
             // 
@@ -156,10 +157,10 @@
             lbl_image.Anchor = AnchorStyles.Top;
             lbl_image.FlatStyle = FlatStyle.Flat;
             lbl_image.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_image.Location = new Point(305, 487);
+            lbl_image.Location = new Point(305, 436);
             lbl_image.Margin = new Padding(0, 0, 0, 12);
             lbl_image.Name = "lbl_image";
-            lbl_image.Size = new Size(232, 1);
+             lbl_image.Size = new Size(232, 100);  // hoặc 50, 60 tùy ý
             lbl_image.TabIndex = 7;
             // 
             // lbl_category
@@ -219,7 +220,7 @@
             label1.AutoSize = true;
             label1.FlatStyle = FlatStyle.Flat;
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(4, 421);
+            label1.Location = new Point(4, 360);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Padding = new Padding(0, 0, 0, 12);
@@ -234,7 +235,7 @@
             chooseImgBtn.BackColor = Color.FromArgb(64, 64, 64);
             chooseImgBtn.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             chooseImgBtn.ForeColor = Color.White;
-            chooseImgBtn.Location = new Point(344, 421);
+            chooseImgBtn.Location = new Point(344, 360);
             chooseImgBtn.Margin = new Padding(4, 0, 4, 0);
             chooseImgBtn.Name = "chooseImgBtn";
             chooseImgBtn.Padding = new Padding(25, 12, 25, 12);
