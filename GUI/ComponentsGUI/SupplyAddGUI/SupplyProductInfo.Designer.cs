@@ -297,7 +297,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             ProductBrand.Name = "ProductBrand";
             ProductBrand.Size = new Size(726, 56);
             ProductBrand.TabIndex = 3;
-            ProductBrand.Text = "Nhãn hàng: Nike";
+            ProductBrand.Text = "Nhãn hàng: ";
             ProductBrand.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductType
@@ -309,7 +309,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             ProductType.Name = "ProductType";
             ProductType.Size = new Size(726, 55);
             ProductType.TabIndex = 2;
-            ProductType.Text = "Loại sản phẩm: Giày dép";
+            ProductType.Text = "Loại sản phẩm: ";
             ProductType.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductName
@@ -321,7 +321,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             ProductName.Name = "ProductName";
             ProductName.Size = new Size(726, 55);
             ProductName.TabIndex = 1;
-            ProductName.Text = "Tên sản phẩm: Giày thể thao";
+            ProductName.Text = "Tên sản phẩm: ";
             ProductName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductID
@@ -333,7 +333,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             ProductID.Name = "ProductID";
             ProductID.Size = new Size(726, 55);
             ProductID.TabIndex = 0;
-            ProductID.Text = "Mã sản phẩm: SP0001";
+            ProductID.Text = "Mã sản phẩm: ";
             ProductID.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // errorProvider1
