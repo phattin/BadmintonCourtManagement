@@ -102,19 +102,53 @@ namespace BadmintonCourtManagement.GUI
             dateTimePicker2.Size = new Size(320, 31);
             dateTimePicker2.TabIndex = 1;
 
-            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
-            customPanel2.BorderRadius = 20;
-            customPanel2.Controls.Add(flowLayoutPanel1);
-            customPanel2.Dock = DockStyle.Top;
-            customPanel2.Location = new Point(70, 84);
-            customPanel2.Name = "customPanel2";
-            customPanel2.Size = new Size(1364, 97);
-            customPanel2.TabIndex = 0;
+// === THAY TOÀN BỘ HEADER TAB SẢN PHẨM BẰNG ĐOẠN NÀY ===
 
-            flowLayoutPanel1.Controls.Add(dateTimePicker2);
-            flowLayoutPanel1.Controls.Add(dateTimePicker1);
-            flowLayoutPanel1.Controls.Add(sortFieldComboBox);
-            flowLayoutPanel1.Controls.Add(btnGenerate);
+customPanel2.BackColor = Color.FromArgb(0, 120, 103);
+customPanel2.BorderRadius = 20;
+customPanel2.Controls.Add(flowLayoutPanel1);
+customPanel2.Dock = DockStyle.Top;
+customPanel2.Location = new Point(70, 84);
+customPanel2.Name = "customPanel2";
+customPanel2.Size = new Size(1364, 98);
+customPanel2.TabIndex = 0;
+
+flowLayoutPanel1.Controls.Clear(); // Đảm bảo sạch
+flowLayoutPanel1.Dock = DockStyle.Fill;
+flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
+flowLayoutPanel1.Padding = new Padding(0, 25, 0, 0);
+flowLayoutPanel1.Name = "flowLayoutPanel1";
+
+// dateTimePicker2 (Từ ngày)
+dateTimePicker2.Location = new Point(35, 35);
+dateTimePicker2.Margin = new Padding(35, 10, 30, 0);
+dateTimePicker2.Size = new Size(310, 31);
+flowLayoutPanel1.Controls.Add(dateTimePicker2);
+
+// dateTimePicker1 (Đến ngày)
+dateTimePicker1.Location = new Point(385, 35);
+dateTimePicker1.Margin = new Padding(10, 10, 0, 0);
+dateTimePicker1.Size = new Size(310, 31);
+flowLayoutPanel1.Controls.Add(dateTimePicker1);
+
+// sort  ComboBox sắp xếp
+sortFieldComboBox.Location = new Point(825, 35);
+sortFieldComboBox.Margin = new Padding(130, 10, 0, 0);
+sortFieldComboBox.Size = new Size(265, 33);
+flowLayoutPanel1.Controls.Add(sortFieldComboBox);
+
+// Nút Thống Kê - đẹp như tab Sân
+btnGenerate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+btnGenerate.AutoSize = true;
+btnGenerate.BackColor = Color.FromArgb(64, 64, 64);
+btnGenerate.Cursor = Cursors.Hand;
+btnGenerate.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+btnGenerate.ForeColor = Color.WhiteSmoke;
+btnGenerate.Padding = new Padding(15, 0, 15, 0);
+btnGenerate.Text = "Thống Kê";
+btnGenerate.TextAlign = ContentAlignment.MiddleCenter;
+btnGenerate.Margin = new Padding(240, 10, 10, 10);
+flowLayoutPanel1.Controls.Add(btnGenerate);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
