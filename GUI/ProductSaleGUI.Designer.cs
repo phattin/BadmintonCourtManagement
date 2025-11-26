@@ -23,9 +23,9 @@ namespace BadmintonCourtManagement.GUI
         private void InitializeComponent()
         {
             components = new Container();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             toolBar = new CustomPanel();
             searchPanel = new CustomPanel();
             btnDelete = new PictureBox();
@@ -41,11 +41,20 @@ namespace BadmintonCourtManagement.GUI
             dtv = new DataGridView();
             propertyPanel = new Panel();
             tableLayoutPanel_property = new TableLayoutPanel();
+            tableLayoutPanel_productQuantity = new TableLayoutPanel();
             lbl_productName = new Label();
             txt_productQuantity = new TextBox();
             txt_productName = new TextBox();
             lbl_productQuantity = new Label();
+            tableLayoutPanel_price = new TableLayoutPanel();
+            txt_priceExchange = new TextBox();
+            txt_priceCustomerPay = new TextBox();
+            lbl_totalPrice = new Label();
+            lbl_priceCustomerPay = new Label();
+            lbl_priceExchange = new Label();
+            txt_totalPrice = new TextBox();
             errorProvider1 = new ErrorProvider(components);
+            errorProvider2 = new ErrorProvider(components);
             toolBar.SuspendLayout();
             searchPanel.SuspendLayout();
             ((ISupportInitialize)btnDelete).BeginInit();
@@ -58,7 +67,10 @@ namespace BadmintonCourtManagement.GUI
             ((ISupportInitialize)dtv).BeginInit();
             propertyPanel.SuspendLayout();
             tableLayoutPanel_property.SuspendLayout();
+            tableLayoutPanel_productQuantity.SuspendLayout();
+            tableLayoutPanel_price.SuspendLayout();
             ((ISupportInitialize)errorProvider1).BeginInit();
+            ((ISupportInitialize)errorProvider2).BeginInit();
             SuspendLayout();
             // 
             // toolBar
@@ -122,7 +134,6 @@ namespace BadmintonCourtManagement.GUI
             filterButton.SizeMode = PictureBoxSizeMode.StretchImage;
             filterButton.TabIndex = 1;
             filterButton.TabStop = false;
-            filterButton.Click += filterButton_Click;
             filterButton.MouseEnter += filterButton_MouseEnter;
             filterButton.MouseLeave += filterButton_MouseLeave;
             // 
@@ -230,39 +241,39 @@ namespace BadmintonCourtManagement.GUI
             dtv.AllowUserToResizeColumns = false;
             dtv.AllowUserToResizeRows = false;
             dtv.BackgroundColor = Color.FromArgb(239, 248, 230);
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(239, 248, 230);
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 11F);
-            dataGridViewCellStyle7.ForeColor = Color.Black;
-            dataGridViewCellStyle7.Padding = new Padding(5);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(200, 255, 230);
-            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dtv.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(239, 248, 230);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F);
+            dataGridViewCellStyle1.ForeColor = Color.Black;
+            dataGridViewCellStyle1.Padding = new Padding(5);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(200, 255, 230);
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dtv.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dtv.ColumnHeadersHeight = 50;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(239, 248, 230);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 11F);
-            dataGridViewCellStyle8.ForeColor = Color.Black;
-            dataGridViewCellStyle8.Padding = new Padding(5);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(200, 255, 230);
-            dataGridViewCellStyle8.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dtv.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(239, 248, 230);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F);
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.Padding = new Padding(5);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(200, 255, 230);
+            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dtv.DefaultCellStyle = dataGridViewCellStyle2;
             dtv.Dock = DockStyle.Fill;
             dtv.EditMode = DataGridViewEditMode.EditProgrammatically;
             dtv.Location = new Point(13, 13);
             dtv.MultiSelect = false;
             dtv.Name = "dtv";
             dtv.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(239, 248, 230);
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle9.ForeColor = Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(200, 255, 230);
-            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dtv.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(239, 248, 230);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(200, 255, 230);
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dtv.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dtv.RowHeadersVisible = false;
             dtv.RowHeadersWidth = 51;
             dtv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -281,39 +292,59 @@ namespace BadmintonCourtManagement.GUI
             // 
             // tableLayoutPanel_property
             // 
-            tableLayoutPanel_property.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel_property.ColumnCount = 2;
-            tableLayoutPanel_property.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.625F));
-            tableLayoutPanel_property.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 84.375F));
-            tableLayoutPanel_property.Controls.Add(lbl_productName, 0, 0);
-            tableLayoutPanel_property.Controls.Add(txt_productQuantity, 1, 1);
-            tableLayoutPanel_property.Controls.Add(txt_productName, 1, 0);
-            tableLayoutPanel_property.Controls.Add(lbl_productQuantity, 0, 1);
-            tableLayoutPanel_property.Location = new Point(533, 0);
+            tableLayoutPanel_property.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel_property.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel_property.Controls.Add(tableLayoutPanel_productQuantity, 0, 0);
+            tableLayoutPanel_property.Controls.Add(tableLayoutPanel_price, 1, 0);
+            tableLayoutPanel_property.Dock = DockStyle.Fill;
+            tableLayoutPanel_property.Location = new Point(0, 0);
             tableLayoutPanel_property.Name = "tableLayoutPanel_property";
-            tableLayoutPanel_property.RowCount = 2;
+            tableLayoutPanel_property.Padding = new Padding(30, 0, 30, 0);
+            tableLayoutPanel_property.RowCount = 1;
             tableLayoutPanel_property.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel_property.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel_property.Size = new Size(480, 125);
-            tableLayoutPanel_property.TabIndex = 4;
+            tableLayoutPanel_property.Size = new Size(1114, 121);
+            tableLayoutPanel_property.TabIndex = 0;
+            // 
+            // tableLayoutPanel_productQuantity
+            // 
+            tableLayoutPanel_productQuantity.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            tableLayoutPanel_productQuantity.ColumnCount = 2;
+            tableLayoutPanel_productQuantity.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel_productQuantity.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
+            tableLayoutPanel_productQuantity.Controls.Add(lbl_productName, 0, 0);
+            tableLayoutPanel_productQuantity.Controls.Add(txt_productQuantity, 1, 1);
+            tableLayoutPanel_productQuantity.Controls.Add(txt_productName, 1, 0);
+            tableLayoutPanel_productQuantity.Controls.Add(lbl_productQuantity, 0, 1);
+            tableLayoutPanel_productQuantity.Location = new Point(33, 3);
+            tableLayoutPanel_productQuantity.Name = "tableLayoutPanel_productQuantity";
+            tableLayoutPanel_productQuantity.Padding = new Padding(20, 0, 0, 0);
+            tableLayoutPanel_productQuantity.RowCount = 2;
+            tableLayoutPanel_productQuantity.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel_productQuantity.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel_productQuantity.Size = new Size(521, 115);
+            tableLayoutPanel_productQuantity.TabIndex = 0;
             // 
             // lbl_productName
             // 
+            lbl_productName.Anchor = AnchorStyles.None;
             lbl_productName.AutoSize = true;
             lbl_productName.Font = new Font("Segoe UI", 10F);
-            lbl_productName.Location = new Point(3, 0);
+            lbl_productName.Location = new Point(32, 17);
             lbl_productName.Name = "lbl_productName";
-            lbl_productName.Size = new Size(67, 46);
+            lbl_productName.Size = new Size(125, 23);
             lbl_productName.TabIndex = 0;
             lbl_productName.Text = "Tên sản phẩm: ";
             // 
             // txt_productQuantity
             // 
+            txt_productQuantity.Anchor = AnchorStyles.Left;
             txt_productQuantity.BackColor = Color.FromArgb(239, 248, 230);
             txt_productQuantity.BorderStyle = BorderStyle.FixedSingle;
             txt_productQuantity.Font = new Font("Segoe UI", 10F);
             txt_productQuantity.ForeColor = Color.Black;
-            txt_productQuantity.Location = new Point(78, 65);
+            txt_productQuantity.Location = new Point(173, 71);
             txt_productQuantity.Name = "txt_productQuantity";
             txt_productQuantity.Size = new Size(125, 30);
             txt_productQuantity.TabIndex = 3;
@@ -321,31 +352,122 @@ namespace BadmintonCourtManagement.GUI
             // 
             // txt_productName
             // 
+            txt_productName.Anchor = AnchorStyles.Left;
             txt_productName.BackColor = Color.FromArgb(239, 248, 230);
             txt_productName.BorderStyle = BorderStyle.None;
             txt_productName.Font = new Font("Segoe UI", 10F);
             txt_productName.ForeColor = Color.Black;
-            txt_productName.Location = new Point(78, 3);
+            txt_productName.Location = new Point(173, 17);
             txt_productName.Name = "txt_productName";
             txt_productName.ReadOnly = true;
             txt_productName.Size = new Size(300, 23);
             txt_productName.TabIndex = 2;
-            txt_productName.TextChanged += txt_productName_TextChanged;
             // 
             // lbl_productQuantity
             // 
+            lbl_productQuantity.Anchor = AnchorStyles.None;
             lbl_productQuantity.AutoSize = true;
             lbl_productQuantity.Font = new Font("Segoe UI", 10F);
-            lbl_productQuantity.Location = new Point(3, 62);
+            lbl_productQuantity.Location = new Point(32, 74);
             lbl_productQuantity.Name = "lbl_productQuantity";
-            lbl_productQuantity.Size = new Size(59, 63);
+            lbl_productQuantity.Size = new Size(126, 23);
             lbl_productQuantity.TabIndex = 1;
             lbl_productQuantity.Text = "Số lượng mua: ";
-            lbl_productQuantity.Click += lbl_productQuantity_Click;
+            // 
+            // tableLayoutPanel_price
+            // 
+            tableLayoutPanel_price.ColumnCount = 2;
+            tableLayoutPanel_price.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel_price.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+            tableLayoutPanel_price.Controls.Add(txt_priceExchange, 1, 2);
+            tableLayoutPanel_price.Controls.Add(txt_priceCustomerPay, 1, 1);
+            tableLayoutPanel_price.Controls.Add(lbl_totalPrice, 0, 0);
+            tableLayoutPanel_price.Controls.Add(lbl_priceCustomerPay, 0, 1);
+            tableLayoutPanel_price.Controls.Add(lbl_priceExchange, 0, 2);
+            tableLayoutPanel_price.Controls.Add(txt_totalPrice, 1, 0);
+            tableLayoutPanel_price.Location = new Point(560, 3);
+            tableLayoutPanel_price.Name = "tableLayoutPanel_price";
+            tableLayoutPanel_price.Padding = new Padding(0, 0, 20, 0);
+            tableLayoutPanel_price.RowCount = 3;
+            tableLayoutPanel_price.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel_price.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel_price.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel_price.Size = new Size(480, 115);
+            tableLayoutPanel_price.TabIndex = 1;
+            // 
+            // txt_priceExchange
+            // 
+            txt_priceExchange.Anchor = AnchorStyles.Left;
+            txt_priceExchange.BackColor = Color.FromArgb(239, 248, 230);
+            txt_priceExchange.BorderStyle = BorderStyle.None;
+            txt_priceExchange.Location = new Point(187, 85);
+            txt_priceExchange.Name = "txt_priceExchange";
+            txt_priceExchange.ReadOnly = true;
+            txt_priceExchange.Size = new Size(223, 20);
+            txt_priceExchange.TabIndex = 6;
+            // 
+            // txt_priceCustomerPay
+            // 
+            txt_priceCustomerPay.Anchor = AnchorStyles.Left;
+            txt_priceCustomerPay.BackColor = Color.FromArgb(239, 248, 230);
+            txt_priceCustomerPay.BorderStyle = BorderStyle.FixedSingle;
+            txt_priceCustomerPay.Location = new Point(187, 43);
+            txt_priceCustomerPay.Name = "txt_priceCustomerPay";
+            txt_priceCustomerPay.Size = new Size(223, 27);
+            txt_priceCustomerPay.TabIndex = 7;
+            txt_priceCustomerPay.TextChanged += updateExchangePrice;
+            // 
+            // lbl_totalPrice
+            // 
+            lbl_totalPrice.Anchor = AnchorStyles.None;
+            lbl_totalPrice.AutoSize = true;
+            lbl_totalPrice.Font = new Font("Segoe UI", 10F);
+            lbl_totalPrice.Location = new Point(48, 7);
+            lbl_totalPrice.Name = "lbl_totalPrice";
+            lbl_totalPrice.Size = new Size(87, 23);
+            lbl_totalPrice.TabIndex = 1;
+            lbl_totalPrice.Text = "Tổng tiền:";
+            // 
+            // lbl_priceCustomerPay
+            // 
+            lbl_priceCustomerPay.Anchor = AnchorStyles.None;
+            lbl_priceCustomerPay.AutoSize = true;
+            lbl_priceCustomerPay.Font = new Font("Segoe UI", 10F);
+            lbl_priceCustomerPay.Location = new Point(42, 45);
+            lbl_priceCustomerPay.Name = "lbl_priceCustomerPay";
+            lbl_priceCustomerPay.Size = new Size(99, 23);
+            lbl_priceCustomerPay.TabIndex = 2;
+            lbl_priceCustomerPay.Text = "Tiền KH trả:";
+            // 
+            // lbl_priceExchange
+            // 
+            lbl_priceExchange.Anchor = AnchorStyles.None;
+            lbl_priceExchange.AutoSize = true;
+            lbl_priceExchange.Font = new Font("Segoe UI", 10F);
+            lbl_priceExchange.Location = new Point(51, 84);
+            lbl_priceExchange.Name = "lbl_priceExchange";
+            lbl_priceExchange.Size = new Size(81, 23);
+            lbl_priceExchange.TabIndex = 3;
+            lbl_priceExchange.Text = "Tiền thối:";
+            // 
+            // txt_totalPrice
+            // 
+            txt_totalPrice.Anchor = AnchorStyles.Left;
+            txt_totalPrice.BackColor = Color.FromArgb(239, 248, 230);
+            txt_totalPrice.BorderStyle = BorderStyle.None;
+            txt_totalPrice.Location = new Point(187, 9);
+            txt_totalPrice.Name = "txt_totalPrice";
+            txt_totalPrice.ReadOnly = true;
+            txt_totalPrice.Size = new Size(223, 20);
+            txt_totalPrice.TabIndex = 8;
             // 
             // errorProvider1
             // 
             errorProvider1.ContainerControl = this;
+            // 
+            // errorProvider2
+            // 
+            errorProvider2.ContainerControl = this;
             // 
             // ProductSaleGUI
             // 
@@ -371,8 +493,12 @@ namespace BadmintonCourtManagement.GUI
             ((ISupportInitialize)dtv).EndInit();
             propertyPanel.ResumeLayout(false);
             tableLayoutPanel_property.ResumeLayout(false);
-            tableLayoutPanel_property.PerformLayout();
+            tableLayoutPanel_productQuantity.ResumeLayout(false);
+            tableLayoutPanel_productQuantity.PerformLayout();
+            tableLayoutPanel_price.ResumeLayout(false);
+            tableLayoutPanel_price.PerformLayout();
             ((ISupportInitialize)errorProvider1).EndInit();
+            ((ISupportInitialize)errorProvider2).EndInit();
             ResumeLayout(false);
         }
         #endregion
@@ -397,5 +523,14 @@ namespace BadmintonCourtManagement.GUI
         private TextBox txt_productName;
         private ErrorProvider errorProvider1;
         private TableLayoutPanel tableLayoutPanel_property;
+        private TableLayoutPanel tableLayoutPanel_price;
+        private TableLayoutPanel tableLayoutPanel_productQuantity;
+        private Label lbl_totalPrice;
+        private Label lbl_priceCustomerPay;
+        private Label lbl_priceExchange;
+        private TextBox txt_priceExchange;
+        private TextBox txt_priceCustomerPay;
+        private TextBox txt_totalPrice;
+        private ErrorProvider errorProvider2;
     }
 }

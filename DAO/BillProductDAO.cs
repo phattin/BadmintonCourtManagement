@@ -5,19 +5,51 @@ namespace BadmintonCourtManagement.DAO
     public class BillProductDAO
     {
         private DBConnection db = new DBConnection();
+
+        public string GetMaxId()
+        {
+            string getMaxIdQuery = "SELECT MAX(BillProductId) FROM BillProduct WHERE BillProductId LIKE 'BP%'";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(getMaxIdQuery, db.Connection);
+                var result = cmd.ExecuteScalar();
+                if (result != DBNull.Value && result != null)
+                {
+                    return result.ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving max BillProductId: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+        }
+
         // create
         public bool InsertProductBill(BillProductDTO bill)
         {
-            string query = "INSERT INTO BillProduct (BillProductId, EmployeeId, CustomerId, TotalPrice, DateCreated, Status) " +
-                           "VALUES (@BillProductId, @EmployeeId, @CustomerId, @TotalPrice, @DateCreated, @Status)";
+            string query = "INSERT INTO BillProduct (BillProductId, EmployeeId, TotalPrice, DateCreated, Status) " +
+                           "VALUES (@BillProductId, @EmployeeId, @TotalPrice, @DateCreated, @Status)";
             int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+
                 cmd.Parameters.AddWithValue("@BillProductId", bill.BillProductId);
                 cmd.Parameters.AddWithValue("@EmployeeId", bill.EmployeeId);
-                cmd.Parameters.AddWithValue("@CustomerId", bill.CustomerId);
+                // set creation time here so DB always uses current time
+                bill.DateCreated = DateTime.Now;
+
                 cmd.Parameters.AddWithValue("@TotalPrice", bill.TotalPrice);
                 cmd.Parameters.AddWithValue("@DateCreated", bill.DateCreated);
                 cmd.Parameters.AddWithValue("@Status", bill.Status.ToString());
@@ -50,7 +82,6 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         EmployeeId = reader["EmployeeId"].ToString(),
-                        CustomerId = reader["CustomerId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                         DateCreated = Convert.ToDateTime(reader["DateCreated"]),
                         Status = (BillProductDTO.Option)Enum.Parse(typeof(BillProductDTO.Option), reader["Status"].ToString())
@@ -84,7 +115,6 @@ namespace BadmintonCourtManagement.DAO
                 {
                     BillProductId = reader["BillProductId"].ToString(),
                     EmployeeId = reader["EmployeeId"].ToString(),
-                    CustomerId = reader["CustomerId"].ToString(),
                     TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                     DateCreated = Convert.ToDateTime(reader["DateCreated"]),
                     Status = (BillProductDTO.Option)Enum.Parse(typeof(BillProductDTO.Option), reader["Status"].ToString())
@@ -100,41 +130,6 @@ namespace BadmintonCourtManagement.DAO
                 db.CloseConnection();
             }
             return bill;
-        }
-
-        public List<BillProductDTO> GetProductBillByCustomerId(string customerId)
-        {
-            string query = "SELECT * FROM BillProduct WHERE CustomerId = @CustomerId";
-            List<BillProductDTO> list = new List<BillProductDTO>();
-            try
-            {
-                db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@CustomerId", customerId);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    list.Add(new BillProductDTO
-                    {
-                        BillProductId = reader["BillProductId"].ToString(),
-                        EmployeeId = reader["EmployeeId"].ToString(),
-                        CustomerId = reader["CustomerId"].ToString(),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        DateCreated = Convert.ToDateTime(reader["DateCreated"]),
-                        Status = (BillProductDTO.Option)Enum.Parse(typeof(BillProductDTO.Option), reader["Status"].ToString())
-                    });
-                }
-                reader.Close();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error retrieving product bills by customer ID: " + ex.Message);
-            }
-            finally
-            {
-                db.CloseConnection();
-            }
-            return list;
         }
 
         public List<BillProductDTO> GetProductBillByPriceRange(double start, double end)
@@ -154,7 +149,6 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         EmployeeId = reader["EmployeeId"].ToString(),
-                        CustomerId = reader["CustomerId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                         DateCreated = Convert.ToDateTime(reader["DateCreated"]),
                         Status = (BillProductDTO.Option)Enum.Parse(typeof(BillProductDTO.Option), reader["Status"].ToString())
@@ -190,7 +184,6 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         EmployeeId = reader["EmployeeId"].ToString(),
-                        CustomerId = reader["CustomerId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                         DateCreated = Convert.ToDateTime(reader["DateCreated"]),
                         Status = (BillProductDTO.Option)Enum.Parse(typeof(BillProductDTO.Option), reader["Status"].ToString())
@@ -211,7 +204,7 @@ namespace BadmintonCourtManagement.DAO
 
         public List<BillProductDTO> Search(string searchCriteria)
         {
-            string query = "SELECT * FROM BillProduct WHERE CustomerId LIKE @SearchCriteria or EmployeeId LIKE @SearchCriteria or BillProductId LIKE @SearchCriteria";
+            string query = "SELECT * FROM BillProduct WHERE EmployeeId LIKE @SearchCriteria or BillProductId LIKE @SearchCriteria";
             List<BillProductDTO> list = new List<BillProductDTO>();
             try
             {
@@ -225,7 +218,6 @@ namespace BadmintonCourtManagement.DAO
                     {
                         BillProductId = reader["BillProductId"].ToString(),
                         EmployeeId = reader["EmployeeId"].ToString(),
-                        CustomerId = reader["CustomerId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
                         DateCreated = Convert.ToDateTime(reader["DateCreated"]),
                         Status = (BillProductDTO.Option)Enum.Parse(typeof(BillProductDTO.Option), reader["Status"].ToString())
@@ -247,7 +239,7 @@ namespace BadmintonCourtManagement.DAO
         // update
         public bool UpdateProductBill(BillProductDTO bill)
         {
-            string query = "UPDATE BillProduct SET EmployeeId = @EmployeeId, CustomerId = @CustomerId, TotalPrice = @TotalPrice, DateCreated = @DateCreated, Status = @Status " +
+            string query = "UPDATE BillProduct SET EmployeeId = @EmployeeId, TotalPrice = @TotalPrice, DateCreated = @DateCreated, Status = @Status " +
                            "WHERE BillProductId = @BillProductId";
             int result = 0;
             try
@@ -256,7 +248,6 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@BillProductId", bill.BillProductId);
                 cmd.Parameters.AddWithValue("@EmployeeId", bill.EmployeeId);
-                cmd.Parameters.AddWithValue("@CustomerId", bill.CustomerId);
                 cmd.Parameters.AddWithValue("@TotalPrice", bill.TotalPrice);
                 cmd.Parameters.AddWithValue("@DateCreated", bill.DateCreated);
                 cmd.Parameters.AddWithValue("@Status", bill.Status);

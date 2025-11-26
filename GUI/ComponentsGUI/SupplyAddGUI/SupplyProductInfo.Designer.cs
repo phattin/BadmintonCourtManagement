@@ -30,6 +30,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             TitlePanel = new Panel();
             Title = new Label();
             Body = new CustomPanel();
@@ -50,12 +51,14 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             ProductType = new Label();
             ProductName = new Label();
             ProductID = new Label();
+            errorProvider1 = new ErrorProvider(components);
             TitlePanel.SuspendLayout();
             Body.SuspendLayout();
             SubBody.SuspendLayout();
             ButtonPanel.SuspendLayout();
             InputPanel.SuspendLayout();
             InfoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -139,6 +142,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             AddButton.Text = "+ Thêm";
             AddButton.TextColor = Color.White;
             AddButton.UseVisualStyleBackColor = false;
+            AddButton.Click += AddButton_Click;
             AddButton.MouseEnter += buttonEnter;
             AddButton.MouseLeave += buttonLeave;
             // 
@@ -176,6 +180,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             textBox3.Location = new Point(239, 201);
             textBox3.Margin = new Padding(0, 20, 25, 0);
             textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
             textBox3.Size = new Size(462, 34);
             textBox3.TabIndex = 10;
             // 
@@ -188,6 +193,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(462, 34);
             textBox2.TabIndex = 9;
+            textBox2.TextChanged += price_TextChanged;
             // 
             // textBox1
             // 
@@ -198,6 +204,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(462, 34);
             textBox1.TabIndex = 8;
+            textBox1.TextChanged += price_TextChanged;
             // 
             // ProductTotal
             // 
@@ -329,6 +336,10 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             ProductID.Text = "Mã sản phẩm: SP0001";
             ProductID.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
             // SupplyProductInfo
             // 
             AutoScaleDimensions = new SizeF(16F, 37F);
@@ -347,6 +358,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             InputPanel.ResumeLayout(false);
             InputPanel.PerformLayout();
             InfoPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
         }
 
@@ -372,5 +384,6 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         private TextBox textBox2;
         private TextBox textBox1;
         private RoundedButton AddButton;
+        private ErrorProvider errorProvider1;
     }
 }
