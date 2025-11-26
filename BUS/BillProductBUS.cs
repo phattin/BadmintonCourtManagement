@@ -43,5 +43,9 @@ namespace BadmintonCourtManagement.BUS
         {
             return dao.DeleteProductBill(id);
         }
+        public BillProductDTO GetProductBillById(string id)
+        {
+            return dao.GetProductBillById(id);
+        }
     }
 }
