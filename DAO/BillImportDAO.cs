@@ -8,6 +8,26 @@ namespace BadmintonCourtManagement.DAO
     {
         private DBConnection db = new DBConnection();
 
+	public string GetMaxId() {
+		string query = "SELECT MAX(ImportBillId) FROM ImportBill WHERE ImportBillId LIKE 'IB%'";
+		try {
+			db.OpenConnection();
+			MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+			var result = cmd.ExecuteScalar();
+			if (result != DBNull.Value && result != null) {
+				return result.ToString();
+			}
+			else {
+				return null;
+			}
+		}
+		catch (Exception ex) {
+			throw new Exception("Error retrieving max ImportBillId: " + ex.Message);
+		} finally {
+			db.CloseConnection();
+		}
+	}
+
         // create
         public bool InsertImportBill(ImportBillDTO importBill)
         {
@@ -20,6 +40,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@ImportBillId", importBill.ImportBillId);
                 cmd.Parameters.AddWithValue("@EmployeeId", importBill.EmployeeId);
                 cmd.Parameters.AddWithValue("@SupplierId", importBill.SupplierId);
+                importBill.DateCreated = DateTime.Now;
                 cmd.Parameters.AddWithValue("@DateCreated", importBill.DateCreated);
                 cmd.Parameters.AddWithValue("@TotalPrice", importBill.TotalPrice);
                 cmd.Parameters.AddWithValue("@Status", importBill.Status.ToString());

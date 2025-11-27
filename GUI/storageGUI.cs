@@ -23,9 +23,11 @@ namespace BadmintonCourtManagement.GUI
         private int page = 0;
         private int itemPerPage = 8;
         private Boolean isFiltered = false;
+        private AccountDTO currentAccount;
 
         public storageGUI(AccountDTO currentAccount)
         {
+            this.currentAccount = currentAccount;
             InitializeComponent();
             this.Load += StorageGUI_Load;
         }
@@ -440,13 +442,13 @@ namespace BadmintonCourtManagement.GUI
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI();
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
             supplyAdd.ShowDialog();
         }
 
         private void AddButton_Click_1(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI();
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
             supplyAdd.ShowDialog();
         }
 
