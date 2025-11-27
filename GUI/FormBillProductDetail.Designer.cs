@@ -12,132 +12,210 @@ namespace BadmintonCourtManagement.GUI
 
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.customPanelMain = new CustomPanel();
-            this.lblTitle = new Label();
-            this.panelHeader = new Panel();
-            this.lblBillId = new Label();
-            this.lblEmployee = new Label();
-            this.lblDate = new Label();
-            this.lblTotalPrice = new Label();
-            this.dgvDetails = new DataGridView();
-            this.colSTT = new DataGridViewTextBoxColumn();
-            this.colProductName = new DataGridViewTextBoxColumn();
-            this.colQuantity = new DataGridViewTextBoxColumn();
-            this.colPrice = new DataGridViewTextBoxColumn();
-            this.colTotal = new DataGridViewTextBoxColumn();
-            this.btnClose = new Label();
-
-            this.customPanelMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).BeginInit();
-            this.SuspendLayout();
-
-            // Form
-            this.Text = "Chi tiết hóa đơn bán hàng";
-            this.Size = new Size(950, 680);
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.BackColor = Color.White;
-            this.Load += FormBillProductDetail_Load;
-
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            customPanelMain = new CustomPanel();
+            btnClose = new Label();
+            dgvDetails = new DataGridView();
+            colSTT = new DataGridViewTextBoxColumn();
+            colProductName = new DataGridViewTextBoxColumn();
+            colQuantity = new DataGridViewTextBoxColumn();
+            colPrice = new DataGridViewTextBoxColumn();
+            colTotal = new DataGridViewTextBoxColumn();
+            panelHeader = new Panel();
+            tlInfo = new TableLayoutPanel();
+            lblBillId = new Label();
+            lblEmployee = new Label();
+            lblTotalPrice = new Label();
+            lblDate = new Label();
+            lblTitle = new Label();
+            customPanelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvDetails).BeginInit();
+            panelHeader.SuspendLayout();
+            tlInfo.SuspendLayout();
+            SuspendLayout();
+            // 
             // customPanelMain
-            this.customPanelMain.Dock = DockStyle.Fill;
-            this.customPanelMain.BackColor = Color.FromArgb(239, 248, 230);
-            this.customPanelMain.BorderRadius = 20;
-            this.customPanelMain.Controls.Add(this.btnClose);
-            this.customPanelMain.Controls.Add(this.dgvDetails);
-            this.customPanelMain.Controls.Add(this.panelHeader);
-            this.customPanelMain.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.customPanelMain);
-
-            // Tiêu đề
-            this.lblTitle.Text = "CHI TIẾT HÓA ĐƠN BÁN HÀNG";
-            this.lblTitle.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
-            this.lblTitle.ForeColor = Color.FromArgb(0, 120, 103);
-            this.lblTitle.Dock = DockStyle.Top;
-            this.lblTitle.Height = 90;
-            this.lblTitle.TextAlign = ContentAlignment.MiddleCenter;
-            this.lblTitle.Padding = new Padding(0, 20, 0, 0);
-
-            // Header hóa đơn
-            this.panelHeader.Dock = DockStyle.Top;
-            this.panelHeader.Height = 140;
-            this.panelHeader.BackColor = Color.FromArgb(0, 120, 103);
-            this.panelHeader.Paint += (s, e) =>
-            {
-                var g = e.Graphics;
-                string text = "HÓA ĐƠN BÁN HÀNG";
-                var font = new Font("Segoe UI", 24F, FontStyle.Bold);
-                var size = g.MeasureString(text, font);
-                g.DrawString(text, font, Brushes.White, 
-                    new PointF((panelHeader.Width - size.Width) / 2, 20));
-            };
-
-            var tlInfo = new TableLayoutPanel
-            {
-                Dock = DockStyle.Bottom,
-                Height = 80,
-                ColumnCount = 4,
-                Padding = new Padding(30, 10, 30, 10)
-            };
-            for (int i = 0; i < 4; i++) tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-
-            lblBillId.Text = "Mã hóa đơn:\n...";
-            lblEmployee.Text = "Nhân viên:\n...";
-            lblDate.Text = "Ngày lập:\n...";
-            lblTotalPrice.Text = "TỔNG TIỀN:\n0 ₫";
-            lblTotalPrice.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-
-            tlInfo.Controls.Add(lblBillId, 0, 0);
-            tlInfo.Controls.Add(lblEmployee, 1, 0);
-            tlInfo.Controls.Add(lblDate, 2, 0);
-            tlInfo.Controls.Add(lblTotalPrice, 3, 0);
-            panelHeader.Controls.Add(tlInfo);
-
-            // DataGridView
-            this.dgvDetails.Dock = DockStyle.Fill;
-            this.dgvDetails.BackgroundColor = Color.White;
-            this.dgvDetails.BorderStyle = BorderStyle.None;
-            this.dgvDetails.RowHeadersVisible = false;
-            this.dgvDetails.AllowUserToAddRows = false;
-            this.dgvDetails.ReadOnly = true;
-            this.dgvDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvDetails.ColumnHeadersHeight = 50;
-            this.dgvDetails.Margin = new Padding(30, 20, 30, 100);
-
-            this.dgvDetails.Columns.AddRange(new DataGridViewColumn[] {
-                colSTT, colProductName, colQuantity, colPrice, colTotal
-            });
-
-            colSTT.HeaderText = "STT"; colSTT.Width = 60;
-            colProductName.HeaderText = "Tên sản phẩm";
-            colQuantity.HeaderText = "SL"; colQuantity.Width = 80;
-            colPrice.HeaderText = "Đơn giá"; colPrice.DefaultCellStyle.Format = "N0";
-            colTotal.HeaderText = "Thành tiền"; colTotal.DefaultCellStyle.Format = "N0";
-
-            // Nút Đóng (đỏ nổi bật)
-            btnClose.Text = "Đóng";
+            // 
+            customPanelMain.BackColor = Color.FromArgb(239, 248, 230);
+            customPanelMain.BorderRadius = 20;
+            customPanelMain.Controls.Add(btnClose);
+            customPanelMain.Controls.Add(dgvDetails);
+            customPanelMain.Controls.Add(panelHeader);
+            customPanelMain.Controls.Add(lblTitle);
+            customPanelMain.Dock = DockStyle.Fill;
+            customPanelMain.Location = new Point(0, 0);
+            customPanelMain.Name = "customPanelMain";
+            customPanelMain.Size = new Size(928, 624);
+            customPanelMain.TabIndex = 0;
+            // 
+            // btnClose
+            // 
+            btnClose.AutoSize = true;
+            btnClose.BackColor = Color.FromArgb(180, 60, 60);
+            btnClose.Cursor = Cursors.Hand;
             btnClose.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnClose.ForeColor = Color.White;
-            btnClose.BackColor = Color.FromArgb(180, 60, 60);
-            btnClose.TextAlign = ContentAlignment.MiddleCenter;
-            btnClose.Cursor = Cursors.Hand;
+            btnClose.Location = new Point(766, 22);
+            btnClose.Name = "btnClose";
             btnClose.Padding = new Padding(30, 12, 30, 12);
-            btnClose.AutoSize = true;
-            btnClose.MouseClick += (s, e) => btnClose_Click(s, EventArgs.Empty);
-
-            // Tự động căn góc dưới bên phải
-            this.Resize += (s, e) =>
-            {
-                btnClose.Location = new Point(this.ClientSize.Width - btnClose.Width - 40, this.ClientSize.Height - 90);
-            };
-            btnClose.Location = new Point(this.ClientSize.Width - btnClose.Width - 40, this.ClientSize.Height - 90);
-
-            this.customPanelMain.ResumeLayout(false);
-            this.customPanelMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).EndInit();
-            this.ResumeLayout(false);
+            btnClose.Size = new Size(137, 56);
+            btnClose.TabIndex = 0;
+            btnClose.Text = "Đóng";
+            btnClose.TextAlign = ContentAlignment.MiddleCenter;
+            btnClose.Click += btnClose_Click;
+            // 
+            // dgvDetails
+            // 
+            dgvDetails.AllowUserToAddRows = false;
+            dgvDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvDetails.BackgroundColor = Color.White;
+            dgvDetails.BorderStyle = BorderStyle.None;
+            dgvDetails.ColumnHeadersHeight = 50;
+            dgvDetails.Columns.AddRange(new DataGridViewColumn[] { colSTT, colProductName, colQuantity, colPrice, colTotal });
+            dgvDetails.Dock = DockStyle.Fill;
+            dgvDetails.Location = new Point(0, 230);
+            dgvDetails.Margin = new Padding(30, 20, 30, 100);
+            dgvDetails.Name = "dgvDetails";
+            dgvDetails.ReadOnly = true;
+            dgvDetails.RowHeadersVisible = false;
+            dgvDetails.RowHeadersWidth = 62;
+            dgvDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvDetails.Size = new Size(928, 394);
+            dgvDetails.TabIndex = 1;
+            // 
+            // colSTT
+            // 
+            colSTT.HeaderText = "STT";
+            colSTT.MinimumWidth = 8;
+            colSTT.Name = "colSTT";
+            colSTT.ReadOnly = true;
+            // 
+            // colProductName
+            // 
+            colProductName.HeaderText = "Tên sản phẩm";
+            colProductName.MinimumWidth = 8;
+            colProductName.Name = "colProductName";
+            colProductName.ReadOnly = true;
+            // 
+            // colQuantity
+            // 
+            colQuantity.HeaderText = "SL";
+            colQuantity.MinimumWidth = 8;
+            colQuantity.Name = "colQuantity";
+            colQuantity.ReadOnly = true;
+            // 
+            // colPrice
+            // 
+            dataGridViewCellStyle1.Format = "N0";
+            colPrice.DefaultCellStyle = dataGridViewCellStyle1;
+            colPrice.HeaderText = "Đơn giá";
+            colPrice.MinimumWidth = 8;
+            colPrice.Name = "colPrice";
+            colPrice.ReadOnly = true;
+            // 
+            // colTotal
+            // 
+            dataGridViewCellStyle2.Format = "N0";
+            colTotal.DefaultCellStyle = dataGridViewCellStyle2;
+            colTotal.HeaderText = "Thành tiền";
+            colTotal.MinimumWidth = 8;
+            colTotal.Name = "colTotal";
+            colTotal.ReadOnly = true;
+            // 
+            // panelHeader
+            // 
+            panelHeader.BackColor = Color.FromArgb(0, 120, 103);
+            panelHeader.Controls.Add(tlInfo);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 90);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(928, 140);
+            panelHeader.TabIndex = 2;
+            // 
+            // tlInfo
+            // 
+            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 187F));
+            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 184F));
+            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 187F));
+            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 183F));
+            tlInfo.Controls.Add(lblBillId, 0, 0);
+            tlInfo.Controls.Add(lblEmployee, 1, 0);
+            tlInfo.Controls.Add(lblTotalPrice, 3, 0);
+            tlInfo.Controls.Add(lblDate, 2, 0);
+            tlInfo.Dock = DockStyle.Fill;
+            tlInfo.Location = new Point(0, 0);
+            tlInfo.Name = "tlInfo";
+            tlInfo.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tlInfo.Size = new Size(928, 140);
+            tlInfo.TabIndex = 0;
+            // 
+            // lblBillId
+            // 
+            lblBillId.Location = new Point(3, 0);
+            lblBillId.Name = "lblBillId";
+            lblBillId.Size = new Size(181, 140);
+            lblBillId.TabIndex = 0;
+            lblBillId.Text = "Mã hóa đơn:\n...";
+            lblBillId.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lblEmployee
+            // 
+            lblEmployee.Location = new Point(190, 0);
+            lblEmployee.Name = "lblEmployee";
+            lblEmployee.Size = new Size(178, 140);
+            lblEmployee.TabIndex = 1;
+            lblEmployee.Text = "Nhân viên:\n...";
+            lblEmployee.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lblTotalPrice
+            // 
+            lblTotalPrice.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblTotalPrice.Location = new Point(561, 0);
+            lblTotalPrice.Name = "lblTotalPrice";
+            lblTotalPrice.Size = new Size(364, 140);
+            lblTotalPrice.TabIndex = 3;
+            lblTotalPrice.Text = "TỔNG TIỀN:\n0 ₫";
+            lblTotalPrice.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lblDate
+            // 
+            lblDate.Location = new Point(374, 0);
+            lblDate.Name = "lblDate";
+            lblDate.Size = new Size(181, 140);
+            lblDate.TabIndex = 2;
+            lblDate.Text = "Ngày lập:\n...";
+            lblDate.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lblTitle
+            // 
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(0, 120, 103);
+            lblTitle.Location = new Point(0, 0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Padding = new Padding(0, 20, 0, 0);
+            lblTitle.Size = new Size(928, 90);
+            lblTitle.TabIndex = 3;
+            lblTitle.Text = "CHI TIẾT HÓA ĐƠN BÁN HÀNG";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // FormBillProductDetail
+            // 
+            BackColor = Color.White;
+            ClientSize = new Size(928, 624);
+            Controls.Add(customPanelMain);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "FormBillProductDetail";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Chi tiết hóa đơn bán hàng";
+            Load += FormBillProductDetail_Load;
+            customPanelMain.ResumeLayout(false);
+            customPanelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvDetails).EndInit();
+            panelHeader.ResumeLayout(false);
+            tlInfo.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         private CustomPanel customPanelMain;
@@ -154,5 +232,6 @@ namespace BadmintonCourtManagement.GUI
         private DataGridViewTextBoxColumn colPrice;
         private DataGridViewTextBoxColumn colTotal;
         private Label btnClose;
+        private TableLayoutPanel tlInfo;
     }
 }
