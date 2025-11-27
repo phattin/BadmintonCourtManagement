@@ -114,8 +114,8 @@ namespace BadmintonCourtManagement.DAO
         // Thêm sản phẩm mới
         public bool InsertProduct(ProductDTO product)
         {
-            string query = "INSERT INTO product (ProductId, ProductName, ProductImg, Quantity, BrandId, TypeId, IsDeleted) " +
-                           "VALUES (@ProductId, @ProductName, @ProductImg, @Quantity, @BrandId, @TypeId, 0)";
+            string query = "INSERT INTO product (ProductId, ProductName, SupplierId, ProductImg, Quantity, BrandId, TypeId, IsDeleted) " +
+                           "VALUES (@ProductId, @ProductName, @SupplierId, @ProductImg, @Quantity, @BrandId, @TypeId, 0)";
             try
             {
                 db.OpenConnection();
@@ -149,7 +149,7 @@ namespace BadmintonCourtManagement.DAO
         // update
         public bool UpdateProduct(ProductDTO product)
         {
-            string query = "UPDATE product SET ProductName = @ProductName, ProductId = @ProductId, Quantity = @Quantity, " +
+            string query = "UPDATE product SET ProductName = @ProductName, Quantity = @Quantity, SupplierId = @SupplierId, " +
                            "BrandId = @BrandId, TypeId = @TypeId, ProductImg = @ProductImg WHERE ProductId = @ProductId AND IsDeleted = 0";
             try
             {

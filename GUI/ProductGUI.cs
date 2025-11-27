@@ -156,20 +156,28 @@ namespace BadmintonCourtManagement.GUI
             }
             Console.WriteLine(imagePath);
 
-            byte[] imageData = File.ReadAllBytes(imagePath);
-            if (imageData.Length == 0)
+            Image pictureImage = null;
+            try
             {
-                throw new Exception($"Image file {imagePath} is empty");
+                byte[] imageData = File.ReadAllBytes(imagePath);
+                if (imageData.Length > 0)
+                {
+                    using (var ms = new MemoryStream(imageData))
+                    using (var tmp = Image.FromStream(ms))
+                    {
+                        // create a copy so we don't depend on the stream
+                        pictureImage = new Bitmap(tmp);
+                    }
+                }
             }
-            Image img;
-            using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+            catch
             {
-                img = Image.FromStream(stream);
+                pictureImage = null;
             }
 
             var pictureBox = new PictureBox
             {
-                Image = new Bitmap(img), // copies the image so we can close the file
+                Image = pictureImage, 
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Margin = new Padding(10),
                 Size = new Size(300, 300),
