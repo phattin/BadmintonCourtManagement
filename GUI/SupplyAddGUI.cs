@@ -1,4 +1,5 @@
 ﻿using GUI.ComponentsGUI;
+using BadmintonCourtManagement.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +14,21 @@ namespace BadmintonCourtManagement.GUI
 {
     public partial class SupplyAddGUI : Form
     {
+        ProductDTO selectedProduct;
         public SupplyAddGUI()
         {
             InitializeComponent();
+        if (this.listProductPanel != null)
+            this.listProductPanel.ProductSelected += OnProductSelected;
+        }
+
+        private void OnProductSelected(ProductDTO product)
+        {
+            selectedProduct = product;
+
+            // update the info panel (call method we added)
+            if (this.infoProductPanel != null)
+                this.infoProductPanel.SetProduct(product);
         }
 
         private void SupplyAddGUI_Load(object sender, EventArgs e)
