@@ -12,7 +12,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             lblTitle = new Label();
             customPanelHeader = new CustomPanel();
             flowLayoutSearch = new FlowLayoutPanel();
@@ -135,33 +135,33 @@ namespace BadmintonCourtManagement.GUI
             // 
             // customPanelMain
             // 
-            customPanelMain.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             customPanelMain.BackColor = Color.FromArgb(239, 248, 230);
             customPanelMain.BorderRadius = 20;
             customPanelMain.Controls.Add(dgvBills);
-            customPanelMain.Location = new Point(70, 175);
+            customPanelMain.Dock = DockStyle.Fill;
+            customPanelMain.Location = new Point(70, 179);
             customPanelMain.Name = "customPanelMain";
             customPanelMain.Padding = new Padding(37, 20, 37, 37);
-            customPanelMain.Size = new Size(1394, 706);
+            customPanelMain.Size = new Size(1394, 720);
             customPanelMain.TabIndex = 0;
             // 
             // dgvBills
             // 
             dgvBills.AllowUserToAddRows = false;
-            dgvBills.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dgvBills.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvBills.BackgroundColor = Color.White;
             dgvBills.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 120, 103);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvBills.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(0, 120, 103);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvBills.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvBills.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvBills.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5 });
+            dgvBills.Dock = DockStyle.Fill;
             dgvBills.EnableHeadersVisualStyles = false;
             dgvBills.Location = new Point(37, 20);
             dgvBills.MultiSelect = false;
@@ -171,7 +171,7 @@ namespace BadmintonCourtManagement.GUI
             dgvBills.RowHeadersVisible = false;
             dgvBills.RowHeadersWidth = 100;
             dgvBills.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBills.Size = new Size(1320, 661);
+            dgvBills.Size = new Size(1320, 663);
             dgvBills.TabIndex = 0;
             // 
             // dataGridViewTextBoxColumn1
@@ -211,7 +211,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // drPanelMain
             // 
-            drPanelMain.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            drPanelMain.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             drPanelMain.BackColor = Color.White;
             drPanelMain.Controls.Add(customPanelMain);
             drPanelMain.Controls.Add(customPanelHeader);
