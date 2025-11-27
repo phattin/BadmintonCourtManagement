@@ -43,8 +43,8 @@ namespace BadmintonCourtManagement.GUI
                 { "Đặt sân", BookCourt_Click },
                 { "Thống kê", Statistics_Click },
                 { "Loại sản phẩm", TypeProduct_Click },
-                { "Nhà cung cấp", Supplier_Click },
-                { "Hóa đơn sản phẩm", BillProduct_Click }
+                { "Nhà cung cấp", Supplier_Click }
+                // { "Hóa đơn sản phẩm", BillProduct_Click }
             };
 
             menuManager!.CreateMenuButtons(menuPanel!, menuItems);
@@ -81,7 +81,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Bill_Click(object? sender, EventArgs e)
         {
-            MessageBox.Show("Hóa đơn clicked!");
+            OpenChildPanel(new BillProductGUI(currentAccount));
         }
 
         private void Sell_Click(object? sender, EventArgs e)
@@ -136,10 +136,10 @@ namespace BadmintonCourtManagement.GUI
         {
             OpenChildPanel(new SupplierGUI(currentAccount));
         }
-        private void BillProduct_Click(object? sender, EventArgs e)
-        {
-            OpenChildPanel(new BillProductGUI(currentAccount));
-        }
+        // private void BillProduct_Click(object? sender, EventArgs e)
+        // {
+        //     OpenChildPanel(new BillProductGUI(currentAccount));
+        // }
 
         private void MainLayout_Load(object sender, EventArgs e)
         {
