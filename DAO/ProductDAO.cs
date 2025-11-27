@@ -28,6 +28,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
                         ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        SupplierId = reader["SupplierId"]?.ToString() ?? string.Empty,
                         ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
                         Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,
                         BrandId = reader["BrandId"]?.ToString() ?? string.Empty,
@@ -83,6 +84,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
                         ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        SupplierId = reader["SupplierId"]?.ToString() ?? string.Empty,
                         ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
                         Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,
                         BrandId = reader["BrandId"]?.ToString() ?? string.Empty,
@@ -120,6 +122,7 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@ProductId", product.ProductId);
                 cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                cmd.Parameters.AddWithValue("@SupplierId", product.SupplierId);
                 cmd.Parameters.AddWithValue("@ProductImg", product.ProductImg);
                 cmd.Parameters.AddWithValue("@Quantity", product.Quantity);
                 cmd.Parameters.AddWithValue("@BrandId", product.BrandId);
@@ -154,6 +157,7 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@ProductId", product.ProductId);
                 cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                cmd.Parameters.AddWithValue("@SupplierId", product.SupplierId);
                 cmd.Parameters.AddWithValue("@ProductImg", product.ProductImg);
                 cmd.Parameters.AddWithValue("@Quantity", product.Quantity);
                 cmd.Parameters.AddWithValue("@BrandId", product.BrandId);
@@ -222,6 +226,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
                         ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        SupplierId = reader["SupplierId"]?.ToString() ?? string.Empty,
                         ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
                         Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,  // FIXED
                         BrandId = reader["BrandId"]?.ToString() ?? string.Empty,
@@ -264,6 +269,7 @@ namespace BadmintonCourtManagement.DAO
                     {
                         ProductId = reader["ProductId"]?.ToString() ?? string.Empty,
                         ProductName = reader["ProductName"]?.ToString() ?? string.Empty,
+                        SupplierId = reader["SupplierId"]?.ToString() ?? string.Empty,
                         ProductImg = reader["ProductImg"]?.ToString() ?? "DefaultProductImage.jpg",
                         Quantity = reader["Quantity"] != DBNull.Value ? Convert.ToInt32(reader["Quantity"]) : 0,  // FIXED
                         BrandId = reader["BrandId"]?.ToString() ?? string.Empty,

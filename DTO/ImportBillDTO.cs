@@ -27,5 +27,12 @@ namespace BadmintonCourtManagement.DTO
             this.TotalPrice = totalPrice;
             this.Status = status;
         }
+	public ImportBillDTO(string importBillId, string supplierId, string employeeId, double totalPrice, Option status) {
+            this.ImportBillId = importBillId;
+            this.SupplierId = supplierId;
+            this.EmployeeId = employeeId;
+            this.TotalPrice = totalPrice;
+            this.Status = status;
+	}
     }
 }
