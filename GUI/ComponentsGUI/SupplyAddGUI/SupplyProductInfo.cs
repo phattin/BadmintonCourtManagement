@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 {
@@ -18,15 +19,14 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         // bus
         private TypeProductBUS typeBus = new TypeProductBUS();
         private BrandBUS brandBus = new BrandBUS();
+        private BillProductBUS billBus = new BillProductBUS();
+        // list
+        private List<BillImportDetailDTO> productListImported = new List<BillImportDetailDTO>();
+        public event Action<BillImportDetailDTO, bool> ProductImported;
 
         public SupplyProductInfo()
         {
             InitializeComponent();
-        }
-
-        private void LoadInfo()
-        {
-            // Load or initialize product info fields if necessary
         }
 
         public void SetProduct(ProductDTO product)
@@ -44,7 +44,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 return;
             }
 
-            ProductID.Text = "Mã SP: " + product.ProductId;
+            ProductID.Text = "Mã sản phẩm: " + product.ProductId;
             ProductName.Text = "Tên sản phẩm: " + product.ProductName;
             ProductType.Text = "Loại sản phẩm: " + typeBus.GetById(product.TypeId.ToString()).TypeProductName;
             ProductBrand.Text = "Nhãn hàng: " + brandBus.GetById(product.BrandId.ToString()).BrandName;
@@ -116,7 +116,62 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 return;
             }
 
-            MessageBox.Show("Thêm sản phẩm vào phiếu nhập thành công (chưa tạo phiến mới)!");
+            // check productId duplicate
+            BillImportDetailDTO existingProduct = null;
+            foreach (var item in productListImported)
+            {
+                if (item.ProductId == ProductID.Text.Replace("Mã sản phẩm: ", ""))
+                {
+                    item.Quantity = int.Parse(QuantityBox.Text);
+                    item.Price = double.Parse(textBox1.Text);
+                    item.TotalPrice = item.Price * item.Quantity;
+                    existingProduct = item;
+                    break;
+                }
+            }
+
+            if (existingProduct != null)
+            {
+                MessageBox.Show("Cập nhật sản phẩm trong phiếu nhập thành công");
+                ProductImported?.Invoke(existingProduct, true);
+            }
+            else
+            {
+                var billId = billBus.GetMaxId();
+                BillImportDetailDTO newBill = new BillImportDetailDTO
+                {
+                    ImportBillId = billId,
+                    ProductId = ProductID.Text.Replace("Mã sản phẩm: ", ""),
+                    Quantity = int.Parse(QuantityBox.Text),
+                    Price = double.Parse(textBox1.Text),
+                    TotalPrice = double.Parse(textBox3.Text),
+                    Status = BillImportDetailDTO.Option.active
+                };
+                productListImported.Add(newBill);
+                if (string.IsNullOrWhiteSpace(billId))
+                {
+                    billId = "BP00001";
+                }
+                else
+                {
+                    var match = Regex.Match(billId, @"^([A-Za-z]*)(\d+)$");
+                    if (match.Success)
+                    {
+                        var prefix = match.Groups[1].Value;
+                        var numberPart = match.Groups[2].Value;
+                        if (int.TryParse(numberPart, out var number))
+                        {
+                            number += productListImported.Count;
+                            billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
+                        }
+                    }
+                }
+
+                ProductImported?.Invoke(newBill, false);
+
+
+                MessageBox.Show("Thêm sản phẩm vào phiếu nhập thành công");
+            }
             // TODO: update UI below - add product once the button is clicked and anything is perfect (don't know what that is)
             // create new bill import product detail objects in a list
             // after that, pass that list to the parent form (SupplyAddGUI) to handle
