@@ -161,11 +161,6 @@ namespace BadmintonCourtManagement.GUI
             OpenChildPanel(new BillProductGUI(currentAccount));
         }
 
-        private void Supplier_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Nhà cung cấp clicked!");
-        }
-
         private void Sell_Click(object sender, EventArgs e)
         {
             OpenChildPanel(new ProductSaleGUI(currentAccount));
