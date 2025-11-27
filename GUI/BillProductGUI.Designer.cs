@@ -166,6 +166,7 @@ namespace BadmintonCourtManagement.GUI
             dgvBills.Location = new Point(37, 20);
             dgvBills.MultiSelect = false;
             dgvBills.Name = "dgvBills";
+            dgvBills.CellContentClick += dgvBills_CellContentClick;
             dgvBills.ReadOnly = true;
             dgvBills.RightToLeft = RightToLeft.No;
             dgvBills.RowHeadersVisible = false;

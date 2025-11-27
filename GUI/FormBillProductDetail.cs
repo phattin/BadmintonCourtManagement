@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
@@ -8,61 +9,76 @@ namespace BadmintonCourtManagement.GUI
 {
     public partial class FormBillProductDetail : Form
     {
-        private string billId;
-        private AccountDTO currentAccount;
-        private BillProductBUS billBUS = new BillProductBUS();
-        private BillProductDetailBUS detailBUS = new BillProductDetailBUS();
+        private readonly string _billId;
+        private readonly BillProductBUS _billBus = new BillProductBUS();
+        private readonly BillProductDetailBUS _detailBus = new BillProductDetailBUS();
+        private readonly ProductBUS _productBus = new ProductBUS(); // Tái sử dụng
+        private readonly AccountDTO? _account;
 
-        public FormBillProductDetail(string billProductId, AccountDTO account)
+        public FormBillProductDetail(string billProductId, AccountDTO? account = null)
         {
-            this.billId = billProductId;
-            this.currentAccount = account;
+            _billId = billProductId;
+            _account = account;
             InitializeComponent();
+        }
+
+        private void FormBillProductDetail_Load(object sender, EventArgs e)
+        {
             LoadBillDetail();
+
+            // Hiệu ứng hover cho nút Đóng
+            btnClose.MouseEnter += (s, args) => btnClose.BackColor = Color.FromArgb(200, 70, 70);
+            btnClose.MouseLeave += (s, args) => btnClose.BackColor = Color.FromArgb(180, 60, 60);
         }
 
         private void LoadBillDetail()
         {
             try
             {
-                var bill = billBUS.GetProductBillById(billId);
-                var details = detailBUS.GetDetailByBillProductId(billId);
+                var bill = _billBus.GetProductBillById(_billId);
+                if (bill == null)
+                {
+                    MessageBox.Show("Không tìm thấy hóa đơn này!", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Close();
+                    return;
+                }
 
-                lblBillId.Text = bill.BillProductId;
-                lblEmployee.Text = bill.EmployeeId;
-                lblDate.Text = bill.DateCreated.ToString("dd/MM/yyyy HH:mm:ss");
-                lblTotalPrice.Text = bill.TotalPrice.ToString("N0") + " ₫";
+                var details = _detailBus.GetDetailByBillProductId(_billId);
 
+                // Thông tin hóa đơn
+                lblBillId.Text = $"Mã hóa đơn:\n{bill.BillProductId}";
+                lblEmployee.Text = $"Nhân viên:\n{(string.IsNullOrWhiteSpace(bill.EmployeeId) ? "Không xác định" : bill.EmployeeId)}";
+                lblDate.Text = $"Ngày lập:\n{bill.DateCreated:dd/MM/yyyy HH:mm:ss}";
+
+                // Danh sách sản phẩm
+                dgvDetails.Rows.Clear();
                 int stt = 1;
+
                 foreach (var item in details)
                 {
-                    var product = new ProductBUS().GetProductById(item.ProductId);
+                    var product = _productBus.GetProductById(item.ProductId);
                     string productName = product?.ProductName ?? "Sản phẩm đã xóa";
 
-                    dgvDetails.Rows.Add(stt++, productName, item.Quantity, item.Price.ToString("N0"), item.TotalPrice.ToString("N0"));
+                    dgvDetails.Rows.Add(
+                        stt++,
+                        productName,
+                        item.Quantity,
+                        item.Price.ToString("N0"),
+                        item.TotalPrice.ToString("N0")
+                    );
                 }
 
-                // Tính lại tổng (phòng khi dữ liệu bị sai lệch)
-                double sum = 0;
-                foreach (DataGridViewRow row in dgvDetails.Rows)
-                {
-                    if (row.Cells[4].Value != null)
-                        sum += Convert.ToDouble(row.Cells[4].Value.ToString().Replace(",", ""));
-                }
-                lblTotalPrice.Text = sum.ToString("N0") + " ₫";
+                // Tổng tiền từ chi tiết
+                double total = details?.Sum(d => d.TotalPrice) ?? 0.0;
+                lblTotalPrice.Text = $"TỔNG TIỀN:\n{total:N0} ₫";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải chi tiết hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi tải dữ liệu:\n" + ex.Message, "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        // private void btnPrint_Click(object sender, EventArgs e)
-        // {
-        //     // Tạo form in (có thể in trực tiếp hoặc lưu PDF)
-        //     PrintBillForm printForm = new PrintBillForm(billId, currentAccount);
-        //     printForm.ShowDialog();
-        // }
 
         private void btnClose_Click(object sender, EventArgs e)
         {

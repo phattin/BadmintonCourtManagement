@@ -26,7 +26,6 @@ namespace BadmintonCourtManagement.GUI
             this.colQuantity = new DataGridViewTextBoxColumn();
             this.colPrice = new DataGridViewTextBoxColumn();
             this.colTotal = new DataGridViewTextBoxColumn();
-            this.btnPrint = new Label();
             this.btnClose = new Label();
 
             this.customPanelMain.SuspendLayout();
@@ -39,20 +38,19 @@ namespace BadmintonCourtManagement.GUI
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.White;
-            this.Load += (s, e) => { this.BringToFront(); };
+            this.Load += FormBillProductDetail_Load;
 
             // customPanelMain
             this.customPanelMain.Dock = DockStyle.Fill;
             this.customPanelMain.BackColor = Color.FromArgb(239, 248, 230);
             this.customPanelMain.BorderRadius = 20;
             this.customPanelMain.Controls.Add(this.btnClose);
-            this.customPanelMain.Controls.Add(this.btnPrint);
             this.customPanelMain.Controls.Add(this.dgvDetails);
             this.customPanelMain.Controls.Add(this.panelHeader);
             this.customPanelMain.Controls.Add(this.lblTitle);
             this.Controls.Add(this.customPanelMain);
 
-            // lblTitle
+            // Tiêu đề
             this.lblTitle.Text = "CHI TIẾT HÓA ĐƠN BÁN HÀNG";
             this.lblTitle.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
             this.lblTitle.ForeColor = Color.FromArgb(0, 120, 103);
@@ -61,7 +59,7 @@ namespace BadmintonCourtManagement.GUI
             this.lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             this.lblTitle.Padding = new Padding(0, 20, 0, 0);
 
-            // panelHeader - Thông tin hóa đơn
+            // Header hóa đơn
             this.panelHeader.Dock = DockStyle.Top;
             this.panelHeader.Height = 140;
             this.panelHeader.BackColor = Color.FromArgb(0, 120, 103);
@@ -71,19 +69,24 @@ namespace BadmintonCourtManagement.GUI
                 string text = "HÓA ĐƠN BÁN HÀNG";
                 var font = new Font("Segoe UI", 24F, FontStyle.Bold);
                 var size = g.MeasureString(text, font);
-                g.DrawString(text, font, Brushes.White, new PointF((panelHeader.Width - size.Width) / 2, 20));
+                g.DrawString(text, font, Brushes.White, 
+                    new PointF((panelHeader.Width - size.Width) / 2, 20));
             };
 
-            var tlInfo = new TableLayoutPanel { Dock = DockStyle.Bottom, Height = 80, ColumnCount = 4, Padding = new Padding(30, 10, 30, 10) };
-            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            var tlInfo = new TableLayoutPanel
+            {
+                Dock = DockStyle.Bottom,
+                Height = 80,
+                ColumnCount = 4,
+                Padding = new Padding(30, 10, 30, 10)
+            };
+            for (int i = 0; i < 4; i++) tlInfo.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
 
-            lblBillId = CreateInfoLabel("Mã hóa đơn:", "BP0001");
-            lblEmployee = CreateInfoLabel("Nhân viên:", "NV001 - Nguyễn Văn A");
-            lblDate = CreateInfoLabel("Ngày lập:", "01/01/2025 14:30:00");
-            lblTotalPrice = CreateInfoLabel("TỔNG TIỀN:", "0 ₫", true);
+            lblBillId.Text = "Mã hóa đơn:\n...";
+            lblEmployee.Text = "Nhân viên:\n...";
+            lblDate.Text = "Ngày lập:\n...";
+            lblTotalPrice.Text = "TỔNG TIỀN:\n0 ₫";
+            lblTotalPrice.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
 
             tlInfo.Controls.Add(lblBillId, 0, 0);
             tlInfo.Controls.Add(lblEmployee, 1, 0);
@@ -91,7 +94,7 @@ namespace BadmintonCourtManagement.GUI
             tlInfo.Controls.Add(lblTotalPrice, 3, 0);
             panelHeader.Controls.Add(tlInfo);
 
-            // dgvDetails
+            // DataGridView
             this.dgvDetails.Dock = DockStyle.Fill;
             this.dgvDetails.BackgroundColor = Color.White;
             this.dgvDetails.BorderStyle = BorderStyle.None;
@@ -113,47 +116,28 @@ namespace BadmintonCourtManagement.GUI
             colPrice.HeaderText = "Đơn giá"; colPrice.DefaultCellStyle.Format = "N0";
             colTotal.HeaderText = "Thành tiền"; colTotal.DefaultCellStyle.Format = "N0";
 
-            // // Nút In
-            // btnPrint.Text = "In hóa đơn";
-            // btnPrint.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            // btnPrint.ForeColor = Color.White;
-            // btnPrint.BackColor = Color.FromArgb(0, 120, 103);
-            // btnPrint.TextAlign = ContentAlignment.MiddleCenter;
-            // btnPrint.Cursor = Cursors.Hand;
-            // btnPrint.Padding = new Padding(20, 10, 20, 10);
-            // btnPrint.Location = new Point(this.Width - 380, this.Height - 100);
-            // btnPrint.AutoSize = true;
-            // btnPrint.Click += btnPrint_Click;
-
-            // Nút Đóng
+            // Nút Đóng (đỏ nổi bật)
             btnClose.Text = "Đóng";
             btnClose.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnClose.ForeColor = Color.White;
-            btnClose.BackColor = Color.FromArgb(100, 100, 100);
+            btnClose.BackColor = Color.FromArgb(180, 60, 60);
             btnClose.TextAlign = ContentAlignment.MiddleCenter;
             btnClose.Cursor = Cursors.Hand;
-            btnClose.Padding = new Padding(20, 10, 20, 10);
-            btnClose.Location = new Point(this.Width - 200, this.Height - 100);
+            btnClose.Padding = new Padding(30, 12, 30, 12);
             btnClose.AutoSize = true;
-            btnClose.Click += btnClose_Click;
+            btnClose.MouseClick += (s, e) => btnClose_Click(s, EventArgs.Empty);
+
+            // Tự động căn góc dưới bên phải
+            this.Resize += (s, e) =>
+            {
+                btnClose.Location = new Point(this.ClientSize.Width - btnClose.Width - 40, this.ClientSize.Height - 90);
+            };
+            btnClose.Location = new Point(this.ClientSize.Width - btnClose.Width - 40, this.ClientSize.Height - 90);
 
             this.customPanelMain.ResumeLayout(false);
+            this.customPanelMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).EndInit();
             this.ResumeLayout(false);
-        }
-
-        private Label CreateInfoLabel(string title, string value, bool isTotal = false)
-        {
-            var lbl = new Label
-            {
-                Text = $"{title}\n{value}",
-                Font = new Font("Segoe UI", isTotal ? 16F : 12F, isTotal ? FontStyle.Bold : FontStyle.Regular),
-                ForeColor = Color.White,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Dock = DockStyle.Fill,
-                Padding = new Padding(10, 5, 0, 0)
-            };
-            return lbl;
         }
 
         private CustomPanel customPanelMain;
@@ -169,7 +153,6 @@ namespace BadmintonCourtManagement.GUI
         private DataGridViewTextBoxColumn colQuantity;
         private DataGridViewTextBoxColumn colPrice;
         private DataGridViewTextBoxColumn colTotal;
-        private Label btnPrint;
         private Label btnClose;
     }
 }
