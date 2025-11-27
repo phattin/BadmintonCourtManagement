@@ -8,6 +8,7 @@ using BadmintonCourtManagement.BUS;
 using System.Text.RegularExpressions;
 using Mysqlx;
 using System.Data;
+using Mysqlx.Resultset;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -16,9 +17,12 @@ namespace BadmintonCourtManagement.GUI
         private List<ProductDTO> productList = new();
         private List<TypeProductDTO> typeList = new();
         private List<BrandDTO> brandList = new();
+        private List<StorageDTO> storageList = new();
+        private Dictionary<string, int> _cart = new(); // ProductId -> QuantityToBuy
 
         private bool _isRowSelected = false;
         private int _selectedRowIndex = -1;
+        private AccountDTO acc;
 
         protected override void OnHandleCreated(EventArgs e)
         {
@@ -44,7 +48,6 @@ namespace BadmintonCourtManagement.GUI
             UpdateSelectionFromDgv();
             UpdateProperty();
         }
-
         private void Dtv_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             UpdateSelectionFromDgv();
@@ -99,6 +102,7 @@ namespace BadmintonCourtManagement.GUI
             LoadInitialData();
             searchBar.KeyDown += searchEnterEvent;
             this.Resize += ProductSaleGUI_Resize;
+            acc = currentAccount;
         }
 
         private void LoadInitialData()
@@ -120,11 +124,6 @@ namespace BadmintonCourtManagement.GUI
                     MessageBoxIcon.Error);
             }
         }
-
-        /// <summary>
-        /// Stub to render products into pSaleProductList.
-        /// TODO: Replace with sale-specific card layout (price, quantity picker, add-to-bill button, stock color, etc.)
-        /// </summary>
         private void LoadProducts(List<ProductDTO> list)
         {
             // pSaleProductList.SuspendLayout();
@@ -133,8 +132,10 @@ namespace BadmintonCourtManagement.GUI
             // pSaleProductList.ResumeLayout();
             var typeBus = new TypeProductBUS();
             var brandBus = new BrandBUS();
+            var billImportDetailBus = new BillImportDetailBUS();
             typeList = typeBus.GetAllTypeProducts();
             brandList = brandBus.GetAllBrands();
+            storageList = StorageBUS.GetAllStorages();
 
             DataTable table = new DataTable();
             var displayList = productList
@@ -143,8 +144,11 @@ namespace BadmintonCourtManagement.GUI
                     p.ProductName,
                     Brand = brandList.FirstOrDefault(b => b.BrandId == p.BrandId)?.BrandName ?? "hi",
                     Type = typeList.FirstOrDefault(t => t.TypeProductId == p.TypeId)?.TypeProductName ?? "bye",
-                    QuantityToBuy = 0,
-                    Price = 0
+                    QuantityToBuy = _cart.ContainsKey(p.ProductId) ? _cart[p.ProductId] : 0,
+                    Price = storageList.Where(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)
+                                .OrderByDescending(ob => ob.ImportBillId)
+                                .Select(ob => ob.Price)
+                                .FirstOrDefault()
                 })
                 .OrderBy(x => x.QuantityToBuy) // use OrderByDescending(x => x.QuantityToBuy) for descending order
                 .ThenBy(x => x.ProductName)
@@ -169,9 +173,6 @@ namespace BadmintonCourtManagement.GUI
             // dtv.DataSource = displayList;
         }
 
-        /// <summary>
-        /// Temporary product row (text only) before implementing card UI.
-        /// </summary>
         private Control CreatePlaceholderRow(ProductDTO dto)
         {
             var lbl = new Label
@@ -279,6 +280,8 @@ namespace BadmintonCourtManagement.GUI
             });
 
             dtv.RowTemplate.Height += 10;
+            if (dtv.Columns["ProductId"] != null)
+                dtv.Columns["ProductId"].Visible = false;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -308,7 +311,108 @@ namespace BadmintonCourtManagement.GUI
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
             // TODO: Implement sale dialog (select products, quantities, create bill).
-            MessageBox.Show("Chức năng bán hàng sẽ được phát triển.");
+            // Build confirmation summary from _cart
+            var selectedItems = _cart.Where(kv => kv.Value > 0).ToList();
+            if (!selectedItems.Any())
+            {
+                MessageBox.Show("Chưa chọn sản phẩm nào để bán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (getPrice(txt_totalPrice.Text) > getPrice(txt_priceCustomerPay.Text))
+            {
+                MessageBox.Show("Khách hàng chưa trả đủ số tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            var confirm = MessageBox.Show("Bạn có chắc chứ?", "Xác nhận đơn hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm == DialogResult.Yes)
+            {
+                createBill(selectedItems);
+                MessageBox.Show("Đã xác nhận đơn hàng.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // clear cart and reset UI
+                _cart.Clear();
+                ReloadProductList();
+                txt_totalPrice.Text = "0";
+                txt_priceCustomerPay.Text = "";
+                txt_priceExchange.Text = "";
+            }
+        }
+
+        private void createBill(List<KeyValuePair<string, int>> selectedItems)
+        {
+            ProductBUS product_bus = new ProductBUS();
+            BillProductBUS bill_bus = new BillProductBUS();
+            BillProductDetailBUS bill_detail_bus = new BillProductDetailBUS();
+            StorageBUS storageBus = new StorageBUS();
+            var selectedIds = selectedItems.Select(kv => kv.Key).ToHashSet();
+            List<ProductDTO> productList = new List<ProductDTO>();
+            foreach (string id in selectedIds)
+            {
+                productList.Add(product_bus.GetProductById(id));
+            }
+
+            // bill product
+            string billId = bill_bus.GetMaxId();
+            EmployeeBUS empBus = new EmployeeBUS();
+            var employee = empBus.GetEmployeeByUsername(acc.Username);
+            if (employee == null)
+            {
+                MessageBox.Show("Không tìm thấy nhân viên tương ứng với tài khoản này.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string employeeId = employee.EmployeeId;
+            double totalPrice = double.Parse(txt_totalPrice.Text);
+
+            if (string.IsNullOrWhiteSpace(billId))
+            {
+                billId = "BP00001";
+            }
+            else
+            {
+                var match = Regex.Match(billId, @"^([A-Za-z]*)(\d+)$");
+                if (match.Success)
+                {
+                    var prefix = match.Groups[1].Value;
+                    var numberPart = match.Groups[2].Value;
+                    if (int.TryParse(numberPart, out var number))
+                    {
+                        number++;
+                        billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
+                    }
+                }
+            }
+
+            // inserting bill product 
+            BillProductDTO product = new BillProductDTO(billId, employeeId, totalPrice);
+            bill_bus.InsertProductBill(product);
+
+            // inserting bill product detail
+            foreach (ProductDTO p in productList)
+            {
+                // get the quantity for this product id from the selectedItems list
+                var qty = selectedItems.First(kv => kv.Key == p.ProductId).Value;
+                if (qty <= 0) continue;
+                StorageDTO storageOb = new StorageDTO();
+                storageOb = storageList.First(ob => ob.ProductId == p.ProductId);
+                BillProductDetailDTO bill_detail = new BillProductDetailDTO(billId, p.ProductId, qty, storageOb.Price, totalPrice);
+                bill_detail_bus.InsertBillProductDetail(bill_detail);
+            }
+
+            // updating product quantity
+            foreach (ProductDTO p in productList)
+            {
+                var qty = selectedItems.First(kv => kv.Key == p.ProductId).Value;
+                p.Quantity -= qty;
+                product_bus.UpdateProduct(p);
+            }
+
+            foreach (StorageDTO ob in storageList)
+            {
+                var qty = selectedItems.FirstOrDefault(kv => kv.Key == ob.ProductId).Value;
+                ob.Quantity -= qty;
+                StorageBUS.UpdateStorage(ob);
+            }
         }
 
         // Resize: later adapt number of columns or hide image (when implemented).
@@ -380,7 +484,63 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
                 row.Cells["QuantityToBuy"].Value = inputQty;
+                _cart[product.ProductId] = inputQty;
+                updateTotalPrice();
             }
+        }
+
+        private void updateTotalPrice()
+        {
+            int rowCount = dtv.RowCount;
+            decimal totalPrice = 0m;
+            for (int i = 0; i < rowCount; i++)
+            {
+                var qtyObj = dtv.Rows[i].Cells["QuantityToBuy"].Value;
+                var priceObj = dtv.Rows[i].Cells["Price"].Value;
+
+                int qty = 0;
+                long price = 0;
+
+                if (qtyObj != null && int.TryParse(qtyObj.ToString(), out var q))
+                    qty = q;
+
+                if (priceObj != null && long.TryParse(priceObj.ToString(), out var p))
+                    price = p;
+
+                totalPrice += qty * price;
+            }
+            txt_totalPrice.Text = totalPrice.ToString();            
+        }
+
+        private long getPrice(string price)
+        {
+            // basic numeric validation
+            if (string.IsNullOrWhiteSpace(price))
+            {
+                errorProvider2.SetError(txt_priceCustomerPay, "");
+                return -1;
+            }
+
+            if (!int.TryParse(price.Trim(), out var inputQty))
+            {
+                errorProvider2.SetError(txt_priceCustomerPay, "Giá tiền phải là thuộc dạng số.");
+                return -1;
+            }
+
+            if (inputQty < 0)
+            {
+                errorProvider2.SetError(txt_priceCustomerPay, "Giá tiền không được âm.");
+                return -1;
+            }
+            return long.Parse(price);
+        }
+
+        private void updateExchangePrice(object sender, EventArgs e)
+        {
+            long totalPrice = long.Parse(txt_totalPrice.Text);
+            long priceCustomerPay = getPrice(txt_priceCustomerPay.Text);
+            long priceExchange = priceCustomerPay - totalPrice;
+            txt_priceExchange.Text = priceExchange.ToString();
         }
     }
 }

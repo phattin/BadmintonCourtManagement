@@ -34,7 +34,7 @@ namespace BadmintonCourtManagement.DTO
         {
             this.EmployeeId = "";
             this.EmployeeName = "";
-            this.EmployeePhone = "";
+            this.EmployeePhone = "0987654321";
             this.Address = "";
             this.Username = "";
             this.RoleId = "";
