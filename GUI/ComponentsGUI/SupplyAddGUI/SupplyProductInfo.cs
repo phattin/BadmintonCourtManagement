@@ -113,7 +113,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // check price
             if (double.Parse(textBox1.Text) >= double.Parse(textBox2.Text))
             {
-                errorProvider1.SetError(textBox1, "Giá nhập phải lớn hơn hoặc bằng giá bán.");
+                errorProvider1.SetError(textBox2, "Đơn giá nhập phải nhỏ hơn đơn giá bán.");
                 return;
             }
 
@@ -165,7 +165,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                         var numberPart = match.Groups[2].Value;
                         if (int.TryParse(numberPart, out var number))
                         {
-                            number += productListImported.Count;
+                            number += productListImported.Count + 1;
                             billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
                         }
                     }
@@ -193,6 +193,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                     CreatedAt = DateTime.Now,
                     Status = StorageDTO.Option.active
                 };
+
+                storageList.Add(newStorage);
 
                 ProductImported?.Invoke(newBill, newStorage, false);
 
@@ -222,12 +224,18 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 var numberPart = match.Groups[2].Value;
                 if (int.TryParse(numberPart, out var number))
                 {
-                    number++;
+                    number += allStorages.Count + 1;
                     return prefix + number.ToString().PadLeft(numberPart.Length, '0');
                 }
             }
             
             return "KH001";
-        }    
+        }
+
+        public void RemoveImportedProduct(BillImportDetailDTO product)
+        {
+            productListImported.RemoveAll(p => p.ProductId == product.ProductId);
+            storageList.RemoveAll(s => s.ProductId == product.ProductId);
+        }
     }
 }

@@ -120,25 +120,27 @@ namespace BadmintonCourtManagement.DAO
         public ImportBillDTO GetImportBillById(string id)
         {
             string query = "SELECT * FROM ImportBill WHERE ImportBillId = @id";
-            ImportBillDTO bill;
+            ImportBillDTO bill = null;
             try
             {
                 db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                using MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@id", id);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                bill = new ImportBillDTO()
+                using MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
                 {
-                    ImportBillId = reader["ImportBillId"].ToString(),
-                    EmployeeId = reader["EmployeeId"].ToString(),
-                    SupplierId = reader["SupplierId"].ToString(),
-                    DateCreated = DateTime.Parse(reader["DateCreated"].ToString()),
-                    TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
-                    Status = reader["Status"] != DBNull.Value
+                    bill = new ImportBillDTO()
+                    {
+                        ImportBillId = reader["ImportBillId"].ToString(),
+                        EmployeeId = reader["EmployeeId"].ToString(),
+                        SupplierId = reader["SupplierId"].ToString(),
+                        DateCreated = DateTime.Parse(reader["DateCreated"].ToString()),
+                        TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
+                        Status = reader["Status"] != DBNull.Value
                             ? (ImportBillDTO.Option)Enum.Parse(typeof(ImportBillDTO.Option), reader["Status"].ToString())
                             : default(ImportBillDTO.Option),
-                };
-                reader.Close();
+                    };
+                }
             }
             finally
             {

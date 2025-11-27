@@ -293,14 +293,15 @@ CREATE TABLE `importbill` (
   `ImportBillId` varchar(10) NOT NULL,
   `EmployeeId` varchar(10) NOT NULL,
   `SupplierId` varchar(10) NOT NULL,
+  `DateCreated`datetime NOT NULL,
   `TotalPrice` double NOT NULL,
-  `Status` enum('pending','delivered') DEFAULT NULL
+  `Status` enum('pending','delivered', 'cancelled', 'paid', 'unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `importbill` (`ImportBillId`, `EmployeeId`, `SupplierId`, `TotalPrice`, `Status`) VALUES
-('IB00001', 'EM00001', 'SPU00001', 5000000, 'delivered'),
-('IB00002', 'EM00001', 'SPU00002', 3500000, 'delivered'),
-('IB00003', 'EM00001', 'SPU00003', 4200000, 'delivered');
+INSERT INTO `importbill` (`ImportBillId`, `EmployeeId`, `SupplierId`, `DateCreated`, `TotalPrice`, `Status`) VALUES
+('IB00001', 'EM00001', 'SPU00001', '2025-10-17 09:00:00', 5000000, 'delivered'),
+('IB00002', 'EM00001', 'SPU00002', '2025-10-17 10:00:00', 3500000, 'delivered'),
+('IB00003', 'EM00001', 'SPU00003', '2025-10-17 11:00:00', 4200000, 'delivered');
 
 
 -- --------------------------------------------------------
@@ -815,7 +816,6 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`BrandId`) REFERENCES `brand` (`BrandId`),
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `typeproduct` (`TypeId`),
   ADD CONSTRAINT `product_ibfk_3` FOREIGN KEY (`SupplierId`) REFERENCES `supplier` (`SupplierId`);
-  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `typeproduct` (`TypeId`);
 
 --
 -- Constraints for table `storage`

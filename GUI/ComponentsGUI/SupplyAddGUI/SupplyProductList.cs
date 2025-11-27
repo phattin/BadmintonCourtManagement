@@ -18,6 +18,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
     {
         // list
         private List<ProductDTO> productList = new List<ProductDTO>();
+        private List<ProductDTO> importedProducts = new List<ProductDTO>();
         // bus
         private ProductBUS productBus = new ProductBUS();
         // event
@@ -25,6 +26,16 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         public SupplyProductList()
         {
             InitializeComponent();
+            // Avoid referencing a non-existent member; initialize as empty by default.
+            importedProducts = new List<ProductDTO>();
+            this.Load += SupplyProductList_Load;
+        }
+
+        // Overload allowing callers (e.g. the parent SupplyAdd form) to pass existing import details.
+        public SupplyProductList(List<ProductDTO> importDetails)
+        {
+            InitializeComponent();
+            importedProducts = importDetails ?? new List<ProductDTO>();
             this.Load += SupplyProductList_Load;
         }
 
@@ -153,9 +164,21 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 
         private void AddButton_Click(object sender, EventArgs e)
         {
+            SupplierBUS supplierBus = new SupplierBUS();
             var button = sender as RoundedButton;
             if (button?.Tag is ProductDTO product)
             {
+                if (importedProducts != null)
+                {
+                    foreach (var p in importedProducts)
+                    {
+                        if (p.SupplierId != product.SupplierId)
+                        {
+                            MessageBox.Show($" Vui lòng chỉ chọn sản phẩm từ cùng một nhà cung cấp trong một lần nhập hàng.\n Nhà cung cấp của hóa đơn này: {supplierBus.GetSupplierById(p.SupplierId).SupplierName}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                }
                 // raise the event so the parent form can handle selection
                 ProductSelected?.Invoke(product);
             }

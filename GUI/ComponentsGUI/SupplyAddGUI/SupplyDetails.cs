@@ -17,6 +17,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
     {
         // bus
         private ProductBUS productBus = new ProductBUS();
+        // event
+        public event Action<BillImportDetailDTO> productDeleted;
         public SupplyDetails()
         {
             InitializeComponent();
@@ -221,6 +223,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                                         CardListPanel.RowStyles.RemoveAt(i);
                                     }
                                     CardListPanel.RowCount -= 1;
+                                    // Raise event to notify parent form
+                                    productDeleted?.Invoke(product);
                                     break;
                                 }
                             }

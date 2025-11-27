@@ -210,7 +210,6 @@ namespace BadmintonCourtManagement.GUI
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             cardList.Size = new Size(1131, 536);
             cardList.TabIndex = 2;
-            cardList.Paint += cardList_Paint;
             // 
             // toolBar
             // 
