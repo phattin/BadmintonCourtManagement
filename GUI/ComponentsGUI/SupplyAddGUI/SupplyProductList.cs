@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GUI.ComponentsGUI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,12 +25,30 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 
         private void FilterButton_MouseEnter(object sender, EventArgs e)
         {
-            FilterButton.BackColor = Color.FromArgb(0, 142, 123);
+            filterButton.BackColor = Color.FromArgb(0, 142, 123);
         }
 
         private void FilterButton_MouseLeave(object sender, EventArgs e)
         {
-            FilterButton.BackColor = Color.FromArgb(0, 120, 103);
+            filterButton.BackColor = Color.FromArgb(0, 120, 103);
+        }
+
+        private void buttonEnter(object sender, EventArgs e)
+        {
+            RoundedButton btn = sender as RoundedButton;
+            if (btn != null)
+            {
+                btn.BackgroundColor = Color.FromArgb(60, 60, 60);
+            }
+        }
+
+        private void buttonLeave(object sender, EventArgs e)
+        {
+            RoundedButton btn = sender as RoundedButton;
+            if (btn != null)
+            {
+                btn.BackgroundColor = Color.Black;
+            }
         }
     }
 }

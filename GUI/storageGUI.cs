@@ -1,5 +1,7 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using GUI.ComponentsGUI;
+using GUI.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,27 +55,28 @@ namespace BadmintonCourtManagement.GUI
                     {
                         if (i <= storageList.Count() - 1 && i >= 0)
                         {
-                            Panel card = new Panel();
-                            Button cardButton = new Button();
+                            CustomPanel card = new CustomPanel();
+                            RoundedButton cardButton = new RoundedButton();
                             Label cardBody = new Label();
                             Label cardTitle = new Label();
 
                             card.AutoSize = false;
+                            card.BorderRadius = 20;
                             card.AutoScroll = true;
                             card.BackColor = Color.FromArgb(200, 250, 214);
                             card.Controls.Add(cardButton);
                             card.Controls.Add(cardBody);
                             card.Controls.Add(cardTitle);
                             card.Dock = DockStyle.Fill;
-                            card.Margin = new Padding(30);
+                            card.Padding = new Padding(20,10,20,10);
                             card.Name = "card";
                             card.TabIndex = 0;
 
                             cardButton.Dock = DockStyle.Top;
-                            cardButton.BackColor = Color.Black;
+                            cardButton.BackgroundColor = Color.Black;
                             cardButton.Cursor = Cursors.Hand;
                             cardButton.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-                            cardButton.ForeColor = Color.White;
+                            cardButton.TextColor = Color.White;
                             cardButton.Name = "cardButton";
                             cardButton.Size = new Size(258, 60);
                             cardButton.TabIndex = 6;
@@ -83,6 +86,7 @@ namespace BadmintonCourtManagement.GUI
                             cardButton.MouseLeave += buttonLeave;
                             cardButton.Click += cardButton_Click;
 
+                            Additional additional = new Additional();
                             cardBody.Dock = DockStyle.Top;
                             cardBody.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardBody.Name = "cardBody";
@@ -90,7 +94,7 @@ namespace BadmintonCourtManagement.GUI
                             cardBody.TabIndex = 4;
                             cardBody.Text = "Mã sản phẩm: " + storageList[i].ProductId
                                 + "\r\nSố lượng: " + storageList[i].Quantity
-                                + "\r\nGiá: " + storageList[i].Price + "đ"
+                                + "\r\nGiá: " + additional.beautyMoney(storageList[i].Price)
                                 + "\r\nNgày: " + storageList[i].CreatedAt.ToString("dd/MM/yyyy");
                             cardBody.TextAlign = ContentAlignment.MiddleCenter;
                             cardBody.Click += cardBody_Click_1;
@@ -300,19 +304,19 @@ namespace BadmintonCourtManagement.GUI
         // các hàm tạm
         private void buttonEnter(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
+            RoundedButton btn = sender as RoundedButton;
             if (btn != null)
             {
-                btn.BackColor = Color.FromArgb(60, 60, 60);
+                btn.BackgroundColor = Color.FromArgb(60, 60, 60);
             }
         }
 
         private void buttonLeave(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
+            RoundedButton btn = sender as RoundedButton;
             if (btn != null)
             {
-                btn.BackColor = Color.Black;
+                btn.BackgroundColor = Color.Black;
             }
         }
 
