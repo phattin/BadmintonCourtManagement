@@ -79,7 +79,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("L?i khi xóa chi ti?t quy?n: " + ex.Message);
+                //MessageBox.Show("L?i khi xï¿½a chi ti?t quy?n: " + ex.Message);
             }
             finally
             {
