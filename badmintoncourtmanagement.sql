@@ -453,6 +453,7 @@ INSERT INTO `pricerule` (`PriceRuleId`, `Price`, `StartTime`, `EndTime`, `StartD
 CREATE TABLE `product` (
   `ProductId` varchar(10) NOT NULL,
   `ProductName` varchar(50) NOT NULL,
+  `SupplierId` varchar(10) NOT NULL,
   `ProductImg` varchar(255) DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL,
   `BrandId` varchar(10) NOT NULL,
@@ -464,20 +465,20 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`ProductId`, `ProductName`, `ProductImg`, `Quantity`, `BrandId`, `TypeId`, `IsDeleted`) VALUES
-('PD00001', 'Yonex Astrox 99', 'yonex-astrox-99_2.png', 12, 'BR00001', 'TP00001', 0),
-('PD00002', 'Yonex Nanoflare 700', 'yonex-nanoflare-700.png', 15, 'BR00001', 'TP00001', 0),
-('PD00003', 'Kumpoo Power Control E88L', 'kumpoo-power-control-e88l.png', 10, 'BR00004', 'TP00001', 0),
-('PD00004', 'Yonex Nanoflare 1000', 'yonex-nanoflare-1000z.png', 8, 'BR00001', 'TP00001', 0),
-('PD00005', 'Yonex Astrox 100 Tour VA', 'yonex-astrox-100-tour-va.png', 0, 'BR00001', 'TP00001', 0),
-('PD00006', 'Yonex Aerosensa Feather (12pcs)', 'yonex-aerosensa-20.png', 50, 'BR00001', 'TP00002', 0),
-('PD00007', 'Yonex Voltric Z Force II LCW Limited', 'yonex-voltric-z-force-ii-lcw-limited.jpg', 40, 'BR00001', 'TP00001', 0),
-('PD00008', 'Yonex Doura 10', 'yonex-doura-10.png', 35, 'BR00001', 'TP00001', 0),
-('PD00009', 'Yonex ArcSaber 11', 'yonex-arcsaber-11.jpg', 0, 'BR00001', 'TP00001', 0),
-('PD00010', 'Lining Woods N90 III', 'lining-woods-n90-iii.png', 0, 'BR00003', 'TP00001', 0),
-('PD00011', 'Lining Aeronaut 6000', 'lining-aeronaut-6000.jpg', 0, 'BR00003', 'TP00001', 0),
-('PD00012', 'Mizuno Fortius 10 Power', 'mizuno-fortius-10-power.jpg', 0, 'BR00005', 'TP00001', 0),
-('PD00013', 'Adidas Spieler Grip', 'adidas-spieler-grip.jpg', 0, 'BR00006', 'TP00003', 0);
+INSERT INTO `product` (`ProductId`, `ProductName`, `SupplierId`, `ProductImg`, `Quantity`, `BrandId`, `TypeId`, `IsDeleted`) VALUES
+('PD00001', 'Yonex Astrox 99', 'SPU00001', 'yonex-astrox-99_2.png', 12, 'BR00001', 'TP00001', 0),
+('PD00002', 'Yonex Nanoflare 700', 'SPU00001', 'yonex-nanoflare-700.png', 15, 'BR00001', 'TP00001', 0),
+('PD00003', 'Kumpoo Power Control E88L', 'SPU00002', 'kumpoo-power-control-e88l.png', 10, 'BR00004', 'TP00001', 0),
+('PD00004', 'Yonex Nanoflare 1000', 'SPU00001', 'yonex-nanoflare-1000z.png', 8, 'BR00001', 'TP00001', 0),
+('PD00005', 'Yonex Astrox 100 Tour VA', 'SPU00001', 'yonex-astrox-100-tour-va.png', 0, 'BR00001', 'TP00001', 0),
+('PD00006', 'Yonex Aerosensa Feather (12pcs)', 'SPU00001', 'yonex-aerosensa-20.png', 50, 'BR00001', 'TP00002', 0),
+('PD00007', 'Yonex Voltric Z Force II LCW Limited', 'SPU00001', 'yonex-voltric-z-force-ii-lcw-limited.jpg', 40, 'BR00001', 'TP00001', 0),
+('PD00008', 'Yonex Doura 10', 'SPU00001', 'yonex-doura-10.png', 35, 'BR00001', 'TP00001', 0),
+('PD00009', 'Yonex ArcSaber 11', 'SPU00001', 'yonex-arcsaber-11.jpg', 0, 'BR00001', 'TP00001', 0),
+('PD00010', 'Lining Woods N90 III', 'SPU00003', 'lining-woods-n90-iii.png', 0, 'BR00003', 'TP00001', 0),
+('PD00011', 'Lining Aeronaut 6000', 'SPU00003', 'lining-aeronaut-6000.jpg', 0, 'BR00003', 'TP00001', 0),
+('PD00012', 'Mizuno Fortius 10 Power', 'SPU00003', 'mizuno-fortius-10-power.jpg', 0, 'BR00005', 'TP00001', 0),
+('PD00013', 'Adidas Spieler Grip', 'SPU00002', 'adidas-spieler-grip.jpg', 0, 'BR00006', 'TP00003', 0);
 
 -- --------------------------------------------------------
 
@@ -707,7 +708,8 @@ ALTER TABLE `pricerule`
 ALTER TABLE `product`
   ADD PRIMARY KEY (`ProductId`),
   ADD KEY `BrandId` (`BrandId`),
-  ADD KEY `TypeId` (`TypeId`);
+  ADD KEY `TypeId` (`TypeId`),
+  ADD KEY `SupplierId` (`SupplierId`);
 
 --
 -- Indexes for table `role`
@@ -809,9 +811,10 @@ ALTER TABLE `pricebookingdetail`
 
 --
 -- Constraints for table `product`
---
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`BrandId`) REFERENCES `brand` (`BrandId`),
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `typeproduct` (`TypeId`),
+  ADD CONSTRAINT `product_ibfk_3` FOREIGN KEY (`SupplierId`) REFERENCES `supplier` (`SupplierId`);
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `typeproduct` (`TypeId`);
 
 --
