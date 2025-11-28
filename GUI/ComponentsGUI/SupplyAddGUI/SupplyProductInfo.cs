@@ -24,6 +24,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         private List<BillImportDetailDTO> productListImported = new List<BillImportDetailDTO>();
         private List<StorageDTO> storageList = new List<StorageDTO>();
         public event Action<BillImportDetailDTO, StorageDTO, bool> ProductImported;
+        private HashSet<string> generatedStorageIds = new HashSet<string>();
 
         public SupplyProductInfo()
         {
@@ -212,24 +213,31 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // Similar pattern to your bill ID generation
             var allStorages = StorageBUS.GetAllStorages();
             
-            if (allStorages == null || allStorages.Count == 0)
-                return "KH001";
-            
-            var lastId = allStorages.OrderByDescending(s => s.StorageId).First().StorageId;
-            var match = Regex.Match(lastId, @"^([A-Za-z]*)(\d+)$");
+            var maxId = allStorages.Max(s => s.StorageId);
+            if (string.IsNullOrWhiteSpace(maxId))
+            {
+                maxId = "ST00000";
+            }
+            var match = Regex.Match(maxId, @"^([A-Za-z]*)(\d+)$");
             
             if (match.Success)
-            {
+            {    
                 var prefix = match.Groups[1].Value;
                 var numberPart = match.Groups[2].Value;
                 if (int.TryParse(numberPart, out var number))
                 {
-                    number += allStorages.Count + 1;
-                    return prefix + number.ToString().PadLeft(numberPart.Length, '0');
+                    string newId;
+                    do {
+                        number++;
+                        newId = prefix + number.ToString("D5");
+                    } while (generatedStorageIds.Contains(newId));
+
+                    generatedStorageIds.Add(newId);
+                    return newId;
                 }
             }
             
-            return "KH001";
+            return "ST00001";
         }
 
         public void RemoveImportedProduct(BillImportDetailDTO product)

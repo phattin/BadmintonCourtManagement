@@ -66,6 +66,53 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             }
         }
 
+        // Apply search filter on product list and re-render cards
+        private void ApplySearch(string keyword)
+        {
+            try
+            {
+                IEnumerable<ProductDTO> source = productList ?? new List<ProductDTO>();
+                if (!string.IsNullOrWhiteSpace(keyword))
+                {
+                    string kw = keyword.Trim().ToLowerInvariant();
+                    source = source.Where(p =>
+                        (!string.IsNullOrEmpty(p.ProductId) && p.ProductId.ToLowerInvariant().Contains(kw)) ||
+                        (!string.IsNullOrEmpty(p.ProductName) && p.ProductName.ToLowerInvariant().Contains(kw))
+                    );
+                }
+
+                var filtered = source.ToList();
+
+                CardListPanel.SuspendLayout();
+                CardListPanel.Controls.Clear();
+                CardListPanel.RowStyles.Clear();
+                CardListPanel.RowCount = filtered.Count;
+
+                for (int i = 0; i < filtered.Count; i++)
+                {
+                    CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 260F));
+                    var card = CreateProductCard(filtered[i]);
+                    CardListPanel.Controls.Add(card, 0, i);
+                }
+                CardListPanel.ResumeLayout();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm sản phẩm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Handle Enter key in search bar
+        private void searchBar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ApplySearch(searchBar.Text);
+                e.Handled = true;
+                e.SuppressKeyPress = true; // prevent ding sound
+            }
+        }
+
         private RoundedTableLayoutPanel CreateProductCard(ProductDTO product)
         {
             // Create card panel

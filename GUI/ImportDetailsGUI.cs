@@ -129,8 +129,8 @@ namespace BadmintonCourtManagement.GUI
                 Padding = new Padding(10),
                 RowCount = 1
             };
-            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 57F));
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23F));
+            cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67F));
             cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             cardPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 

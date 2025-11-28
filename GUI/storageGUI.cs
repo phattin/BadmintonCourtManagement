@@ -259,6 +259,7 @@ namespace BadmintonCourtManagement.GUI
             Pagination();
             isFiltered = false;
             searchBar.Text = "";
+            StorageGUI_Load(sender, e);
         }
 
         // hàm lọc theo ngày
@@ -467,7 +468,7 @@ namespace BadmintonCourtManagement.GUI
                             cardButton.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardButton.TextColor = Color.White;
                             cardButton.Name = "cardButton";
-                            cardButton.Size = new Size(0, 40);
+                            cardButton.Size = new Size(258, 60);
                             cardButton.Text = "Chi tiết";
                             cardButton.UseVisualStyleBackColor = false;
                             // cardButton.BackColor = Color.Black;
@@ -479,6 +480,7 @@ namespace BadmintonCourtManagement.GUI
                             cardButton.Click += supplyCardButton_Click;
 
                             Additional additional = new Additional();
+                            var status = supplyList[i].Status.ToString();
                             cardBody.Dock = DockStyle.Top;
                             cardBody.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardBody.Name = "cardBody";
@@ -488,7 +490,7 @@ namespace BadmintonCourtManagement.GUI
                                 "Mã nhà cung cấp: " + supplyList[i].SupplierId + "\r\n" +
                                 "Ngày tạo: " + supplyList[i].DateCreated.ToString("dd/MM/yyyy") + "\r\n" +
                                 "Tổng tiền: " + supplyList[i].TotalPrice.ToString("N0") + " VND\r\n" +
-                                "Trạng thái: " + supplyList[i].Status.ToString();
+                                "Trạng thái: " + (status == "delivered" ? "Đã giao" : status == "pending" ? "Chờ xử lý" : status == "cancelled" ? "Đã hủy" : status == "paid" ? "Đã thanh toán" : "Chưa thanh toán");
                             // cardBody.AutoSize = false;
                             // cardBody.Padding = new Padding(0, 10, 0, 0);
                             // cardBody.TabIndex = 1;
@@ -633,6 +635,7 @@ namespace BadmintonCourtManagement.GUI
             supplyPage = 0;
             supplySearchBar.Clear();
             SupplyPagination();
+            StorageGUI_Load(sender, e);
         }
 
         // Hàm lọc theo ngày nhập hàng

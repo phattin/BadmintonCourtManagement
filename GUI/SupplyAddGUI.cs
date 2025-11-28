@@ -189,6 +189,16 @@ namespace BadmintonCourtManagement.GUI
             {
                 StorageBUS.InsertStorage(s);
             }
+
+            // update product quantities
+            foreach (var bill_detail in importDetails)
+            {
+                var product = productBus.GetProductById(bill_detail.ProductId);
+                int quantityInStock = product.Quantity + bill_detail.Quantity;
+                product.Quantity = quantityInStock;
+                productBus.UpdateProduct(product);
+            }
+
             MessageBox.Show("Đã hoàn tất nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }

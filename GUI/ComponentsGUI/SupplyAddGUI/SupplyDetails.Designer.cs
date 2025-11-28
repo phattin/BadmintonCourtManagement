@@ -346,7 +346,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             Title.Name = "Title";
             Title.Size = new Size(1175, 80);
             Title.TabIndex = 0;
-            Title.Text = "Chi tiết đơn hàng nhập";
+            Title.Text = "Chi tiết đơn hàng nhập: ";
             Title.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // SupplyDetails
