@@ -421,6 +421,7 @@ namespace BadmintonCourtManagement.GUI
             supplyExtraNext.TabIndex = 16;
             supplyExtraNext.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyExtraNext.UseVisualStyleBackColor = false;
+            supplyExtraNext.Click += supplyExtraNext_Click;
             // 
             // supplyExtraPrevious
             // 
@@ -438,6 +439,7 @@ namespace BadmintonCourtManagement.GUI
             supplyExtraPrevious.TabIndex = 13;
             supplyExtraPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyExtraPrevious.UseVisualStyleBackColor = false;
+            supplyExtraPrevious.Click += supplyExtraPrevious_Click;
             // 
             // supplyNext
             // 
@@ -454,6 +456,7 @@ namespace BadmintonCourtManagement.GUI
             supplyNext.TabIndex = 15;
             supplyNext.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyNext.UseVisualStyleBackColor = false;
+            supplyNext.Click += supplyNext_Click;
             // 
             // supplyPrevious
             // 
@@ -470,6 +473,7 @@ namespace BadmintonCourtManagement.GUI
             supplyPrevious.TabIndex = 14;
             supplyPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyPrevious.UseVisualStyleBackColor = false;
+            supplyPrevious.Click += supplyPrevious_Click;
             // 
             // supplyCardList
             // 
@@ -537,6 +541,7 @@ namespace BadmintonCourtManagement.GUI
             supplyReset.Size = new Size(96, 72);
             supplyReset.TabIndex = 5;
             supplyReset.UseVisualStyleBackColor = false;
+            supplyReset.Click += supplyReset_Click;
             supplyReset.MouseEnter += filterButton_MouseEnter;
             supplyReset.MouseHover += filterButton_MouseLeave;
             // 
@@ -580,6 +585,7 @@ namespace BadmintonCourtManagement.GUI
             supplySearchBar.PlaceholderText = "Tìm kiếm...";
             supplySearchBar.Size = new Size(265, 39);
             supplySearchBar.TabIndex = 1;
+            supplySearchBar.KeyDown += supplySearchEnterEvent;
             // 
             // supplyStartDate
             // 
@@ -626,6 +632,7 @@ namespace BadmintonCourtManagement.GUI
             supplyFilter.Size = new Size(95, 72);
             supplyFilter.TabIndex = 4;
             supplyFilter.UseVisualStyleBackColor = false;
+            supplyFilter.Click += supplyFilter_Click;
             supplyFilter.MouseEnter += filterButton_MouseEnter;
             supplyFilter.MouseHover += filterButton_MouseLeave;
             // 
@@ -679,7 +686,7 @@ namespace BadmintonCourtManagement.GUI
             supplyAdd.Text = "+ Thêm";
             supplyAdd.TextColor = Color.White;
             supplyAdd.UseVisualStyleBackColor = false;
-            supplyAdd.Click += AddButton_Click;
+            supplyAdd.Click += supplyAdd_Click;
             supplyAdd.MouseEnter += buttonEnter;
             supplyAdd.MouseLeave += buttonLeave;
             // 

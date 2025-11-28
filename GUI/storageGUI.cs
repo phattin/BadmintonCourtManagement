@@ -25,6 +25,14 @@ namespace BadmintonCourtManagement.GUI
         private Boolean isFiltered = false;
         private AccountDTO currentAccount;
 
+        // Import bill page fields
+        private List<ImportBillDTO> supplyList = new List<ImportBillDTO>();
+        private List<ImportBillDTO> supplyOldList = new List<ImportBillDTO>();
+        private List<ImportBillDTO> supplySearchList = new List<ImportBillDTO>();
+        private int supplyPage = 0;
+        private int supplyItemPerPage = 8;
+        private Boolean supplyIsFiltered = false;
+
         public storageGUI(AccountDTO currentAccount)
         {
             this.currentAccount = currentAccount;
@@ -41,6 +49,19 @@ namespace BadmintonCourtManagement.GUI
             searchList = oldList;
             page = 0;
             Pagination();
+
+            // Load import bills for supply page
+            LoadSupplyList();
+        }
+
+        // Load import bill list
+        private void LoadSupplyList()
+        {
+            supplyList = new BillImportBUS().GetAllImportBills();
+            supplyOldList = supplyList;
+            supplySearchList = supplyOldList;
+            supplyPage = 0;
+            SupplyPagination();
         }
 
         // hàm phân trang
@@ -81,7 +102,7 @@ namespace BadmintonCourtManagement.GUI
                             cardButton.TextColor = Color.White;
                             cardButton.Name = "cardButton";
                             cardButton.Size = new Size(258, 60);
-                            cardButton.TabIndex = 6;
+                            // cardButton.TabIndex = 6;
                             cardButton.Text = "Xem chi tiết";
                             cardButton.UseVisualStyleBackColor = false;
                             cardButton.MouseEnter += buttonEnter;
@@ -407,6 +428,323 @@ namespace BadmintonCourtManagement.GUI
         {
             filterButton.BackColor = Color.FromArgb(0, 120, 103);
         }
+
+        // ==================== SUPPLY PAGE (NHẬP HÀNG) METHODS ====================
+
+        // Hàm phân trang cho nhập hàng
+        private void SupplyPagination()
+        {
+            try
+            {
+                if (supplyList.Count > 0)
+                {
+                    supplyCardList.Controls.Clear();
+                    int index = supplyPage * supplyItemPerPage;
+                    for (int i = index; i < index + supplyItemPerPage; i++)
+                    {
+                        if (i <= supplyList.Count() - 1 && i >= 0)
+                        {
+                            CustomPanel card = new CustomPanel();
+                            RoundedButton cardButton = new RoundedButton();
+                            Label cardBody = new Label();
+                            Label cardTitle = new Label();
+
+                            card.AutoSize = false;
+                            card.BorderRadius = 20;
+                            card.AutoScroll = true;
+                            card.BackColor = Color.FromArgb(200, 250, 214);
+                            card.Controls.Add(cardButton);
+                            card.Controls.Add(cardBody);
+                            card.Controls.Add(cardTitle);
+                            card.Dock = DockStyle.Fill;
+                            card.Padding = new Padding(20, 10, 20, 10);
+                            card.Name = "card";
+                            card.TabIndex = 0;
+
+                            cardButton.Dock = DockStyle.Top;
+                            cardButton.BackgroundColor = Color.Black;
+                            cardButton.Cursor = Cursors.Hand;
+                            cardButton.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                            cardButton.TextColor = Color.White;
+                            cardButton.Name = "cardButton";
+                            cardButton.Size = new Size(0, 40);
+                            cardButton.Text = "Chi tiết";
+                            cardButton.UseVisualStyleBackColor = false;
+                            // cardButton.BackColor = Color.Black;
+                            // cardButton.ForeColor = Color.White;
+                            // cardButton.BorderRadius = 20;
+                            // cardButton.TabIndex = 2;
+                            cardButton.MouseEnter += buttonEnter;
+                            cardButton.MouseLeave += buttonLeave;
+                            cardButton.Click += supplyCardButton_Click;
+
+                            Additional additional = new Additional();
+                            cardBody.Dock = DockStyle.Top;
+                            cardBody.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                            cardBody.Name = "cardBody";
+                            cardBody.Size = new Size(374, 180);
+                            cardBody.Text = 
+                                "Mã nhân viên: " + supplyList[i].EmployeeId + "\r\n" +
+                                "Mã nhà cung cấp: " + supplyList[i].SupplierId + "\r\n" +
+                                "Ngày tạo: " + supplyList[i].DateCreated.ToString("dd/MM/yyyy") + "\r\n" +
+                                "Tổng tiền: " + supplyList[i].TotalPrice.ToString("N0") + " VND\r\n" +
+                                "Trạng thái: " + supplyList[i].Status.ToString();
+                            // cardBody.AutoSize = false;
+                            // cardBody.Padding = new Padding(0, 10, 0, 0);
+                            // cardBody.TabIndex = 1;
+
+                            // cardTitle.AutoSize = false;
+                            cardTitle.Dock = DockStyle.Top;
+                            cardTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+                            cardTitle.Name = "cardTitle";
+                            cardTitle.Size = new Size(374, 80);
+                            // cardTitle.TabIndex = 0;
+                            cardTitle.Text = supplyList[i].ImportBillId;
+                            cardTitle.TextAlign = ContentAlignment.MiddleCenter;
+
+                            supplyCardList.Controls.Add(card);
+                        }
+                        else break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi xảy ra khi phân trang: " + ex.Message,
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        // Sự kiện chuyển trang nhập hàng
+        private void supplyPrevious_Click(object sender, EventArgs e)
+        {
+            supplyPage--;
+            if (supplyPage < 0) supplyPage = 0;
+            SupplyPagination();
+        }
+
+        private void supplyNext_Click(object sender, EventArgs e)
+        {
+            supplyPage++;
+            if (supplyPage > (int)Math.Ceiling((double)supplyList.Count() / supplyItemPerPage) - 1)
+                supplyPage = (int)Math.Ceiling((double)supplyList.Count() / supplyItemPerPage) - 1;
+            SupplyPagination();
+        }
+
+        private void supplyExtraPrevious_Click(object sender, EventArgs e)
+        {
+            supplyPage = 0;
+            SupplyPagination();
+        }
+
+        private void supplyExtraNext_Click(object sender, EventArgs e)
+        {
+            supplyPage = (int)Math.Ceiling((double)supplyList.Count() / supplyItemPerPage) - 1;
+            if (supplyPage < 0) supplyPage = 0;
+            SupplyPagination();
+        }
+
+        // Hàm tìm kiếm nhập hàng
+        private void supplySearchEnterEvent(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SupplySearch(supplySearchBar.Text);
+            }
+        }
+
+        private void SupplySearch(string info)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(info))
+                {
+                    supplySearchList = new List<ImportBillDTO>();
+                    foreach (var item in supplyOldList)
+                    {
+                        if (item.ImportBillId.ToLower().Contains(info.ToLower()) ||
+                            item.EmployeeId.ToLower().Contains(info.ToLower()) ||
+                            item.SupplierId.ToLower().Contains(info.ToLower()) ||
+                            item.Status.ToString().ToLower().Contains(info.ToLower()))
+                        {
+                            supplySearchList.Add(item);
+                        }
+                    }
+
+                    if (supplyIsFiltered)
+                    {
+                        List<ImportBillDTO> temp = new List<ImportBillDTO>();
+                        foreach (var item in supplyList)
+                        {
+                            if (supplySearchList.Contains(item))
+                            {
+                                temp.Add(item);
+                            }
+                        }
+                        supplySearchList = temp;
+                    }
+
+                    if (supplySearchList.Count > 0)
+                    {
+                        supplyList = supplySearchList;
+                        supplyPage = 0;
+                        SupplyPagination();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tìm thấy kết quả",
+                            "Thông báo",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    if (supplyIsFiltered)
+                    {
+                        supplySearchList = supplyList;
+                    }
+                    else
+                    {
+                        supplyList = supplyOldList;
+                        supplySearchList = supplyOldList;
+                    }
+                    supplyPage = 0;
+                    SupplyPagination();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message,
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        // Hàm reset nhập hàng
+        private void supplyReset_Click(object sender, EventArgs e)
+        {
+            supplyList = supplyOldList;
+            supplySearchList = supplyOldList;
+            supplyIsFiltered = false;
+            supplyPage = 0;
+            supplySearchBar.Clear();
+            SupplyPagination();
+        }
+
+        // Hàm lọc theo ngày nhập hàng
+        private void supplyFilter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DateTime start = supplyStartDate.Value.Date;
+                DateTime end = supplyEndDate.Value.Date;
+
+                if (start > end)
+                {
+                    MessageBox.Show("Ngày bắt đầu không thể lớn hơn ngày kết thúc",
+                        "Cảnh báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
+                List<ImportBillDTO> temp = new List<ImportBillDTO>();
+                foreach (var item in supplyOldList)
+                {
+                    if (item.DateCreated.Date >= start && item.DateCreated.Date <= end)
+                    {
+                        temp.Add(item);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(supplySearchBar.Text))
+                {
+                    List<ImportBillDTO> temp2 = new List<ImportBillDTO>();
+                    foreach (var item in temp)
+                    {
+                        if (supplySearchList.Contains(item))
+                        {
+                            temp2.Add(item);
+                        }
+                    }
+                    temp = temp2;
+                }
+
+                if (temp.Count > 0)
+                {
+                    supplyList = temp;
+                    supplyIsFiltered = true;
+                    supplyPage = 0;
+                    SupplyPagination();
+                }
+                else
+                {
+                    supplyIsFiltered = false;
+                    MessageBox.Show("Không tìm thấy kết quả theo bộ lọc",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi lọc " + ex.Message,
+                    "Cảnh báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
+        // Xem chi tiết đơn nhập hàng
+        private void supplyCardButton_Click(object sender, EventArgs e)
+        {
+            Button cardButton = sender as Button;
+            if (cardButton == null) return;
+            Panel card = cardButton.Parent as Panel;
+            if (card == null) return;
+            Label cardTitle = card.Controls["cardTitle"] as Label;
+            if (cardTitle == null) return;
+
+            foreach (var item in supplySearchList)
+            {
+                if (item.ImportBillId.Equals(cardTitle.Text.ToString()))
+                {
+                    // TODO: Update SupplyDetailsGUI constructor to accept ImportBillDTO parameter
+                    BillImportDetailBUS importDetail = new BillImportDetailBUS();
+                    List<BillImportDetailDTO> details = importDetail.GetDetailImportBillsByImportBillId(item.ImportBillId);
+                    ImportDetailsGUI supplyDetails = new ImportDetailsGUI(details);
+                    supplyDetails.ShowDialog();
+                    // Refresh list after closing details
+                    LoadSupplyList();
+                    return;
+                }
+            }
+        }
+
+        // Thêm đơn nhập hàng mới
+        private void supplyAdd_Click(object sender, EventArgs e)
+        {
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
+            supplyAdd.ShowDialog();
+            // Refresh list after closing add form
+            LoadSupplyList();
+        }
+
+        private void supplyFilter_MouseEnter(object sender, EventArgs e)
+        {
+            supplyFilter.BackColor = Color.FromArgb(0, 142, 123);
+        }
+
+        private void supplyFilter_MouseLeave(object sender, EventArgs e)
+        {
+            supplyFilter.BackColor = Color.FromArgb(0, 120, 103);
+        }
+
+        // ==================== END SUPPLY PAGE METHODS ====================
 
         private void cardTitlePanel_Paint(object sender, PaintEventArgs e)
         {
