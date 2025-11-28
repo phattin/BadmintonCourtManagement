@@ -174,8 +174,11 @@ namespace BadmintonCourtManagement.DAO
         public List<EmployeeDTO> Search(string keyword)
         {
             List<EmployeeDTO> list = new List<EmployeeDTO>();
-            string query = "SELECT * FROM employee WHERE EmployeeId LIKE @keyword OR EmployeeName LIKE @keyword";
-
+            string query = @"SELECT * FROM employee 
+                 WHERE EmployeeId   LIKE @keyword
+                    OR EmployeeName LIKE @keyword
+                    OR Phone        LIKE @keyword
+                    OR Address      LIKE @keyword";
             try
             {
                 db.OpenConnection();

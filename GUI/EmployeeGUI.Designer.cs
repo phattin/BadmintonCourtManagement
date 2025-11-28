@@ -33,18 +33,16 @@
             nextButton = new Button();
             extraPreviousButton = new Button();
             previousButton = new Button();
-            btnAdd = new Label();
             customPanel1 = new CustomPanel();
             pEmployeeList = new TableLayoutPanel();
             customPanel2 = new CustomPanel();
             customPanel3 = new CustomPanel();
-            //btnDelete = new PictureBox();
             textBox1 = new TextBox();
             lblTitle = new Label();
+            btnAdd = new Label();
             customPanel1.SuspendLayout();
             customPanel2.SuspendLayout();
             customPanel3.SuspendLayout();
-            //((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
             SuspendLayout();
             // 
             // extraNextButton
@@ -60,7 +58,7 @@
             extraNextButton.TabIndex = 29;
             extraNextButton.TextImageRelation = TextImageRelation.TextAboveImage;
             extraNextButton.UseVisualStyleBackColor = false;
-            extraNextButton.Click += extraNextButton_Click_1;
+            extraNextButton.Click += extraNextButton_Click;
             // 
             // nextButton
             // 
@@ -75,6 +73,7 @@
             nextButton.TabIndex = 28;
             nextButton.TextImageRelation = TextImageRelation.TextAboveImage;
             nextButton.UseVisualStyleBackColor = false;
+            nextButton.Click += nextButton_Click;
             // 
             // extraPreviousButton
             // 
@@ -90,6 +89,7 @@
             extraPreviousButton.TabIndex = 27;
             extraPreviousButton.TextImageRelation = TextImageRelation.TextAboveImage;
             extraPreviousButton.UseVisualStyleBackColor = false;
+            extraPreviousButton.Click += extraPreviousButton_Click;
             // 
             // previousButton
             // 
@@ -105,23 +105,7 @@
             previousButton.TabIndex = 26;
             previousButton.TextImageRelation = TextImageRelation.TextAboveImage;
             previousButton.UseVisualStyleBackColor = false;
-            // 
-            // btnAdd
-            // 
-            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAdd.AutoSize = true;
-            btnAdd.BackColor = Color.FromArgb(64, 64, 64);
-            btnAdd.Cursor = Cursors.Hand;
-            btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAdd.ForeColor = Color.White;
-            btnAdd.Location = new Point(865, 10);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Padding = new Padding(9, 8, 9, 10);
-            btnAdd.Size = new Size(182, 46);
-            btnAdd.TabIndex = 25;
-            btnAdd.Text = "Thêm nhân viên";
-            btnAdd.TextAlign = ContentAlignment.MiddleCenter;
-            btnAdd.Click += btnAdd_Click;
+            previousButton.Click += previousButton_Click;
             // 
             // customPanel1
             // 
@@ -168,24 +152,12 @@
             // 
             customPanel3.BackColor = Color.White;
             customPanel3.BorderRadius = 30;
-            //customPanel3.Controls.Add(btnDelete);
             customPanel3.Controls.Add(textBox1);
             customPanel3.Location = new Point(13, 9);
             customPanel3.Margin = new Padding(3, 2, 3, 2);
             customPanel3.Name = "customPanel3";
             customPanel3.Size = new Size(455, 38);
             customPanel3.TabIndex = 1;
-            // 
-            // btnDelete
-            // 
-            //btnDelete.Image = Properties.Resources.X;
-            //btnDelete.Location = new Point(429, 14);
-            //btnDelete.Margin = new Padding(3, 2, 3, 2);
-            //btnDelete.Name = "btnDelete";
-            //btnDelete.Size = new Size(11, 10);
-            //btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
-            //btnDelete.TabIndex = 1;
-            //btnDelete.TabStop = false;
             // 
             // textBox1
             // 
@@ -196,8 +168,9 @@
             textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Value";
-            textBox1.Size = new Size(397, 20);
+            textBox1.Size = new Size(397, 16);
             textBox1.TabIndex = 0;
+            textBox1.TextChanged += txtBox1_TextChanged;
             // 
             // lblTitle
             // 
@@ -208,24 +181,41 @@
             lblTitle.Location = new Point(41, 21);
             lblTitle.Name = "lblTitle";
             lblTitle.Padding = new Padding(9, 8, 9, 8);
-            lblTitle.Size = new Size(163, 54);
+            lblTitle.Size = new Size(133, 46);
             lblTitle.TabIndex = 23;
             lblTitle.Text = "Nhân viên";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             lblTitle.UseWaitCursor = true;
             // 
+            // btnAdd
+            // 
+            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAdd.AutoSize = true;
+            btnAdd.BackColor = Color.FromArgb(64, 64, 64);
+            btnAdd.Cursor = Cursors.Hand;
+            btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.ForeColor = Color.White;
+            btnAdd.Location = new Point(896, 21);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Padding = new Padding(9, 8, 9, 10);
+            btnAdd.Size = new Size(151, 39);
+            btnAdd.TabIndex = 30;
+            btnAdd.Text = "Thêm nhân viên";
+            btnAdd.TextAlign = ContentAlignment.MiddleCenter;
+            btnAdd.Click += btnAdd_Click;
+            // 
             // EmployeeGUI
             // 
-            AutoScaleDimensions = new SizeF(12F, 25F);
+            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             AutoSize = true;
             BackColor = Color.White;
+            Controls.Add(btnAdd);
             Controls.Add(extraNextButton);
             Controls.Add(nextButton);
             Controls.Add(extraPreviousButton);
             Controls.Add(previousButton);
-            //Controls.Add(btnAdd);
             Controls.Add(customPanel1);
             Controls.Add(lblTitle);
             Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -236,7 +226,6 @@
             customPanel2.ResumeLayout(false);
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
-            //((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -247,7 +236,6 @@
         private Button nextButton;
         private Button extraPreviousButton;
         private Button previousButton;
-        private Label btnAdd;
         private CustomPanel customPanel1;
         private TableLayoutPanel pEmployeeList;
         private Label lblTitle;
@@ -255,5 +243,6 @@
         private CustomPanel customPanel3;
         //private PictureBox btnDelete;
         private TextBox textBox1;
+        private Label btnAdd;
     }
 }
