@@ -200,7 +200,7 @@ namespace BadmintonCourtManagement.GUI
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoSize = true,
-                Anchor = AnchorStyles.Bottom,
+                Anchor = AnchorStyles.None,
                 Padding = new Padding(0, 5, 0, 5),
                 Margin = new Padding(0),
                 AutoSizeMode = AutoSizeMode.GrowAndShrink
@@ -217,7 +217,7 @@ namespace BadmintonCourtManagement.GUI
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0),
-                Anchor = AnchorStyles.Bottom
+                Anchor = AnchorStyles.None
             };
 
             // Nút Sửa
@@ -231,7 +231,7 @@ namespace BadmintonCourtManagement.GUI
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0),
-                Anchor = AnchorStyles.Bottom
+                Anchor = AnchorStyles.None
             };
 
             // Sự kiện Detail

@@ -156,6 +156,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             var infoPanel = new TableLayoutPanel
             {
                 ColumnCount = 1,
+
                 Dock = DockStyle.Fill,
                 Margin = new Padding(0),
                 RowCount = 2
