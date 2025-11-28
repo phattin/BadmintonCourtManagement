@@ -30,6 +30,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void StatisticGUI_Load(object sender, EventArgs e)
         {
+            btnGenerate.Click += btnGenerate_Click;
             dateTimePicker1.Value = DateTime.Now.AddDays(-30);
             dateTimePicker2.Value = DateTime.Now;
 
@@ -159,104 +160,162 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void SetupSummaryTab()
-        {
-            dtpSummaryStart.Value = DateTime.Now.AddDays(-30);
-            dtpSummaryEnd.Value = DateTime.Now;
+{
+    dtpSummaryStart.Value = DateTime.Now.AddDays(-30);
+    dtpSummaryEnd.Value = DateTime.Now;
 
-            TableLayoutPanel tableMain = new TableLayoutPanel();
-            tableMain.Dock = DockStyle.Fill;
-            tableMain.ColumnCount = 2;
-            tableMain.RowCount = 2;
-            tableMain.Size = new Size(1200, 600); // Set an initial size
-            
-            tableMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            tableMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            tableMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tableMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+    // === HEADER ĐỒNG BỘ VỚI 2 TAB KIA (xanh đậm, bo góc) ===
+    var headerPanel = new CustomPanel
+    {
+        Dock = DockStyle.Top,
+        Height = 98,
+        BackColor = Color.FromArgb(0, 120, 103),
+        BorderRadius = 20
+    };
 
-            // Filter
-            FlowLayoutPanel flowFilter = new FlowLayoutPanel();
-            flowFilter.Dock = DockStyle.Fill;
-            flowFilter.FlowDirection = FlowDirection.LeftToRight;
-            flowFilter.Padding = new Padding(10, 20, 10, 10);
+    var flowFilter = new FlowLayoutPanel
+    {
+        Dock = DockStyle.Fill,
+        FlowDirection = FlowDirection.LeftToRight,
+        Padding = new Padding(35, 25, 35, 0)
+    };
 
-            dtpSummaryStart.Width = 280;
-            dtpSummaryStart.Margin = new Padding(0, 0, 15, 0);
-            dtpSummaryEnd.Width = 280;
-            dtpSummaryEnd.Margin = new Padding(0, 0, 30, 0);
+    // DateTimePicker
+    dtpSummaryStart.Width = 300;
+    dtpSummaryEnd.Width = 300;
+    dtpSummaryEnd.Margin = new Padding(20, 0, 0, 0);
 
-            lblGenerateSummary.Text = "Thống Kê";
-            lblGenerateSummary.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblGenerateSummary.ForeColor = Color.WhiteSmoke;
-            lblGenerateSummary.BackColor = Color.FromArgb(64, 64, 64);
-            lblGenerateSummary.TextAlign = ContentAlignment.MiddleCenter;
-            lblGenerateSummary.Cursor = Cursors.Hand;
-            lblGenerateSummary.AutoSize = false;
-            lblGenerateSummary.Width = 130;
-            lblGenerateSummary.Height = 36;
-            lblGenerateSummary.Margin = new Padding(10, 10, 0, 0);
-            lblGenerateSummary.Padding = new Padding(10, 0, 10, 0);
+    // Nút Thống Kê (giữ kiểu cũ nhưng đẹp hơn)
+    lblGenerateSummary = new Label
+    {
+        Text = "Thống Kê",
+        Font = new Font("Segoe UI", 12F, FontStyle.Bold),
+        ForeColor = Color.WhiteSmoke,
+        BackColor = Color.FromArgb(64, 64, 64),
+        TextAlign = ContentAlignment.MiddleCenter,
+        Cursor = Cursors.Hand,
+        AutoSize = true,
+        Padding = new Padding(25, 10, 25, 10),
+        Margin = new Padding(60, 0, 0, 0)
+    };
+    lblGenerateSummary.Click += lblGenerateSummary_Click;
 
-            flowFilter.Controls.Add(dtpSummaryStart);
-            flowFilter.Controls.Add(dtpSummaryEnd);
-            flowFilter.Controls.Add(lblGenerateSummary);
+    flowFilter.Controls.Add(dtpSummaryStart);
+    flowFilter.Controls.Add(dtpSummaryEnd);
+    flowFilter.Controls.Add(lblGenerateSummary);
+    headerPanel.Controls.Add(flowFilter);
 
-            tableMain.Controls.Add(flowFilter, 0, 0);
-            tableMain.SetColumnSpan(flowFilter, 2);
+    // === BODY CHÍNH - RESPONSIVE ===
+    var bodyPanel = new TableLayoutPanel
+    {
+        Dock = DockStyle.Fill,
+        ColumnCount = 2,
+        RowCount = 1,
+        Padding = new Padding(30, 20, 30, 30)
+    };
+    bodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 58F));  // Biểu đồ
+    bodyPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42F));  // Số liệu
+    bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
-            // Chart
-            Panel panelChart = new Panel();
-            panelChart.Dock = DockStyle.Fill;
-            panelChart.Padding = new Padding(20);
-            panelChart.MinimumSize = new Size(100, 100); // Set minimum size
-            
-            chartPie.BackColor = Color.White;
-            chartPie.Dock = DockStyle.Fill;
-            chartPie.MinimumSize = new Size(100, 100); // Set minimum size for chart
+    // === BIỂU ĐỒ TRÒN ===
+    var panelChart = new Panel
+    {
+        Dock = DockStyle.Fill,
+        Padding = new Padding(20),
+        BackColor = Color.White
+    };
 
-            var chartArea = new ChartArea("ChartArea");
-            chartPie.ChartAreas.Add(chartArea);
+    chartPie = new Chart
+    {
+        Dock = DockStyle.Fill,
+        BackColor = Color.White
+    };
 
-            var series = new Series("RevenueSeries");
-            series.ChartType = SeriesChartType.Pie;
-            series.IsValueShownAsLabel = true;
-            series["PieLabelStyle"] = "Outside";
-            chartPie.Series.Add(series);
+    var chartArea = new ChartArea();
+    chartArea.Area3DStyle.Enable3D = true;
+    chartArea.Area3DStyle.Rotation = 15;
+    chartArea.Area3DStyle.Inclination = 15;
+    chartPie.ChartAreas.Add(chartArea);
 
-            var legend = new Legend("Legend");
-            legend.Docking = Docking.Right;
-            chartPie.Legends.Add(legend);
+    var series = new Series("RevenueSeries")
+    {
+        ChartType = SeriesChartType.Pie,
+        IsValueShownAsLabel = true,
+        Font = new Font("Segoe UI", 11F, FontStyle.Bold),
+        LabelForeColor = Color.White,
+        ["PieLabelStyle"] = "Outside",
+        ["PieLineColor"] = "White"
+    };
+    chartPie.Series.Clear();
+    chartPie.Series.Add(series);
 
-            panelChart.Controls.Add(chartPie);
-            tableMain.Controls.Add(panelChart, 0, 1);
+    var legend = new Legend
+    {
+        Docking = Docking.Right,
+        Alignment = StringAlignment.Center,
+        Font = new Font("Segoe UI", 11F)
+    };
+    chartPie.Legends.Clear();
+    chartPie.Legends.Add(legend);
 
-            // Stats
-            TableLayoutPanel tableStats = new TableLayoutPanel();
-            tableStats.Dock = DockStyle.Fill;
-            tableStats.RowCount = 5;
-            tableStats.Padding = new Padding(20, 40, 20, 20);
-            tableStats.AutoScroll = true;
+    panelChart.Controls.Add(chartPie);
+    bodyPanel.Controls.Add(panelChart, 0, 0);
 
-            for (int i = 0; i < 5; i++)
-                tableStats.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+    // === BẢNG SỐ LIỆU (lớn hơn, đẹp hơn) ===
+    var tableStats = new TableLayoutPanel
+    {
+        Dock = DockStyle.Fill,
+        RowCount = 5,
+        Padding = new Padding(30, 40, 30, 30),
+        BackColor = Color.White
+    };
 
-            tableStats.Controls.Add(lblCourtRevenue, 0, 0);
-            tableStats.Controls.Add(lblProductRevenue, 0, 1);
-            tableStats.Controls.Add(lblTotalRevenue, 0, 2);
-            tableStats.Controls.Add(lblCourtPercent, 0, 3);
-            tableStats.Controls.Add(lblProductPercent, 0, 4);
+    for (int i = 0; i < 5; i++)
+        tableStats.RowStyles.Add(new RowStyle(SizeType.Absolute, 78F));
 
-            tableMain.Controls.Add(tableStats, 1, 1);
+    // Tạo lại các label cho đẹp (dùng hàm nhỏ gọn)
+    lblCourtRevenue = CreateStatLabel("Doanh thu sân bãi:");
+    lblProductRevenue = CreateStatLabel("Doanh thu bán đồ:");
+    lblTotalRevenue = CreateStatLabel("TỔNG DOANH THU:", true);
+    lblCourtPercent = CreateStatLabel("Tỷ lệ sân bãi:");
+    lblProductPercent = CreateStatLabel("Tỷ lệ bán đồ:");
 
-            customPanelSummary.Controls.Clear();
-            customPanelSummary.Controls.Add(tableMain);
+    tableStats.Controls.Add(lblCourtRevenue, 0, 0);
+    tableStats.Controls.Add(lblProductRevenue, 0, 1);
+    tableStats.Controls.Add(lblTotalRevenue, 0, 2);
+    tableStats.Controls.Add(lblCourtPercent, 0, 3);
+    tableStats.Controls.Add(lblProductPercent, 0, 4);
 
-            lblGenerateSummary.Click += lblGenerateSummary_Click;
-            dtpSummaryStart.ValueChanged += (s, e) => { if (!isInitializing) LoadRevenueSummary(); };
-            dtpSummaryEnd.ValueChanged += (s, e) => { if (!isInitializing) LoadRevenueSummary(); };
+    bodyPanel.Controls.Add(tableStats, 1, 0);
 
-            LoadRevenueSummary();
-        }
+    // === GỘP TẤT CẢ VÀO CUSTOM PANEL ===
+    customPanelSummary.Controls.Clear();
+    customPanelSummary.BackColor = Color.FromArgb(239, 248, 230);
+    customPanelSummary.BorderRadius = 20;
+    customPanelSummary.Dock = DockStyle.Fill;
+    customPanelSummary.Padding = new Padding(70, 84, 70, 50); // Đồng bộ với 2 tab kia
+
+    customPanelSummary.Controls.Add(bodyPanel);
+    customPanelSummary.Controls.Add(headerPanel); // Header ở trên cùng
+
+    // Chỉ load khi bấm nút (không tự động khi đổi ngày)
+    // LoadRevenueSummary(); // Bỏ dòng này nếu không muốn load lần đầu
+}
+
+// Hàm tạo label thống kê đẹp, gọn
+private Label CreateStatLabel(string text, bool isTotal = false)
+{
+    return new Label
+    {
+        Text = isTotal ? $"{text} 0₫" : $"{text} 0₫",
+        Font = new Font("Segoe UI", isTotal ? 16F : 13F, isTotal ? FontStyle.Bold : FontStyle.Regular),
+        ForeColor = isTotal ? Color.FromArgb(0, 120, 103) : Color.FromArgb(50, 50, 50),
+        Dock = DockStyle.Fill,
+        TextAlign = ContentAlignment.MiddleLeft,
+        Padding = new Padding(10, 8, 0, 8),
+        AutoSize = false
+    };
+}
 
         private void LoadRevenueSummary()
         {
@@ -302,8 +361,8 @@ namespace BadmintonCourtManagement.GUI
 
         // Các sự kiện trống
         private void sortFieldComboBox_SelectedIndexChanged(object sender, EventArgs e) { }
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e) { }
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e) { }
+        // private void dateTimePicker1_ValueChanged(object sender, EventArgs e) { }
+        // private void dateTimePicker2_ValueChanged(object sender, EventArgs e) { }
         private void drPanelCourtMN_Paint(object sender, PaintEventArgs e) { }
         private void customPanel1_Paint(object sender, PaintEventArgs e) { }
         private void customPanel10_Paint(object sender, PaintEventArgs e) { }

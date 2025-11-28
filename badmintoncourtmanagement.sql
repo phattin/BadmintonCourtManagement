@@ -101,18 +101,17 @@ INSERT INTO `billimportproductdetail` (`ImportBillDetailId`, `ImportBillId`, `Pr
 CREATE TABLE `billproduct` (
   `BillProductId` varchar(10) NOT NULL,
   `EmployeeId` varchar(10) NOT NULL,
-  `CustomerId` varchar(10) DEFAULT NULL,
   `TotalPrice` double NOT NULL,
   `DateCreated` datetime NOT NULL,
   `Status` enum('paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `CustomerId`, `TotalPrice`, `DateCreated`, `Status`) VALUES
-('BP00001', 'EM00001', 'CU00001', 600000, '2025-10-17 09:00:00', 'paid'),
-('BP00002', 'EM00001', 'CU00002', 450000, '2025-10-17 11:00:00', 'paid'),
-('BP00003', 'EM00001', 'CU00003', 350000, '2025-10-17 13:30:00', 'unpaid'),
-('BP00004', 'EM00001', 'CU00004', 900000, '2025-10-18 09:45:00', 'paid'),
-('BP00005', 'EM00001', 'CU00005', 250000, '2025-10-18 15:10:00', 'paid');
+INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `TotalPrice`, `DateCreated`, `Status`) VALUES
+('BP00001', 'EM00001', 600000, '2025-10-17 09:00:00', 'paid'),
+('BP00002', 'EM00001', 450000, '2025-10-17 11:00:00', 'paid'),
+('BP00003', 'EM00001', 350000, '2025-10-17 13:30:00', 'unpaid'),
+('BP00004', 'EM00001', 900000, '2025-10-18 09:45:00', 'paid'),
+('BP00005', 'EM00001', 250000, '2025-10-18 15:10:00', 'paid');
 
 
 -- --------------------------------------------------------
@@ -609,8 +608,7 @@ ALTER TABLE `billimportproductdetail`
 --
 ALTER TABLE `billproduct`
   ADD PRIMARY KEY (`BillProductId`),
-  ADD KEY `EmployeeId` (`EmployeeId`),
-  ADD KEY `CustomerId` (`CustomerId`);
+  ADD KEY `EmployeeId` (`EmployeeId`);
 
 --
 -- Indexes for table `billproductdetail`
@@ -767,8 +765,7 @@ ALTER TABLE `billimportproductdetail`
 -- Constraints for table `billproduct`
 --
 ALTER TABLE `billproduct`
-  ADD CONSTRAINT `billproduct_ibfk_1` FOREIGN KEY (`EmployeeId`) REFERENCES `employee` (`EmployeeId`),
-  ADD CONSTRAINT `billproduct_ibfk_2` FOREIGN KEY (`CustomerId`) REFERENCES `customer` (`CustomerId`);
+  ADD CONSTRAINT `billproduct_ibfk_1` FOREIGN KEY (`EmployeeId`) REFERENCES `employee` (`EmployeeId`);
 
 --
 -- Constraints for table `billproductdetail`

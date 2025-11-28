@@ -56,9 +56,10 @@ namespace BadmintonCourtManagement.GUI
                 { "Thống kê", Statistics_Click },
                 { "Loại sản phẩm", TypeProduct_Click },
                 { "Nhà cung cấp", Supplier_Click }
+                // { "Hóa đơn sản phẩm", BillProduct_Click }
             };
 
-            menuManager.CreateMenuButtons(menuPanel, menuItems);
+            menuManager!.CreateMenuButtons(menuPanel!, menuItems);
         }
 
         private void CreateMenuButtons1(List<PermissionDetailDTO> viewPermissions)
@@ -131,13 +132,13 @@ namespace BadmintonCourtManagement.GUI
             // Remove current panel if exists
             if (currentPanel != null)
             {
-                contentPanel.Controls.Remove(currentPanel);
+                contentPanel!.Controls.Remove(currentPanel!);
                 currentPanel.Dispose();
             }
 
             // Add new panel
             currentPanel = childPanel;
-            contentPanel.Controls.Add(childPanel);
+            contentPanel!.Controls.Add(childPanel);
             childPanel.Dock = DockStyle.Fill;
             //childPanel.BringToFront();
 
@@ -145,19 +146,19 @@ namespace BadmintonCourtManagement.GUI
             //menuPanel.BringToFront();
         }
 
-        private void Permission_Click(object sender, EventArgs e)
+        private void Permission_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new PermissionGUI(currentAccount));
         }
         
-        private void Account_Click(object sender, EventArgs e)
+        private void Account_Click(object? sender, EventArgs e)
         {
             MessageBox.Show("Tài khoản clicked!");
         }
 
-        private void Bill_Click(object sender, EventArgs e)
+        private void Bill_Click(object? sender, EventArgs e)
         {
-            MessageBox.Show("Hóa đơn clicked!");
+            OpenChildPanel(new BillProductGUI(currentAccount));
         }
 
         private void Sell_Click(object sender, EventArgs e)
@@ -166,13 +167,13 @@ namespace BadmintonCourtManagement.GUI
         }
 
         // Event handlers for menu buttons
-        private void BookCourt_Click(object sender, EventArgs e)
+        private void BookCourt_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new BookCourtGUI(currentAccount));
             // MessageBox.Show("Đặt sân clicked!");
         }
 
-        private void ManageCourts_Click(object sender, EventArgs e)
+        private void ManageCourts_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new CourtManagementGUI(currentAccount));
             //MessageBox.Show("Quản lý sân clicked!");
@@ -189,34 +190,38 @@ namespace BadmintonCourtManagement.GUI
             // MessageBox.Show("form: " + this.Size.ToString() + "\ncontentPanel: " + contentPanel.Size.ToString() + "\ncurrentPanel: " + currentPanel.Size.ToString());
         }
 
-        private void Storage_Click(object sender, EventArgs e)
+        private void Storage_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new storageGUI(currentAccount));
         }
 
-        private void Employee_Click(object sender, EventArgs e)
+        private void Employee_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new EmployeeGUI(currentAccount));
         }
 
-        private void Product_Click(object sender, EventArgs e)
+        private void Product_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new ProductGUI(currentAccount));
         }
 
-        private void Statistics_Click(object sender, EventArgs e)
+        private void Statistics_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new StatisticGUI(currentAccount));
         }
-        private void TypeProduct_Click(object sender, EventArgs e)
+        private void TypeProduct_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new TypeProductGUI(currentAccount));
         }
         
-        private void Supplier_Click(object sender, EventArgs e)
+        private void Supplier_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new SupplierGUI(currentAccount));
         }
+        // private void BillProduct_Click(object? sender, EventArgs e)
+        // {
+        //     OpenChildPanel(new BillProductGUI(currentAccount));
+        // }
 
         private void MainLayout_Load(object sender, EventArgs e)
         {

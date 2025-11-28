@@ -124,7 +124,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             filterButton.MouseEnter += FilterButton_MouseEnter;
             filterButton.MouseLeave += FilterButton_MouseLeave;
             // 
-            // CardListPanel
+            // CardListPanel (panel to store product cards)
             // 
             CardListPanel.AutoSize = true;
             CardListPanel.BackColor = Color.FromArgb(239, 248, 230);
@@ -143,13 +143,10 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             CardListPanel.Size = new Size(597, 1554);
             CardListPanel.TabIndex = 5;
             // 
-            // cardPanel
+            // cardPanel (product card)
             // 
             cardPanel.BackColor = Color.FromArgb(200, 250, 214);
             cardPanel.BorderRadius = 20;

@@ -22,6 +22,11 @@ namespace BadmintonCourtManagement.BUS
             return employeeDAO.GetEmployeeById(id);
         }
 
+        public EmployeeDTO GetEmployeeByUsername(string username)
+        {
+            return employeeDAO.GetEmployeeByUsername(username);
+        }
+
         public bool InsertEmployee(EmployeeDTO employee)
         {
             return employeeDAO.InsertEmployee(employee);

@@ -7,7 +7,7 @@ namespace BadmintonCourtManagement.DTO
         private int quantity = 0;
         private double price = 0;
         private double totalPrice = 0;
-        public enum Option { Paid, Unpaid };
+        public enum Option { active, inactive };
         private Option status;
 
         public string ImportBillId { get => importBillId; set => importBillId = value; }
