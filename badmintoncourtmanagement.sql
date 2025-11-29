@@ -281,7 +281,8 @@ INSERT INTO `function` (`FunctionId`, `FunctionName`) VALUES
 ('F06', 'Quản lý sản phẩm'),
 ('F10', 'Quản lý tài khoản'),
 ('F12', 'Thống kê'),
-('F01', 'Đặt sân');
+('F01', 'Đặt sân'),
+('F13', 'Quản lý giá sân');
 
 -- --------------------------------------------------------
 
@@ -362,6 +363,10 @@ CREATE TABLE `permissiondetail` (
 --
 
 INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
+('P00002', 'F13', 'Delete'),
+('P00002', 'F13', 'Update'),
+('P00002', 'F13', 'Insert'),
+('P00002', 'F13', 'View'),
 ('P00002', 'F11', 'Delete'),
 ('P00002', 'F11', 'Update'),
 ('P00002', 'F11', 'Insert'),
