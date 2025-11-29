@@ -119,6 +119,7 @@
             buttonModify.TabIndex = 1;
             buttonModify.Text = "Sửa ";
             buttonModify.UseVisualStyleBackColor = false;
+            buttonModify.Click += buttonModify_Click;
             // 
             // buttonDelete
             // 
@@ -132,6 +133,7 @@
             buttonDelete.TabIndex = 2;
             buttonDelete.Text = "Xóa";
             buttonDelete.UseVisualStyleBackColor = false;
+            buttonDelete.Click += buttonDelete_Click;
             // 
             // labelTitle
             // 
@@ -165,7 +167,7 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
@@ -175,7 +177,7 @@
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ID, StartTime, EndTime, StartDate, EndDate, EndType, Price, Status, Function });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -187,8 +189,11 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.RowTemplate.Height = 40;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(1122, 736);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // ID
             // 
@@ -198,51 +203,55 @@
             // 
             // StartTime
             // 
-            StartTime.HeaderText = "StartTime";
+            StartTime.HeaderText = "Giờ bắt đầu";
             StartTime.MinimumWidth = 6;
             StartTime.Name = "StartTime";
             // 
             // EndTime
             // 
-            EndTime.HeaderText = "EndTime";
+            EndTime.HeaderText = "Giờ kết thúc";
             EndTime.MinimumWidth = 6;
             EndTime.Name = "EndTime";
             // 
             // StartDate
             // 
-            StartDate.HeaderText = "StartDate";
+            StartDate.HeaderText = "Ngày bắt đầu";
             StartDate.MinimumWidth = 6;
             StartDate.Name = "StartDate";
             // 
             // EndDate
             // 
-            EndDate.HeaderText = "EndDate";
+            EndDate.HeaderText = "Ngày kết thúc";
             EndDate.MinimumWidth = 6;
             EndDate.Name = "EndDate";
             // 
             // EndType
             // 
-            EndType.HeaderText = "EndType";
+            EndType.HeaderText = "Thể loại";
             EndType.MinimumWidth = 6;
             EndType.Name = "EndType";
             // 
             // Price
             // 
-            Price.HeaderText = "Price";
+            Price.HeaderText = "Giá";
             Price.MinimumWidth = 6;
             Price.Name = "Price";
             // 
             // Status
             // 
-            Status.HeaderText = "Status";
+            Status.HeaderText = "Tình trạng";
             Status.MinimumWidth = 6;
             Status.Name = "Status";
             // 
             // Function
             // 
-            Function.HeaderText = "Function";
+            Function.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Function.HeaderText = "Chi tiết";
             Function.MinimumWidth = 6;
             Function.Name = "Function";
+            Function.Text = "Xem";
+            Function.UseColumnTextForButtonValue = true;
+            Function.Width = 124;
             // 
             // PriceRuleGUI
             // 
