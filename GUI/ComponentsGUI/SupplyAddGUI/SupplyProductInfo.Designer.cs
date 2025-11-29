@@ -193,7 +193,6 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(462, 34);
             textBox2.TabIndex = 9;
-            textBox2.TextChanged += price_TextChanged;
             // 
             // textBox1
             // 
@@ -266,6 +265,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             QuantityBox.Margin = new Padding(0, 20, 25, 0);
             QuantityBox.Name = "QuantityBox";
             QuantityBox.Size = new Size(462, 34);
+            QuantityBox.TextChanged += price_TextChanged;
             QuantityBox.TabIndex = 7;
             // 
             // InfoPanel

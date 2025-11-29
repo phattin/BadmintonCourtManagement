@@ -7,6 +7,8 @@ namespace BadmintonCourtManagement.GUI
     {
         public Color NormalColor { get; set; }
         public Color SelectedColor { get; set; }
+        public Color ForeColor { get; set; }
+        public Color SelectedForeColor { get; set; }
         public Font NormalFont { get; set; }
         public Font SelectedFont { get; set; }
         public int Height { get; set; }
@@ -14,10 +16,13 @@ namespace BadmintonCourtManagement.GUI
 
         public static ButtonStyle MenuButtonStyle => new ButtonStyle
         {
-            NormalColor = Color.FromArgb(239, 248, 230),
-            SelectedColor = Color.FromArgb(200, 250, 214),
-            NormalFont = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
-            SelectedFont = new Font("Segoe UI Semibold", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
+            // original normal color: 239, 248, 230
+            NormalColor = Color.FromArgb(229, 228, 226),
+            SelectedColor = Color.FromArgb(239, 248, 230), //200, 250, 214
+            ForeColor = Color.Black,
+            SelectedForeColor = Color.Black,
+            NormalFont = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
+            SelectedFont = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
             Height = 50,
             Dock = DockStyle.Top
         };
@@ -26,6 +31,8 @@ namespace BadmintonCourtManagement.GUI
         {
             NormalColor = Color.FromArgb(100, 150, 200),
             SelectedColor = Color.FromArgb(80, 120, 180),
+            ForeColor = Color.Black,
+            SelectedForeColor = Color.Black,
             NormalFont = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0),
             SelectedFont = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0),
             Height = 35,

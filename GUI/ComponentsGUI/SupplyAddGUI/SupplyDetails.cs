@@ -17,6 +17,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
     {
         // bus
         private ProductBUS productBus = new ProductBUS();
+        // event
+        public event Action<BillImportDetailDTO> productDeleted;
         public SupplyDetails()
         {
             InitializeComponent();
@@ -123,11 +125,13 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             infoPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
 
-            var importBillIdLabel = new Label
+            Title.Text = $"Chi tiết đơn hàng nhập: {product.ImportBillId}";
+
+            var productNameLabel = new Label
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold),
-                Text = "Mã CT đơn nhập: " + product.ImportBillId,
+                Text = "Tên sản phẩm: " + productBus.GetProductById(product.ProductId).ProductName,
                 TextAlign = ContentAlignment.MiddleLeft
             };
 
@@ -163,8 +167,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 TextAlign = ContentAlignment.MiddleLeft
             };
 
-            infoPanel.Controls.Add(importBillIdLabel, 0, 0);
-            infoPanel.Controls.Add(productIDLabel, 0, 1);
+            infoPanel.Controls.Add(productIDLabel, 0, 0);
+            infoPanel.Controls.Add(productNameLabel, 0, 1);
             infoPanel.Controls.Add(quantityLabel, 0, 2);
             infoPanel.Controls.Add(priceLabel, 0, 3);
             infoPanel.Controls.Add(totalPriceLabel, 0, 4);
@@ -221,6 +225,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                                         CardListPanel.RowStyles.RemoveAt(i);
                                     }
                                     CardListPanel.RowCount -= 1;
+                                    // Raise event to notify parent form
+                                    productDeleted?.Invoke(product);
                                     break;
                                 }
                             }

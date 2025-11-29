@@ -19,10 +19,12 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         // bus
         private TypeProductBUS typeBus = new TypeProductBUS();
         private BrandBUS brandBus = new BrandBUS();
-        private BillProductBUS billBus = new BillProductBUS();
+        private BillImportBUS billBus = new BillImportBUS();
         // list
         private List<BillImportDetailDTO> productListImported = new List<BillImportDetailDTO>();
-        public event Action<BillImportDetailDTO, bool> ProductImported;
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+        public event Action<BillImportDetailDTO, StorageDTO, bool> ProductImported;
+        private HashSet<string> generatedStorageIds = new HashSet<string>();
 
         public SupplyProductInfo()
         {
@@ -112,12 +114,13 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // check price
             if (double.Parse(textBox1.Text) >= double.Parse(textBox2.Text))
             {
-                errorProvider1.SetError(textBox1, "Giá nhập phải lớn hơn hoặc bằng giá bán.");
+                errorProvider1.SetError(textBox2, "Đơn giá nhập phải nhỏ hơn đơn giá bán.");
                 return;
             }
 
             // check productId duplicate
             BillImportDetailDTO existingProduct = null;
+            StorageDTO existingStorage = null;
             foreach (var item in productListImported)
             {
                 if (item.ProductId == ProductID.Text.Replace("Mã sản phẩm: ", ""))
@@ -126,6 +129,17 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                     item.Price = double.Parse(textBox1.Text);
                     item.TotalPrice = item.Price * item.Quantity;
                     existingProduct = item;
+                    foreach (var storageItem in storageList)
+                    {
+                        if (storageItem.ProductId == item.ProductId)
+                        {
+                            storageItem.Quantity = item.Quantity;
+                            storageItem.Price = item.Price;
+                            storageItem.TotalPrice = item.TotalPrice;
+                            existingStorage = storageItem;
+                            break;
+                        }
+                    }
                     break;
                 }
             }
@@ -133,24 +147,15 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             if (existingProduct != null)
             {
                 MessageBox.Show("Cập nhật sản phẩm trong phiếu nhập thành công");
-                ProductImported?.Invoke(existingProduct, true);
+                ProductImported?.Invoke(existingProduct, existingStorage, true);
             }
             else
             {
                 var billId = billBus.GetMaxId();
-                BillImportDetailDTO newBill = new BillImportDetailDTO
-                {
-                    ImportBillId = billId,
-                    ProductId = ProductID.Text.Replace("Mã sản phẩm: ", ""),
-                    Quantity = int.Parse(QuantityBox.Text),
-                    Price = double.Parse(textBox1.Text),
-                    TotalPrice = double.Parse(textBox3.Text),
-                    Status = BillImportDetailDTO.Option.active
-                };
-                productListImported.Add(newBill);
+
                 if (string.IsNullOrWhiteSpace(billId))
                 {
-                    billId = "BP00001";
+                    billId = "IB00001";
                 }
                 else
                 {
@@ -161,13 +166,38 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                         var numberPart = match.Groups[2].Value;
                         if (int.TryParse(numberPart, out var number))
                         {
-                            number += productListImported.Count;
+                            number += productListImported.Count + 1;
                             billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
                         }
                     }
                 }
 
-                ProductImported?.Invoke(newBill, false);
+                BillImportDetailDTO newBill = new BillImportDetailDTO
+                {
+                    ImportBillId = billId,
+                    ProductId = ProductID.Text.Replace("Mã sản phẩm: ", ""),
+                    Quantity = int.Parse(QuantityBox.Text),
+                    Price = double.Parse(textBox1.Text),
+                    TotalPrice = double.Parse(textBox3.Text),
+                    Status = BillImportDetailDTO.Option.active
+                };
+                productListImported.Add(newBill);
+
+                StorageDTO newStorage = new StorageDTO
+                {
+                    StorageId = GenerateStorageId(),
+                    ImportBillId = billId,
+                    ProductId = newBill.ProductId,
+                    Quantity = newBill.Quantity,
+                    Price = newBill.Price,
+                    TotalPrice = newBill.TotalPrice,
+                    CreatedAt = DateTime.Now,
+                    Status = StorageDTO.Option.active
+                };
+
+                storageList.Add(newStorage);
+
+                ProductImported?.Invoke(newBill, newStorage, false);
 
 
                 MessageBox.Show("Thêm sản phẩm vào phiếu nhập thành công");
@@ -176,6 +206,44 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             // create new bill import product detail objects in a list
             // after that, pass that list to the parent form (SupplyAddGUI) to handle
             // parent form should pass that list to SupplyDetails.cs to display
+        }
+
+        private string GenerateStorageId()
+        {
+            // Similar pattern to your bill ID generation
+            var allStorages = StorageBUS.GetAllStorages();
+            
+            var maxId = allStorages.Max(s => s.StorageId);
+            if (string.IsNullOrWhiteSpace(maxId))
+            {
+                maxId = "ST00000";
+            }
+            var match = Regex.Match(maxId, @"^([A-Za-z]*)(\d+)$");
+            
+            if (match.Success)
+            {    
+                var prefix = match.Groups[1].Value;
+                var numberPart = match.Groups[2].Value;
+                if (int.TryParse(numberPart, out var number))
+                {
+                    string newId;
+                    do {
+                        number++;
+                        newId = prefix + number.ToString("D5");
+                    } while (generatedStorageIds.Contains(newId));
+
+                    generatedStorageIds.Add(newId);
+                    return newId;
+                }
+            }
+            
+            return "ST00001";
+        }
+
+        public void RemoveImportedProduct(BillImportDetailDTO product)
+        {
+            productListImported.RemoveAll(p => p.ProductId == product.ProductId);
+            storageList.RemoveAll(s => s.ProductId == product.ProductId);
         }
     }
 }

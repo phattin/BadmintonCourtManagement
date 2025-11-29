@@ -76,8 +76,8 @@ namespace BadmintonCourtManagement.GUI
                     return "NCC001";
 
                 var maxNum = all
-                    .Where(x => x.SupplierId.StartsWith("NCC"))
-                    .Select(x => x.SupplierId.Substring(3))
+                    .Where(x => x.SupplierId.StartsWith("SPU"))
+                    .Select(x => x.SupplierId.Substring(4))
                     .Where(s => int.TryParse(s, out _))
                     .Select(int.Parse)
                     .DefaultIfEmpty(0)

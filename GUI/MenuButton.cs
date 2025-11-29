@@ -1,10 +1,11 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using GUI.ComponentsGUI;
 
 namespace BadmintonCourtManagement.GUI
 {
-    public class MenuButton : Button
+    public class MenuButton : RoundedButton
     {
         private readonly ButtonStyle style;
         public bool IsSelected { get; private set; }
@@ -24,22 +25,25 @@ namespace BadmintonCourtManagement.GUI
             Dock = style.Dock;
             FlatStyle = FlatStyle.Flat;
             Height = style.Height;
-            UseVisualStyleBackColor = false;
+            // UseVisualStyleBackgroundColor = false;
             FlatAppearance.BorderSize = 0;
+            Margin = new Padding(5, 0, 5, 0);
         }
 
         public void Select()
         {
             IsSelected = true;
-            BackColor = style.SelectedColor;
+            BackgroundColor = style.SelectedColor;
             Font = style.SelectedFont;
+            ForeColor = style.SelectedForeColor;
         }
 
         public void Deselect()
         {
             IsSelected = false;
-            BackColor = style.NormalColor;
+            BackgroundColor = style.NormalColor;
             Font = style.NormalFont;
+            ForeColor = style.ForeColor;
         }
     }
 }
