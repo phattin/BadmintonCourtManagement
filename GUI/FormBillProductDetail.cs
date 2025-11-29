@@ -84,5 +84,51 @@ namespace BadmintonCourtManagement.GUI
         {
             this.Close();
         }
+        private void print_Click(object sender, EventArgs e)
+{
+    // Tạo SaveFileDialog để người dùng chọn nơi lưu
+    using (SaveFileDialog saveDialog = new SaveFileDialog())
+    {
+        saveDialog.Filter = "PNG Image|*.png|JPEG Image|*.jpg";
+        saveDialog.Title = "Lưu hóa đơn dưới dạng ảnh";
+        saveDialog.FileName = $"HoaDon_BanHang_{_billId}_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+        if (saveDialog.ShowDialog() == DialogResult.OK)
+        {
+            try
+            {
+                // Tạo bitmap có kích thước bằng customPanelMain (phần chính của hóa đơn)
+                using (Bitmap bitmap = new Bitmap(customPanelMain.Width, customPanelMain.Height))
+                {
+                    // Vẽ toàn bộ customPanelMain vào bitmap
+                    customPanelMain.DrawToBitmap(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+
+                    // Lưu ảnh
+                    bitmap.Save(saveDialog.FileName, GetImageFormat(saveDialog.FileName));
+                    
+                    MessageBox.Show($"Đã lưu hóa đơn thành công!\n{saveDialog.FileName}", 
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu ảnh:\n" + ex.Message, "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}
+
+// Hàm hỗ trợ lấy định dạng ảnh từ đuôi file
+private System.Drawing.Imaging.ImageFormat GetImageFormat(string fileName)
+{
+    string extension = System.IO.Path.GetExtension(fileName).ToLower();
+    return extension switch
+    {
+        ".png" => System.Drawing.Imaging.ImageFormat.Png,
+        ".jpg" or ".jpeg" => System.Drawing.Imaging.ImageFormat.Jpeg,
+        _ => System.Drawing.Imaging.ImageFormat.Png
+    };
+}
     }
 }
