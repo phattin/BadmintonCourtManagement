@@ -13,14 +13,45 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class PriceRuleAddGUI : Form
+    public partial class PriceRuleModifyGUI : Form
     {
-        public PriceRuleDTO NewPriceRule { get; private set; }
+        public PriceRuleDTO currentPriceRule { get; private set; }
         PriceRuleBUS bus = new PriceRuleBUS();
-        public PriceRuleAddGUI()
+        public PriceRuleModifyGUI(PriceRuleDTO data)
         {
             InitializeComponent();
-            comboBoxEndType.Text = "Weekday";
+            this.currentPriceRule = data;
+            FillDataToControls();
+        }
+
+        private void FillDataToControls()
+        {
+            numericUpDown1.Value = (decimal)currentPriceRule.Price;
+
+            dateTimePickerStartTime.Value = DateTime.Today.Add(currentPriceRule.StartTime.ToTimeSpan());
+            dateTimePickerEndTime.Value = DateTime.Today.Add(currentPriceRule.EndTime.ToTimeSpan());
+
+            if (currentPriceRule.StartDate != null)
+            {
+                dateTimePickerStartDate.Checked = true;
+                dateTimePickerStartDate.Value = currentPriceRule.StartDate.Value.ToDateTime(TimeOnly.MinValue);
+            }
+            else
+            {
+                dateTimePickerStartDate.Checked = false;
+            }
+            if (currentPriceRule.EndDate != null)
+            {
+                dateTimePickerEndDate.Checked = true;
+                dateTimePickerEndDate.Value = currentPriceRule.EndDate.Value.ToDateTime(TimeOnly.MinValue);
+            }
+            else
+            {
+                dateTimePickerEndDate.Checked = false;
+            }
+
+            comboBoxEndType.Text = currentPriceRule.EndType;
+            textBoxDes.Text = currentPriceRule.Description;
         }
 
         private void buttonAccept_Click(object sender, EventArgs e)
@@ -43,8 +74,8 @@ namespace GUI
             string endType = comboBoxEndType.Text.Trim();
             string description = textBoxDes.Text.Trim();
 
-            PriceRuleDTO dto = new PriceRuleDTO(price, startTime, endTime, startDate, endDate, endType, description, 1);
-            Dictionary<string, string> errors = bus.ValidatePriceRule(dto);
+            PriceRuleDTO updateDto = new PriceRuleDTO(currentPriceRule.PriceRuleId, price, startTime, endTime, startDate, endDate, endType, description, currentPriceRule.IsActive);
+            Dictionary<string, string> errors = bus.ValidatePriceRule(updateDto);
 
             if (errors.Count > 0)
             {
@@ -58,19 +89,16 @@ namespace GUI
             }
             try
             {
-                string newId = bus.GeneratePriceRuleId();
-                PriceRuleDTO newPriceRule = new PriceRuleDTO(newId, price, startTime, endTime, startDate, endDate, endType, description, 1);
-
-                if (bus.InsertPriceRule(newPriceRule))
+                if (bus.UpdatePriceRule(updateDto))
                 {
-                    MessageBox.Show("Thêm giá sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.NewPriceRule = newPriceRule;
+                    MessageBox.Show("Sửa giá sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.currentPriceRule = updateDto;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Thêm thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Sửa thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
