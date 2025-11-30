@@ -144,6 +144,8 @@ private void StatisticGUI_Load(object sender, EventArgs e)
 
     // Có thể ẩn cột ID nếu không muốn hiển thị
     // dataGridView1.Columns["CourtId"].Visible = false;
+        dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+    dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
 
     // Các thiết lập khác...
     label4.Click += label4_Click;
