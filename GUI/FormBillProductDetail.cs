@@ -89,7 +89,9 @@ private void print_Click(object sender, EventArgs e)
     try
     {
         // Đường dẫn tuyệt đối đến thư mục ORDER (cùng cấp với file exe)
-        string orderFolder = Path.Combine(Application.StartupPath, "ORDER");
+        // string orderFolder = Path.Combine(Application.StartupPath, "ORDER");
+        string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
+        string orderFolder = Path.Combine(projectRoot, "ORDER");                              
 
         // Tạo thư mục nếu chưa tồn tại (dù bạn nói đã tạo rồi, nhưng cứ kiểm tra cho chắc)
         if (!Directory.Exists(orderFolder))
