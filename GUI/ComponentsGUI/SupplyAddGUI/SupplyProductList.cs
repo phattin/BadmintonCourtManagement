@@ -18,6 +18,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
     {
         // list
         private List<ProductDTO> productList = new List<ProductDTO>();
+        private List<ProductDTO> importedProducts = new List<ProductDTO>();
         // bus
         private ProductBUS productBus = new ProductBUS();
         // event
@@ -25,6 +26,16 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         public SupplyProductList()
         {
             InitializeComponent();
+            // Avoid referencing a non-existent member; initialize as empty by default.
+            importedProducts = new List<ProductDTO>();
+            this.Load += SupplyProductList_Load;
+        }
+
+        // Overload allowing callers (e.g. the parent SupplyAdd form) to pass existing import details.
+        public SupplyProductList(List<ProductDTO> importDetails)
+        {
+            InitializeComponent();
+            importedProducts = importDetails ?? new List<ProductDTO>();
             this.Load += SupplyProductList_Load;
         }
 
@@ -52,6 +63,53 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi tải danh sách sản phẩm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Apply search filter on product list and re-render cards
+        private void ApplySearch(string keyword)
+        {
+            try
+            {
+                IEnumerable<ProductDTO> source = productList ?? new List<ProductDTO>();
+                if (!string.IsNullOrWhiteSpace(keyword))
+                {
+                    string kw = keyword.Trim().ToLowerInvariant();
+                    source = source.Where(p =>
+                        (!string.IsNullOrEmpty(p.ProductId) && p.ProductId.ToLowerInvariant().Contains(kw)) ||
+                        (!string.IsNullOrEmpty(p.ProductName) && p.ProductName.ToLowerInvariant().Contains(kw))
+                    );
+                }
+
+                var filtered = source.ToList();
+
+                CardListPanel.SuspendLayout();
+                CardListPanel.Controls.Clear();
+                CardListPanel.RowStyles.Clear();
+                CardListPanel.RowCount = filtered.Count;
+
+                for (int i = 0; i < filtered.Count; i++)
+                {
+                    CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 260F));
+                    var card = CreateProductCard(filtered[i]);
+                    CardListPanel.Controls.Add(card, 0, i);
+                }
+                CardListPanel.ResumeLayout();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm sản phẩm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Handle Enter key in search bar
+        private void searchBar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ApplySearch(searchBar.Text);
+                e.Handled = true;
+                e.SuppressKeyPress = true; // prevent ding sound
             }
         }
 
@@ -98,6 +156,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             var infoPanel = new TableLayoutPanel
             {
                 ColumnCount = 1,
+
                 Dock = DockStyle.Fill,
                 Margin = new Padding(0),
                 RowCount = 2
@@ -153,9 +212,21 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 
         private void AddButton_Click(object sender, EventArgs e)
         {
+            SupplierBUS supplierBus = new SupplierBUS();
             var button = sender as RoundedButton;
             if (button?.Tag is ProductDTO product)
             {
+                if (importedProducts != null)
+                {
+                    foreach (var p in importedProducts)
+                    {
+                        if (p.SupplierId != product.SupplierId)
+                        {
+                            MessageBox.Show($" Vui lòng chỉ chọn sản phẩm từ cùng một nhà cung cấp trong một lần nhập hàng.\n Nhà cung cấp của hóa đơn này: {supplierBus.GetSupplierById(p.SupplierId).SupplierName}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                }
                 // raise the event so the parent form can handle selection
                 ProductSelected?.Invoke(product);
             }

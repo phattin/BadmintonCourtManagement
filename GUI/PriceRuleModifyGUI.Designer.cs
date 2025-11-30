@@ -1,7 +1,6 @@
-﻿
-namespace GUI
+﻿namespace GUI
 {
-    partial class PriceRuleAddGUI
+    partial class PriceRuleModifyGUI
     {
         /// <summary>
         /// Required designer variable.
@@ -96,7 +95,7 @@ namespace GUI
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(980, 56);
             labelTitle.TabIndex = 0;
-            labelTitle.Text = "Thêm giá sân mới";
+            labelTitle.Text = "Sửa giá sân";
             labelTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel1
@@ -445,7 +444,7 @@ namespace GUI
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // PriceRuleAddGUI
+            // PriceRuleModifyGUI
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -455,9 +454,9 @@ namespace GUI
             Controls.Add(panel1);
             Controls.Add(panelTitle);
             Margin = new Padding(3, 4, 3, 4);
-            Name = "PriceRuleAddGUI";
+            Name = "PriceRuleModifyGUI";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Thêm";
+            Text = "Sửa";
             panelTitle.ResumeLayout(false);
             panel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);

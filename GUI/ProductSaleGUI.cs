@@ -224,65 +224,119 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void SetupGrid()
+{
+    dtv.Columns.Clear();
+    dtv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+    dtv.AllowUserToResizeColumns = false;
+    dtv.AllowUserToResizeRows = false;
+    dtv.RowTemplate.Height = 45;
+    dtv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+    dtv.MultiSelect = false;
+
+    // Thêm các cột với tỷ lệ đẹp (tổng = 100)
+    var colName = new DataGridViewTextBoxColumn
+    {
+        Name = "ProductName",
+        HeaderText = "Tên Sản Phẩm",
+        DataPropertyName = "ProductName",
+        FillWeight = 35,        // Rộng nhất
+        ReadOnly = true
+    };
+
+    var colBrand = new DataGridViewTextBoxColumn
+    {
+        Name = "Brand",
+        HeaderText = "Thương Hiệu",
+        DataPropertyName = "Brand",
+        FillWeight = 20,
+        ReadOnly = true
+    };
+
+    var colType = new DataGridViewTextBoxColumn
+    {
+        Name = "Type",
+        HeaderText = "Loại",
+        DataPropertyName = "Type",
+        FillWeight = 15,
+        ReadOnly = true
+    };
+
+    var colPrice = new DataGridViewTextBoxColumn
+    {
+        Name = "Price",
+        HeaderText = "Đơn Giá",
+        DataPropertyName = "Price",
+        FillWeight = 15,
+        ReadOnly = true,
+        DefaultCellStyle = new DataGridViewCellStyle
         {
-            dtv.Columns.Clear();
-
-            dtv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "ProductName",
-                HeaderText = "Tên sản phẩm",
-                DataPropertyName = "ProductName",
-                FillWeight = 26,
-                ReadOnly = true,
-                Width = 900
-            });
-
-            dtv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Brand",
-                HeaderText = "Thương hiệu",
-                DataPropertyName = "Brand",
-                FillWeight = 16,
-                ReadOnly = true,
-                Width = 150
-            });
-
-            dtv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Type",
-                HeaderText = "Thể loại",
-                DataPropertyName = "Type",
-                FillWeight = 14,
-                ReadOnly = true,
-                Width = 160
-            });
-
-            dtv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Price",
-                HeaderText = "Đơn giá",
-                DataPropertyName = "Price",
-                FillWeight = 12,
-                ReadOnly = true,
-                Width = 160,
-                DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight, Format = "N0" }
-            });
-
-            dtv.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "QuantityToBuy",
-                HeaderText = "Số lượng mua",
-                DataPropertyName = "QuantityToBuy",
-                FillWeight = 10,
-                ReadOnly = false,
-                Width = 150,
-                DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight }
-            });
-
-            dtv.RowTemplate.Height += 10;
-            if (dtv.Columns["ProductId"] != null)
-                dtv.Columns["ProductId"].Visible = false;
+            Alignment = DataGridViewContentAlignment.MiddleRight,
+            Format = "N0"  // 1,234,567 ₫
         }
+    };
+
+    var colQty = new DataGridViewTextBoxColumn
+    {
+        Name = "QuantityToBuy",
+        HeaderText = "SL Mua",
+        DataPropertyName = "QuantityToBuy",
+        FillWeight = 15,
+        ReadOnly = false,
+        DefaultCellStyle = new DataGridViewCellStyle
+        {
+            Alignment = DataGridViewContentAlignment.MiddleCenter,
+            Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+            ForeColor = Color.DarkBlue
+        }
+    };
+
+    dtv.Columns.AddRange(colName, colBrand, colType, colPrice, colQty);
+
+    // Làm đẹp header
+    dtv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+    dtv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+    dtv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 120, 103);
+    dtv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+    dtv.EnableHeadersVisualStyles = false;
+
+    // Bắt sự kiện khi người dùng sửa trực tiếp số lượng trên grid
+    dtv.CellEndEdit += (s, e) =>
+    {
+        if (e.ColumnIndex == dtv.Columns["QuantityToBuy"].Index && e.RowIndex >= 0)
+        {
+            var cell = dtv.Rows[e.RowIndex].Cells["QuantityToBuy"];
+            var productNameCell = dtv.Rows[e.RowIndex].Cells["ProductName"];
+
+            if (int.TryParse(cell.Value?.ToString(), out int qty) && qty >= 0)
+            {
+                var product = productList.FirstOrDefault(p => p.ProductName == productNameCell.Value?.ToString());
+                if (product != null)
+                {
+                    if (qty > product.Quantity)
+                    {
+                        MessageBox.Show($"Chỉ còn {product.Quantity} sản phẩm trong kho!", "Vượt tồn kho", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cell.Value = _cart.ContainsKey(product.ProductId) ? _cart[product.ProductId] : 0;
+                    }
+                    else
+                    {
+                        _cart[product.ProductId] = qty;
+                        if (qty == 0) _cart.Remove(product.ProductId);
+                    }
+                }
+            }
+            else
+            {
+                cell.Value = 0;
+            }
+
+            updateTotalPrice();
+        }
+    };
+
+    // Cập nhật tổng tiền khi click vào dòng bất kỳ
+    dtv.SelectionChanged += (s, e) => updateTotalPrice();
+}
 
         private void btnDelete_Click(object sender, EventArgs e)
         {

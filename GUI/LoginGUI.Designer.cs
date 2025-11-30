@@ -1,4 +1,5 @@
-﻿namespace BadmintonCourtManagement.GUI
+﻿
+namespace BadmintonCourtManagement.GUI
 {
     partial class LoginGUI
     {

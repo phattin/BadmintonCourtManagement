@@ -40,6 +40,37 @@ namespace BadmintonCourtManagement.DAO
             return supplier;
         }
 
+        // Lấy nhà cung cấp theo Email
+        public SupplierDTO GetSupplierByEmail(string email)
+        {
+            string query = "SELECT * FROM supplier WHERE Email = @Email AND IsDeleted = 0";
+            SupplierDTO supplier = null;
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Email", email);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    supplier = new SupplierDTO()
+                    {
+                        SupplierId = reader["SupplierId"].ToString(),
+                        SupplierName = reader["SupplierName"].ToString(),
+                        SupplierAddress = reader["Address"].ToString(),
+                        SupplierEmail = reader["Email"].ToString(),
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                    };
+                }
+                reader.Close();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return supplier;
+        }
+
         // Lấy tất cả nhà cung cấp chưa xóa
         public List<SupplierDTO> GetAllSuppliers()
         {

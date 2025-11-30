@@ -86,10 +86,12 @@
             extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
             extraNextButton.Location = new Point(756, 17);
             extraNextButton.Name = "extraNextButton";
-            extraNextButton.Size = new Size(75, 69);
+            extraNextButton.Size = new Size(75, 75);
             extraNextButton.TabIndex = 16;
             extraNextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraNextButton.UseVisualStyleBackColor = false;
+            extraNextButton.FlatStyle = FlatStyle.Flat;
+            extraNextButton.FlatAppearance.BorderSize = 0;
             extraNextButton.Click += extraNextButton_Click;
             // 
             // extraPreviousButton
@@ -101,10 +103,12 @@
             extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
             extraPreviousButton.Location = new Point(426, 17);
             extraPreviousButton.Name = "extraPreviousButton";
-            extraPreviousButton.Size = new Size(75, 69);
+            extraPreviousButton.Size = new Size(75, 75);
             extraPreviousButton.TabIndex = 13;
             extraPreviousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraPreviousButton.UseVisualStyleBackColor = false;
+            extraPreviousButton.FlatStyle = FlatStyle.Flat;
+            extraPreviousButton.FlatAppearance.BorderSize = 0;
             extraPreviousButton.Click += extraPreviousButton_Click;
             // 
             // nextButton
@@ -115,10 +119,12 @@
             nextButton.Image = (Image)resources.GetObject("nextButton.Image");
             nextButton.Location = new Point(644, 17);
             nextButton.Name = "nextButton";
-            nextButton.Size = new Size(75, 69);
+            nextButton.Size = new Size(75, 75);
             nextButton.TabIndex = 15;
             nextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             nextButton.UseVisualStyleBackColor = false;
+            nextButton.FlatStyle = FlatStyle.Flat;
+            nextButton.FlatAppearance.BorderSize = 0;
             nextButton.Click += nextButton_Click;
             // 
             // previousButton
@@ -129,10 +135,12 @@
             previousButton.Image = (Image)resources.GetObject("previousButton.Image");
             previousButton.Location = new Point(539, 17);
             previousButton.Name = "previousButton";
-            previousButton.Size = new Size(75, 69);
+            previousButton.Size = new Size(75, 75);
             previousButton.TabIndex = 14;
             previousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             previousButton.UseVisualStyleBackColor = false;
+            previousButton.FlatStyle = FlatStyle.Flat;
+            previousButton.FlatAppearance.BorderSize = 0;
             previousButton.Click += previousButton_Click;
             // 
             // cardList
@@ -166,7 +174,7 @@
             card.Location = new Point(15, 15);
             card.Margin = new Padding(15);
             card.Name = "card";
-            card.Size = new Size(417, 470);
+            card.Size = new Size(417, 500);
             card.TabIndex = 0;
             // 
             // cardButton
@@ -342,8 +350,8 @@
             bodyPanel.Margin = new Padding(3, 4, 3, 4);
             bodyPanel.Name = "bodyPanel";
             bodyPanel.RowCount = 2;
-            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
-            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 85F));
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 80));
+            bodyPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             bodyPanel.Size = new Size(1146, 527);
             bodyPanel.TabIndex = 0;
             // 

@@ -1,4 +1,5 @@
-﻿namespace GUI
+﻿
+namespace GUI
 {
     partial class PriceRuleDescriptionGUI
     {
@@ -44,47 +45,51 @@
             panelTop.Location = new Point(0, 0);
             panelTop.Margin = new Padding(0);
             panelTop.Name = "panelTop";
-            panelTop.Size = new Size(513, 100);
+            panelTop.Size = new Size(586, 133);
             panelTop.TabIndex = 0;
             // 
             // labelTitle
             // 
             labelTitle.Dock = DockStyle.Fill;
+            labelTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTitle.Location = new Point(0, 0);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(513, 100);
+            labelTitle.Size = new Size(586, 133);
             labelTitle.TabIndex = 0;
-            labelTitle.Text = "Description";
+            labelTitle.Text = "Mô tả";
             labelTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelBottom
             // 
             panelBottom.Controls.Add(labelDescription);
             panelBottom.Dock = DockStyle.Fill;
-            panelBottom.Location = new Point(0, 100);
+            panelBottom.Location = new Point(0, 133);
+            panelBottom.Margin = new Padding(3, 4, 3, 4);
             panelBottom.Name = "panelBottom";
-            panelBottom.Size = new Size(513, 97);
+            panelBottom.Size = new Size(586, 130);
             panelBottom.TabIndex = 1;
             // 
             // labelDescription
             // 
             labelDescription.Dock = DockStyle.Fill;
-            labelDescription.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelDescription.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelDescription.Location = new Point(0, 0);
             labelDescription.Name = "labelDescription";
-            labelDescription.Size = new Size(513, 97);
+            labelDescription.Size = new Size(586, 130);
             labelDescription.TabIndex = 0;
             labelDescription.Text = "Giá sân này chỉ dùng cho đấu giải";
             labelDescription.TextAlign = ContentAlignment.TopCenter;
             // 
             // PriceRuleDescriptionGUI
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(513, 197);
+            ClientSize = new Size(586, 263);
             Controls.Add(panelBottom);
             Controls.Add(panelTop);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "PriceRuleDescriptionGUI";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "PriceRuleDescriptionGUI";
             panelTop.ResumeLayout(false);
             panelBottom.ResumeLayout(false);

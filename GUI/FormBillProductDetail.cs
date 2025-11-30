@@ -84,5 +84,73 @@ namespace BadmintonCourtManagement.GUI
         {
             this.Close();
         }
+private void print_Click(object sender, EventArgs e)
+{
+    try
+    {
+        // Đường dẫn tuyệt đối đến thư mục ORDER (cùng cấp với file exe)
+        // string orderFolder = Path.Combine(Application.StartupPath, "ORDER");
+        string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
+        string orderFolder = Path.Combine(projectRoot, "ORDER");                              
+
+        // Tạo thư mục nếu chưa tồn tại (dù bạn nói đã tạo rồi, nhưng cứ kiểm tra cho chắc)
+        if (!Directory.Exists(orderFolder))
+            Directory.CreateDirectory(orderFolder);
+
+        // Tên file đẹp, không trùng: HD_BP001_20251129_143022.png
+        string fileName = $"HD_{_billId}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
+        string fullPath = Path.Combine(orderFolder, fileName);
+
+        // Ẩn tạm 2 nút để ảnh hóa đơn sạch sẽ, đẹp như in thật
+        bool printWasVisible = print.Visible;
+        bool closeWasVisible = btnClose.Visible;
+
+        print.Visible = false;
+        btnClose.Visible = false;
+        customPanelMain.Refresh();
+        Application.DoEvents();
+
+        // Chụp ảnh toàn bộ panel hóa đơn
+        using (Bitmap bitmap = new Bitmap(customPanelMain.Width, customPanelMain.Height))
+        {
+            customPanelMain.DrawToBitmap(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+            bitmap.Save(fullPath, System.Drawing.Imaging.ImageFormat.Png);
+        }
+
+        // Hiện lại nút
+        print.Visible = printWasVisible;
+        btnClose.Visible = closeWasVisible;
+
+        // Thông báo + tự động mở thư mục ORDER luôn
+        MessageBox.Show(
+            $"Đã xuất hóa đơn thành công!\n\n" +
+            $"Tên file: {fileName}\n" +
+            $"Lưu tại: {orderFolder}\n\n" +
+            $"Thư mục ORDER sẽ tự động mở để bạn kiểm tra.",
+            "Xuất hóa đơn thành công",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information);
+
+        // Mở thư mục ORDER để nhân viên thấy file vừa xuất
+        System.Diagnostics.Process.Start("explorer.exe", orderFolder);
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Lỗi khi xuất hóa đơn:\n" + ex.Message, "Lỗi",
+            MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
+
+// Hàm hỗ trợ lấy định dạng ảnh từ đuôi file
+private System.Drawing.Imaging.ImageFormat GetImageFormat(string fileName)
+{
+    string extension = System.IO.Path.GetExtension(fileName).ToLower();
+    return extension switch
+    {
+        ".png" => System.Drawing.Imaging.ImageFormat.Png,
+        ".jpg" or ".jpeg" => System.Drawing.Imaging.ImageFormat.Jpeg,
+        _ => System.Drawing.Imaging.ImageFormat.Png
+    };
+}
     }
 }
