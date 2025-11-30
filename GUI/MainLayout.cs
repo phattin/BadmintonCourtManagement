@@ -23,17 +23,20 @@ namespace BadmintonCourtManagement.GUI
         public MainLayout(AccountDTO account)
         {
             this.currentAccount = account;
-            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByPermissionId(currentAccount.PermissionId);
-            List<PermissionDetailDTO> viewPermissions = new List<PermissionDetailDTO>();
-            foreach (var detail in permissionDetails)
-            {
-                if (detail.Option == "View")
-                {
-                    viewPermissions.Add(detail);
-                }
-            }
             InitializeComponent();
+            Session.CurrentUser = account;
+            Session.OnPermissionChanged += ReloadMenu;
+            ReloadMenu();
             this.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        private void ReloadMenu()
+        {
+            menuPanel.Controls.Clear();
+
+            List<PermissionDetailDTO> newPermissions = permissiondetailBUS.GetPermissionDetailsByPermissionId(Session.CurrentUser.PermissionId);
+            List<PermissionDetailDTO> viewPermissions = newPermissions.FindAll(p => p.Option == "View");
+
             CreateMenuButtons1(viewPermissions);
         }
 

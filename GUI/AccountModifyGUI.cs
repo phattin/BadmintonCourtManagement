@@ -73,6 +73,11 @@ namespace GUI
                 if (accountBUS.UpdateAccount(updateAccount))
                 {
                     MessageBox.Show("Cập nhật tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (Session.CurrentUser.Username == currentAccount.Username)
+                    {
+                        Session.CurrentUser = updateAccount;
+                        Session.TriggerPermissionChange();
+                    }
                     this.currentAccount = updateAccount;
                     this.DialogResult = DialogResult.OK;
                     this.Close();

@@ -28,30 +28,23 @@ namespace GUI
             InitializeComponent();
             ConfigureDataGridView();
             LoadData();
-            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId("F13");
-            List<PermissionDetailDTO> accountPermissions = new List<PermissionDetailDTO>();
-            foreach (var permissionDetail in permissionDetails)
+            CheckPermissions("F13");
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
             {
-                if (permissionDetail.PermissionId == currentAccount.PermissionId)
+                if (p.PermissionId == currentAccount.PermissionId)
                 {
-                    accountPermissions.Add(permissionDetail);
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                    else if (p.Option == "Delete") isDelete = true;
                 }
             }
-            foreach (var permission in accountPermissions)
-            {
-                if (permission.Option == "Insert")
-                {
-                    isInsert = true;
-                }
-                else if (permission.Option == "Update")
-                {
-                    isUpdate = true;
-                }
-                else if (permission.Option == "Delete")
-                {
-                    isDelete = true;
-                }
-            }
+
             buttonAdd.Visible = isInsert;
             buttonModify.Visible = isUpdate;
             buttonDelete.Visible = isDelete;

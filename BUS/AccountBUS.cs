@@ -31,11 +31,10 @@ namespace BadmintonCourtManagement.BUS
 
         public bool InsertAccount(AccountDTO account)
         {
-            // Kiểm tra username đã tồn tại chưa
-            var existing = dao.GetByUsername(account.Username);
-            if (existing != null)
-                throw new Exception("Username đã tồn tại!");
-
+            if (dao.IsUsernameExists(account.Username))
+            {
+                throw new Exception("Account đã tồn tại!");
+            }
             return dao.InsertAccount(account);
         }
 

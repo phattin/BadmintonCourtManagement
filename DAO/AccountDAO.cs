@@ -39,6 +39,20 @@ namespace BadmintonCourtManagement.DAO
             return account;
         }
 
+        public bool IsUsernameExists(string username)
+        {
+            string query = "SELECT COUNT(*) FROM account WHERE Username = @Username";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                long count = (long)cmd.ExecuteScalar();
+                return count > 0;
+            }
+            finally { db.CloseConnection(); }
+        }
+
         // Lấy tất cả account chưa xóa
         public List<AccountDTO> GetAllAccount()
         {
