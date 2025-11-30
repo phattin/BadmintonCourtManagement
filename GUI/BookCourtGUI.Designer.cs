@@ -26,11 +26,8 @@
             customPanel5 = new CustomPanel();
             pCourtList = new TableLayoutPanel();
             customPanel6 = new CustomPanel();
-            customPanel1 = new CustomPanel();
             btnDelete = new PictureBox();
-            textBox1 = new TextBox();
             customPanel4 = new CustomPanel();
-            btnTimeFinish = new BadmintonCourtManagement.GUI.ComponentsGUI.TimePicker();
             lbltimeFinish = new Label();
             customPanel1 = new CustomPanel();
             textBox1 = new TextBox();
@@ -44,7 +41,6 @@
             draft_panel.SuspendLayout();
             customPanel5.SuspendLayout();
             customPanel6.SuspendLayout();
-            customPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
             customPanel4.SuspendLayout();
             customPanel1.SuspendLayout();
@@ -62,7 +58,6 @@
             draft_panel.Controls.Add(customPanel5);
             draft_panel.Controls.Add(lblTitle);
             draft_panel.Controls.Add(customPanel5);
-            draft_panel.Controls.Add(customPanel7);
             draft_panel.Dock = DockStyle.Fill;
             draft_panel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             draft_panel.Location = new Point(0, 0);
@@ -393,10 +388,7 @@
         private ComponentsGUI.TimePicker btnTimeStart;
         private Label lbltimeStart;
         private CustomPanel customPanel2;
-        private DateTimePicker dateTimePicker1;
         private Label lblDate;
-        private ComponentsGUI.TimePicker btnTimeStart;
-        private ComponentsGUI.TimePicker btnTimeFinish;
         private CustomPanel customPanel5;
         private TableLayoutPanel pCourtList;
         private CustomPanel customPanel6;
@@ -407,8 +399,6 @@
         private Button nextButton;
         private Button extraPreviousButton;
         private Button previousButton;
-        private CustomPanel customPanel1;
         private PictureBox btnDelete;
-        private TextBox textBox1;
     }
 }
