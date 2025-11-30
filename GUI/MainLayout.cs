@@ -153,7 +153,7 @@ namespace BadmintonCourtManagement.GUI
         
         private void Account_Click(object? sender, EventArgs e)
         {
-            MessageBox.Show("Tài khoản clicked!");
+            OpenChildPanel(new AccountGUI(currentAccount));
         }
 
         private void Bill_Click(object? sender, EventArgs e)

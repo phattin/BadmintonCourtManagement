@@ -68,6 +68,34 @@ namespace BadmintonCourtManagement.DAO
             return list;
         }
 
+        public List<AccountDTO> GetAllAccount1()
+        {
+            string query = "SELECT * FROM account";
+            List<AccountDTO> list = new List<AccountDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new AccountDTO()
+                    {
+                        Username = reader["Username"].ToString(),
+                        Password = reader["Password"].ToString(),
+                        PermissionId = reader["PermissionId"].ToString(),
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                    });
+                }
+                reader.Close();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return list;
+        }
+
         // Kiểm tra login
         public AccountDTO GetAccount(string username, string password)
         {
