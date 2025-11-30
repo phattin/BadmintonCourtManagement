@@ -13,7 +13,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             lblTitle = new Label();
             customPanelHeader = new CustomPanel();
             flowLayoutSearch = new FlowLayoutPanel();
@@ -78,8 +78,8 @@ namespace BadmintonCourtManagement.GUI
             // dtpFrom
             // 
             dtpFrom.Format = DateTimePickerFormat.Short;
-            dtpFrom.Location = new Point(35, 35);
-            dtpFrom.Margin = new Padding(35, 10, 30, 0);
+            dtpFrom.Location = new Point(20, 35);
+            dtpFrom.Margin = new Padding(20, 10, 0, 0);
             dtpFrom.Name = "dtpFrom";
             dtpFrom.Size = new Size(310, 31);
             dtpFrom.TabIndex = 0;
@@ -87,7 +87,7 @@ namespace BadmintonCourtManagement.GUI
             // dtpTo
             // 
             dtpTo.Format = DateTimePickerFormat.Short;
-            dtpTo.Location = new Point(385, 35);
+            dtpTo.Location = new Point(340, 35);
             dtpTo.Margin = new Padding(10, 10, 0, 0);
             dtpTo.Name = "dtpTo";
             dtpTo.Size = new Size(310, 31);
@@ -98,8 +98,8 @@ namespace BadmintonCourtManagement.GUI
             txtSearch.BorderStyle = BorderStyle.None;
             txtSearch.Font = new Font("Segoe UI", 10F);
             txtSearch.ForeColor = Color.Black;
-            txtSearch.Location = new Point(745, 35);
-            txtSearch.Margin = new Padding(50, 10, 0, 0);
+            txtSearch.Location = new Point(700, 38);
+            txtSearch.Margin = new Padding(50, 13, 0, 0);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Tìm mã hóa đơn, nhân viên...";
             txtSearch.Size = new Size(265, 27);
@@ -111,7 +111,7 @@ namespace BadmintonCourtManagement.GUI
             cmbSort.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSort.FormattingEnabled = true;
             cmbSort.Items.AddRange(new object[] { "Mới nhất trước", "Cũ nhất trước", "Tổng tiền giảm dần", "Tổng tiền tăng dần" });
-            cmbSort.Location = new Point(1020, 35);
+            cmbSort.Location = new Point(975, 35);
             cmbSort.Margin = new Padding(10, 10, 0, 0);
             cmbSort.Name = "cmbSort";
             cmbSort.Size = new Size(265, 33);
@@ -124,8 +124,8 @@ namespace BadmintonCourtManagement.GUI
             btnSearch.Cursor = Cursors.Hand;
             btnSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnSearch.ForeColor = Color.WhiteSmoke;
-            btnSearch.Location = new Point(30, 68);
-            btnSearch.Margin = new Padding(30, 0, 0, 0);
+            btnSearch.Location = new Point(10, 68);
+            btnSearch.Margin = new Padding(10, 0, 0, 0);
             btnSearch.Name = "btnSearch";
             btnSearch.Padding = new Padding(20, 8, 20, 8);
             btnSearch.Size = new Size(162, 48);
@@ -152,14 +152,14 @@ namespace BadmintonCourtManagement.GUI
             dgvBills.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvBills.BackgroundColor = Color.White;
             dgvBills.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(0, 120, 103);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvBills.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 120, 103);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvBills.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvBills.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvBills.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5 });
             dgvBills.Dock = DockStyle.Fill;
@@ -167,7 +167,6 @@ namespace BadmintonCourtManagement.GUI
             dgvBills.Location = new Point(37, 20);
             dgvBills.MultiSelect = false;
             dgvBills.Name = "dgvBills";
-            dgvBills.CellContentClick += dgvBills_CellContentClick;
             dgvBills.ReadOnly = true;
             dgvBills.RightToLeft = RightToLeft.No;
             dgvBills.RowHeadersVisible = false;
@@ -175,6 +174,7 @@ namespace BadmintonCourtManagement.GUI
             dgvBills.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBills.Size = new Size(1320, 663);
             dgvBills.TabIndex = 0;
+            dgvBills.CellContentClick += dgvBills_CellContentClick;
             // 
             // dataGridViewTextBoxColumn1
             // 

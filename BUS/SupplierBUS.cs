@@ -24,6 +24,11 @@ namespace BadmintonCourtManagement.BUS
             return dao.Search(keyword);
         }
 
+        public SupplierDTO GetSupplierByEmail(string email)
+        {
+            return dao.GetSupplierByEmail(email);
+        }
+
 
 
         public bool InsertSupplier(SupplierDTO supplier)
