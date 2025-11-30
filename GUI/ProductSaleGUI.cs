@@ -146,7 +146,7 @@ namespace BadmintonCourtManagement.GUI
                     Type = typeList.FirstOrDefault(t => t.TypeProductId == p.TypeId)?.TypeProductName ?? "bye",
                     StockQuantity = p.Quantity,
                     Price = storageList.Where(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)
-                                .OrderByDescending(ob => ob.ImportBillId)
+                                .OrderByDescending(ob => ob.ImportBillDetailId)
                                 .Select(ob => ob.Price)
                                 .FirstOrDefault(),
                     QuantityToBuy = _cart.ContainsKey(p.ProductId) ? _cart[p.ProductId] : 0

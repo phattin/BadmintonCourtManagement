@@ -186,7 +186,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 StorageDTO newStorage = new StorageDTO
                 {
                     StorageId = GenerateStorageId(),
-                    ImportBillId = billId,
+                    ImportBillDetailId = billId,
                     ProductId = newBill.ProductId,
                     Quantity = newBill.Quantity,
                     Price = double.Parse(textBox2.Text),
