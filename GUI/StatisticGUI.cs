@@ -28,37 +28,53 @@ namespace BadmintonCourtManagement.GUI
             statisticalBUS = new StatisticalBUS();
         }
 
-        private void StatisticGUI_Load(object sender, EventArgs e)
-        {
-            btnGenerate.Click += btnGenerate_Click;
-            dateTimePicker1.Value = DateTime.Now.AddDays(-30);
-            dateTimePicker2.Value = DateTime.Now;
+private void StatisticGUI_Load(object sender, EventArgs e)
+{
+    btnGenerate.Click += btnGenerate_Click;
 
-            dgTopProducts.Columns.Clear();
-            dgTopProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            dgTopProducts.AllowUserToResizeColumns = false;
+    dateTimePicker1.Value = DateTime.Now.AddDays(-30);
+    dateTimePicker2.Value = DateTime.Now;
 
-            dgTopProducts.Columns.Add("ProductId", "Product ID");
-            dgTopProducts.Columns.Add("ProductName", "Product Name");
-            dgTopProducts.Columns.Add("Quantity", "Total Sold");
-            dgTopProducts.Columns.Add("TotalRevenue", "Total Revenue");
+    // ====================== CÀI ĐẶT dgTopProducts ======================
+    dgTopProducts.Columns.Clear();
 
-            dgTopProducts.Columns["ProductId"].Width = 370;
-            dgTopProducts.Columns["ProductName"].Width = 380;
-            dgTopProducts.Columns["Quantity"].Width = 370;
-            dgTopProducts.Columns["TotalRevenue"].Width = 367;
+    // Dùng Fill để tự động chia % chiều rộng
+    dgTopProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+    dgTopProducts.AllowUserToResizeColumns = false; // không cho user kéo
 
-            dgTopProducts.Columns["TotalRevenue"].DefaultCellStyle.Format = "C2";
-            dgTopProducts.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgTopProducts.Columns["ProductId"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgTopProducts.Columns["Quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+    dgTopProducts.Columns.Add("ProductId", "Product ID");
+    dgTopProducts.Columns.Add("ProductName", "Tên Sản Phẩm");
+    dgTopProducts.Columns.Add("Quantity", "Số Lượng Bán");
+    dgTopProducts.Columns.Add("TotalRevenue", "Doanh Thu");
 
-            isInitializing = false;
+    // === TÙY CHỈNH TỶ LỆ CỘT (rất linh hoạt) ===
+    dgTopProducts.Columns["ProductId"].FillWeight     = 20;  // 20%
+    dgTopProducts.Columns["ProductName"].FillWeight   = 40;  // 40% → tên sản phẩm rộng nhất
+    dgTopProducts.Columns["Quantity"].FillWeight      = 20;  // 20%
+    dgTopProducts.Columns["TotalRevenue"].FillWeight  = 20;  // 20%
 
-            SetupCourtTab();
-            SetupSummaryTab(); // Tạo layout động tại đây
-            
-        }
+    // Nếu muốn chia đều 25% thì để tất cả FillWeight = 100 hoặc = 1 đều được
+    // Ví dụ chia đều:
+    // foreach (DataGridViewColumn col in dgTopProducts.Columns) col.FillWeight = 1;
+
+    // Style đẹp
+    dgTopProducts.Columns["TotalRevenue"].DefaultCellStyle.Format = "C0"; // hoặc "C2" nếu muốn 2 chữ số thập phân
+    dgTopProducts.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+    dgTopProducts.Columns["ProductId"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+    dgTopProducts.Columns["Quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+    // Optional: làm đẹp thêm header
+    dgTopProducts.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+    dgTopProducts.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+
+    
+
+    isInitializing = false;
+
+    SetupCourtTab();        // bạn đã sửa ở tin nhắn trước rồi đúng không?
+    SetupSummaryTab();
+}
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
@@ -98,32 +114,43 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
-        private void SetupCourtTab()
-        {
-            dataGridView1.Columns.Clear();
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            dataGridView1.AllowUserToResizeColumns = false;
+      private void SetupCourtTab()
+{
+    dataGridView1.Columns.Clear();
 
-            dataGridView1.Columns.Add("CourtId", "ID");
-            dataGridView1.Columns.Add("CourtName", "Tên Sân");
-            dataGridView1.Columns.Add("TotalRevenue", "Tổng Doanh Thu");
-            dataGridView1.Columns.Add("BookingCount", "Số lần đặt sân");
+    // Cho phép tự động chia cột theo tỷ lệ
+    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            dataGridView1.Columns["CourtId"].Width = 250;
-            dataGridView1.Columns["CourtName"].Width = 400;
-            dataGridView1.Columns["TotalRevenue"].Width = 400;
-            dataGridView1.Columns["BookingCount"].Width = 387;
+    // Tắt việc người dùng tự resize (nếu muốn cố định tỷ lệ)
+    dataGridView1.AllowUserToResizeColumns = false;
 
-            dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Format = "C0";
-            dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridView1.Columns["BookingCount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            // dataGridView1.Columns["CourtId"].Visible = false;
+    // Thêm các cột
+    dataGridView1.Columns.Add("CourtId", "ID");
+    dataGridView1.Columns.Add("CourtName", "Tên Sân");
+    dataGridView1.Columns.Add("TotalRevenue", "Tổng Doanh Thu");
+    dataGridView1.Columns.Add("BookingCount", "Số lần đặt sân");
 
-            label4.Click += label4_Click;
+    // === QUAN TRỌNG: Chia đều 25% cho mỗi cột ===
+    foreach (DataGridViewColumn col in dataGridView1.Columns)
+    {
+        col.FillWeight = 1; // tất cả đều bằng nhau → mỗi cột 25%
+        // Nếu muốn cột nào to hơn thì tăng FillWeight lên (ví dụ 1.5 → 37.5%, còn lại 20.83%)
+    }
 
-            dateTimePicker3.Value = DateTime.Now.AddDays(-30);
-            dateTimePicker4.Value = DateTime.Now;
-        }
+    // Căn lề và định dạng tiền
+    dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Format = "C0"; // ₫ hoặc $ tùy culture
+    dataGridView1.Columns["TotalRevenue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+    dataGridView1.Columns["BookingCount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+    // Có thể ẩn cột ID nếu không muốn hiển thị
+    // dataGridView1.Columns["CourtId"].Visible = false;
+
+    // Các thiết lập khác...
+    label4.Click += label4_Click;
+
+    dateTimePicker3.Value = DateTime.Now.AddDays(-30);
+    dateTimePicker4.Value = DateTime.Now;
+}
 
         private void label4_Click(object sender, EventArgs e)
         {
