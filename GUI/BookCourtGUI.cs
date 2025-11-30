@@ -55,9 +55,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            // Nếu có search:
-            // currentList = courtBUS.Search(textBox1.Text);
-            // LoadCourts(currentList, 1);
+            currentList = courtBUS.Search(textBox1.Text);
+            LoadCourts(currentList, 1);
         }
 
         private void label1_Click(object sender, EventArgs e) { }
@@ -253,5 +252,6 @@ namespace BadmintonCourtManagement.GUI
 
             return panel;
         }
+
     }
 }
