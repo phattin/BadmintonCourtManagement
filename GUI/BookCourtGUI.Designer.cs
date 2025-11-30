@@ -32,6 +32,8 @@
             customPanel4 = new CustomPanel();
             btnTimeFinish = new BadmintonCourtManagement.GUI.ComponentsGUI.TimePicker();
             lbltimeFinish = new Label();
+            customPanel1 = new CustomPanel();
+            textBox1 = new TextBox();
             customPanel3 = new CustomPanel();
             btnTimeStart = new BadmintonCourtManagement.GUI.ComponentsGUI.TimePicker();
             lbltimeStart = new Label();
@@ -45,6 +47,7 @@
             customPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
             customPanel4.SuspendLayout();
+            customPanel1.SuspendLayout();
             customPanel3.SuspendLayout();
             customPanel2.SuspendLayout();
             SuspendLayout();
@@ -58,9 +61,12 @@
             draft_panel.Controls.Add(previousButton);
             draft_panel.Controls.Add(customPanel5);
             draft_panel.Controls.Add(lblTitle);
+            draft_panel.Controls.Add(customPanel5);
+            draft_panel.Controls.Add(customPanel7);
             draft_panel.Dock = DockStyle.Fill;
             draft_panel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             draft_panel.Location = new Point(0, 0);
+            draft_panel.Margin = new Padding(4);
             draft_panel.Name = "draft_panel";
             draft_panel.Size = new Size(1243, 765);
             draft_panel.TabIndex = 0;
@@ -218,6 +224,7 @@
             customPanel4.Name = "customPanel4";
             customPanel4.Size = new Size(113, 37);
             customPanel4.TabIndex = 3;
+            customPanel4.Paint += customPanel4_Paint;
             // 
             // btnTimeFinish
             // 
@@ -236,9 +243,33 @@
             lbltimeFinish.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbltimeFinish.Location = new Point(3, 11);
             lbltimeFinish.Name = "lbltimeFinish";
-            lbltimeFinish.Size = new Size(77, 17);
+            lbltimeFinish.Size = new Size(94, 21);
             lbltimeFinish.TabIndex = 2;
             lbltimeFinish.Text = "Giờ kết thúc";
+            // 
+            // customPanel1
+            // 
+            customPanel1.BackColor = Color.White;
+            customPanel1.BorderRadius = 30;
+            customPanel1.Controls.Add(textBox1);
+            customPanel1.Location = new Point(26, 26);
+            customPanel1.Margin = new Padding(4);
+            customPanel1.Name = "customPanel1";
+            customPanel1.Size = new Size(309, 48);
+            customPanel1.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.ForeColor = Color.Black;
+            textBox1.Location = new Point(15, 10);
+            textBox1.Margin = new Padding(4);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Value";
+            textBox1.Size = new Size(156, 24);
+            textBox1.TabIndex = 0;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // customPanel3
             // 
@@ -269,7 +300,7 @@
             lbltimeStart.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbltimeStart.Location = new Point(3, 11);
             lbltimeStart.Name = "lbltimeStart";
-            lbltimeStart.Size = new Size(77, 17);
+            lbltimeStart.Size = new Size(91, 21);
             lbltimeStart.TabIndex = 2;
             lbltimeStart.Text = "Giờ bắt đầu";
             // 
@@ -287,9 +318,10 @@
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(88, 5);
+            dateTimePicker1.Location = new Point(110, 6);
+            dateTimePicker1.Margin = new Padding(4);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(22, 27);
+            dateTimePicker1.Size = new Size(26, 31);
             dateTimePicker1.TabIndex = 1;
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             // 
@@ -299,30 +331,34 @@
             lblDate.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDate.Location = new Point(3, 11);
             lblDate.Name = "lblDate";
-            lblDate.Size = new Size(39, 17);
+            lblDate.Size = new Size(47, 21);
             lblDate.TabIndex = 2;
             lblDate.Text = "Ngày";
             // 
             // lblTitle
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.BackColor = Color.White;
-            lblTitle.Font = new Font("Segoe UI Semibold", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.ForeColor = Color.Black;
-            lblTitle.Location = new Point(40, 35);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Padding = new Padding(10, 11, 10, 11);
-            lblTitle.Size = new Size(133, 60);
-            lblTitle.TabIndex = 4;
-            lblTitle.Text = "Đặt sân";
-            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
-            lblTitle.UseWaitCursor = true;
+            pCourtList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pCourtList.ColumnCount = 4;
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pCourtList.Location = new Point(26, 129);
+            pCourtList.Margin = new Padding(2);
+            pCourtList.Name = "pCourtList";
+            pCourtList.RowCount = 2;
+            pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pCourtList.Size = new Size(940, 410);
+            pCourtList.TabIndex = 0;
+            pCourtList.Paint += pCourtList_Paint;
             // 
             // BookCourtGUI
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(draft_panel);
+            Margin = new Padding(4);
             Name = "BookCourtGUI";
             Size = new Size(1243, 765);
             draft_panel.ResumeLayout(false);
@@ -334,6 +370,8 @@
             ((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
             customPanel4.ResumeLayout(false);
             customPanel4.PerformLayout();
+            customPanel1.ResumeLayout(false);
+            customPanel1.PerformLayout();
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
             customPanel2.ResumeLayout(false);
@@ -347,10 +385,15 @@
         private Label lblTitle;
         private DateTimePicker dateTimePicker1;
         private CustomPanel customPanel4;
+        private ComponentsGUI.TimePicker btnTimeFinish;
         private Label lbltimeFinish;
+        private CustomPanel customPanel1;
+        private TextBox textBox1;
         private CustomPanel customPanel3;
+        private ComponentsGUI.TimePicker btnTimeStart;
         private Label lbltimeStart;
         private CustomPanel customPanel2;
+        private DateTimePicker dateTimePicker1;
         private Label lblDate;
         private ComponentsGUI.TimePicker btnTimeStart;
         private ComponentsGUI.TimePicker btnTimeFinish;

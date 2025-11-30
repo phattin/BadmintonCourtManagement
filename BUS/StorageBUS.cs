@@ -57,6 +57,8 @@ namespace BadmintonCourtManagement.BUS
             return entity == null ? null : StorageMapper.ToDTO(entity);
         }
 
+    
+
         public static List<StorageDTO> GetAllStorages()
         {
             //return dao.GetAllStorage();

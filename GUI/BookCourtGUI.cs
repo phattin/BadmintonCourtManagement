@@ -253,5 +253,9 @@ namespace BadmintonCourtManagement.GUI
             return panel;
         }
 
+        private void customPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

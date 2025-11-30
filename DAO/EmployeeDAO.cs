@@ -26,7 +26,8 @@ namespace BadmintonCourtManagement.DAO
 
                 while (reader.Read())
                 {
-                    EmployeeDTO employee = new EmployeeDTO
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    var employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
@@ -65,11 +66,12 @@ namespace BadmintonCourtManagement.DAO
 
                 if (reader.Read())
                 {
+                    var phoneValue = reader["Phone"].ToString().Trim();
                     employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
-                        EmployeePhone = reader["Phone"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
                         RoleId = reader["RoleId"].ToString()
                     };
@@ -188,11 +190,12 @@ namespace BadmintonCourtManagement.DAO
 
                 while (reader.Read())
                 {
-                    EmployeeDTO employee = new EmployeeDTO
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    var employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
-                        EmployeePhone = reader["Phone"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
                         RoleId = reader["RoleId"].ToString()
                     };

@@ -18,30 +18,56 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
         }
 
-        public void LoadProduct(ProductDTO product, List<BrandDTO> brands, List<TypeProductDTO> types)
-        {
-            _product = product;
+        private void btnSave_Click(object sender, EventArgs e)
+{
+    if (_product == null)
+    {
+        MessageBox.Show("Không có sản phẩm để cập nhật.");
+        return;
+    }
 
-            // Fill controls
-            txtProductId.Text = product.ProductId;
-            txtProductName.Text = product.ProductName;
+    string productName = txtProductName.Text.Trim();
+    if (string.IsNullOrEmpty(productName))
+    {
+        MessageBox.Show("Vui lòng nhập tên sản phẩm.");
+        return;
+    }
 
-            // Brands
-            cmbBrand.DataSource = brands;
-            cmbBrand.DisplayMember = "BrandName";
-            cmbBrand.ValueMember = "BrandId";
-            cmbBrand.SelectedValue = product.BrandId;
+    string brandId = cmbBrand.SelectedValue?.ToString() ?? string.Empty;
+    string typeId = cmbType.SelectedValue?.ToString() ?? string.Empty;
+    string supplierId = cmbSupplier.SelectedValue?.ToString() ?? string.Empty; // mới thêm
 
-            // Types
-            cmbType.DataSource = types;
-            cmbType.DisplayMember = "TypeProductName";
-            cmbType.ValueMember = "TypeProductId";
-            cmbType.SelectedValue = product.TypeId;
+    if (string.IsNullOrEmpty(brandId) || string.IsNullOrEmpty(typeId) || string.IsNullOrEmpty(supplierId))
+    {
+        MessageBox.Show("Vui lòng chọn đầy đủ thương hiệu, loại sản phẩm và nhà cung cấp.");
+        return;
+    }
 
-            // Load image
-            _newImageName = product.ProductImg;
-            LoadImage(_newImageName);
-        }
+    string imgName = string.IsNullOrEmpty(_newImageName) ? _product.ProductImg : _newImageName;
+
+    ProductDTO updated = new ProductDTO(
+        _product.ProductId,
+        productName,
+        supplierId,        // ← đã thêm SupplierId
+        imgName,
+        _product.Quantity,
+        brandId,
+        typeId,
+        _product.IsDeleted
+    );
+
+    ProductBUS bus = new ProductBUS();
+    bool ok = bus.UpdateProduct(updated);
+    if (ok)
+    {
+        MessageBox.Show("Cập nhật sản phẩm thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        this.FindForm()?.Close();
+    }
+    else
+    {
+        MessageBox.Show("Cập nhật thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
 
         private void LoadImage(string? imageName)
         {
@@ -70,56 +96,57 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (_product == null)
-            {
-                MessageBox.Show("Không có sản phẩm để cập nhật.");
-                return;
-            }
+        // private void btnSave_Click(object sender, EventArgs e)
+        // {
+        //     if (_product == null)
+        //     {
+        //         MessageBox.Show("Không có sản phẩm để cập nhật.");
+        //         return;
+        //     }
 
-            string productName = txtProductName.Text.Trim();
-            if (string.IsNullOrEmpty(productName))
-            {
-                MessageBox.Show("Vui lòng nhập tên sản phẩm.");
-                return;
-            }
+        //     string productName = txtProductName.Text.Trim();
+        //     if (string.IsNullOrEmpty(productName))
+        //     {
+        //         MessageBox.Show("Vui lòng nhập tên sản phẩm.");
+        //         return;
+        //     }
 
-            string brandId = cmbBrand.SelectedValue?.ToString() ?? string.Empty;
-            string typeId = cmbType.SelectedValue?.ToString() ?? string.Empty;
+        //     string brandId = cmbBrand.SelectedValue?.ToString() ?? string.Empty;
+        //     string typeId = cmbType.SelectedValue?.ToString() ?? string.Empty;
 
-            if (string.IsNullOrEmpty(brandId) || string.IsNullOrEmpty(typeId))
-            {
-                MessageBox.Show("Vui lòng chọn thương hiệu và loại sản phẩm.");
-                return;
-            }
+        //     if (string.IsNullOrEmpty(brandId) || string.IsNullOrEmpty(typeId))
+        //     {
+        //         MessageBox.Show("Vui lòng chọn thương hiệu và loại sản phẩm.");
+        //         return;
+        //     }
 
-            // Dùng ảnh mới nếu có, nếu không thì giữ ảnh cũ
+        //     // Dùng ảnh mới nếu có, nếu không thì giữ ảnh cũ
 
-            string imgName = _newImageName?? _product.ProductImg; 
+        //     string imgName = _newImageName?? _product.ProductImg; 
 
-            ProductDTO updated = new ProductDTO(
-                _product.ProductId,
-                productName,
-                imgName,
-                _product.Quantity,
-                brandId,
-                typeId,
-                _product.IsDeleted
-            );
+        //     ProductDTO updated = new ProductDTO(
+        //         _product.ProductId,
+        //         productName,
+        //         _product.SupplierId,
+        //         imgName,
+        //         _product.Quantity,
+        //         brandId,
+        //         typeId,
+        //         _product.IsDeleted
+        //     );
 
-            ProductBUS bus = new ProductBUS();
-            bool ok = bus.UpdateProduct(updated);
-            if (ok)
-            {
-                MessageBox.Show("Cập nhật sản phẩm thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.FindForm()?.Close();
-            }
-            else
-            {
-                MessageBox.Show("Cập nhật thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //     ProductBUS bus = new ProductBUS();
+        //     bool ok = bus.UpdateProduct(updated);
+        //     if (ok)
+        //     {
+        //         MessageBox.Show("Cập nhật sản phẩm thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //         this.FindForm()?.Close();
+        //     }
+        //     else
+        //     {
+        //         MessageBox.Show("Cập nhật thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //     }
+        // }
 
    
         
@@ -159,6 +186,60 @@ namespace BadmintonCourtManagement.GUI
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.FindForm()?.Close();
+        }
+
+        // Load product data into the form for editing
+        public void LoadProduct(ProductDTO product, List<BrandDTO> brands, List<TypeProductDTO> types)
+        {
+            _product = product;
+            _newImageName = null;
+
+            // Fill text fields
+            txtProductId.Text = product.ProductId;
+            txtProductName.Text = product.ProductName;
+
+            // Brands
+            if (brands != null)
+            {
+                cmbBrand.DataSource = null;
+                cmbBrand.DisplayMember = "BrandName";
+                cmbBrand.ValueMember = "BrandId";
+                cmbBrand.DataSource = brands;
+                cmbBrand.SelectedValue = product.BrandId;
+            }
+
+            // Types
+            if (types != null)
+            {
+                cmbType.DataSource = null;
+                cmbType.DisplayMember = "TypeProductName";
+                cmbType.ValueMember = "TypeProductId";
+                cmbType.DataSource = types;
+                cmbType.SelectedValue = product.TypeId;
+            }
+
+            // Suppliers: load from BUS so UI has full list
+            try
+            {
+                var supplierBus = new BadmintonCourtManagement.BUS.SupplierBUS();
+                var suppliers = supplierBus.GetAllSuppliers();
+                cmbSupplier.DataSource = null;
+                cmbSupplier.DisplayMember = "SupplierName";
+                cmbSupplier.ValueMember = "SupplierId";
+                cmbSupplier.DataSource = suppliers;
+                cmbSupplier.SelectedValue = product.SupplierId;
+            }
+            catch
+            {
+                // Fallback: show current supplier id only
+                cmbSupplier.DataSource = null;
+                cmbSupplier.Items.Clear();
+                cmbSupplier.Items.Add(product.SupplierId);
+                cmbSupplier.SelectedIndex = 0;
+            }
+
+            // Load image
+            LoadImage(product.ProductImg);
         }
     }
 }

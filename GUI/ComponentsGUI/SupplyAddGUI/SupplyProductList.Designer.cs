@@ -84,7 +84,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             toolBar.Controls.Add(searchBar, 0, 0);
-            toolBar.Controls.Add(filterButton, 1, 0);
+            // Hide filter button from toolbar for this component
+            // toolBar.Controls.Add(filterButton, 1, 0);
             toolBar.Dock = DockStyle.Top;
             toolBar.Location = new Point(0, 80);
             toolBar.Margin = new Padding(0);
@@ -121,10 +122,12 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             filterButton.Size = new Size(68, 60);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
-            filterButton.MouseEnter += FilterButton_MouseEnter;
-            filterButton.MouseLeave += FilterButton_MouseLeave;
+            // Hide filter button entirely
+            filterButton.Visible = false;
+            // Wire Enter key to trigger search
+            searchBar.KeyDown += searchBar_KeyDown;
             // 
-            // CardListPanel
+            // CardListPanel (panel to store product cards)
             // 
             CardListPanel.AutoSize = true;
             CardListPanel.BackColor = Color.FromArgb(239, 248, 230);
@@ -143,13 +146,10 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             CardListPanel.Size = new Size(597, 1554);
             CardListPanel.TabIndex = 5;
             // 
-            // cardPanel
+            // cardPanel (product card)
             // 
             cardPanel.BackColor = Color.FromArgb(200, 250, 214);
             cardPanel.BorderRadius = 20;
