@@ -22,7 +22,7 @@ namespace BadmintonCourtManagement.DAO
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@StorageId", storage.StorageId);
-                cmd.Parameters.AddWithValue("@ImportBillId", storage.ImportBillId);
+                cmd.Parameters.AddWithValue("@ImportBillId", storage.ImportBillDetailId);
                 cmd.Parameters.AddWithValue("@ProductId", storage.ProductId);
                 cmd.Parameters.AddWithValue("@Quantity", storage.Quantity);
                 cmd.Parameters.AddWithValue("@Price", storage.Price);
