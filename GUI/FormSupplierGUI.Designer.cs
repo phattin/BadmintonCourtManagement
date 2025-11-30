@@ -33,7 +33,6 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 215F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(lblTitle, 0, 0);
             tableLayoutPanel1.Controls.Add(lblSupplierId, 0, 1);
             tableLayoutPanel1.Controls.Add(txtSupplierId, 1, 1);
             tableLayoutPanel1.Controls.Add(lblSupplierName, 0, 2);
@@ -44,6 +43,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.Controls.Add(txtEmail, 1, 4);
             tableLayoutPanel1.Controls.Add(btnSave, 0, 5);
             tableLayoutPanel1.Controls.Add(btnCancel, 1, 5);
+            tableLayoutPanel1.Controls.Add(lblTitle, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -55,6 +55,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 63F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 59F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(418, 350);
             tableLayoutPanel1.TabIndex = 0;
             // 
