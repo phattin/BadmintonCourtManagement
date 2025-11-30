@@ -1,36 +1,31 @@
 ﻿using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
-using Mysqlx.Crud;
+using BadmintonCourtManagement.GUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class PriceRuleGUI : UserControl
+    public partial class AccountGUI : UserControl
     {
         private AccountDTO currentAccount;
+
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private AccountBUS accountBUS = new AccountBUS();
+        private BindingList<AccountDTO> accountList;
         private bool isInsert = false, isUpdate = false, isDelete = false;
-        private PriceRuleBUS priceruleBUS = new PriceRuleBUS();
-        private BindingList<PriceRuleDTO> priceRuleList;
-        public PriceRuleGUI(AccountDTO account)
+        public AccountGUI(AccountDTO account)
         {
             this.currentAccount = account;
             InitializeComponent();
             ConfigureDataGridView();
             LoadData();
-            CheckPermissions("F13");
+            CheckPermissions("F10");
         }
-
         private void CheckPermissions(string functionId)
         {
             List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
@@ -49,66 +44,62 @@ namespace GUI
             buttonModify.Visible = isUpdate;
             buttonDelete.Visible = isDelete;
         }
-
         private void ConfigureDataGridView()
         {
             dataGridView1.AutoGenerateColumns = false;
 
-            ID.DataPropertyName = "PriceRuleId";
-            StartTime.DataPropertyName = "StartTime";
-            EndTime.DataPropertyName = "EndTime";
-            StartDate.DataPropertyName = "StartDate";
-            EndDate.DataPropertyName = "EndDate";
-            EndType.DataPropertyName = "EndType";
-            Price.DataPropertyName = "Price";
-            Status.DataPropertyName = "IsActive";
+            if (dataGridView1.Columns.Contains("Username"))
+                dataGridView1.Columns["Username"].DataPropertyName = "Username";
+
+            if (dataGridView1.Columns.Contains("Password"))
+                dataGridView1.Columns["Password"].DataPropertyName = "Password";
+
+            if (dataGridView1.Columns.Contains("PermissionId"))
+                dataGridView1.Columns["PermissionId"].DataPropertyName = "PermissionId";
+
+            if (dataGridView1.Columns.Contains("Status"))
+                dataGridView1.Columns["Status"].DataPropertyName = "IsDeleted";
 
             dataGridView1.CellFormatting += DataGridView1_CellFormatting;
         }
-
         public void LoadData()
         {
             try
             {
-                var list = priceruleBUS.GetAllPriceRules();
+                var list = accountBUS.GetAllAccount1();
 
-                priceRuleList = new BindingList<PriceRuleDTO>(list);
-
-                dataGridView1.DataSource = priceRuleList;
+                accountList = new BindingList<AccountDTO>(list);
+                dataGridView1.DataSource = accountList;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
             }
         }
-
         private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0 || e.Value == null) return;
 
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Price")
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "PermissionId")
             {
-                if (e.Value is double price)
+                string id = e.Value.ToString();
+                PermissionBUS permissionBUS = new PermissionBUS();
+                List<PermissionDTO> permissions = permissionBUS.GetAllPermissions();
+                foreach(var permission in permissions)
                 {
-                    e.Value = price.ToString("#,##0") + " VNĐ";
-                    e.FormattingApplied = true;
-                }
-            }
-
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "StartDate" ||
-                dataGridView1.Columns[e.ColumnIndex].Name == "EndDate")
-            {
-                if (e.Value is DateOnly date)
-                {
-                    e.Value = date.ToString("dd/MM/yyyy");
-                    e.FormattingApplied = true;
+                    if(permission.PermissionId == id)
+                    {
+                        e.Value = permission.PermissionName;
+                        e.FormattingApplied = true;
+                        break;
+                    }
                 }
             }
 
             if (dataGridView1.Columns[e.ColumnIndex].Name == "Status")
             {
-                int status = Convert.ToInt32(e.Value);
-                if (status == 1)
+                int isDeleted = Convert.ToInt32(e.Value);
+                if (isDeleted == 0)
                 {
                     e.Value = "Đang hoạt động";
                     e.CellStyle.ForeColor = Color.Green;
@@ -121,57 +112,61 @@ namespace GUI
                 e.FormattingApplied = true;
             }
         }
-
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            PriceRuleAddGUI addPriceRuleGUI = new PriceRuleAddGUI();
-            if (addPriceRuleGUI.ShowDialog() == DialogResult.OK)
+            AccountAddGUI addForm = new AccountAddGUI();
+            if (addForm.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
-
         private void buttonModify_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn một dòng để sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn tài khoản để sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-            PriceRuleDTO selectedItem = selectedRow.DataBoundItem as PriceRuleDTO;
+
+            var selectedRow = dataGridView1.SelectedRows[0];
+            var selectedItem = selectedRow.DataBoundItem as AccountDTO;
+
             if (selectedItem == null) return;
 
-            if (selectedItem.IsActive != 1)
+            if (selectedItem.IsDeleted == 1)
             {
-                MessageBox.Show("Giá sân này đã ngưng hoạt động.\nKhông thể thực hiện chỉnh sửa.",
-                                "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Tài khoản này đã bị xóa, không thể chỉnh sửa.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            PriceRuleModifyGUI modifyForm = new PriceRuleModifyGUI(selectedItem);
+            AccountModifyGUI modifyForm = new AccountModifyGUI(selectedItem);
 
             if (modifyForm.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
-
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn một dòng để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn tài khoản để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             var selectedRow = dataGridView1.SelectedRows[0];
-            var selectedItem = selectedRow.DataBoundItem as PriceRuleDTO;
+            var selectedItem = selectedRow.DataBoundItem as AccountDTO;
 
             if (selectedItem == null) return;
 
+            if (selectedItem.Username == currentAccount.Username)
+            {
+                MessageBox.Show("Bạn không thể xóa tài khoản đang đăng nhập!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             DialogResult result = MessageBox.Show(
-                $"Bạn có chắc chắn muốn xóa không?\n\nHành động này không thể hoàn tác.",
+                $"Bạn có chắc chắn muốn xóa tài khoản này không?",
                 "Xác nhận xóa",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
@@ -181,33 +176,19 @@ namespace GUI
             {
                 try
                 {
-                    if (priceruleBUS.DeletePriceRule1(selectedItem.PriceRuleId))
+                    if (accountBUS.DeleteAccount(selectedItem.Username))
                     {
                         MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadData();
                     }
                     else
                     {
-                        MessageBox.Show("Xóa thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Xóa thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Không thể xóa dữ liệu này.\nCó thể dữ liệu đang được sử dụng trong hóa đơn hoặc đặt sân.\n\nChi tiết: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-            }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Function")
-            {
-                var selectedItem = dataGridView1.Rows[e.RowIndex].DataBoundItem as PriceRuleDTO;
-                if (selectedItem != null)
-                {
-                    PriceRuleDescriptionGUI desForm = new PriceRuleDescriptionGUI(selectedItem);
-                    desForm.ShowDialog();
+                    MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

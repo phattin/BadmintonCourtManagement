@@ -1,6 +1,6 @@
 ﻿namespace GUI
 {
-    partial class PriceRuleGUI
+    partial class AccountGUI
     {
         /// <summary> 
         /// Required designer variable.
@@ -39,15 +39,10 @@
             labelTitle = new Label();
             panelBottom = new Panel();
             dataGridView1 = new DataGridView();
-            ID = new DataGridViewTextBoxColumn();
-            StartTime = new DataGridViewTextBoxColumn();
-            EndTime = new DataGridViewTextBoxColumn();
-            StartDate = new DataGridViewTextBoxColumn();
-            EndDate = new DataGridViewTextBoxColumn();
-            EndType = new DataGridViewTextBoxColumn();
-            Price = new DataGridViewTextBoxColumn();
+            PermissionId = new DataGridViewTextBoxColumn();
+            Username = new DataGridViewTextBoxColumn();
+            Password = new DataGridViewTextBoxColumn();
             Status = new DataGridViewTextBoxColumn();
-            Function = new DataGridViewButtonColumn();
             panelTop.SuspendLayout();
             panelTopRight.SuspendLayout();
             flowLayoutPanel.SuspendLayout();
@@ -147,7 +142,7 @@
             labelTitle.Padding = new Padding(0, 20, 0, 0);
             labelTitle.Size = new Size(753, 72);
             labelTitle.TabIndex = 0;
-            labelTitle.Text = "Bảng giá sân";
+            labelTitle.Text = "Quản lý tài khoản";
             labelTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // panelBottom
@@ -174,7 +169,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ID, StartTime, EndTime, StartDate, EndDate, EndType, Price, Status, Function });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { PermissionId, Username, Password, Status });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -193,49 +188,24 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(1122, 736);
             dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // ID
+            // PermissionId
             // 
-            ID.HeaderText = "ID";
-            ID.MinimumWidth = 6;
-            ID.Name = "ID";
+            PermissionId.HeaderText = "Quyền hạn";
+            PermissionId.MinimumWidth = 6;
+            PermissionId.Name = "PermissionId";
             // 
-            // StartTime
+            // Username
             // 
-            StartTime.HeaderText = "Giờ bắt đầu";
-            StartTime.MinimumWidth = 6;
-            StartTime.Name = "StartTime";
+            Username.HeaderText = "Tài khoản";
+            Username.MinimumWidth = 6;
+            Username.Name = "Username";
             // 
-            // EndTime
+            // Password
             // 
-            EndTime.HeaderText = "Giờ kết thúc";
-            EndTime.MinimumWidth = 6;
-            EndTime.Name = "EndTime";
-            // 
-            // StartDate
-            // 
-            StartDate.HeaderText = "Ngày bắt đầu";
-            StartDate.MinimumWidth = 6;
-            StartDate.Name = "StartDate";
-            // 
-            // EndDate
-            // 
-            EndDate.HeaderText = "Ngày kết thúc";
-            EndDate.MinimumWidth = 6;
-            EndDate.Name = "EndDate";
-            // 
-            // EndType
-            // 
-            EndType.HeaderText = "Thể loại";
-            EndType.MinimumWidth = 6;
-            EndType.Name = "EndType";
-            // 
-            // Price
-            // 
-            Price.HeaderText = "Giá";
-            Price.MinimumWidth = 6;
-            Price.Name = "Price";
+            Password.HeaderText = "Mật khẩu";
+            Password.MinimumWidth = 6;
+            Password.Name = "Password";
             // 
             // Status
             // 
@@ -243,24 +213,14 @@
             Status.MinimumWidth = 6;
             Status.Name = "Status";
             // 
-            // Function
-            // 
-            Function.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            Function.HeaderText = "Chi tiết";
-            Function.MinimumWidth = 6;
-            Function.Name = "Function";
-            Function.Text = "Xem";
-            Function.UseColumnTextForButtonValue = true;
-            Function.Width = 124;
-            // 
-            // PriceRuleGUI
+            // AccountGUI
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panelBottom);
             Controls.Add(panelTop);
             Margin = new Padding(3, 4, 3, 4);
-            Name = "PriceRuleGUI";
+            Name = "AccountGUI";
             Size = new Size(1209, 808);
             panelTop.ResumeLayout(false);
             panelTopRight.ResumeLayout(false);
@@ -281,14 +241,9 @@
         private FlowLayoutPanel flowLayoutPanel;
         private Button buttonModify;
         private Button buttonDelete;
-        private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn StartTime;
-        private DataGridViewTextBoxColumn EndTime;
-        private DataGridViewTextBoxColumn StartDate;
-        private DataGridViewTextBoxColumn EndDate;
-        private DataGridViewTextBoxColumn EndType;
-        private DataGridViewTextBoxColumn Price;
+        private DataGridViewTextBoxColumn PermissionId;
+        private DataGridViewTextBoxColumn Username;
+        private DataGridViewTextBoxColumn Password;
         private DataGridViewTextBoxColumn Status;
-        private DataGridViewButtonColumn Function;
     }
 }

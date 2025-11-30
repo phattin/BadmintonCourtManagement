@@ -39,10 +39,52 @@ namespace BadmintonCourtManagement.DAO
             return account;
         }
 
+        public bool IsUsernameExists(string username)
+        {
+            string query = "SELECT COUNT(*) FROM account WHERE Username = @Username";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                long count = (long)cmd.ExecuteScalar();
+                return count > 0;
+            }
+            finally { db.CloseConnection(); }
+        }
+
         // Lấy tất cả account chưa xóa
         public List<AccountDTO> GetAllAccount()
         {
             string query = "SELECT * FROM account WHERE IsDeleted = 0";
+            List<AccountDTO> list = new List<AccountDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new AccountDTO()
+                    {
+                        Username = reader["Username"].ToString(),
+                        Password = reader["Password"].ToString(),
+                        PermissionId = reader["PermissionId"].ToString(),
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                    });
+                }
+                reader.Close();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return list;
+        }
+
+        public List<AccountDTO> GetAllAccount1()
+        {
+            string query = "SELECT * FROM account";
             List<AccountDTO> list = new List<AccountDTO>();
             try
             {
