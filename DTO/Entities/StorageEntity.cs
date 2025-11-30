@@ -22,6 +22,7 @@ namespace DTO.Entities
             public string ProductId { get; set; } = "";
 
             private int _quantity = 0;
+
             [Required]
             public int Quantity { 
                 get => _quantity; 
