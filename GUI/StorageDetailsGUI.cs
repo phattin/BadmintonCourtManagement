@@ -13,7 +13,7 @@ namespace BadmintonCourtManagement.GUI
                 Random random = new Random();
                 Additional additional = new Additional();
                 TitleText.Text += " " + storage.StorageId;
-                importBillID.Text += " " + storage.ImportBillId;
+                importBillID.Text += " " + storage.ImportBillDetailId;
                 productID.Text += " " + storage.ProductId;
                 quantity.Text += " " + storage.Quantity;
                 price.Text += " " + additional.beautyMoney(storage.Price);
