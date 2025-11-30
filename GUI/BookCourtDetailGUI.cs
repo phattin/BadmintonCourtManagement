@@ -1,4 +1,7 @@
-﻿using BadmintonCourtManagement.DTO;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using BadmintonCourtManagement.DTO;
 using BadmintonCourtManagement.BUS;
 
 namespace BadmintonCourtManagement.GUI
@@ -20,10 +23,17 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
         }
 
+        // ================== LOAD FORM ==================
         private void BookCourtDetail_Load(object sender, EventArgs e)
         {
-            txtCourtID.Text = courtDTO.CourtId;
+            if (courtDTO != null)
+                txtCourtID.Text = courtDTO.CourtId;
 
+            // Ngày mặc định: hôm nay
+            calBooking.SetDate(DateTime.Today);
+            txtDate.Text = DateTime.Today.ToString("dd/MM/yyyy");
+
+            // Giờ mặc định: bo tròn về 00 hoặc 30 gần nhất phía sau
             int nowMinute = DateTime.Now.Minute;
             int nowHour = DateTime.Now.Hour;
             if (nowMinute < 30)
@@ -33,20 +43,59 @@ namespace BadmintonCourtManagement.GUI
                 nowMinute = 0;
                 nowHour += 1;
             }
-            btnStartTime.SelectedTime = new DateTime(2025, 10, 4, nowHour, nowMinute, 32, 333);
 
-            btnEndTime.SelectedTime = new DateTime(2025, 10, 4, nowHour, nowMinute, 32, 333);
+            var defaultStart = new DateTime(
+                DateTime.Now.Year,
+                DateTime.Now.Month,
+                DateTime.Now.Day,
+                nowHour,
+                nowMinute,
+                0
+            );
+
+            timeStartPicker.Value = defaultStart;
+            timeEndPicker.Value = defaultStart.AddHours(1);
+
+            // đồng bộ sang bên phải (textbox chỉ hiển thị)
+            txtStartTime.Text = timeStartPicker.Value.ToString("HH:mm");
+            txtEndTime.Text = timeEndPicker.Value.ToString("HH:mm");
         }
 
+        // ================== SỰ KIỆN BÊN TRÁI (CHỌN LỊCH & GIỜ) ==================
+
+        private void calBooking_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            // cập nhật ngày bên phải (read-only)
+            txtDate.Text = e.Start.ToString("dd/MM/yyyy");
+        }
+
+        private void timeStartPicker_ValueChanged(object sender, EventArgs e)
+        {
+            // cập nhật giờ bắt đầu bên phải
+            txtStartTime.Text = timeStartPicker.Value.ToString("HH:mm");
+
+            // nếu giờ kết thúc <= giờ bắt đầu thì tự đẩy lên +1h
+            if (timeEndPicker.Value <= timeStartPicker.Value)
+            {
+                timeEndPicker.Value = timeStartPicker.Value.AddHours(1);
+                txtEndTime.Text = timeEndPicker.Value.ToString("HH:mm");
+            }
+        }
+
+        private void timeEndPicker_ValueChanged(object sender, EventArgs e)
+        {
+            // cập nhật giờ kết thúc bên phải
+            txtEndTime.Text = timeEndPicker.Value.ToString("HH:mm");
+        }
+
+        // ================== CÁC SỰ KIỆN KHÁC ==================
 
         private void customPanel3_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void customPanel2_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void btnBooking_Click(object sender, EventArgs e)
@@ -57,6 +106,7 @@ namespace BadmintonCourtManagement.GUI
             this.Controls.Add(bookingGUI);
         }
 
+        // Validate giờ bắt đầu (textbox chỉ nhận text từ timeStartPicker)
         private void txtStartTime_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtDate.Text))
@@ -73,7 +123,6 @@ namespace BadmintonCourtManagement.GUI
                     TimeSpan minTime = new TimeSpan(5, 0, 0);   // 5h00
                     TimeSpan maxTime = new TimeSpan(23, 0, 0);  // 23h00
 
-                    // Kiểm tra khoảng giờ hợp lệ
                     if (startTime < minTime || startTime >= maxTime)
                     {
                         MessageBox.Show("Giờ bắt đầu phải nằm trong khoảng 5h00 - 23h00");
@@ -81,7 +130,6 @@ namespace BadmintonCourtManagement.GUI
                         return;
                     }
 
-                    // Kiểm tra phút chỉ được là 00 hoặc 30
                     if (!(startTime.Minutes == 0 || startTime.Minutes == 30))
                     {
                         MessageBox.Show("Chỉ được chọn phút là 00 hoặc 30");
@@ -95,9 +143,9 @@ namespace BadmintonCourtManagement.GUI
                     txtStartTime.Text = "";
                 }
             }
+        }
 
-        }zzzs
-
+        // Validate giờ kết thúc + tính tiền
         private void txtEndTime_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtStartTime.Text))
@@ -127,7 +175,6 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
-                // Thời gian tối thiểu 1 giờ
                 if ((endTime - startTime).TotalMinutes < 60)
                 {
                     MessageBox.Show("Thời gian đặt tối thiểu là 1 tiếng");
@@ -135,7 +182,6 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
-                // Kiểm tra phút chỉ được là 00 hoặc 30
                 if (!((startTime.Minutes == 0 || startTime.Minutes == 30) &&
                       (endTime.Minutes == 0 || endTime.Minutes == 30)))
                 {
@@ -150,10 +196,9 @@ namespace BadmintonCourtManagement.GUI
 
                 while (current < endTime)
                 {
-                    TimeSpan next = current.Add(new TimeSpan(0, 30, 0)); // cộng 30 phút
+                    TimeSpan next = current.Add(new TimeSpan(0, 30, 0));
                     if (next > endTime) next = endTime;
 
-                    // Nếu block này nằm trong khung 5h-16h
                     if (current >= new TimeSpan(5, 0, 0) && current < new TimeSpan(16, 0, 0))
                     {
                         totalPrice += 30000; // 30k mỗi 30 phút
@@ -173,21 +218,6 @@ namespace BadmintonCourtManagement.GUI
                 MessageBox.Show("Vui lòng nhập giờ hợp lệ (HH:mm, VD: 15:30)");
                 txtTotalPrice.Text = "";
             }
-        }
-
-        private void btnStartTime_Load(object sender, EventArgs e)
-        {
-
-        }
-        
-        private void btnStartTime_ValueChanged(object sender, EventArgs e)
-        {
-            txtStartTime.Text = btnStartTime.SelectedTime.ToString("HH:mm");
-        }
-
-        private void btnEndTime_ValueChanged(object sender, EventArgs e)
-        {
-            txtEndTime.Text = btnEndTime.SelectedTime.ToString("HH:mm");
         }
     }
 }
