@@ -111,7 +111,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 }
             }
 
-            // check price
+            // check import price (textbox1) < sell price (textbox2)
             if (double.Parse(textBox1.Text) >= double.Parse(textBox2.Text))
             {
                 errorProvider1.SetError(textBox2, "Đơn giá nhập phải nhỏ hơn đơn giá bán.");
@@ -134,8 +134,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                         if (storageItem.ProductId == item.ProductId)
                         {
                             storageItem.Quantity = item.Quantity;
-                            storageItem.Price = item.Price;
-                            storageItem.TotalPrice = item.TotalPrice;
+                            storageItem.Price = double.Parse(textBox2.Text);
+                            storageItem.TotalPrice = item.Quantity * storageItem.Price;
                             existingStorage = storageItem;
                             break;
                         }
@@ -189,8 +189,8 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                     ImportBillId = billId,
                     ProductId = newBill.ProductId,
                     Quantity = newBill.Quantity,
-                    Price = newBill.Price,
-                    TotalPrice = newBill.TotalPrice,
+                    Price = double.Parse(textBox2.Text),
+                    TotalPrice = newBill.Quantity * double.Parse(textBox2.Text),
                     CreatedAt = DateTime.Now,
                     Status = StorageDTO.Option.active
                 };
