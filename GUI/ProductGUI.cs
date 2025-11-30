@@ -29,6 +29,7 @@ namespace BadmintonCourtManagement.GUI
             productList = productBUS.GetAllProducts();
             LoadProducts(productList);
             searchBar.KeyDown += searchEnterEvent;
+            this.Resize += ProductGUI_Resize;
         }
         // private void SetupFilter(ProductFilterGUI filter)
         // {
@@ -155,20 +156,28 @@ namespace BadmintonCourtManagement.GUI
             }
             Console.WriteLine(imagePath);
 
-            byte[] imageData = File.ReadAllBytes(imagePath);
-            if (imageData.Length == 0)
+            Image pictureImage = null;
+            try
             {
-                throw new Exception($"Image file {imagePath} is empty");
+                byte[] imageData = File.ReadAllBytes(imagePath);
+                if (imageData.Length > 0)
+                {
+                    using (var ms = new MemoryStream(imageData))
+                    using (var tmp = Image.FromStream(ms))
+                    {
+                        // create a copy so we don't depend on the stream
+                        pictureImage = new Bitmap(tmp);
+                    }
+                }
             }
-            Image img;
-            using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+            catch
             {
-                img = Image.FromStream(stream);
+                pictureImage = null;
             }
 
             var pictureBox = new PictureBox
             {
-                Image = new Bitmap(img), // copies the image so we can close the file
+                Image = pictureImage, 
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Margin = new Padding(10),
                 Size = new Size(300, 300),
@@ -207,7 +216,8 @@ namespace BadmintonCourtManagement.GUI
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
-                Margin = new Padding(10, 0, 10, 0)
+                Margin = new Padding(10, 0, 10, 0),
+                Anchor = AnchorStyles.None
             };
 
             // Nút Sửa
@@ -220,55 +230,55 @@ namespace BadmintonCourtManagement.GUI
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
-                Margin = new Padding(10, 0, 10, 0)
+                Margin = new Padding(10, 0, 10, 0),
+                Anchor = AnchorStyles.None
             };
 
             // Sự kiện Detail
-            // btnDetail.Click += (s, e) =>
-            // {
-            //     Form detailForm = new Form()
-            //     {
-            //         Text = "Chi tiết sản phẩm",
-            //         Size = new Size(400, 300),
-            //         StartPosition = FormStartPosition.CenterParent
-            //     };
-
-            //     var lblDetail = new Label()
-            //     {
-            //         Text = $"Mã sản phẩm: {courtDTO.CourtId}\nTên sản phẩm: {courtDTO.CourtName}",
-            //         Dock = DockStyle.Fill,
-            //         Font = new Font("Segoe UI", 12, FontStyle.Regular),
-            //         TextAlign = ContentAlignment.MiddleCenter
-            //     };
-
-            //     detailForm.Controls.Add(lblDetail);
-            //     detailForm.ShowDialog();
-            // };
+            btnDetail.Click += (s, e) =>
+            {
+                // Open the ProductDetailsGUI form modally with the selected product
+                try
+                {
+                    using (var details = new ProductDetailsGUI(productDTO))
+                    {
+                        details.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi hiển thị chi tiết sản phẩm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
 
             // Sự kiện Sửa
-            // btnEdit.Click += (s, e) =>
-            // {
-            //     Form dialog = new Form()
-            //     {
-            //         Text = string.Empty, // bỏ tiêu đề
-            //         FormBorderStyle = FormBorderStyle.FixedDialog,
-            //         StartPosition = FormStartPosition.CenterParent,
-            //         Size = new Size(450, 450),
-            //         MaximizeBox = false,
-            //         MinimizeBox = false,
-            //         ShowInTaskbar = false
-            //     };
+            btnEdit.Click += (s, e) =>
+            {
+                var brands = LoadBrands();
+                var types = LoadTypes();
 
-            //     var editCourtGUI = new EditCourtGUI(courtDTO);
-            //     editCourtGUI.Dock = DockStyle.Fill;
+                Form dialog = new Form()
+                {
+                    Text = "Sửa sản phẩm",
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent,
+                    Size = new Size(600, 500),
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    ShowInTaskbar = false
+                };
 
-            //     dialog.Controls.Add(editCourtGUI);
+                var updateForm = new ProductUpdateGUI { 
+                    Dock = DockStyle.Fill
+                };
+                updateForm.LoadProduct(productDTO, brands, types);
 
-            //     dialog.ShowDialog();
+                dialog.Controls.Add(updateForm);
+                dialog.ShowDialog();
 
-            //     ReloadCourtList(); // reload danh sách sau khi đóng dialog
-            // };
-
+                // Sau khi đóng form sửa → reload danh sách
+                ReloadProductList();
+            };
 
             buttonPanel.Controls.Add(btnDetail);
             buttonPanel.Controls.Add(btnEdit);
@@ -282,6 +292,13 @@ namespace BadmintonCourtManagement.GUI
             panel.Controls.Add(tlProduct);
 
             return panel;
+        }
+        private void ReloadProductList()
+        {
+            ProductBUS productBus = new ProductBUS();
+            productList = productBus.GetAllProducts();
+            page = 0;
+            LoadProducts(productList);
         }
 
         // Pagination buttons
@@ -516,6 +533,52 @@ namespace BadmintonCourtManagement.GUI
 
             dialog.Controls.Add(insertForm);
             dialog.ShowDialog();
+        }
+
+        private void ProductGUI_Resize(object sender, EventArgs e)
+        {
+            int threshold = 1200; // Hide images when width < 800px
+            bool showImages = this.Width >= threshold && this.Height >= threshold-300;
+            
+            foreach (Control ctrl in pProductList.Controls)
+            {
+                if (ctrl is CustomPanel panel)
+                {
+                    foreach (Control child in panel.Controls)
+                    {
+                        if (child is TableLayoutPanel tlp)
+                        {
+                            if (tlp.RowStyles.Count >= 4)
+                            {
+                                if (showImages)
+                                {
+                                    // Show images - original layout
+                                    tlp.RowStyles[0].Height = 10F;  // ID row
+                                    tlp.RowStyles[1].Height = 65F;  // Image row
+                                    tlp.RowStyles[2].Height = 15F;  // Name row
+                                    tlp.RowStyles[3].Height = 10F;  // Button row
+                                }
+                                else
+                                {
+                                    // Hide images - collapse image row
+                                    tlp.RowStyles[0].Height = 20F;  // ID row (more space)
+                                    tlp.RowStyles[1].Height = 0F;   // Image row (hidden)
+                                    tlp.RowStyles[2].Height = 60F;  // Name row (more space)
+                                    tlp.RowStyles[3].Height = 20F;  // Button row (more space)
+                                }
+                            }
+                            foreach (Control innerCtrl in tlp.Controls)
+                            {
+                                if (innerCtrl is PictureBox pb)
+                                {
+                                    pb.Visible = showImages;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

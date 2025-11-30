@@ -1,180 +1,193 @@
+// FormCustomerGUI.Designer.cs
 namespace BadmintonCourtManagement.GUI
 {
     partial class FormCustomerGUI
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
-
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            Title = new Label();
-            lblCustomerName = new Label();
-            lblCustomerPhone = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            lblTitle = new Label();
+            label1 = new Label();
+            txtCustomerId = new TextBox();
+            label2 = new Label();
             txtCustomerName = new TextBox();
+            label3 = new Label();
             txtCustomerPhone = new TextBox();
-            btnAccept = new Button();
+            btnSave = new Button();
             btnCancel = new Button();
-            lblCustomerID = new Label();
-            CustomerID = new Label();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
-            // Title
+            // tableLayoutPanel1
             // 
-            Title.AutoSize = true;
-            Title.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Title.Location = new Point(59, -12);
-            Title.Margin = new Padding(4, 0, 4, 0);
-            Title.Name = "Title";
-            Title.Size = new Size(322, 56);
-            Title.TabIndex = 0;
-            Title.Text = "Thêm khách hàng";
-            Title.UseCompatibleTextRendering = true;
-            Title.Click += Title_Click;
+            tableLayoutPanel1.BackColor = Color.White;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 38F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62F));
+            tableLayoutPanel1.Controls.Add(lblTitle, 0, 0);
+            tableLayoutPanel1.Controls.Add(label1, 0, 1);
+            tableLayoutPanel1.Controls.Add(txtCustomerId, 1, 1);
+            tableLayoutPanel1.Controls.Add(label2, 0, 2);
+            tableLayoutPanel1.Controls.Add(txtCustomerName, 1, 2);
+            tableLayoutPanel1.Controls.Add(label3, 0, 3);
+            tableLayoutPanel1.Controls.Add(txtCustomerPhone, 1, 3);
+            tableLayoutPanel1.Controls.Add(btnSave, 0, 5);
+            tableLayoutPanel1.Controls.Add(btnCancel, 1, 5);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(10, 10);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new Padding(30, 20, 30, 30);
+            tableLayoutPanel1.RowCount = 6;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 90F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
+            tableLayoutPanel1.Size = new Size(530, 430);
+            tableLayoutPanel1.TabIndex = 0;
             // 
-            // lblCustomerName
+            // lblTitle
             // 
-            lblCustomerName.AutoSize = true;
-            lblCustomerName.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCustomerName.Location = new Point(-3, 144);
-            lblCustomerName.Margin = new Padding(4, 0, 4, 0);
-            lblCustomerName.Name = "lblCustomerName";
-            lblCustomerName.Size = new Size(214, 44);
-            lblCustomerName.TabIndex = 1;
-            lblCustomerName.Text = "Tên khách hàng";
-            lblCustomerName.UseCompatibleTextRendering = true;
+            lblTitle.AutoSize = true;
+            tableLayoutPanel1.SetColumnSpan(lblTitle, 2);
+            lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(30, 30, 30);
+            lblTitle.Location = new Point(30, 20);
+            lblTitle.Margin = new Padding(0);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(340, 45);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "THÊM KHÁCH HÀNG";
+            lblTitle.TextAlign = ContentAlignment.TopCenter;
             // 
-            // lblCustomerPhone
+            // label1
             // 
-            lblCustomerPhone.AutoSize = true;
-            lblCustomerPhone.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCustomerPhone.Location = new Point(4, 216);
-            lblCustomerPhone.Margin = new Padding(4, 0, 4, 0);
-            lblCustomerPhone.Name = "lblCustomerPhone";
-            lblCustomerPhone.Size = new Size(180, 44);
-            lblCustomerPhone.TabIndex = 2;
-            lblCustomerPhone.Text = "Số điện thoại";
-            lblCustomerPhone.UseCompatibleTextRendering = true;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label1.Location = new Point(33, 110);
+            label1.Name = "label1";
+            label1.Size = new Size(157, 28);
+            label1.TabIndex = 1;
+            label1.Text = "Mã khách hàng";
+            label1.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtCustomerId
+            // 
+            txtCustomerId.BackColor = Color.FromArgb(245, 245, 245);
+            txtCustomerId.Enabled = false;
+            txtCustomerId.Font = new Font("Segoe UI", 11F);
+            txtCustomerId.Location = new Point(211, 113);
+            txtCustomerId.Name = "txtCustomerId";
+            txtCustomerId.Size = new Size(167, 37);
+            txtCustomerId.TabIndex = 2;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label2.Location = new Point(33, 170);
+            label2.Name = "label2";
+            label2.Size = new Size(160, 28);
+            label2.TabIndex = 3;
+            label2.Text = "Tên khách hàng";
+            label2.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtCustomerName
             // 
-            txtCustomerName.Location = new Point(232, 154);
-            txtCustomerName.Margin = new Padding(4, 3, 4, 3);
-            txtCustomerName.Multiline = true;
+            txtCustomerName.Font = new Font("Segoe UI", 11F);
+            txtCustomerName.Location = new Point(211, 173);
             txtCustomerName.Name = "txtCustomerName";
-            txtCustomerName.Size = new Size(191, 34);
-            txtCustomerName.TabIndex = 3;
+            txtCustomerName.Size = new Size(167, 37);
+            txtCustomerName.TabIndex = 4;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label3.Location = new Point(33, 230);
+            label3.Name = "label3";
+            label3.Size = new Size(138, 28);
+            label3.TabIndex = 5;
+            label3.Text = "Số điện thoại";
+            label3.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtCustomerPhone
             // 
-            txtCustomerPhone.Location = new Point(232, 224);
-            txtCustomerPhone.Margin = new Padding(4, 3, 4, 3);
-            txtCustomerPhone.Multiline = true;
+            txtCustomerPhone.Font = new Font("Segoe UI", 11F);
+            txtCustomerPhone.Location = new Point(211, 233);
+            txtCustomerPhone.MaxLength = 11;
             txtCustomerPhone.Name = "txtCustomerPhone";
-            txtCustomerPhone.Size = new Size(191, 34);
-            txtCustomerPhone.TabIndex = 4;
+            txtCustomerPhone.Size = new Size(167, 37);
+            txtCustomerPhone.TabIndex = 6;
             // 
-            // btnAccept
+            // btnSave
             // 
-            btnAccept.BackColor = Color.IndianRed;
-            btnAccept.ForeColor = Color.White;
-            btnAccept.Location = new Point(60, 299);
-            btnAccept.Margin = new Padding(4, 3, 4, 3);
-            btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(133, 50);
-            btnAccept.TabIndex = 5;
-            btnAccept.Text = "Xác nhận";
-            btnAccept.UseVisualStyleBackColor = false;
-            btnAccept.Click += btnAccept_Click;
+            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnSave.BackColor = Color.FromArgb(0, 142, 123);
+            btnSave.Cursor = Cursors.Hand;
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(33, 323);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(172, 39);
+            btnSave.TabIndex = 7;
+            btnSave.Text = "Lưu";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // btnCancel
             // 
-            btnCancel.BackColor = Color.DimGray;
+            btnCancel.BackColor = Color.FromArgb(220, 53, 69);
+            btnCancel.Cursor = Cursors.Hand;
+            btnCancel.FlatAppearance.BorderSize = 0;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(247, 299);
-            btnCancel.Margin = new Padding(4, 3, 4, 3);
+            btnCancel.Location = new Point(211, 323);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(133, 50);
-            btnCancel.TabIndex = 6;
+            btnCancel.Size = new Size(167, 39);
+            btnCancel.TabIndex = 8;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
             // 
-            // lblCustomerID
-            // 
-            lblCustomerID.AutoSize = true;
-            lblCustomerID.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCustomerID.Location = new Point(0, 71);
-            lblCustomerID.Margin = new Padding(4, 0, 4, 0);
-            lblCustomerID.Name = "lblCustomerID";
-            lblCustomerID.Size = new Size(208, 44);
-            lblCustomerID.TabIndex = 7;
-            lblCustomerID.Text = "Mã khách hàng";
-            lblCustomerID.UseCompatibleTextRendering = true;
-            lblCustomerID.Click += lblCustomerID_Click;
-            // 
-            // CustomerID
-            // 
-            CustomerID.AutoSize = true;
-            CustomerID.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CustomerID.Location = new Point(232, 71);
-            CustomerID.Margin = new Padding(4, 0, 4, 0);
-            CustomerID.Name = "CustomerID";
-            CustomerID.Size = new Size(122, 44);
-            CustomerID.TabIndex = 8;
-            CustomerID.Text = "CUS0001";
-            CustomerID.UseCompatibleTextRendering = true;
-            // 
             // FormCustomerGUI
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(CustomerID);
-            Controls.Add(lblCustomerID);
-            Controls.Add(btnCancel);
-            Controls.Add(btnAccept);
-            Controls.Add(txtCustomerPhone);
-            Controls.Add(txtCustomerName);
-            Controls.Add(lblCustomerPhone);
-            Controls.Add(lblCustomerName);
-            Controls.Add(Title);
-            Margin = new Padding(4, 3, 4, 3);
+            BackColor = Color.White;
+            Controls.Add(tableLayoutPanel1);
+            Font = new Font("Segoe UI", 10F);
+            MinimumSize = new Size(550, 450);
             Name = "FormCustomerGUI";
-            Size = new Size(524, 638);
+            Padding = new Padding(10);
+            Size = new Size(550, 450);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
-        #endregion
-
-        private Label Title;
-        private Label lblCustomerName;
-        private Label lblCustomerPhone;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label lblTitle;
+        private Label label1;
+        private TextBox txtCustomerId;
+        private Label label2;
         private TextBox txtCustomerName;
+        private Label label3;
         private TextBox txtCustomerPhone;
-        private Button btnAccept;
+        private Button btnSave;
         private Button btnCancel;
-        private Label lblCustomerID;
-        private Label CustomerID;
     }
 }

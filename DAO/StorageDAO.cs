@@ -21,13 +21,8 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-<<<<<<< Updated upstream
-                cmd.Parameters.AddWithValue("@StorageID", storage.StorageId);
-                cmd.Parameters.AddWithValue("@ImportBillId", storage.ImportBillId);
-=======
                 cmd.Parameters.AddWithValue("@StorageId", storage.StorageId);
-                cmd.Parameters.AddWithValue("@ImportBillDetailId", storage.ImportBillDetailId);
->>>>>>> Stashed changes
+                cmd.Parameters.AddWithValue("@ImportBillId", storage.ImportBillId);
                 cmd.Parameters.AddWithValue("@ProductId", storage.ProductId);
                 cmd.Parameters.AddWithValue("@Quantity", storage.Quantity);
                 cmd.Parameters.AddWithValue("@Price", storage.Price);
@@ -167,7 +162,7 @@ namespace BadmintonCourtManagement.DAO
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@StorageID", storageId);
+                cmd.Parameters.AddWithValue("@StorageId", storageId);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
@@ -187,7 +182,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving storage by StorageID: " + ex.Message);
+                throw new Exception("Error retrieving storage by StorageId: " + ex.Message);
             }
             finally
             {

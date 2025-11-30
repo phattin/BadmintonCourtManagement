@@ -40,6 +40,37 @@ namespace BadmintonCourtManagement.DAO
             return supplier;
         }
 
+        // Lấy nhà cung cấp theo Email
+        public SupplierDTO GetSupplierByEmail(string email)
+        {
+            string query = "SELECT * FROM supplier WHERE Email = @Email AND IsDeleted = 0";
+            SupplierDTO supplier = null;
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Email", email);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    supplier = new SupplierDTO()
+                    {
+                        SupplierId = reader["SupplierId"].ToString(),
+                        SupplierName = reader["SupplierName"].ToString(),
+                        SupplierAddress = reader["Address"].ToString(),
+                        SupplierEmail = reader["Email"].ToString(),
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                    };
+                }
+                reader.Close();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return supplier;
+        }
+
         // Lấy tất cả nhà cung cấp chưa xóa
         public List<SupplierDTO> GetAllSuppliers()
         {
@@ -85,8 +116,8 @@ namespace BadmintonCourtManagement.DAO
                 {
                     list.Add(new SupplierDTO()
                     {
-                        SupplierId = reader["SipplierId"].ToString(),
-                        SupplierName = reader["Suppliername"].ToString(),
+                        SupplierId = reader["SupplierId"].ToString(),
+                        SupplierName = reader["SupplierName"].ToString(),
                         SupplierAddress = reader["Address"].ToString(),
                         SupplierEmail = reader["Email"].ToString(),
                         IsDeleted = Convert.ToInt32(reader["IsDeleted"])
@@ -104,12 +135,13 @@ namespace BadmintonCourtManagement.DAO
         // Insert
         public bool InsertSupplier(SupplierDTO supplier)
         {
-            string query = "INSERT INTO supplier (SupplierName, Address, Email, IsDeleted) VALUES (@SupplierName, @Address, @Email, 0)";
+            string query = "INSERT INTO supplier (SupplierId, SupplierName, Address, Email, IsDeleted) VALUES (@SupplierId, @SupplierName, @Address, @Email, 0)";
             int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@SupplierId", supplier.SupplierId);
                 cmd.Parameters.AddWithValue("@SupplierName", supplier.SupplierName);
                 cmd.Parameters.AddWithValue("@Address", supplier.SupplierAddress);
                 cmd.Parameters.AddWithValue("@Email", supplier.SupplierEmail);
@@ -125,7 +157,7 @@ namespace BadmintonCourtManagement.DAO
         // update
         public bool UpdateSupplier(SupplierDTO supplier)
         {
-            string query = "UPDATE supplier SET SupplierName=@SuplierName, Address=@Address, Email=@Email WHERE SupplierId=@SupplerId AND IsDeleted=0";
+            string query = "UPDATE supplier SET SupplierName=@SupplierName, Address=@Address, Email=@Email WHERE SupplierId=@SupplierId AND IsDeleted=0";
             int result = 0;
             try
             {
@@ -147,7 +179,7 @@ namespace BadmintonCourtManagement.DAO
         // delete
         public bool DeleteSupplier(string id)
         {
-            string query = "UPDATE supplier SET IsDeleted=1 WHERE Id=@Id AND IsDeleted=0";
+            string query = "UPDATE supplier SET IsDeleted=1 WHERE SupplierId=@SupplierId AND IsDeleted=0";
             int result = 0;
             try
             {

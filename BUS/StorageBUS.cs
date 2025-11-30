@@ -1,5 +1,7 @@
 ﻿using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
+using BUS.EF_Core;
+using DAO.EF_Core;
 using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ namespace BadmintonCourtManagement.BUS
 {
     public class StorageBUS
     {
-        private static StorageDAO dao = new StorageDAO();
+        private static StorageEF dao = new StorageEF();
 
         // data test
         private static List<StorageDTO> StorageList = new List<StorageDTO>();
@@ -45,18 +47,30 @@ namespace BadmintonCourtManagement.BUS
         {
             //return dao.GetStorageListByStorageId(id);
 
-            foreach (StorageDTO storage in StorageList)
-            {
-                if(storage.StorageId == id) return storage;
-            }
-            return null;
+            //foreach (StorageDTO storage in StorageList)
+            //{
+            //    if(storage.StorageId == id) return storage;
+            //}
+            //return null;
+
+            var entity = dao.GetById(id);
+            return entity == null ? null : StorageMapper.ToDTO(entity);
         }
+
+    
 
         public static List<StorageDTO> GetAllStorages()
         {
             //return dao.GetAllStorage();
 
-            return StorageBUS.StorageList;
+            //return StorageBUS.StorageList;
+
+            var entities = dao.GetAll();
+            var list = new List<StorageDTO>();
+            foreach (var item in entities)
+                list.Add(StorageMapper.ToDTO(item));
+
+            return list;
         }
 
         public static bool InsertStorage(StorageDTO storage)
@@ -68,13 +82,20 @@ namespace BadmintonCourtManagement.BUS
 
             //return dao.InsertStorage(storage);
 
-            var existing = StorageBUS.GetStorageById(storage.StorageId);
-            if(existing != null)
-            {
-                throw new Exception("Storage đã tồn tại");
-            }
-            StorageBUS.StorageList.Add(storage);
-            return true;
+            //var existing = StorageBUS.GetStorageById(storage.StorageId);
+            //if(existing != null)
+            //{
+            //    throw new Exception("Storage đã tồn tại");
+            //}
+            //StorageBUS.StorageList.Add(storage);
+            //return true;
+
+            var existing = dao.GetById(storage.StorageId);
+            if (existing != null)
+                throw new Exception("Storage đã tồn tại!");
+            var entity = StorageMapper.ToEntity(storage);
+            entity.CalcTotal();
+            return dao.Insert(entity);
         }
 
         public static bool UpdateStorage(StorageDTO storage)
@@ -85,16 +106,22 @@ namespace BadmintonCourtManagement.BUS
 
             //return dao.UpdateStorage(storage);
 
-            for(int i = 0; i < StorageList.Count; i++)
-            {
-                if (StorageList[i].StorageId == storage.StorageId)
-                {
-                    StorageList[i] = storage;
-                    return true;
-                }
-            }
+            //for(int i = 0; i < StorageList.Count; i++)
+            //{
+            //    if (StorageList[i].StorageId == storage.StorageId)
+            //    {
+            //        StorageList[i] = storage;
+            //        return true;
+            //    }
+            //}
+            //return false;
 
-            return false;
+            var existing = dao.GetById(storage.StorageId);
+            if (existing == null)
+                throw new Exception("Storage không tồn tại!");
+            var entity = StorageMapper.ToEntity(storage);
+            entity.CalcTotal();
+            return dao.Update(entity);
         }
 
         public static bool DeleteStorage(string id)
@@ -105,16 +132,17 @@ namespace BadmintonCourtManagement.BUS
 
             //return dao.DeleteStorage(id);
 
-            for (int i = 0; i < StorageList.Count; i++)
-            {
-                if (StorageList[i].StorageId == id)
-                {
-                    StorageList.Remove(StorageList[i]);
-                    return true;
-                }
-            }
+            //for (int i = 0; i < StorageList.Count; i++)
+            //{
+            //    if (StorageList[i].StorageId == id)
+            //    {
+            //        StorageList.Remove(StorageList[i]);
+            //        return true;
+            //    }
+            //}
+            //return false;
 
-            return false;
+            return dao.Delete(id);
         }
     }
 }

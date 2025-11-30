@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GUI.ComponentsGUI;
+using BadmintonCourtManagement.DTO;
+using BadmintonCourtManagement.BUS;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,35 +10,84 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 {
     public partial class SupplyProductInfo : UserControl
     {
+        // bus
+        private TypeProductBUS typeBus = new TypeProductBUS();
+        private BrandBUS brandBus = new BrandBUS();
+        private BillImportBUS billBus = new BillImportBUS();
+        // list
+        private List<BillImportDetailDTO> productListImported = new List<BillImportDetailDTO>();
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+        public event Action<BillImportDetailDTO, StorageDTO, bool> ProductImported;
+        private HashSet<string> generatedStorageIds = new HashSet<string>();
+
         public SupplyProductInfo()
         {
             InitializeComponent();
         }
 
+        public void SetProduct(ProductDTO product)
+        {
+            if (product == null) return;
+
+            // Example: set UI controls. Replace the control names below
+            // with the actual names in your designer for labels/textboxes.
+            // For example: lblProductId, lblProductName, lblPrice, lblCurrentStock, txtQuantity, etc.
+
+            // If those labels don't exist yet, create them in the Designer and name them accordingly.
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => SetProduct(product)));
+                return;
+            }
+
+            ProductID.Text = "Mã sản phẩm: " + product.ProductId;
+            ProductName.Text = "Tên sản phẩm: " + product.ProductName;
+            ProductType.Text = "Loại sản phẩm: " + typeBus.GetById(product.TypeId.ToString()).TypeProductName;
+            ProductBrand.Text = "Nhãn hàng: " + brandBus.GetById(product.BrandId.ToString()).BrandName;
+        }
+
+        private void price_TextChanged(object sender, EventArgs e)
+        {
+            updatedTotalPrice();
+        }
+
+        private void updatedTotalPrice()
+        {
+            if (double.TryParse(textBox1.Text, out double importPrice) &&
+                double.TryParse(QuantityBox.Text, out double quantity))
+            {
+                double totalPrice = importPrice * quantity;
+                textBox3.Text = totalPrice.ToString();
+            }
+            else
+            {
+                textBox3.Text = "0";
+            }
+        }
+
         private void buttonEnter(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
+            RoundedButton btn = sender as RoundedButton;
             if (btn != null)
             {
-                btn.BackColor = Color.FromArgb(60, 60, 60);
+                btn.BackgroundColor = Color.FromArgb(60, 60, 60);
             }
         }
 
         private void buttonLeave(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
+            RoundedButton btn = sender as RoundedButton;
             if (btn != null)
             {
-                btn.BackColor = Color.Black;
+                btn.BackgroundColor = Color.Black;
             }
         }
-<<<<<<< Updated upstream
-=======
 
         private void AddButton_Click(object sender, EventArgs e)
         {
@@ -193,6 +245,5 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             productListImported.RemoveAll(p => p.ProductId == product.ProductId);
             storageList.RemoveAll(s => s.ProductId == product.ProductId);
         }
->>>>>>> Stashed changes
     }
 }

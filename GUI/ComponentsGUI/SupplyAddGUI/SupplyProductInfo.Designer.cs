@@ -1,4 +1,6 @@
-﻿namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
+﻿using GUI.ComponentsGUI;
+
+namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 {
     partial class SupplyProductInfo
     {
@@ -28,13 +30,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             TitlePanel = new Panel();
             Title = new Label();
-            Body = new Panel();
-            SubBody = new Panel();
+            Body = new CustomPanel();
+            SubBody = new CustomPanel();
             ButtonPanel = new Panel();
-            AddButton = new Button();
-            InputPanel = new TableLayoutPanel();
+            AddButton = new RoundedButton();
+            InputPanel = new RoundedTableLayoutPanel();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
@@ -48,12 +51,14 @@
             ProductType = new Label();
             ProductName = new Label();
             ProductID = new Label();
+            errorProvider1 = new ErrorProvider(components);
             TitlePanel.SuspendLayout();
             Body.SuspendLayout();
             SubBody.SuspendLayout();
             ButtonPanel.SuspendLayout();
             InputPanel.SuspendLayout();
             InfoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // TitlePanel
@@ -81,6 +86,7 @@
             // Body
             // 
             Body.BackColor = Color.FromArgb(0, 120, 103);
+            Body.BorderRadius = 20;
             Body.Controls.Add(SubBody);
             Body.Dock = DockStyle.Top;
             Body.Location = new Point(0, 76);
@@ -93,6 +99,7 @@
             // SubBody
             // 
             SubBody.BackColor = Color.FromArgb(200, 250, 214);
+            SubBody.BorderRadius = 20;
             SubBody.Controls.Add(ButtonPanel);
             SubBody.Controls.Add(InputPanel);
             SubBody.Controls.Add(InfoPanel);
@@ -111,30 +118,38 @@
             ButtonPanel.Location = new Point(20, 481);
             ButtonPanel.Margin = new Padding(0);
             ButtonPanel.Name = "ButtonPanel";
-            ButtonPanel.Padding = new Padding(150, 4, 150, 4);
+            ButtonPanel.Padding = new Padding(180, 4, 180, 4);
             ButtonPanel.Size = new Size(726, 90);
             ButtonPanel.TabIndex = 2;
             // 
             // AddButton
             // 
             AddButton.BackColor = Color.Black;
+            AddButton.BackgroundColor = Color.Black;
+            AddButton.BorderColor = Color.PaleVioletRed;
+            AddButton.BorderRadius = 20;
+            AddButton.BorderSize = 0;
             AddButton.Cursor = Cursors.Hand;
             AddButton.Dock = DockStyle.Fill;
+            AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             AddButton.ForeColor = Color.White;
-            AddButton.Location = new Point(150, 4);
+            AddButton.Location = new Point(180, 4);
             AddButton.Margin = new Padding(0);
             AddButton.Name = "AddButton";
-            AddButton.Size = new Size(426, 82);
+            AddButton.Size = new Size(366, 82);
             AddButton.TabIndex = 0;
             AddButton.Text = "+ Thêm";
+            AddButton.TextColor = Color.White;
             AddButton.UseVisualStyleBackColor = false;
+            AddButton.Click += AddButton_Click;
             AddButton.MouseEnter += buttonEnter;
             AddButton.MouseLeave += buttonLeave;
             // 
             // InputPanel
             // 
             InputPanel.BackColor = Color.FromArgb(0, 120, 103);
+            InputPanel.BorderRadius = 20;
             InputPanel.ColumnCount = 2;
             InputPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.03303F));
             InputPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 66.9669647F));
@@ -165,6 +180,7 @@
             textBox3.Location = new Point(239, 201);
             textBox3.Margin = new Padding(0, 20, 25, 0);
             textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
             textBox3.Size = new Size(462, 34);
             textBox3.TabIndex = 10;
             // 
@@ -187,6 +203,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(462, 34);
             textBox1.TabIndex = 8;
+            textBox1.TextChanged += price_TextChanged;
             // 
             // ProductTotal
             // 
@@ -248,6 +265,7 @@
             QuantityBox.Margin = new Padding(0, 20, 25, 0);
             QuantityBox.Name = "QuantityBox";
             QuantityBox.Size = new Size(462, 34);
+            QuantityBox.TextChanged += price_TextChanged;
             QuantityBox.TabIndex = 7;
             // 
             // InfoPanel
@@ -279,7 +297,7 @@
             ProductBrand.Name = "ProductBrand";
             ProductBrand.Size = new Size(726, 56);
             ProductBrand.TabIndex = 3;
-            ProductBrand.Text = "Nhãn hàng: Nike";
+            ProductBrand.Text = "Nhãn hàng: ";
             ProductBrand.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductType
@@ -291,7 +309,7 @@
             ProductType.Name = "ProductType";
             ProductType.Size = new Size(726, 55);
             ProductType.TabIndex = 2;
-            ProductType.Text = "Loại sản phẩm: Giày dép";
+            ProductType.Text = "Loại sản phẩm: ";
             ProductType.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductName
@@ -303,7 +321,7 @@
             ProductName.Name = "ProductName";
             ProductName.Size = new Size(726, 55);
             ProductName.TabIndex = 1;
-            ProductName.Text = "Tên sản phẩm: Giày thể thao";
+            ProductName.Text = "Tên sản phẩm: ";
             ProductName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductID
@@ -315,8 +333,12 @@
             ProductID.Name = "ProductID";
             ProductID.Size = new Size(726, 55);
             ProductID.TabIndex = 0;
-            ProductID.Text = "Mã sản phẩm: SP0001";
+            ProductID.Text = "Mã sản phẩm: ";
             ProductID.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
             // 
             // SupplyProductInfo
             // 
@@ -336,6 +358,7 @@
             InputPanel.ResumeLayout(false);
             InputPanel.PerformLayout();
             InfoPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
         }
 
@@ -343,11 +366,11 @@
 
         private Panel TitlePanel;
         private Label Title;
-        private Panel Body;
-        private Panel SubBody;
+        private CustomPanel Body;
+        private CustomPanel SubBody;
         private TableLayoutPanel InfoPanel;
         private Label ProductID;
-        private TableLayoutPanel InputPanel;
+        private RoundedTableLayoutPanel InputPanel;
         private Label ProductBrand;
         private Label ProductType;
         private Label ProductName;
@@ -360,6 +383,7 @@
         private TextBox textBox3;
         private TextBox textBox2;
         private TextBox textBox1;
-        private Button AddButton;
+        private RoundedButton AddButton;
+        private ErrorProvider errorProvider1;
     }
 }

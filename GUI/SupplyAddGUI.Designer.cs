@@ -1,4 +1,5 @@
 ﻿using BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI;
+using GUI.ComponentsGUI;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -32,7 +33,7 @@ namespace BadmintonCourtManagement.GUI
         {
             MainPanel = new Panel();
             donePanel = new Panel();
-            done = new Button();
+            done = new RoundedButton();
             listDetailPanel = new SupplyDetails();
             productPanel = new TableLayoutPanel();
             listProductPanel = new SupplyProductList();
@@ -70,10 +71,10 @@ namespace BadmintonCourtManagement.GUI
             // 
             // done
             // 
-            done.BackColor = Color.Black;
+            done.BackgroundColor = Color.Black;
             done.Cursor = Cursors.Hand;
             done.Dock = DockStyle.Fill;
-            done.ForeColor = Color.White;
+            done.TextColor = Color.White;
             done.Location = new Point(500, 0);
             done.Margin = new Padding(0);
             done.Name = "done";
@@ -83,6 +84,7 @@ namespace BadmintonCourtManagement.GUI
             done.UseVisualStyleBackColor = false;
             done.MouseEnter += buttonEnter;
             done.MouseLeave += buttonLeave;
+            done.Click += Done_Click;
             // 
             // listDetailPanel
             // 
@@ -166,6 +168,6 @@ namespace BadmintonCourtManagement.GUI
         private Panel panel1;
         private ComponentsGUI.SupplyAddGUI.SupplyDetails listDetailPanel;
         private Panel donePanel;
-        private Button done;
+        private RoundedButton done;
     }
 }

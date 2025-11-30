@@ -1,4 +1,5 @@
-﻿using BadmintonCourtManagement.DTO;
+﻿using BadmintonCourtManagement.DAO;
+using BadmintonCourtManagement.DTO;
 using GUI.Utils;
 
 namespace BadmintonCourtManagement.GUI
@@ -22,7 +23,15 @@ namespace BadmintonCourtManagement.GUI
                 date.Text += " " + storage.CreatedAt.ToString("dd/MM/yyyy");
                 string activeIcon = Path.Combine(DefaultPath.ICON_IMG_PATH, "Active.png");
                 string inactiveIcon = Path.Combine(DefaultPath.ICON_IMG_PATH, "Inactive.png");
-                string productImg = Path.Combine(DefaultPath.PRODUCT_IMG_PATH, "Picture.png");
+
+                ProductDTO productDTO = new ProductDAO().GetProductById(storage.ProductId);
+                string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                string projectRoot = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\"));
+                string productImg = Path.Combine(projectRoot, "Img", "Product", productDTO.ProductImg);
+                if (!File.Exists(productImg))
+                {
+                    productImg = Path.Combine(projectRoot, "Img", "Product", "DefaultProductImage.jpg");
+                }
                 if (storage.Status == StorageDTO.Option.active && File.Exists(activeIcon))
                 {
                     status.Text += " đang hoạt động";
@@ -44,6 +53,11 @@ namespace BadmintonCourtManagement.GUI
                 MessageBox.Show("Lỗi xảy ra khi khởi tạo " + ex.Message
                     , "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void TitleText_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

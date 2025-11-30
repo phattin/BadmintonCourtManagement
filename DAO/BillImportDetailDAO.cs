@@ -54,7 +54,7 @@ namespace BadmintonCourtManagement.DAO
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
-                        Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
+                        Status = reader["Status"].ToString() == "active" ? BillImportDetailDTO.Option.active : BillImportDetailDTO.Option.inactive
                     };
                     billDetails.Add(bill);
                 }
@@ -90,7 +90,7 @@ namespace BadmintonCourtManagement.DAO
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
-                        Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
+                        Status = reader["Status"].ToString() == "active" ? BillImportDetailDTO.Option.active : BillImportDetailDTO.Option.inactive
                     });
                 }
                 reader.Close();
@@ -125,7 +125,7 @@ namespace BadmintonCourtManagement.DAO
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
                         TotalPrice = double.Parse(reader["TotalPrice"].ToString()),
-                        Status = reader["Status"].ToString() == "Paid" ? BillImportDetailDTO.Option.Paid : BillImportDetailDTO.Option.Unpaid
+                        Status = reader["Status"].ToString() == "active" ? BillImportDetailDTO.Option.active : BillImportDetailDTO.Option.inactive
                     });
                 }
                 reader.Close();

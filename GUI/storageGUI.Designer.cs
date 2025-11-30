@@ -1,4 +1,6 @@
-﻿namespace BadmintonCourtManagement.GUI
+﻿using GUI.ComponentsGUI;
+
+namespace BadmintonCourtManagement.GUI
 {
     partial class storageGUI
     {
@@ -36,8 +38,8 @@
             extraPreviousButton = new Button();
             nextButton = new Button();
             previousButton = new Button();
-            cardList = new TableLayoutPanel();
-            toolBar = new TableLayoutPanel();
+            cardList = new RoundedTableLayoutPanel();
+            toolBar = new RoundedTableLayoutPanel();
             Reset = new Button();
             endDate = new DateTimePicker();
             endText = new Label();
@@ -53,8 +55,8 @@
             supplyExtraPrevious = new Button();
             supplyNext = new Button();
             supplyPrevious = new Button();
-            supplyCardList = new TableLayoutPanel();
-            supplyToolBar = new TableLayoutPanel();
+            supplyCardList = new RoundedTableLayoutPanel();
+            supplyToolBar = new RoundedTableLayoutPanel();
             supplyReset = new Button();
             supplyEndDate = new DateTimePicker();
             supplyEndLabel = new Label();
@@ -64,7 +66,7 @@
             supplyFilter = new Button();
             supplyTitlePanel = new TableLayoutPanel();
             supplyTitle = new Label();
-            supplyAdd = new Button();
+            supplyAdd = new RoundedButton();
             tabPane.SuspendLayout();
             khoHangPage.SuspendLayout();
             pageButtonPanel.SuspendLayout();
@@ -101,6 +103,7 @@
             khoHangPage.Location = new Point(4, 40);
             khoHangPage.Margin = new Padding(0);
             khoHangPage.Name = "khoHangPage";
+            khoHangPage.Padding = new Padding(30, 0, 30, 0);
             khoHangPage.Size = new Size(1191, 759);
             khoHangPage.TabIndex = 0;
             khoHangPage.Text = "Kho hàng";
@@ -113,10 +116,10 @@
             pageButtonPanel.Controls.Add(nextButton);
             pageButtonPanel.Controls.Add(previousButton);
             pageButtonPanel.Dock = DockStyle.Bottom;
-            pageButtonPanel.Location = new Point(0, 678);
+            pageButtonPanel.Location = new Point(30, 678);
             pageButtonPanel.Margin = new Padding(0);
             pageButtonPanel.Name = "pageButtonPanel";
-            pageButtonPanel.Size = new Size(1191, 81);
+            pageButtonPanel.Size = new Size(1131, 81);
             pageButtonPanel.TabIndex = 3;
             // 
             // extraNextButton
@@ -127,7 +130,7 @@
             extraNextButton.FlatAppearance.BorderSize = 0;
             extraNextButton.FlatStyle = FlatStyle.Flat;
             extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
-            extraNextButton.Location = new Point(697, 13);
+            extraNextButton.Location = new Point(667, 13);
             extraNextButton.Margin = new Padding(2);
             extraNextButton.Name = "extraNextButton";
             extraNextButton.Size = new Size(60, 58);
@@ -145,7 +148,7 @@
             extraPreviousButton.FlatStyle = FlatStyle.Flat;
             extraPreviousButton.ForeColor = Color.Transparent;
             extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
-            extraPreviousButton.Location = new Point(433, 13);
+            extraPreviousButton.Location = new Point(403, 13);
             extraPreviousButton.Margin = new Padding(0);
             extraPreviousButton.Name = "extraPreviousButton";
             extraPreviousButton.Size = new Size(60, 58);
@@ -162,7 +165,7 @@
             nextButton.FlatAppearance.BorderSize = 0;
             nextButton.FlatStyle = FlatStyle.Flat;
             nextButton.Image = (Image)resources.GetObject("nextButton.Image");
-            nextButton.Location = new Point(607, 13);
+            nextButton.Location = new Point(577, 13);
             nextButton.Margin = new Padding(2);
             nextButton.Name = "nextButton";
             nextButton.Size = new Size(60, 58);
@@ -179,7 +182,7 @@
             previousButton.FlatAppearance.BorderSize = 0;
             previousButton.FlatStyle = FlatStyle.Flat;
             previousButton.Image = (Image)resources.GetObject("previousButton.Image");
-            previousButton.Location = new Point(523, 13);
+            previousButton.Location = new Point(493, 13);
             previousButton.Margin = new Padding(2);
             previousButton.Name = "previousButton";
             previousButton.Size = new Size(60, 58);
@@ -192,25 +195,26 @@
             // 
             cardList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cardList.BackColor = Color.FromArgb(239, 248, 230);
+            cardList.BorderRadius = 20;
             cardList.ColumnCount = 4;
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.Font = new Font("Segoe UI", 11F);
-            cardList.Location = new Point(0, 142);
+            cardList.Location = new Point(30, 142);
             cardList.Margin = new Padding(0);
             cardList.Name = "cardList";
             cardList.RowCount = 2;
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            cardList.Size = new Size(1191, 536);
+            cardList.Size = new Size(1131, 536);
             cardList.TabIndex = 2;
-            cardList.Paint += cardList_Paint;
             // 
             // toolBar
             // 
             toolBar.BackColor = Color.FromArgb(0, 120, 103);
+            toolBar.BorderRadius = 20;
             toolBar.ColumnCount = 7;
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.6420288F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.8735247F));
@@ -228,13 +232,13 @@
             toolBar.Controls.Add(filterButton, 5, 0);
             toolBar.Dock = DockStyle.Top;
             toolBar.Font = new Font("Segoe UI", 9F);
-            toolBar.Location = new Point(0, 57);
+            toolBar.Location = new Point(30, 57);
             toolBar.Margin = new Padding(0);
             toolBar.Name = "toolBar";
             toolBar.Padding = new Padding(8);
             toolBar.RowCount = 1;
             toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            toolBar.Size = new Size(1191, 85);
+            toolBar.Size = new Size(1131, 85);
             toolBar.TabIndex = 1;
             toolBar.Paint += tableLayoutPanel1_Paint;
             // 
@@ -246,10 +250,10 @@
             Reset.FlatAppearance.BorderSize = 0;
             Reset.FlatStyle = FlatStyle.Flat;
             Reset.Image = Properties.Resources.Reset;
-            Reset.Location = new Point(1081, 8);
+            Reset.Location = new Point(1027, 8);
             Reset.Margin = new Padding(0);
             Reset.Name = "Reset";
-            Reset.Size = new Size(102, 69);
+            Reset.Size = new Size(96, 69);
             Reset.TabIndex = 5;
             Reset.UseVisualStyleBackColor = false;
             Reset.Click += Reset_Click;
@@ -262,11 +266,11 @@
             endDate.DropDownAlign = LeftRightAlignment.Right;
             endDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             endDate.Format = DateTimePickerFormat.Custom;
-            endDate.Location = new Point(787, 23);
+            endDate.Location = new Point(747, 23);
             endDate.Margin = new Padding(0, 15, 8, 0);
             endDate.Name = "endDate";
             endDate.ShowUpDown = true;
-            endDate.Size = new Size(186, 39);
+            endDate.Size = new Size(177, 39);
             endDate.TabIndex = 3;
             // 
             // endText
@@ -275,10 +279,10 @@
             endText.Dock = DockStyle.Fill;
             endText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             endText.ForeColor = Color.White;
-            endText.Location = new Point(642, 8);
+            endText.Location = new Point(610, 8);
             endText.Margin = new Padding(8, 0, 0, 0);
             endText.Name = "endText";
-            endText.Size = new Size(145, 69);
+            endText.Size = new Size(137, 69);
             endText.TabIndex = 3;
             endText.Text = "Ngày kết thúc:";
             endText.TextAlign = ContentAlignment.MiddleCenter;
@@ -293,7 +297,7 @@
             searchBar.Margin = new Padding(0, 15, 8, 0);
             searchBar.Name = "searchBar";
             searchBar.PlaceholderText = "Tìm kiếm...";
-            searchBar.Size = new Size(279, 39);
+            searchBar.Size = new Size(265, 39);
             searchBar.TabIndex = 1;
             searchBar.TextChanged += textBox1_TextChanged;
             searchBar.KeyDown += searchEnterEvent;
@@ -306,12 +310,12 @@
             startDate.DropDownAlign = LeftRightAlignment.Right;
             startDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             startDate.Format = DateTimePickerFormat.Custom;
-            startDate.Location = new Point(445, 23);
+            startDate.Location = new Point(423, 23);
             startDate.Margin = new Padding(0, 15, 8, 0);
             startDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
             startDate.Name = "startDate";
             startDate.ShowUpDown = true;
-            startDate.Size = new Size(181, 39);
+            startDate.Size = new Size(171, 39);
             startDate.TabIndex = 2;
             startDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             startDate.ValueChanged += dateTimePicker1_ValueChanged;
@@ -322,10 +326,10 @@
             startText.Dock = DockStyle.Fill;
             startText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             startText.ForeColor = Color.White;
-            startText.Location = new Point(295, 8);
+            startText.Location = new Point(281, 8);
             startText.Margin = new Padding(0);
             startText.Name = "startText";
-            startText.Size = new Size(150, 69);
+            startText.Size = new Size(142, 69);
             startText.TabIndex = 2;
             startText.Text = "Ngày bắt đầu:";
             startText.TextAlign = ContentAlignment.MiddleCenter;
@@ -339,10 +343,10 @@
             filterButton.FlatAppearance.BorderSize = 0;
             filterButton.FlatStyle = FlatStyle.Flat;
             filterButton.Image = Properties.Resources.Filter;
-            filterButton.Location = new Point(981, 8);
+            filterButton.Location = new Point(932, 8);
             filterButton.Margin = new Padding(0);
             filterButton.Name = "filterButton";
-            filterButton.Size = new Size(100, 69);
+            filterButton.Size = new Size(95, 69);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
             filterButton.Click += filterButton_Click;
@@ -353,10 +357,10 @@
             // 
             titlePanel.Controls.Add(titleText);
             titlePanel.Dock = DockStyle.Top;
-            titlePanel.Location = new Point(0, 0);
-            titlePanel.Margin = new Padding(2);
+            titlePanel.Location = new Point(30, 0);
+            titlePanel.Margin = new Padding(0);
             titlePanel.Name = "titlePanel";
-            titlePanel.Size = new Size(1191, 57);
+            titlePanel.Size = new Size(1131, 57);
             titlePanel.TabIndex = 0;
             titlePanel.Paint += panel1_Paint;
             // 
@@ -367,7 +371,7 @@
             titleText.Location = new Point(0, 0);
             titleText.Margin = new Padding(0);
             titleText.Name = "titleText";
-            titleText.Size = new Size(1191, 57);
+            titleText.Size = new Size(1131, 57);
             titleText.TabIndex = 2;
             titleText.Text = "Kho hàng";
             titleText.TextAlign = ContentAlignment.MiddleLeft;
@@ -383,6 +387,7 @@
             nhapHangPage.Location = new Point(4, 40);
             nhapHangPage.Margin = new Padding(0);
             nhapHangPage.Name = "nhapHangPage";
+            nhapHangPage.Padding = new Padding(30, 0, 30, 0);
             nhapHangPage.Size = new Size(1191, 759);
             nhapHangPage.TabIndex = 1;
             nhapHangPage.Text = "Nhập hàng";
@@ -395,10 +400,10 @@
             supplyPagination.Controls.Add(supplyNext);
             supplyPagination.Controls.Add(supplyPrevious);
             supplyPagination.Dock = DockStyle.Bottom;
-            supplyPagination.Location = new Point(0, 678);
+            supplyPagination.Location = new Point(30, 678);
             supplyPagination.Margin = new Padding(0);
             supplyPagination.Name = "supplyPagination";
-            supplyPagination.Size = new Size(1191, 81);
+            supplyPagination.Size = new Size(1131, 81);
             supplyPagination.TabIndex = 4;
             // 
             // supplyExtraNext
@@ -409,13 +414,14 @@
             supplyExtraNext.FlatAppearance.BorderSize = 0;
             supplyExtraNext.FlatStyle = FlatStyle.Flat;
             supplyExtraNext.Image = (Image)resources.GetObject("supplyExtraNext.Image");
-            supplyExtraNext.Location = new Point(693, 12);
+            supplyExtraNext.Location = new Point(663, 12);
             supplyExtraNext.Margin = new Padding(2);
             supplyExtraNext.Name = "supplyExtraNext";
             supplyExtraNext.Size = new Size(60, 58);
             supplyExtraNext.TabIndex = 16;
             supplyExtraNext.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyExtraNext.UseVisualStyleBackColor = false;
+            supplyExtraNext.Click += supplyExtraNext_Click;
             // 
             // supplyExtraPrevious
             // 
@@ -426,13 +432,14 @@
             supplyExtraPrevious.FlatStyle = FlatStyle.Flat;
             supplyExtraPrevious.ForeColor = Color.Transparent;
             supplyExtraPrevious.Image = (Image)resources.GetObject("supplyExtraPrevious.Image");
-            supplyExtraPrevious.Location = new Point(435, 12);
+            supplyExtraPrevious.Location = new Point(405, 12);
             supplyExtraPrevious.Margin = new Padding(0);
             supplyExtraPrevious.Name = "supplyExtraPrevious";
             supplyExtraPrevious.Size = new Size(60, 58);
             supplyExtraPrevious.TabIndex = 13;
             supplyExtraPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyExtraPrevious.UseVisualStyleBackColor = false;
+            supplyExtraPrevious.Click += supplyExtraPrevious_Click;
             // 
             // supplyNext
             // 
@@ -442,13 +449,14 @@
             supplyNext.FlatAppearance.BorderSize = 0;
             supplyNext.FlatStyle = FlatStyle.Flat;
             supplyNext.Image = (Image)resources.GetObject("supplyNext.Image");
-            supplyNext.Location = new Point(607, 12);
+            supplyNext.Location = new Point(577, 12);
             supplyNext.Margin = new Padding(2);
             supplyNext.Name = "supplyNext";
             supplyNext.Size = new Size(60, 58);
             supplyNext.TabIndex = 15;
             supplyNext.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyNext.UseVisualStyleBackColor = false;
+            supplyNext.Click += supplyNext_Click;
             // 
             // supplyPrevious
             // 
@@ -458,37 +466,40 @@
             supplyPrevious.FlatAppearance.BorderSize = 0;
             supplyPrevious.FlatStyle = FlatStyle.Flat;
             supplyPrevious.Image = (Image)resources.GetObject("supplyPrevious.Image");
-            supplyPrevious.Location = new Point(521, 12);
+            supplyPrevious.Location = new Point(491, 12);
             supplyPrevious.Margin = new Padding(2);
             supplyPrevious.Name = "supplyPrevious";
             supplyPrevious.Size = new Size(60, 58);
             supplyPrevious.TabIndex = 14;
             supplyPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyPrevious.UseVisualStyleBackColor = false;
+            supplyPrevious.Click += supplyPrevious_Click;
             // 
             // supplyCardList
             // 
             supplyCardList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             supplyCardList.AutoScroll = true;
             supplyCardList.BackColor = Color.FromArgb(239, 248, 230);
+            supplyCardList.BorderRadius = 20;
             supplyCardList.ColumnCount = 4;
             supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             supplyCardList.Font = new Font("Segoe UI", 11F);
-            supplyCardList.Location = new Point(0, 142);
+            supplyCardList.Location = new Point(30, 142);
             supplyCardList.Margin = new Padding(0);
             supplyCardList.Name = "supplyCardList";
             supplyCardList.RowCount = 2;
             supplyCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             supplyCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            supplyCardList.Size = new Size(1191, 536);
+            supplyCardList.Size = new Size(1131, 536);
             supplyCardList.TabIndex = 3;
             // 
             // supplyToolBar
             // 
             supplyToolBar.BackColor = Color.FromArgb(0, 120, 103);
+            supplyToolBar.BorderRadius = 20;
             supplyToolBar.ColumnCount = 7;
             supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.5029163F));
             supplyToolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.8008471F));
@@ -506,14 +517,14 @@
             supplyToolBar.Controls.Add(supplyFilter, 5, 0);
             supplyToolBar.Dock = DockStyle.Top;
             supplyToolBar.Font = new Font("Segoe UI", 9F);
-            supplyToolBar.Location = new Point(0, 54);
+            supplyToolBar.Location = new Point(30, 54);
             supplyToolBar.Margin = new Padding(0);
             supplyToolBar.Name = "supplyToolBar";
             supplyToolBar.Padding = new Padding(8);
             supplyToolBar.RowCount = 1;
             supplyToolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             supplyToolBar.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            supplyToolBar.Size = new Size(1191, 88);
+            supplyToolBar.Size = new Size(1131, 88);
             supplyToolBar.TabIndex = 2;
             // 
             // supplyReset
@@ -524,12 +535,13 @@
             supplyReset.FlatAppearance.BorderSize = 0;
             supplyReset.FlatStyle = FlatStyle.Flat;
             supplyReset.Image = Properties.Resources.Reset;
-            supplyReset.Location = new Point(1081, 8);
+            supplyReset.Location = new Point(1027, 8);
             supplyReset.Margin = new Padding(0);
             supplyReset.Name = "supplyReset";
-            supplyReset.Size = new Size(102, 72);
+            supplyReset.Size = new Size(96, 72);
             supplyReset.TabIndex = 5;
             supplyReset.UseVisualStyleBackColor = false;
+            supplyReset.Click += supplyReset_Click;
             supplyReset.MouseEnter += filterButton_MouseEnter;
             supplyReset.MouseHover += filterButton_MouseLeave;
             // 
@@ -541,11 +553,11 @@
             supplyEndDate.DropDownAlign = LeftRightAlignment.Right;
             supplyEndDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyEndDate.Format = DateTimePickerFormat.Custom;
-            supplyEndDate.Location = new Point(787, 23);
+            supplyEndDate.Location = new Point(747, 23);
             supplyEndDate.Margin = new Padding(0, 15, 8, 0);
             supplyEndDate.Name = "supplyEndDate";
             supplyEndDate.ShowUpDown = true;
-            supplyEndDate.Size = new Size(186, 39);
+            supplyEndDate.Size = new Size(177, 39);
             supplyEndDate.TabIndex = 3;
             // 
             // supplyEndLabel
@@ -554,10 +566,10 @@
             supplyEndLabel.Dock = DockStyle.Fill;
             supplyEndLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyEndLabel.ForeColor = Color.White;
-            supplyEndLabel.Location = new Point(642, 8);
+            supplyEndLabel.Location = new Point(610, 8);
             supplyEndLabel.Margin = new Padding(8, 0, 0, 0);
             supplyEndLabel.Name = "supplyEndLabel";
-            supplyEndLabel.Size = new Size(145, 72);
+            supplyEndLabel.Size = new Size(137, 72);
             supplyEndLabel.TabIndex = 3;
             supplyEndLabel.Text = "Ngày kết thúc:";
             supplyEndLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -571,8 +583,9 @@
             supplySearchBar.Margin = new Padding(0, 15, 8, 0);
             supplySearchBar.Name = "supplySearchBar";
             supplySearchBar.PlaceholderText = "Tìm kiếm...";
-            supplySearchBar.Size = new Size(279, 39);
+            supplySearchBar.Size = new Size(265, 39);
             supplySearchBar.TabIndex = 1;
+            supplySearchBar.KeyDown += supplySearchEnterEvent;
             // 
             // supplyStartDate
             // 
@@ -582,12 +595,12 @@
             supplyStartDate.DropDownAlign = LeftRightAlignment.Right;
             supplyStartDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyStartDate.Format = DateTimePickerFormat.Custom;
-            supplyStartDate.Location = new Point(445, 23);
+            supplyStartDate.Location = new Point(423, 23);
             supplyStartDate.Margin = new Padding(0, 15, 8, 0);
             supplyStartDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
             supplyStartDate.Name = "supplyStartDate";
             supplyStartDate.ShowUpDown = true;
-            supplyStartDate.Size = new Size(181, 39);
+            supplyStartDate.Size = new Size(171, 39);
             supplyStartDate.TabIndex = 2;
             supplyStartDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             // 
@@ -597,10 +610,10 @@
             supplyStartLabel.Dock = DockStyle.Fill;
             supplyStartLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyStartLabel.ForeColor = Color.White;
-            supplyStartLabel.Location = new Point(295, 8);
+            supplyStartLabel.Location = new Point(281, 8);
             supplyStartLabel.Margin = new Padding(0);
             supplyStartLabel.Name = "supplyStartLabel";
-            supplyStartLabel.Size = new Size(150, 72);
+            supplyStartLabel.Size = new Size(142, 72);
             supplyStartLabel.TabIndex = 2;
             supplyStartLabel.Text = "Ngày bắt đầu:";
             supplyStartLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -613,12 +626,13 @@
             supplyFilter.FlatAppearance.BorderSize = 0;
             supplyFilter.FlatStyle = FlatStyle.Flat;
             supplyFilter.Image = Properties.Resources.Filter;
-            supplyFilter.Location = new Point(981, 8);
+            supplyFilter.Location = new Point(932, 8);
             supplyFilter.Margin = new Padding(0);
             supplyFilter.Name = "supplyFilter";
-            supplyFilter.Size = new Size(100, 72);
+            supplyFilter.Size = new Size(95, 72);
             supplyFilter.TabIndex = 4;
             supplyFilter.UseVisualStyleBackColor = false;
+            supplyFilter.Click += supplyFilter_Click;
             supplyFilter.MouseEnter += filterButton_MouseEnter;
             supplyFilter.MouseHover += filterButton_MouseLeave;
             // 
@@ -630,23 +644,24 @@
             supplyTitlePanel.Controls.Add(supplyTitle, 0, 0);
             supplyTitlePanel.Controls.Add(supplyAdd, 1, 0);
             supplyTitlePanel.Dock = DockStyle.Top;
-            supplyTitlePanel.Location = new Point(0, 0);
+            supplyTitlePanel.Location = new Point(30, 0);
             supplyTitlePanel.Margin = new Padding(0);
             supplyTitlePanel.Name = "supplyTitlePanel";
+            supplyTitlePanel.Padding = new Padding(0, 4, 0, 4);
             supplyTitlePanel.RowCount = 1;
             supplyTitlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             supplyTitlePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            supplyTitlePanel.Size = new Size(1191, 54);
+            supplyTitlePanel.Size = new Size(1131, 54);
             supplyTitlePanel.TabIndex = 5;
             // 
             // supplyTitle
             // 
             supplyTitle.Dock = DockStyle.Fill;
             supplyTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            supplyTitle.Location = new Point(0, 0);
+            supplyTitle.Location = new Point(0, 4);
             supplyTitle.Margin = new Padding(0);
             supplyTitle.Name = "supplyTitle";
-            supplyTitle.Size = new Size(595, 54);
+            supplyTitle.Size = new Size(565, 46);
             supplyTitle.TabIndex = 3;
             supplyTitle.Text = "Nhập hàng";
             supplyTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -655,17 +670,23 @@
             // 
             supplyAdd.AutoSize = true;
             supplyAdd.BackColor = Color.Black;
+            supplyAdd.BackgroundColor = Color.Black;
+            supplyAdd.BorderColor = Color.PaleVioletRed;
+            supplyAdd.BorderRadius = 20;
+            supplyAdd.BorderSize = 0;
             supplyAdd.Cursor = Cursors.Hand;
             supplyAdd.Dock = DockStyle.Right;
+            supplyAdd.FlatStyle = FlatStyle.Flat;
             supplyAdd.ForeColor = Color.White;
-            supplyAdd.Location = new Point(1059, 0);
+            supplyAdd.Location = new Point(999, 4);
             supplyAdd.Margin = new Padding(0, 0, 10, 0);
             supplyAdd.Name = "supplyAdd";
-            supplyAdd.Size = new Size(122, 54);
+            supplyAdd.Size = new Size(122, 46);
             supplyAdd.TabIndex = 4;
             supplyAdd.Text = "+ Thêm";
+            supplyAdd.TextColor = Color.White;
             supplyAdd.UseVisualStyleBackColor = false;
-            supplyAdd.Click += AddButton_Click;
+            supplyAdd.Click += supplyAdd_Click;
             supplyAdd.MouseEnter += buttonEnter;
             supplyAdd.MouseLeave += buttonLeave;
             // 
@@ -701,12 +722,12 @@
         private TabControl tabPane;
         private TabPage khoHangPage;
         private TabPage nhapHangPage;
-        private TableLayoutPanel toolBar;
+        private RoundedTableLayoutPanel toolBar;
         private DateTimePicker startDate;
         private Label startText;
         private Label endText;
         private DateTimePicker endDate;
-        private TableLayoutPanel cardList;
+        private RoundedTableLayoutPanel cardList;
         private Panel titlePanel;
         private Label titleText;
         private Panel pageButtonPanel;
@@ -717,8 +738,8 @@
         private Button filterButton;
         private Button Reset;
         private TextBox searchBar;
-        private TableLayoutPanel supplyCardList;
-        private TableLayoutPanel supplyToolBar;
+        private RoundedTableLayoutPanel supplyCardList;
+        private RoundedTableLayoutPanel supplyToolBar;
         private Button supplyReset;
         private DateTimePicker supplyEndDate;
         private Label supplyEndLabel;
@@ -733,6 +754,6 @@
         private Button supplyPrevious;
         private TableLayoutPanel supplyTitlePanel;
         private Label supplyTitle;
-        private Button supplyAdd;
+        private RoundedButton supplyAdd;
     }
 }

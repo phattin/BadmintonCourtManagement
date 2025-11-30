@@ -16,7 +16,7 @@ namespace BadmintonCourtManagement.DAO
         public List<EmployeeDTO> GetAllEmployees()
         {
             List<EmployeeDTO> list = new List<EmployeeDTO>();
-            string query = "SELECT * FROM employee";
+            string query = "SELECT EmployeeId, EmployeeName, Phone, Address, RoleId FROM employee";
 
             try
             {
@@ -26,14 +26,14 @@ namespace BadmintonCourtManagement.DAO
 
                 while (reader.Read())
                 {
-                    EmployeeDTO employee = new EmployeeDTO
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    var employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
-                        EmployeePhone = reader["Phone"].ToString(),
+                        EmployeePhone = reader["Phone"].ToString().Trim(),
                         Address = reader["Address"].ToString(),
-                        Username = reader["Username"].ToString(),
-                        RoleId = reader["RoleID"].ToString()
+                        RoleId = reader["RoleId"].ToString()
                     };
                     list.Add(employee);
                 }
@@ -42,7 +42,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("Lỗi khi lấy danh sách nhân viên: " + ex.Message);
+                //throw new Exception("Loi GetAllEmployees: " + ex.Message, ex);
             }
             finally
             {
@@ -54,7 +54,7 @@ namespace BadmintonCourtManagement.DAO
 
         public EmployeeDTO GetEmployeeById(string id)
         {
-            string query = "SELECT * FROM employee WHERE EmployeeId = @EmployeeId";
+            string query = "SELECT EmployeeId, EmployeeName, Phone, Address, RoleId FROM employee WHERE EmployeeId = @EmployeeId";
             EmployeeDTO employee = null;
 
             try
@@ -66,14 +66,14 @@ namespace BadmintonCourtManagement.DAO
 
                 if (reader.Read())
                 {
+                    var phoneValue = reader["Phone"].ToString().Trim();
                     employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
-                        EmployeePhone = reader["Phone"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
-                        Username = reader["Username"].ToString(),
-                        RoleId = reader["RoleID"].ToString()
+                        RoleId = reader["RoleId"].ToString()
                     };
                 }
 
@@ -91,12 +91,50 @@ namespace BadmintonCourtManagement.DAO
             return employee;
         }
 
+        public EmployeeDTO GetEmployeeByUsername(string username)
+        {
+            string query = "SELECT employee.EmployeeId, EmployeeName, Phone, Address, RoleId FROM employee join account on employee.EmployeeId = account.EmployeeId WHERE account.Username = @Username";
+            EmployeeDTO employee = null;
+
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    employee = new EmployeeDTO
+                    {
+                        EmployeeId = reader["EmployeeId"].ToString(),
+                        EmployeeName = reader["EmployeeName"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
+                        Address = reader["Address"].ToString(),
+                        RoleId = reader["RoleId"].ToString()
+                    };
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Lỗi khi lấy thông tin nhân viên: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return employee;
+        }
 
         // 🔹 Thêm nhân viên mới
         public bool InsertEmployee(EmployeeDTO employee)
         {
-            string query = "INSERT INTO employee (EmployeeId, EmployeeName, Phone, Address, Username, RoleID) " +
-                           "VALUES (@EmployeeId, @EmployeeName, @Phone, @Address, @Username, @RoleID)";
+            string query = "INSERT INTO employee (EmployeeId, EmployeeName, Phone, Address, RoleID) " +
+                           "VALUES (@EmployeeId, @EmployeeName, @Phone, @Address, @RoleId)";
 
             try
             {
@@ -106,8 +144,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
                 cmd.Parameters.AddWithValue("@Phone", employee.EmployeePhone);
                 cmd.Parameters.AddWithValue("@Address", employee.Address);
-                cmd.Parameters.AddWithValue("@Username", employee.Username);
-                cmd.Parameters.AddWithValue("@RoleID", employee.RoleId);
+                cmd.Parameters.AddWithValue("@RoleId", employee.RoleId);
 
                 return cmd.ExecuteNonQuery() > 0;
             }
@@ -125,8 +162,7 @@ namespace BadmintonCourtManagement.DAO
         // 🔹 Cập nhật nhân viên
         public bool UpdateEmployee(EmployeeDTO employee)
         {
-            string query = "UPDATE employee SET EmployeeName = @EmployeeName, Phone = @Phone, Address = @Address, " +
-                           "Username = @Username, RoleID = @RoleID WHERE EmployeeId = @EmployeeId";
+            string query = "UPDATE employee SET EmployeeName = @EmployeeName, Phone = @Phone, Address = @Address, RoleId = @RoleId WHERE EmployeeId = @EmployeeId";
 
             try
             {
@@ -136,8 +172,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
                 cmd.Parameters.AddWithValue("@Phone", employee.EmployeePhone);
                 cmd.Parameters.AddWithValue("@Address", employee.Address);
-                cmd.Parameters.AddWithValue("@Username", employee.Username);
-                cmd.Parameters.AddWithValue("@RoleID", employee.RoleId);
+                cmd.Parameters.AddWithValue("@RoleId", employee.RoleId);
 
                 return cmd.ExecuteNonQuery() > 0;
             }
@@ -180,8 +215,11 @@ namespace BadmintonCourtManagement.DAO
         public List<EmployeeDTO> Search(string keyword)
         {
             List<EmployeeDTO> list = new List<EmployeeDTO>();
-            string query = "SELECT * FROM employee WHERE EmployeeId LIKE @keyword OR EmployeeName LIKE @keyword";
-
+            string query = @"SELECT * FROM employee 
+                 WHERE EmployeeId   LIKE @keyword
+                    OR EmployeeName LIKE @keyword
+                    OR Phone        LIKE @keyword
+                    OR Address      LIKE @keyword";
             try
             {
                 db.OpenConnection();
@@ -191,14 +229,14 @@ namespace BadmintonCourtManagement.DAO
 
                 while (reader.Read())
                 {
-                    EmployeeDTO employee = new EmployeeDTO
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    var employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
-                        EmployeePhone = reader["Phone"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
-                        Username = reader["Username"].ToString(),
-                        RoleId = reader["RoleID"].ToString()
+                        RoleId = reader["RoleId"].ToString()
                     };
                     list.Add(employee);
                 }

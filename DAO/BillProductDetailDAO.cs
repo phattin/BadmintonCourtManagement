@@ -10,7 +10,7 @@ namespace BadmintonCourtManagement.DAO
         // create
         public bool InsertBillProductDetail(BillProductDetailDTO bill)
         {
-            string query = "INSERT INTO billimportproductdetail (BillProductId, ProductId, Quantity, Price, TotalPrice) VALUES (@BillProductId, @ProductId, @Quantity, @Price, @TotalPrice)";
+            string query = "INSERT INTO billproductdetail(BillProductId, ProductId, Quantity, Price, TotalPrice) VALUES (@BillProductId, @ProductId, @Quantity, @Price, @TotalPrice)";
             int result = 0;
             try
             {

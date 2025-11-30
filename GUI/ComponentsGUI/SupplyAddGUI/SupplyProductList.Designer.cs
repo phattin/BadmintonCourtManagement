@@ -1,4 +1,6 @@
-﻿namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
+﻿using GUI.ComponentsGUI;
+
+namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
 {
     partial class SupplyProductList
     {
@@ -30,16 +32,16 @@
         {
             TitlePanel = new Panel();
             Title = new Label();
-            toolBar = new TableLayoutPanel();
+            toolBar = new RoundedTableLayoutPanel();
             searchBar = new TextBox();
             filterButton = new Button();
-            CardListPanel = new TableLayoutPanel();
-            cardPanel = new TableLayoutPanel();
+            CardListPanel = new RoundedTableLayoutPanel();
+            cardPanel = new RoundedTableLayoutPanel();
             picture = new PictureBox();
             infoPanel = new TableLayoutPanel();
             productID = new Label();
             importDetailID = new Label();
-            delete = new Button();
+            delete = new RoundedButton();
             TitlePanel.SuspendLayout();
             toolBar.SuspendLayout();
             CardListPanel.SuspendLayout();
@@ -55,7 +57,7 @@
             TitlePanel.Location = new Point(0, 0);
             TitlePanel.Margin = new Padding(0);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(702, 80);
+            TitlePanel.Size = new Size(597, 80);
             TitlePanel.TabIndex = 1;
             // 
             // Title
@@ -65,7 +67,7 @@
             Title.Location = new Point(0, 0);
             Title.Margin = new Padding(4, 0, 4, 0);
             Title.Name = "Title";
-            Title.Size = new Size(702, 80);
+            Title.Size = new Size(597, 80);
             Title.TabIndex = 0;
             Title.Text = "Danh sách sản phẩm";
             Title.TextAlign = ContentAlignment.MiddleLeft;
@@ -73,6 +75,7 @@
             // toolBar
             // 
             toolBar.BackColor = Color.FromArgb(0, 120, 103);
+            toolBar.BorderRadius = 20;
             toolBar.ColumnCount = 2;
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 88.27107F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.7289314F));
@@ -81,7 +84,8 @@
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             toolBar.Controls.Add(searchBar, 0, 0);
-            toolBar.Controls.Add(filterButton, 1, 0);
+            // Hide filter button from toolbar for this component
+            // toolBar.Controls.Add(filterButton, 1, 0);
             toolBar.Dock = DockStyle.Top;
             toolBar.Location = new Point(0, 80);
             toolBar.Margin = new Padding(0);
@@ -89,7 +93,7 @@
             toolBar.Padding = new Padding(12, 13, 12, 13);
             toolBar.RowCount = 1;
             toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            toolBar.Size = new Size(702, 86);
+            toolBar.Size = new Size(597, 86);
             toolBar.TabIndex = 4;
             // 
             // searchBar
@@ -101,7 +105,7 @@
             searchBar.Margin = new Padding(0, 15, 0, 0);
             searchBar.Name = "searchBar";
             searchBar.PlaceholderText = "Tìm kiếm...";
-            searchBar.Size = new Size(598, 34);
+            searchBar.Size = new Size(505, 34);
             searchBar.TabIndex = 1;
             // 
             // filterButton
@@ -112,19 +116,22 @@
             filterButton.FlatAppearance.BorderSize = 0;
             filterButton.FlatStyle = FlatStyle.Flat;
             filterButton.Image = Properties.Resources.Filter;
-            filterButton.Location = new Point(610, 13);
+            filterButton.Location = new Point(517, 13);
             filterButton.Margin = new Padding(0);
             filterButton.Name = "filterButton";
-            filterButton.Size = new Size(80, 60);
+            filterButton.Size = new Size(68, 60);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
-            filterButton.MouseEnter += FilterButton_MouseEnter;
-            filterButton.MouseLeave += FilterButton_MouseLeave;
+            // Hide filter button entirely
+            filterButton.Visible = false;
+            // Wire Enter key to trigger search
+            searchBar.KeyDown += searchBar_KeyDown;
             // 
-            // CardListPanel
+            // CardListPanel (panel to store product cards)
             // 
             CardListPanel.AutoSize = true;
             CardListPanel.BackColor = Color.FromArgb(239, 248, 230);
+            CardListPanel.BorderRadius = 20;
             CardListPanel.ColumnCount = 1;
             CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             CardListPanel.Controls.Add(cardPanel, 0, 0);
@@ -139,15 +146,13 @@
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.Size = new Size(702, 1554);
+            CardListPanel.Size = new Size(597, 1554);
             CardListPanel.TabIndex = 5;
             // 
-            // cardPanel
+            // cardPanel (product card)
             // 
             cardPanel.BackColor = Color.FromArgb(200, 250, 214);
+            cardPanel.BorderRadius = 20;
             cardPanel.ColumnCount = 3;
             cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.0044861F));
             cardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 49.5035477F));
@@ -163,7 +168,7 @@
             cardPanel.RowCount = 1;
             cardPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             cardPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            cardPanel.Size = new Size(662, 219);
+            cardPanel.Size = new Size(557, 219);
             cardPanel.TabIndex = 0;
             // 
             // picture
@@ -173,7 +178,7 @@
             picture.Location = new Point(10, 10);
             picture.Margin = new Padding(0, 0, 40, 0);
             picture.Name = "picture";
-            picture.Size = new Size(171, 199);
+            picture.Size = new Size(137, 199);
             picture.SizeMode = PictureBoxSizeMode.StretchImage;
             picture.TabIndex = 0;
             picture.TabStop = false;
@@ -185,7 +190,7 @@
             infoPanel.Controls.Add(productID, 0, 1);
             infoPanel.Controls.Add(importDetailID, 0, 0);
             infoPanel.Dock = DockStyle.Fill;
-            infoPanel.Location = new Point(221, 10);
+            infoPanel.Location = new Point(187, 10);
             infoPanel.Margin = new Padding(0);
             infoPanel.Name = "infoPanel";
             infoPanel.RowCount = 2;
@@ -194,7 +199,7 @@
             infoPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             infoPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             infoPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            infoPanel.Size = new Size(317, 199);
+            infoPanel.Size = new Size(265, 199);
             infoPanel.TabIndex = 1;
             // 
             // productID
@@ -204,7 +209,7 @@
             productID.Location = new Point(0, 99);
             productID.Margin = new Padding(0);
             productID.Name = "productID";
-            productID.Size = new Size(317, 100);
+            productID.Size = new Size(265, 100);
             productID.TabIndex = 5;
             productID.Text = "Tên sản phẩm:";
             productID.TextAlign = ContentAlignment.MiddleLeft;
@@ -216,7 +221,7 @@
             importDetailID.Location = new Point(0, 0);
             importDetailID.Margin = new Padding(0);
             importDetailID.Name = "importDetailID";
-            importDetailID.Size = new Size(317, 99);
+            importDetailID.Size = new Size(265, 99);
             importDetailID.TabIndex = 0;
             importDetailID.Text = "Mã sản phẩm:";
             importDetailID.TextAlign = ContentAlignment.MiddleLeft;
@@ -224,17 +229,23 @@
             // delete
             // 
             delete.BackColor = Color.Black;
+            delete.BackgroundColor = Color.Black;
+            delete.BorderColor = Color.PaleVioletRed;
+            delete.BorderRadius = 20;
+            delete.BorderSize = 0;
+            delete.Cursor = Cursors.Hand;
             delete.Dock = DockStyle.Fill;
             delete.FlatAppearance.BorderSize = 0;
             delete.FlatStyle = FlatStyle.Flat;
             delete.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             delete.ForeColor = Color.White;
-            delete.Location = new Point(548, 70);
+            delete.Location = new Point(462, 70);
             delete.Margin = new Padding(10, 60, 10, 60);
             delete.Name = "delete";
-            delete.Size = new Size(94, 79);
+            delete.Size = new Size(75, 79);
             delete.TabIndex = 2;
             delete.Text = "Thêm";
+            delete.TextColor = Color.White;
             delete.UseVisualStyleBackColor = false;
             delete.MouseEnter += buttonEnter;
             delete.MouseLeave += buttonLeave;
@@ -250,7 +261,7 @@
             Font = new Font("Roboto Medium", 34.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Margin = new Padding(0);
             Name = "SupplyProductList";
-            Size = new Size(702, 1021);
+            Size = new Size(597, 1021);
             TitlePanel.ResumeLayout(false);
             toolBar.ResumeLayout(false);
             toolBar.PerformLayout();
@@ -266,15 +277,15 @@
 
         private Panel TitlePanel;
         private Label Title;
-        private TableLayoutPanel toolBar;
+        private RoundedTableLayoutPanel toolBar;
         private TextBox searchBar;
         private Button filterButton;
-        private TableLayoutPanel CardListPanel;
-        private TableLayoutPanel cardPanel;
+        private RoundedTableLayoutPanel CardListPanel;
+        private RoundedTableLayoutPanel cardPanel;
         private PictureBox picture;
         private TableLayoutPanel infoPanel;
         private Label productID;
         private Label importDetailID;
-        private Button delete;
+        private RoundedButton delete;
     }
 }
