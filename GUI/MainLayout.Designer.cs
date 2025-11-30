@@ -24,20 +24,21 @@
             // menuPanel
             // 
             menuPanel.AutoScroll = true;
-            menuPanel.BackColor = Color.FromArgb(239, 248, 230);
+            menuPanel.BackColor = Color.FromArgb(229, 228, 226);
             menuPanel.Dock = DockStyle.Left;
             menuPanel.Location = new Point(0, 0);
             menuPanel.Name = "menuPanel";
-            menuPanel.Size = new Size(200, 719);
+            menuPanel.Size = new Size(279, 719);
             menuPanel.TabIndex = 1;
+            menuPanel.Padding = new Padding(20, 20, 20, 20);
             menuPanel.Paint += menuPanel_Paint;
             // 
             // contentPanel
             // 
             contentPanel.Dock = DockStyle.Fill;
-            contentPanel.Location = new Point(166, 0);
+            contentPanel.Location = new Point(279, 0);
             contentPanel.Name = "contentPanel";
-            contentPanel.Size = new Size(1243, 719);
+            contentPanel.Size = new Size(1130, 719);
             contentPanel.TabIndex = 0;
             contentPanel.Paint += contentPanel_Paint;
             // 

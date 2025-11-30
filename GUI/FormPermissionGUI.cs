@@ -137,8 +137,8 @@ namespace BadmintonCourtManagement.GUI
                         else if (tag.StartsWith("Update")) { prefix = "Update"; target = tag.Substring(6); }
                         else if (tag.StartsWith("Delete")) { prefix = "Delete"; target = tag.Substring(6); }
 
-                        // --- Nếu tick Update/Delete thì phải tick View ---
-                        if ((prefix == "Update" || prefix == "Delete") && cb.Checked)
+                        // --- Nếu tick Insert/Update/Delete thì phải tick View ---
+                        if ((prefix == "Insert" || prefix == "Update" || prefix == "Delete") && cb.Checked)
                         {
                             foreach (Control c2 in tPermission.Controls)
                             {
@@ -149,7 +149,7 @@ namespace BadmintonCourtManagement.GUI
                             }
                         }
 
-                        // --- Nếu bỏ tick View thì bỏ luôn Update & Delete ---
+                        // --- Nếu bỏ tick View thì bỏ luôn Insert & Update & Delete ---
                         if (prefix == "View" && !cb.Checked)
                         {
                             foreach (Control c2 in tPermission.Controls)
@@ -157,7 +157,7 @@ namespace BadmintonCourtManagement.GUI
                                 if (c2 is CheckBox cb2 && cb2.Tag != null)
                                 {
                                     string tag2 = cb2.Tag.ToString();
-                                    if (tag2 == "Update" + target || tag2 == "Delete" + target)
+                                    if (tag2 == "Insert" + target || tag2 == "Update" + target || tag2 == "Delete" + target)
                                     {
                                         cb2.Checked = false;
                                     }

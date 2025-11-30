@@ -1,4 +1,5 @@
-﻿using BadmintonCourtManagement.BUS;
+﻿
+using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
 using System;
 using System.Drawing;
@@ -21,156 +22,136 @@ namespace BadmintonCourtManagement.GUI
         {
             Text = "Chi tiết sản phẩm";
             StartPosition = FormStartPosition.CenterParent;
-            Size = new Size(520, 640);
+            Size = new Size(700, 520);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
+            BackColor = Color.White;
 
             var main = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 1,
-                RowCount = 6,
-                Padding = new Padding(12)
+                RowCount = 3,
+                Padding = new Padding(12),
+                BackColor = Color.White
             };
-            main.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F)); // title
-            main.RowStyles.Add(new RowStyle(SizeType.Absolute, 220F)); // image
-            main.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F)); // name
-            main.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F)); // id
-            main.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // other details
-            main.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F)); // buttons
 
-            var title = new Label
+            main.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            main.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            main.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+
+            var header = new Label
             {
-                Text = "Thông tin sản phẩm",
-                Font = new Font("Segoe UI", 14F, FontStyle.Bold),
+                Text = "THÔNG TIN SẢN PHẨM",
+                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(0, 120, 103),
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            var pic = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BorderStyle = BorderStyle.FixedSingle
-            };
-
-            // Load image
-            pic.Image = LoadProductImage(_product.ProductImg);
-
-            var lblName = new Label
-            {
-                Text = $"Tên: {_product.ProductName}",
-                Font = new Font("Segoe UI", 11F, FontStyle.Regular),
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(6, 0, 0, 0)
-            };
-
-            var lblId = new Label
-            {
-                Text = $"Mã: {_product.ProductId}",
-                Font = new Font("Segoe UI", 10F, FontStyle.Regular),
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(6, 0, 0, 0)
-            };
-
-            // Other details panel
-            var details = new TableLayoutPanel
+            // Content: two columns - image (fixed) and details
+            var content = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 2,
-                RowCount = 3,
-                AutoSize = true
+                RowCount = 1,
+                Padding = new Padding(8)
             };
-            details.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
-            details.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            content.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 260F));
+            content.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
 
-            var lblBrandTitle = new Label { Text = "Thương hiệu:", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
-            var lblBrand = new Label { Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
-            var lblTypeTitle = new Label { Text = "Loại:", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
-            var lblType = new Label { Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
-            var lblQtyTitle = new Label { Text = "Số lượng:", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
-            var lblQty = new Label { Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
+            // Image panel
+            var imgPanel = new Panel { Dock = DockStyle.Fill, Padding = new Padding(6) };
+            var picProduct = new PictureBox { Dock = DockStyle.Fill, SizeMode = PictureBoxSizeMode.Zoom, BorderStyle = BorderStyle.FixedSingle };
+            picProduct.Image = LoadProductImage(_product.ProductImg);
+            imgPanel.Controls.Add(picProduct);
 
-            // Try to fetch brand/type names via BUS
+            // Details stack
+            var details = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 6, Padding = new Padding(6) };
+            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F)); // name
+            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F)); // id
+            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F)); // supplier
+            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F)); // brand
+            details.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F)); // type
+            details.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // spacer / extra
+
+            var lblName = new Label { Text = _product.ProductName, Font = new Font("Segoe UI", 14F, FontStyle.Bold), Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
+            var lblId = new Label { Text = $"Mã: {_product.ProductId}", Font = new Font("Segoe UI", 10F), Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft, ForeColor = Color.Gray };
+
+            string supplierName;
             try
             {
-                var brandBus = new BrandBUS();
-                var typeBus = new TypeProductBUS();
-                var brand = brandBus.GetAllBrands().Find(b => b.BrandId == _product.BrandId);
-                var type = typeBus.GetAllTypeProducts().Find(t => t.TypeProductId == _product.TypeId);
-                lblBrand.Text = brand?.BrandName ?? _product.BrandId ?? string.Empty;
-                lblType.Text = type?.TypeProductName ?? _product.TypeId ?? string.Empty;
+                var supplier = new SupplierBUS().GetAllSuppliers().Find(s => s.SupplierId == _product.SupplierId);
+                supplierName = supplier?.SupplierName ?? _product.SupplierId ?? "Không xác định";
             }
-            catch
+            catch { supplierName = _product.SupplierId ?? "Không xác định"; }
+
+            var lblSupplier = new Label { Text = $"Nhà cung cấp: {supplierName}", Font = new Font("Segoe UI", 10F), Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
+
+            string brandName;
+            string typeName;
+            try
             {
-                lblBrand.Text = _product.BrandId ?? string.Empty;
-                lblType.Text = _product.TypeId ?? string.Empty;
+                var brand = new BrandBUS().GetAllBrands().Find(b => b.BrandId == _product.BrandId);
+                var type = new TypeProductBUS().GetAllTypeProducts().Find(t => t.TypeProductId == _product.TypeId);
+                brandName = brand?.BrandName ?? _product.BrandId ?? "Không xác định";
+                typeName = type?.TypeProductName ?? _product.TypeId ?? "Không xác định";
             }
+            catch { brandName = _product.BrandId ?? "N/A"; typeName = _product.TypeId ?? "N/A"; }
 
-            lblQty.Text = _product.Quantity.ToString();
+            var lblBrand = new Label { Text = $"Thương hiệu: {brandName}", Font = new Font("Segoe UI", 10F), Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
+            var lblType = new Label { Text = $"Loại sản phẩm: {typeName}", Font = new Font("Segoe UI", 10F), Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
 
-            details.Controls.Add(lblBrandTitle, 0, 0);
-            details.Controls.Add(lblBrand, 1, 0);
-            details.Controls.Add(lblTypeTitle, 0, 1);
-            details.Controls.Add(lblType, 1, 1);
-            details.Controls.Add(lblQtyTitle, 0, 2);
-            details.Controls.Add(lblQty, 1, 2);
+            var lblQty = new Label { Text = $"Tồn kho: {_product.Quantity:N0}", Font = new Font("Segoe UI", 11F, FontStyle.Bold), Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft, ForeColor = _product.Quantity > 0 ? Color.Green : Color.Red };
 
-            var btnClose = new Button
-            {
-                Text = "Đóng",
-                Dock = DockStyle.Right,
-                Width = 100,
-                Height = 34,
-                BackColor = Color.FromArgb(64, 64, 64),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
-            };
+            details.Controls.Add(lblName, 0, 0);
+            details.Controls.Add(lblId, 0, 1);
+            details.Controls.Add(lblSupplier, 0, 2);
+            details.Controls.Add(lblBrand, 0, 3);
+            details.Controls.Add(lblType, 0, 4);
+            details.Controls.Add(lblQty, 0, 5);
+
+            content.Controls.Add(imgPanel, 0, 0);
+            content.Controls.Add(details, 1, 0);
+
+            var btnClose = new Button { Text = "Đóng", Height = 40, Width = 120, BackColor = Color.FromArgb(220, 53, 69), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 10F, FontStyle.Bold) };
+            btnClose.FlatAppearance.BorderSize = 0;
             btnClose.Click += (s, e) => Close();
 
-            main.Controls.Add(title, 0, 0);
-            main.Controls.Add(pic, 0, 1);
-            main.Controls.Add(lblName, 0, 2);
-            main.Controls.Add(lblId, 0, 3);
-            main.Controls.Add(details, 0, 4);
-            main.Controls.Add(btnClose, 0, 5);
+            var btnPanel = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.RightToLeft, Padding = new Padding(8) };
+            btnPanel.Controls.Add(btnClose);
 
+            main.Controls.Add(header, 0, 0);
+            main.Controls.Add(content, 0, 1);
+            main.Controls.Add(btnPanel, 0, 2);
+
+            Controls.Clear();
             Controls.Add(main);
         }
 
-        private Image? LoadProductImage(string? imageName)
+        private Image LoadProductImage(string imageName)
         {
             if (string.IsNullOrWhiteSpace(imageName))
                 imageName = "DefaultProductImage.jpg";
 
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string projectRoot = Path.GetFullPath(Path.Combine(basePath, @"..\..\.."));
+            string projectRoot = Directory.GetParent(basePath).Parent.Parent.Parent.FullName;
             string imagePath = Path.Combine(projectRoot, "Img", "Product", imageName);
 
             if (!File.Exists(imagePath))
-            {
                 imagePath = Path.Combine(projectRoot, "Img", "Product", "DefaultProductImage.jpg");
-                if (!File.Exists(imagePath))
-                    return null;
+
+            if (File.Exists(imagePath))
+            {
+                try
+                {
+                    return Image.FromFile(imagePath);
+                }
+                catch { /* ignore */ }
             }
 
-            try
-            {
-                using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                {
-                    return new Bitmap(stream);
-                }
-            }
-            catch
-            {
-                return null;
-            }
+            return Properties.Resources.DefaultProductImage ?? null; // Nếu có ảnh default trong Resources
         }
     }
 }

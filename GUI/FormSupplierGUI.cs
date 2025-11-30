@@ -1,3 +1,4 @@
+// FormSupplierGUI.cs
 using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
 using System;
@@ -9,146 +10,141 @@ namespace BadmintonCourtManagement.GUI
     public partial class FormSupplierGUI : Form
     {
         private string mode; // "Insert" hoặc "Update"
-        private string? supplierId;
+        private string supplierId; // Chỉ dùng khi Update
         private SupplierBUS supplierBUS = new SupplierBUS();
 
-        public FormSupplierGUI(string mode, string? supplierId = null, AccountDTO? currentAccount = null)
+        public FormSupplierGUI(string mode, string supplierId = null, AccountDTO currentAccount = null)
         {
             InitializeComponent();
+
             this.mode = mode;
-            this.supplierId = supplierId;
+            this.supplierId = supplierId; // Có thể null khi Insert
+
+            // Tắt chỉnh sửa mã nhà cung cấp
+            txtSupplierId.Enabled = false;
+            txtSupplierId.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
 
             if (mode == "Insert")
             {
-                lblTitle.Text = "     THÊM NHÀ CUNG CẤP";
-                txtSupplierId.Text = GenerateNewSupplierId();
-                txtSupplierId.Enabled = false;
+                lblTitle.Text = "THÊM NHÀ CUNG CẤP";
+                
+                // TỰ ĐỘNG TẠO MÃ NHÀ CUNG CẤP MỚI
+                string newId = GenerateNewSupplierId();
+                txtSupplierId.Text = newId;
+                this.supplierId = newId; // Gán luôn để dùng khi lưu
             }
-            else if (mode == "Update" && !string.IsNullOrEmpty(supplierId))
+            else if (mode == "Update")
             {
                 lblTitle.Text = "CẬP NHẬT NHÀ CUNG CẤP";
+
                 txtSupplierId.Text = supplierId;
-                txtSupplierId.Enabled = false;
 
-                LoadSupplierData(supplierId); // Gọi hàm riêng để dễ debug
-            }
-
-            this.Text = lblTitle.Text;
-        }
-
-        private void LoadSupplierData(string id)
-        {
-            try
-            {
-                var dto = supplierBUS.GetSupplierById(id);
-
-                if (dto == null)
+                var supplier = supplierBUS.GetSupplierById(supplierId);
+                if (supplier != null)
                 {
-                    MessageBox.Show($"Không tìm thấy nhà cung cấp với mã: {id}\nCó thể đã bị xóa hoặc không tồn tại.",
-                        "Không tìm thấy", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    this.DialogResult = DialogResult.Cancel;
-                    this.Close();
-                    return;
+                    txtSupplierName.Text = supplier.SupplierName ?? "";
+                    txtAddress.Text       = supplier.SupplierAddress ?? "";
+                    txtEmail.Text         = supplier.SupplierEmail ?? "";
                 }
-
-                // Đổ dữ liệu lên form
-                txtSupplierName.Text = dto.SupplierName ?? "";
-                txtAddress.Text      = dto.SupplierAddress ?? "";
-                txtEmail.Text        = dto.SupplierEmail ?? "";
-
-                // Nếu bạn có cột IsDeleted, vẫn cho phép sửa (thường là có)
-                // Không cần làm gì thêm
-            }
-            catch (Exception ex)
-            {
-            MessageBox.Show("Lỗi khi tải dữ liệu nhà cung cấp:\n" + ex.Message, 
-                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
             }
         }
 
+        // TỰ ĐỘNG TẠO MÃ NHÀ CUNG CẤP MỚI (NCC0001, NCC0002, ...)
         private string GenerateNewSupplierId()
         {
             try
             {
-                var all = supplierBUS.GetAllSuppliers();
-                if (all == null || all.Count == 0)
-                    return "NCC001";
+                var allSuppliers = supplierBUS.GetAllSuppliers();
+                if (allSuppliers == null || !allSuppliers.Any())
+                    return "NCC0001";
 
-                var maxNum = all
-                    .Where(x => x.SupplierId.StartsWith("NCC"))
-                    .Select(x => x.SupplierId.Substring(3))
-                    .Where(s => int.TryParse(s, out _))
-                    .Select(int.Parse)
-                    .DefaultIfEmpty(0)
-                    .Max();
+                var validNumbers = allSuppliers
+                    .Where(s => s.SupplierId != null)
+                    .Select(s => s.SupplierId.Trim().ToUpper())
+                    .Where(id => id.StartsWith("NCC") && id.Length >= 6)
+                    .Select(id => 
+                    {
+                        string numPart = id.Substring(3);
+                        return int.TryParse(numPart, out int num) ? num : -1;
+                    })
+                    .Where(num => num >= 0)
+                    .ToList();
 
-                return "NCC" + (maxNum + 1).ToString("000");
+                int nextNumber = validNumbers.Any() ? validNumbers.Max() + 1 : 1;
+
+                return $"NCC{nextNumber:0000}";
             }
-            catch
+            catch (Exception ex)
             {
-                return "NCC" + DateTime.Now.ToString("yyMMddHHmm");
+                MessageBox.Show("Lỗi tạo mã nhà cung cấp tự động: " + ex.Message);
+                return "NCC" + DateTime.Now.ToString("yyyyMMddHHmmss");
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string name = txtSupplierName.Text.Trim();
-            string email = txtEmail.Text.Trim();
+            string name    = txtSupplierName.Text.Trim();
             string address = txtAddress.Text.Trim();
+            string email   = txtEmail.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Vui lòng nhập tên nhà cung cấp!", "Thiếu thông tin", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtSupplierName.Focus();
+                MessageBox.Show("Vui lòng nhập tên nhà cung cấp.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var dto = new SupplierDTO
+
+            if (string.IsNullOrWhiteSpace(email))
             {
-                SupplierId = txtSupplierId.Text,
-                SupplierName = name,
+                MessageBox.Show("Vui lòng nhập email.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra định dạng email đơn giản
+            if (!email.Contains("@") || !email.Contains("."))
+            {
+                MessageBox.Show("Email không hợp lệ.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra trùng email (trừ chính nó khi Update)
+            var existing = supplierBUS.GetSupplierByEmail(email);
+            if (existing != null && existing.SupplierId != supplierId)
+            {
+                MessageBox.Show("Email này đã được sử dụng bởi nhà cung cấp khác.", "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SupplierDTO supplier = new SupplierDTO
+            {
+                SupplierId      = txtSupplierId.Text,
+                SupplierName    = name,
                 SupplierAddress = address,
-                SupplierEmail = email,
-                IsDeleted = 0
+                SupplierEmail   = email,
+                IsDeleted       = 0
             };
 
-            bool success;
-            string message;
+            bool success = mode == "Insert"
+                ? supplierBUS.InsertSupplier(supplier)
+                : supplierBUS.UpdateSupplier(supplier);
 
-            try
+            if (success)
             {
-                if (mode == "Insert")
-                {
-                    success = supplierBUS.InsertSupplier(dto);
-                    message = success ? "Thêm nhà cung cấp thành công!" : "Thêm thất bại! Có thể mã hoặc tên đã tồn tại.";
-                }
-                else
-                {
-                    success = supplierBUS.UpdateSupplier(dto);
-                    message = success ? "Cập nhật thành công!" : "Cập nhật thất bại!";
-                }
+                MessageBox.Show(
+                    mode == "Insert" ? "Thêm nhà cung cấp thành công!" : "Cập nhật nhà cung cấp thành công!",
+                    "Thành công",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
-                if (success)
-                {
-                    MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Thao tác thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }

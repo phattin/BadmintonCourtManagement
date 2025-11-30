@@ -26,7 +26,8 @@ namespace BadmintonCourtManagement.DAO
 
                 while (reader.Read())
                 {
-                    EmployeeDTO employee = new EmployeeDTO
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    var employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
@@ -65,11 +66,51 @@ namespace BadmintonCourtManagement.DAO
 
                 if (reader.Read())
                 {
+                    var phoneValue = reader["Phone"].ToString().Trim();
                     employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
-                        EmployeePhone = reader["Phone"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
+                        Address = reader["Address"].ToString(),
+                        RoleId = reader["RoleId"].ToString()
+                    };
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Lỗi khi lấy thông tin nhân viên: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return employee;
+        }
+
+        public EmployeeDTO GetEmployeeByUsername(string username)
+        {
+            string query = "SELECT employee.EmployeeId, EmployeeName, Phone, Address, RoleId FROM employee join account on employee.EmployeeId = account.EmployeeId WHERE account.Username = @Username";
+            EmployeeDTO employee = null;
+
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    employee = new EmployeeDTO
+                    {
+                        EmployeeId = reader["EmployeeId"].ToString(),
+                        EmployeeName = reader["EmployeeName"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
                         RoleId = reader["RoleId"].ToString()
                     };
@@ -188,11 +229,12 @@ namespace BadmintonCourtManagement.DAO
 
                 while (reader.Read())
                 {
-                    EmployeeDTO employee = new EmployeeDTO
+                    var phoneValue = reader["Phone"].ToString().Trim();
+                    var employee = new EmployeeDTO
                     {
                         EmployeeId = reader["EmployeeId"].ToString(),
                         EmployeeName = reader["EmployeeName"].ToString(),
-                        EmployeePhone = reader["Phone"].ToString(),
+                        EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
                         RoleId = reader["RoleId"].ToString()
                     };

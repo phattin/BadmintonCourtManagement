@@ -31,8 +31,8 @@ namespace BadmintonCourtManagement.GUI
             // 
             tableLayoutPanel1.BackColor = Color.White;
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 252F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 38F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62F));
             tableLayoutPanel1.Controls.Add(lblTitle, 0, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 1);
             tableLayoutPanel1.Controls.Add(txtCustomerId, 1, 1);
@@ -53,7 +53,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel1.Size = new Size(580, 460);
+            tableLayoutPanel1.Size = new Size(530, 430);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // lblTitle
@@ -62,12 +62,13 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.SetColumnSpan(lblTitle, 2);
             lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(30, 30, 30);
-            lblTitle.Location = new Point(33, 20);
+            lblTitle.Location = new Point(30, 20);
+            lblTitle.Margin = new Padding(0);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(415, 45);
+            lblTitle.Size = new Size(340, 45);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "THÊM KHÁCH HÀNG MỚI";
-            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            lblTitle.Text = "THÊM KHÁCH HÀNG";
+            lblTitle.TextAlign = ContentAlignment.TopCenter;
             // 
             // label1
             // 
@@ -85,9 +86,9 @@ namespace BadmintonCourtManagement.GUI
             txtCustomerId.BackColor = Color.FromArgb(245, 245, 245);
             txtCustomerId.Enabled = false;
             txtCustomerId.Font = new Font("Segoe UI", 11F);
-            txtCustomerId.Location = new Point(285, 113);
+            txtCustomerId.Location = new Point(211, 113);
             txtCustomerId.Name = "txtCustomerId";
-            txtCustomerId.Size = new Size(128, 37);
+            txtCustomerId.Size = new Size(167, 37);
             txtCustomerId.TabIndex = 2;
             // 
             // label2
@@ -104,9 +105,9 @@ namespace BadmintonCourtManagement.GUI
             // txtCustomerName
             // 
             txtCustomerName.Font = new Font("Segoe UI", 11F);
-            txtCustomerName.Location = new Point(285, 173);
+            txtCustomerName.Location = new Point(211, 173);
             txtCustomerName.Name = "txtCustomerName";
-            txtCustomerName.Size = new Size(128, 37);
+            txtCustomerName.Size = new Size(167, 37);
             txtCustomerName.TabIndex = 4;
             // 
             // label3
@@ -123,14 +124,15 @@ namespace BadmintonCourtManagement.GUI
             // txtCustomerPhone
             // 
             txtCustomerPhone.Font = new Font("Segoe UI", 11F);
-            txtCustomerPhone.Location = new Point(285, 233);
+            txtCustomerPhone.Location = new Point(211, 233);
             txtCustomerPhone.MaxLength = 11;
             txtCustomerPhone.Name = "txtCustomerPhone";
-            txtCustomerPhone.Size = new Size(128, 37);
+            txtCustomerPhone.Size = new Size(167, 37);
             txtCustomerPhone.TabIndex = 6;
             // 
             // btnSave
             // 
+            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnSave.BackColor = Color.FromArgb(0, 142, 123);
             btnSave.Cursor = Cursors.Hand;
             btnSave.FlatAppearance.BorderSize = 0;
@@ -139,7 +141,7 @@ namespace BadmintonCourtManagement.GUI
             btnSave.ForeColor = Color.White;
             btnSave.Location = new Point(33, 323);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(75, 39);
+            btnSave.Size = new Size(172, 39);
             btnSave.TabIndex = 7;
             btnSave.Text = "Lưu";
             btnSave.UseVisualStyleBackColor = false;
@@ -153,9 +155,9 @@ namespace BadmintonCourtManagement.GUI
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(285, 323);
+            btnCancel.Location = new Point(211, 323);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(75, 39);
+            btnCancel.Size = new Size(167, 39);
             btnCancel.TabIndex = 8;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = false;
@@ -171,7 +173,7 @@ namespace BadmintonCourtManagement.GUI
             MinimumSize = new Size(550, 450);
             Name = "FormCustomerGUI";
             Padding = new Padding(10);
-            Size = new Size(600, 480);
+            Size = new Size(550, 450);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
