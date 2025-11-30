@@ -184,17 +184,17 @@ namespace BadmintonCourtManagement.GUI
             };
             string bookingTimeText = "";
             if (nextBookingStartTime != "" && nextBookingEndTime != "")
-                bookingTimeText = "Tình trạng: Đã đặt\nBooking tiếp theo: "+nextBookingStartTime+"-"+nextBookingEndTime;
+                bookingTimeText = "Tình trạng: Đã đặt\nBooking tiếp theo: " + nextBookingStartTime + "-" + nextBookingEndTime;
             else
                 bookingTimeText = "Tình trạng: Trống\nBooking tiếp theo: Không có";
-                // Label thông tin
-                var lblInfo = new Label
-                {
-                    Text = bookingTimeText,
-                    Dock = DockStyle.Fill,
-                    Font = new Font("Segoe UI", 9F),
-                    TextAlign = ContentAlignment.MiddleCenter
-                };
+            // Label thông tin
+            var lblInfo = new Label
+            {
+                Text = bookingTimeText,
+                Dock = DockStyle.Fill,
+                Font = new Font("Segoe UI", 9F),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
 
             // Nút đặt sân
             var btnBooking = new Button
@@ -202,12 +202,12 @@ namespace BadmintonCourtManagement.GUI
                 Text = "Đặt sân",
                 Width = 200,
                 Height = 40,
-                Anchor = AnchorStyles.Bottom, 
+                Anchor = AnchorStyles.Bottom,
                 BackColor = Color.FromArgb(64, 64, 64),
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
-                Margin = new Padding(0, 0, 0, 10) 
+                Margin = new Padding(0, 0, 0, 10)
             };
 
             btnBooking.Click += (s, e) =>
@@ -227,5 +227,9 @@ namespace BadmintonCourtManagement.GUI
             return panel;
         }
 
+        private void customPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

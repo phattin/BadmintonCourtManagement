@@ -24,20 +24,50 @@ namespace BadmintonCourtManagement.GUI
         public SupplyAddGUI(AccountDTO acc)
         {
             currentAcc = acc;
-
             InitializeComponent();
             if (this.listProductPanel != null)
+            {
                 this.listProductPanel.ProductSelected += OnProductSelected;
+            }
 
             if (this.infoProductPanel != null)
             {
                 this.infoProductPanel.ProductImported += OnProductImported;
+            }
+
+            if (this.listDetailPanel != null)
+            {
+                this.listDetailPanel.productDeleted += OnProductDeleted;
             }
         }
 
 
         private void OnProductSelected(ProductDTO product)
         {
+            if (product == null) return;
+
+            // If there are already products in the import list, enforce same supplier
+            if (importDetails != null && importDetails.Count > 0)
+            {
+                try
+                {
+                    var productBus = new ProductBUS();
+                    var supplierBus = new SupplierBUS();
+                    var firstProductId = importDetails[0].ProductId;
+                    var firstProduct = productBus.GetProductById(firstProductId);
+                    if (firstProduct != null && firstProduct.SupplierId != product.SupplierId)
+                    {
+                        MessageBox.Show($" Vui lòng chọn sản phẩm từ cùng một nhà cung cấp trong một lần nhập hàng.\n Nhà cung cấp của đơn nhập hàng này: {supplierBus.GetSupplierById(firstProduct.SupplierId).SupplierName}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Defensive: if lookup fails, show message and block selection
+                    MessageBox.Show("Không thể kiểm tra nhà cung cấp hiện tại: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
             selectedProduct = product;
 
             // update the info panel (call method we added)
@@ -47,6 +77,32 @@ namespace BadmintonCourtManagement.GUI
 
         private void OnProductImported(BillImportDetailDTO importedProduct, StorageDTO storage, bool isDuplicate)
         {
+            if (importedProduct == null)
+                return;
+
+            // Defensive supplier validation before adding to master lists (in case it slipped through)
+            if (!isDuplicate && importDetails.Count > 0)
+            {
+                try
+                {
+                    var productBus = new ProductBUS();
+                    // supplier of previously added items (use first)
+                    var firstProductId = importDetails[0].ProductId;
+                    var firstProduct = productBus.GetProductById(firstProductId);
+                    var newProduct = productBus.GetProductById(importedProduct.ProductId);
+
+                    if (firstProduct != null && newProduct != null && firstProduct.SupplierId != newProduct.SupplierId)
+                    {
+                        MessageBox.Show("Không thể thêm sản phẩm: nhà cung cấp không khớp với các sản phẩm đã chọn trước đó.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Không thể kiểm tra nhà cung cấp: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
             this.importedProduct = importedProduct;
             if (this.listDetailPanel != null)
             {
@@ -81,6 +137,21 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
+        private void OnProductDeleted(BillImportDetailDTO product)
+        {
+            if (product == null)
+                return;
+
+            // Remove from importDetails
+            importDetails.RemoveAll(b => b.ProductId == product.ProductId);
+
+            // Remove from storages
+            storages.RemoveAll(s => s.ProductId == product.ProductId);
+
+            // remove from lists in SupplyProductInfo.cs if needed
+            this.infoProductPanel.RemoveImportedProduct(product);
+        }
+
         private void Done_Click(object sender, EventArgs e)
         {
             ImportBillDTO newBill = null;
@@ -102,7 +173,7 @@ namespace BadmintonCourtManagement.GUI
                 totalPrice += bill.TotalPrice;
             }
             // create new bill import
-            newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, employeeBus.GetEmployeeByUsername(currentAcc.Username).ToString(), totalPrice, ImportBillDTO.Option.Paid);
+            newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, employeeBus.GetEmployeeByUsername(currentAcc.Username).EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
 
             // insert new bill import
             billImportBus.InsertBillImport(newBill);
@@ -118,6 +189,16 @@ namespace BadmintonCourtManagement.GUI
             {
                 StorageBUS.InsertStorage(s);
             }
+
+            // update product quantities
+            foreach (var bill_detail in importDetails)
+            {
+                var product = productBus.GetProductById(bill_detail.ProductId);
+                int quantityInStock = product.Quantity + bill_detail.Quantity;
+                product.Quantity = quantityInStock;
+                productBus.UpdateProduct(product);
+            }
+
             MessageBox.Show("Đã hoàn tất nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }

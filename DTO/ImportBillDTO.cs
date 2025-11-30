@@ -7,8 +7,8 @@ namespace BadmintonCourtManagement.DTO
         private string employeeId = "";
         private DateTime dateCreated = DateTime.Now;
         private double totalPrice = 0;
-        public enum Option { Pending, Delivered, Cancelled, Paid, Unpaid }
-        private Option status = Option.Unpaid;
+        public enum Option { pending, delivered, cancelled, paid, unpaid }
+        private Option status = Option.unpaid;
 
         public string ImportBillId { get => importBillId; set => importBillId = value; }
         public string SupplierId { get => supplierId; set => supplierId = value; }
