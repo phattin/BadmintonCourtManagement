@@ -20,15 +20,49 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         private TypeProductBUS typeBus = new TypeProductBUS();
         private BrandBUS brandBus = new BrandBUS();
         private BillImportBUS billBus = new BillImportBUS();
+        private BillImportDetailBUS detailBillBus = new BillImportDetailBUS();
         // list
         private List<BillImportDetailDTO> productListImported = new List<BillImportDetailDTO>();
         private List<StorageDTO> storageList = new List<StorageDTO>();
         public event Action<BillImportDetailDTO, StorageDTO, bool> ProductImported;
         private HashSet<string> generatedStorageIds = new HashSet<string>();
 
+        private string billId = "";
+        
         public SupplyProductInfo()
         {
             InitializeComponent();
+            GenerateImportBillId();
+        }
+
+        private void GenerateImportBillId()
+        {
+            billId = billBus.GetMaxId();
+
+            if (string.IsNullOrWhiteSpace(billId))
+            {
+                billId = "IB00001";
+            }
+            else
+            {
+                var match = Regex.Match(billId, @"^IB\d+$");
+                if (match.Success)
+                {
+                    string numberPart = billId.Substring(2);
+                    if (int.TryParse(numberPart, out var number))
+                    {
+                        number += productListImported.Count + 1;
+                        if (number < 10)
+                            billId = "IB0000" + number;
+                        else if (number < 100)
+                            billId = "IB000" + number;
+                        else if (number < 1000)
+                            billId = "IB00" + number;
+                        else if (number < 10000)
+                            billId = "IB0" + number;
+                    }
+                }
+            }
         }
 
         public void SetProduct(ProductDTO product)
@@ -160,52 +194,42 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             }
             else
             {
-                var billId = billBus.GetMaxId();
+                string detailBillId = detailBillBus.GetMaxId();
 
-                if (string.IsNullOrWhiteSpace(billId))
+                if (string.IsNullOrWhiteSpace(detailBillId))
                 {
-                    billId = "IB00001";
+                    detailBillId = "ID00001";
                 }
                 else
                 {
-                    var match = Regex.Match(billId, @"^([A-Za-z]*)(\d+)$");
+                    var match = Regex.Match(detailBillId, @"^ID\d+$");
                     if (match.Success)
                     {
-                        var prefix = match.Groups[1].Value;
-                        var numberPart = match.Groups[2].Value;
+                        string numberPart = detailBillId.Substring(2);
+
                         if (int.TryParse(numberPart, out var number))
                         {
                             number += productListImported.Count + 1;
-                            billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
+                            if (number < 10)
+                                detailBillId = "ID0000" + number.ToString();
+                            else if (number < 100)
+                                detailBillId = "ID000" + number.ToString();
+                            else if (number < 1000)
+                                detailBillId = "ID00" + number.ToString();
+                            else if (number < 10000)
+                                detailBillId = "ID0" + number.ToString();
                         }
-                    }
-                }
-
-                var importbillId = billBus.GetMaxId();
-
-                if (string.IsNullOrWhiteSpace(importbillId))
-                {
-                    importbillId = "ID00001";
-                }
-                else
-                {
-                    var match = Regex.Match(importbillId, @"^([A-Za-z]*)(\d+)$");
-                    if (match.Success)
+                    } 
+                    else
                     {
-                        var prefix = match.Groups[1].Value;
-                        var numberPart = match.Groups[2].Value;
-                        if (int.TryParse(numberPart, out var number))
-                        {
-                            number += productListImported.Count + 1;
-                            importbillId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
-                        }
+                        MessageBox.Show("Mã hóa đơn chi tiết không trùng regex.");  
                     }
                 }
 
                 BillImportDetailDTO newBill = new BillImportDetailDTO
                 {
-                    ImportBillDetailId = importbillId ?? "ID00001",
-                    ImportBillId = billId ?? "IB00001",
+                    ImportBillDetailId = detailBillId,
+                    ImportBillId = billId,
                     ProductId = productId,
                     Quantity = int.Parse(QuantityBox.Text),
                     Price = double.Parse(textBox1.Text), // import price
@@ -217,7 +241,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 StorageDTO newStorage = new StorageDTO
                 {
                     StorageId = GenerateStorageId(),
-                    ImportBillDetailId = importbillId,
+                    ImportBillDetailId = detailBillId,
                     ProductId = newBill.ProductId,
                     Quantity = newBill.Quantity,
                     // Store sale price (computed) in storage for selling

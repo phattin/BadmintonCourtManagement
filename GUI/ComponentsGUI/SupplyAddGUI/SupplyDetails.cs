@@ -139,7 +139,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold),
-                Text = "Mã sản phẩm: " + product.ProductId,
+                Text = "Mã CTHD: " + product.ImportBillDetailId,
                 TextAlign = ContentAlignment.MiddleLeft
             };
 

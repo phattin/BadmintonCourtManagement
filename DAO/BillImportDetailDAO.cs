@@ -17,7 +17,7 @@ namespace BadmintonCourtManagement.DAO
                     return result.ToString();
                 }
                 else {
-                    return null;
+                    return "Tú bị gay";
                 }
             }
             catch (Exception ex) {
