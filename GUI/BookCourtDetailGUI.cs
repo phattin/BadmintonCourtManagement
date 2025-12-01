@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using BadmintonCourtManagement.DTO;
 using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DAO;   // để dùng PriceRuleDAO
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -90,13 +92,9 @@ namespace BadmintonCourtManagement.GUI
 
         // ================== CÁC SỰ KIỆN KHÁC ==================
 
-        private void customPanel3_Paint(object sender, PaintEventArgs e)
-        {
-        }
+        private void customPanel3_Paint(object sender, PaintEventArgs e) { }
 
-        private void customPanel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
+        private void customPanel2_Paint(object sender, PaintEventArgs e) { }
 
         private void btnBooking_Click(object sender, EventArgs e)
         {
@@ -120,16 +118,7 @@ namespace BadmintonCourtManagement.GUI
             {
                 if (TimeSpan.TryParse(txtStartTime.Text, out TimeSpan startTime))
                 {
-                    TimeSpan minTime = new TimeSpan(5, 0, 0);   // 5h00
-                    TimeSpan maxTime = new TimeSpan(23, 0, 0);  // 23h00
-
-                    if (startTime < minTime || startTime >= maxTime)
-                    {
-                        MessageBox.Show("Giờ bắt đầu phải nằm trong khoảng 5h00 - 23h00");
-                        txtStartTime.Text = "";
-                        return;
-                    }
-
+                    // kiểm tra phút 00 hoặc 30
                     if (!(startTime.Minutes == 0 || startTime.Minutes == 30))
                     {
                         MessageBox.Show("Chỉ được chọn phút là 00 hoặc 30");
@@ -145,7 +134,7 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
-        // Validate giờ kết thúc + tính tiền
+        // Validate giờ kết thúc + gọi DAO tính tiền
         private void txtEndTime_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtStartTime.Text))
@@ -158,23 +147,7 @@ namespace BadmintonCourtManagement.GUI
             if (TimeSpan.TryParse(txtStartTime.Text, out TimeSpan startTime) &&
                 TimeSpan.TryParse(txtEndTime.Text, out TimeSpan endTime))
             {
-                TimeSpan minTime = new TimeSpan(5, 0, 0);
-                TimeSpan maxTime = new TimeSpan(23, 0, 0);
-
-                if (endTime > maxTime)
-                {
-                    MessageBox.Show("Thời gian chỉ được đặt trong khoảng 5h00 - 23h00");
-                    txtEndTime.Text = "";
-                    return;
-                }
-
-                if (endTime <= startTime)
-                {
-                    MessageBox.Show("Giờ kết thúc phải sau giờ bắt đầu");
-                    txtEndTime.Text = "";
-                    return;
-                }
-
+                // tối thiểu 1 tiếng
                 if ((endTime - startTime).TotalMinutes < 60)
                 {
                     MessageBox.Show("Thời gian đặt tối thiểu là 1 tiếng");
@@ -182,6 +155,7 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
+                // phút phải là 00 hoặc 30
                 if (!((startTime.Minutes == 0 || startTime.Minutes == 30) &&
                       (endTime.Minutes == 0 || endTime.Minutes == 30)))
                 {
@@ -190,28 +164,41 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
-                // Tính tiền theo block 30 phút
-                decimal totalPrice = 0;
-                TimeSpan current = startTime;
+                // ======= DÙNG PRICE RULE ĐỂ TÍNH TIỀN =======
 
-                while (current < endTime)
+                // 1. Lấy bookingDate từ txtDate (dd/MM/yyyy)
+                if (!DateOnly.TryParseExact(
+                        txtDate.Text,
+                        "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out DateOnly bookingDate))
                 {
-                    TimeSpan next = current.Add(new TimeSpan(0, 30, 0));
-                    if (next > endTime) next = endTime;
-
-                    if (current >= new TimeSpan(5, 0, 0) && current < new TimeSpan(16, 0, 0))
-                    {
-                        totalPrice += 30000; // 30k mỗi 30 phút
-                    }
-                    else if (current >= new TimeSpan(16, 0, 0) && current < new TimeSpan(23, 0, 0))
-                    {
-                        totalPrice += 40000; // 40k mỗi 30 phút
-                    }
-
-                    current = next;
+                    MessageBox.Show("Ngày đặt không hợp lệ");
+                    txtTotalPrice.Text = "";
+                    return;
                 }
 
-                txtTotalPrice.Text = totalPrice.ToString();
+                // 2. Gọi DAO để lấy giá / giờ
+                var priceRuleDao = new PriceRuleDAO();
+                var pricePerHour = priceRuleDao.GetPriceToRule(
+                    TimeOnly.FromTimeSpan(startTime),
+                    TimeOnly.FromTimeSpan(endTime),
+                    bookingDate
+                );
+
+                if (pricePerHour == null)
+                {
+                    MessageBox.Show("Không tìm được luật giá phù hợp cho khung giờ này");
+                    txtTotalPrice.Text = "";
+                    return;
+                }
+
+                // 3. Tính tổng tiền = giá/giờ * số giờ đặt
+                double hours = (endTime - startTime).TotalHours;   // ví dụ 1.5 giờ
+                double total = pricePerHour.Value * hours;
+
+                txtTotalPrice.Text = total.ToString("0");
             }
             else
             {
@@ -219,5 +206,9 @@ namespace BadmintonCourtManagement.GUI
                 txtTotalPrice.Text = "";
             }
         }
+
+        private void calBooking_DateChanged(object sender, DateRangeEventArgs e) { }
+
+        private void lblCalStart_Click(object sender, EventArgs e) { }
     }
 }
