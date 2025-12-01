@@ -1,5 +1,6 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using Mysqlx.Crud;
 using System.Runtime.CompilerServices;
 
 namespace BadmintonCourtManagement.GUI
@@ -9,6 +10,8 @@ namespace BadmintonCourtManagement.GUI
         private AccountDTO currentAccount;
         private PermissionBUS permissionBUS = new PermissionBUS();
         private List<PermissionDTO> currentList = new List<PermissionDTO>();
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false, isUpdate = false, isDelete = false;
         private int currentPage;
         private int itemsPerPage;   
         private int totalPages;
@@ -16,10 +19,27 @@ namespace BadmintonCourtManagement.GUI
         {
             InitializeComponent();
             this.currentAccount = currentAccount;
+            CheckPermissions("F11");
             currentPage = 1;
             itemsPerPage = 8;
             totalPages = 1; 
             ReloadList();
+        }
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == currentAccount.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                    else if (p.Option == "Delete") isDelete = true;
+                }
+            }
+
+            btnInsert.Visible = isInsert;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -163,6 +183,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(0, 0, 0, 10)
             };
+            btnUpdate.Visible = isUpdate;
 
             btnView.Click += (s, e) =>
             {

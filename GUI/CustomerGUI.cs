@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DTO;
+using Mysqlx.Crud;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BadmintonCourtManagement.BUS;
-using BadmintonCourtManagement.DTO;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -16,6 +17,8 @@ namespace BadmintonCourtManagement.GUI
     {
         private AccountDTO currentAccount;
         private CustomerBUS customerBUS;
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false, isUpdate = false, isDelete = false;
 
         // Biến phân trang
         private int page = 0;
@@ -32,9 +35,27 @@ namespace BadmintonCourtManagement.GUI
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
+            CheckPermissions("F08");
             customerBUS = new CustomerBUS();
             LoadCustomers(customerBUS.GetAllCustomers());
             
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == currentAccount.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                    else if (p.Option == "Delete") isDelete = true;
+                }
+            }
+
+            lblAddCustomer.Visible = isInsert;
         }
 
         private void CustomerGUI_Load(object sender, EventArgs e)
@@ -211,6 +232,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnDelete.Visible = isDelete;
 
             // Nút Sửa
             var btnEdit = new Button
@@ -224,6 +246,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnEdit.Visible = isUpdate;
 
             // Sự kiện Xóa
             btnDelete.Click += (s, e) =>

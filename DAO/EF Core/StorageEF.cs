@@ -23,7 +23,7 @@ namespace DAO.EF_Core
         {
             using var context = new AppDbContext();
             context.Storages.Add(storage);
-            context.SaveChanges();
+                context.SaveChanges();
             return true;
         }
 

@@ -1,10 +1,11 @@
 
+using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DTO;
+using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using BadmintonCourtManagement.BUS;
-using BadmintonCourtManagement.DTO;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -17,6 +18,8 @@ namespace BadmintonCourtManagement.GUI
         private const int itemPerPage = 8;
         private int totalPages = 0;
         private List<SupplierDTO> currentSupplierList = new List<SupplierDTO>();
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false, isUpdate = false, isDelete = false;
 
         public SupplierGUI()
         {
@@ -28,8 +31,26 @@ namespace BadmintonCourtManagement.GUI
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
+            CheckPermissions("F07");
             supplierBUS = new SupplierBUS();
             LoadSuppliers(supplierBUS.GetAllSuppliers());
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == currentAccount.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                    else if (p.Option == "Delete") isDelete = true;
+                }
+            }
+
+            lblAddSupplier.Visible = isInsert;
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -140,7 +161,9 @@ namespace BadmintonCourtManagement.GUI
             };
 
             var btnDelete = new Button { Text = "Xóa", Width = 70, Height = 35, BackColor = Color.FromArgb(64, 64, 64), ForeColor = Color.White, Font = new Font("Segoe UI", 10, FontStyle.Bold), FlatStyle = FlatStyle.Flat, Margin = new Padding(10, 0, 10, 0) };
+            btnDelete.Visible = isDelete;
             var btnEdit = new Button { Text = "Sửa", Width = 70, Height = 35, BackColor = Color.FromArgb(64, 64, 64), ForeColor = Color.White, Font = new Font("Segoe UI", 10, FontStyle.Bold), FlatStyle = FlatStyle.Flat, Margin = new Padding(10, 0, 10, 0) };
+            btnEdit.Visible = isUpdate;
 
             btnDelete.Click += (s, ev) =>
             {

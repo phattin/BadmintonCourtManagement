@@ -16,20 +16,41 @@ namespace BadmintonCourtManagement.GUI
 {
     public partial class ProductGUI : UserControl
     {
+        private AccountDTO currentAccount;
         private ProductFilterGUI filter; // AI Generated Code
         private List<ProductDTO> productList;
         private int page = 0;
         private int itemPerPage = 8;
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false, isUpdate = false;
 
         public ProductGUI(AccountDTO currentAccount)
         {
+            this.currentAccount = currentAccount;
             InitializeComponent();
+            CheckPermissions("F06");
             productList = new List<ProductDTO>();
             ProductBUS productBUS = new ProductBUS();
             productList = productBUS.GetAllProducts();
             LoadProducts(productList);
             searchBar.KeyDown += searchEnterEvent;
             this.Resize += ProductGUI_Resize;
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == currentAccount.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                }
+            }
+
+            btnAddProduct.Visible = isInsert;
         }
         // private void SetupFilter(ProductFilterGUI filter)
         // {
@@ -233,6 +254,7 @@ namespace BadmintonCourtManagement.GUI
                 Margin = new Padding(10, 0, 10, 0),
                 Anchor = AnchorStyles.None
             };
+            btnEdit.Visible = isUpdate;
 
             // Sự kiện Detail
             btnDetail.Click += (s, e) =>

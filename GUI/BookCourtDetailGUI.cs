@@ -1,5 +1,10 @@
-﻿using BadmintonCourtManagement.DTO;
+﻿using System;
+using System.Drawing;
+using System.Globalization;
+using System.Windows.Forms;
+using BadmintonCourtManagement.DTO;
 using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DAO;   // để dùng PriceRuleDAO
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -20,10 +25,17 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
         }
 
+        // ================== LOAD FORM ==================
         private void BookCourtDetail_Load(object sender, EventArgs e)
         {
-            txtCourtID.Text = courtDTO.CourtId;
+            if (courtDTO != null)
+                txtCourtID.Text = courtDTO.CourtId;
 
+            // Ngày mặc định: hôm nay
+            calBooking.SetDate(DateTime.Today);
+            txtDate.Text = DateTime.Today.ToString("dd/MM/yyyy");
+
+            // Giờ mặc định: bo tròn về 00 hoặc 30 gần nhất phía sau
             int nowMinute = DateTime.Now.Minute;
             int nowHour = DateTime.Now.Hour;
             if (nowMinute < 30)
@@ -33,21 +45,56 @@ namespace BadmintonCourtManagement.GUI
                 nowMinute = 0;
                 nowHour += 1;
             }
-            btnStartTime.SelectedTime = new DateTime(2025, 10, 4, nowHour, nowMinute, 32, 333);
 
-            btnEndTime.SelectedTime = new DateTime(2025, 10, 4, nowHour, nowMinute, 32, 333);
+            var defaultStart = new DateTime(
+                DateTime.Now.Year,
+                DateTime.Now.Month,
+                DateTime.Now.Day,
+                nowHour,
+                nowMinute,
+                0
+            );
+
+            timeStartPicker.Value = defaultStart;
+            timeEndPicker.Value = defaultStart.AddHours(1);
+
+            // đồng bộ sang bên phải (textbox chỉ hiển thị)
+            txtStartTime.Text = timeStartPicker.Value.ToString("HH:mm");
+            txtEndTime.Text = timeEndPicker.Value.ToString("HH:mm");
         }
 
+        // ================== SỰ KIỆN BÊN TRÁI (CHỌN LỊCH & GIỜ) ==================
 
-        private void customPanel3_Paint(object sender, PaintEventArgs e)
+        private void calBooking_DateSelected(object sender, DateRangeEventArgs e)
         {
-
+            // cập nhật ngày bên phải (read-only)
+            txtDate.Text = e.Start.ToString("dd/MM/yyyy");
         }
 
-        private void customPanel2_Paint(object sender, PaintEventArgs e)
+        private void timeStartPicker_ValueChanged(object sender, EventArgs e)
         {
+            // cập nhật giờ bắt đầu bên phải
+            txtStartTime.Text = timeStartPicker.Value.ToString("HH:mm");
 
+            // nếu giờ kết thúc <= giờ bắt đầu thì tự đẩy lên +1h
+            if (timeEndPicker.Value <= timeStartPicker.Value)
+            {
+                timeEndPicker.Value = timeStartPicker.Value.AddHours(1);
+                txtEndTime.Text = timeEndPicker.Value.ToString("HH:mm");
+            }
         }
+
+        private void timeEndPicker_ValueChanged(object sender, EventArgs e)
+        {
+            // cập nhật giờ kết thúc bên phải
+            txtEndTime.Text = timeEndPicker.Value.ToString("HH:mm");
+        }
+
+        // ================== CÁC SỰ KIỆN KHÁC ==================
+
+        private void customPanel3_Paint(object sender, PaintEventArgs e) { }
+
+        private void customPanel2_Paint(object sender, PaintEventArgs e) { }
 
         private void btnBooking_Click(object sender, EventArgs e)
         {
@@ -57,6 +104,7 @@ namespace BadmintonCourtManagement.GUI
             this.Controls.Add(bookingGUI);
         }
 
+        // Validate giờ bắt đầu (textbox chỉ nhận text từ timeStartPicker)
         private void txtStartTime_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtDate.Text))
@@ -70,18 +118,7 @@ namespace BadmintonCourtManagement.GUI
             {
                 if (TimeSpan.TryParse(txtStartTime.Text, out TimeSpan startTime))
                 {
-                    TimeSpan minTime = new TimeSpan(5, 0, 0);   // 5h00
-                    TimeSpan maxTime = new TimeSpan(23, 0, 0);  // 23h00
-
-                    // Kiểm tra khoảng giờ hợp lệ
-                    if (startTime < minTime || startTime >= maxTime)
-                    {
-                        MessageBox.Show("Giờ bắt đầu phải nằm trong khoảng 5h00 - 23h00");
-                        txtStartTime.Text = "";
-                        return;
-                    }
-
-                    // Kiểm tra phút chỉ được là 00 hoặc 30
+                    // kiểm tra phút 00 hoặc 30
                     if (!(startTime.Minutes == 0 || startTime.Minutes == 30))
                     {
                         MessageBox.Show("Chỉ được chọn phút là 00 hoặc 30");
@@ -95,9 +132,9 @@ namespace BadmintonCourtManagement.GUI
                     txtStartTime.Text = "";
                 }
             }
-
         }
 
+        // Validate giờ kết thúc + gọi DAO tính tiền
         private void txtEndTime_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtStartTime.Text))
@@ -110,24 +147,7 @@ namespace BadmintonCourtManagement.GUI
             if (TimeSpan.TryParse(txtStartTime.Text, out TimeSpan startTime) &&
                 TimeSpan.TryParse(txtEndTime.Text, out TimeSpan endTime))
             {
-                TimeSpan minTime = new TimeSpan(5, 0, 0);
-                TimeSpan maxTime = new TimeSpan(23, 0, 0);
-
-                if (endTime > maxTime)
-                {
-                    MessageBox.Show("Thời gian chỉ được đặt trong khoảng 5h00 - 23h00");
-                    txtEndTime.Text = "";
-                    return;
-                }
-
-                if (endTime <= startTime)
-                {
-                    MessageBox.Show("Giờ kết thúc phải sau giờ bắt đầu");
-                    txtEndTime.Text = "";
-                    return;
-                }
-
-                // Thời gian tối thiểu 1 giờ
+                // tối thiểu 1 tiếng
                 if ((endTime - startTime).TotalMinutes < 60)
                 {
                     MessageBox.Show("Thời gian đặt tối thiểu là 1 tiếng");
@@ -135,7 +155,7 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
-                // Kiểm tra phút chỉ được là 00 hoặc 30
+                // phút phải là 00 hoặc 30
                 if (!((startTime.Minutes == 0 || startTime.Minutes == 30) &&
                       (endTime.Minutes == 0 || endTime.Minutes == 30)))
                 {
@@ -144,29 +164,41 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
-                // Tính tiền theo block 30 phút
-                decimal totalPrice = 0;
-                TimeSpan current = startTime;
+                // ======= DÙNG PRICE RULE ĐỂ TÍNH TIỀN =======
 
-                while (current < endTime)
+                // 1. Lấy bookingDate từ txtDate (dd/MM/yyyy)
+                if (!DateOnly.TryParseExact(
+                        txtDate.Text,
+                        "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out DateOnly bookingDate))
                 {
-                    TimeSpan next = current.Add(new TimeSpan(0, 30, 0)); // cộng 30 phút
-                    if (next > endTime) next = endTime;
-
-                    // Nếu block này nằm trong khung 5h-16h
-                    if (current >= new TimeSpan(5, 0, 0) && current < new TimeSpan(16, 0, 0))
-                    {
-                        totalPrice += 30000; // 30k mỗi 30 phút
-                    }
-                    else if (current >= new TimeSpan(16, 0, 0) && current < new TimeSpan(23, 0, 0))
-                    {
-                        totalPrice += 40000; // 40k mỗi 30 phút
-                    }
-
-                    current = next;
+                    MessageBox.Show("Ngày đặt không hợp lệ");
+                    txtTotalPrice.Text = "";
+                    return;
                 }
 
-                txtTotalPrice.Text = totalPrice.ToString();
+                // 2. Gọi DAO để lấy giá / giờ
+                var priceRuleDao = new PriceRuleDAO();
+                var pricePerHour = priceRuleDao.GetPriceToRule(
+                    TimeOnly.FromTimeSpan(startTime),
+                    TimeOnly.FromTimeSpan(endTime),
+                    bookingDate
+                );
+
+                if (pricePerHour == null)
+                {
+                    MessageBox.Show("Không tìm được luật giá phù hợp cho khung giờ này");
+                    txtTotalPrice.Text = "";
+                    return;
+                }
+
+                // 3. Tính tổng tiền = giá/giờ * số giờ đặt
+                double hours = (endTime - startTime).TotalHours;   // ví dụ 1.5 giờ
+                double total = pricePerHour.Value * hours;
+
+                txtTotalPrice.Text = total.ToString("0");
             }
             else
             {
@@ -175,19 +207,8 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
-        private void btnStartTime_Load(object sender, EventArgs e)
-        {
+        private void calBooking_DateChanged(object sender, DateRangeEventArgs e) { }
 
-        }
-        
-        private void btnStartTime_ValueChanged(object sender, EventArgs e)
-        {
-            txtStartTime.Text = btnStartTime.SelectedTime.ToString("HH:mm");
-        }
-
-        private void btnEndTime_ValueChanged(object sender, EventArgs e)
-        {
-            txtEndTime.Text = btnEndTime.SelectedTime.ToString("HH:mm");
-        }
+        private void lblCalStart_Click(object sender, EventArgs e) { }
     }
 }

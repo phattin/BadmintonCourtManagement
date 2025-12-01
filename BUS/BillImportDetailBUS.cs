@@ -6,6 +6,9 @@ namespace BadmintonCourtManagement.BUS
     public class BillImportDetailBUS
     {
         private BillImportDetailDAO dao = new BillImportDetailDAO();
+        public string GetMaxId() {
+            return dao.GetMaxId();
+        }
         public bool InsertBillImportDetail(BillImportDetailDTO bill)
         {
             return dao.InsertBillImportDetail(bill);

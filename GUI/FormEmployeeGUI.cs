@@ -113,42 +113,58 @@ namespace BadmintonCourtManagement.GUI
             // ---- THÊM MỚI ----  
             if (mode == "Insert")
             {
-                if (employeeBUS.InsertEmployee(emp))
+                try
                 {
-                    MessageBox.Show("Thêm nhân viên thành công!",
-                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    Form parentForm = this.FindForm();
-                    if (parentForm != null)
+                    if (employeeBUS.InsertEmployee(emp))
                     {
-                        parentForm.Close();
+                        MessageBox.Show("Thêm nhân viên thành công!",
+                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        Form parentForm = this.FindForm();
+                        if (parentForm != null)
+                        {
+                            parentForm.Close();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Thêm nhân viên thất bại! Vui lòng kiểm tra lại.",
+                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
-                else
+                catch (ArgumentException aex)
                 {
-                    MessageBox.Show("Thêm nhân viên thất bại! Vui lòng kiểm tra lại.",
-                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(aex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
             // ---- CẬP NHẬT ----
             else if (mode == "Update")
             {
-                if (employeeBUS.UpdateEmployee(emp))
+                try
                 {
-                    MessageBox.Show("Cập nhật nhân viên thành công!",
-                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    Form parentForm = this.FindForm();
-                    if (parentForm != null)
+                    if (employeeBUS.UpdateEmployee(emp))
                     {
-                        parentForm.Close();
+                        MessageBox.Show("Cập nhật nhân viên thành công!",
+                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        Form parentForm = this.FindForm();
+                        if (parentForm != null)
+                        {
+                            parentForm.Close();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cập nhật nhân viên thất bại! Vui lòng kiểm tra lại.",
+                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
-                else
+                catch (ArgumentException ex)
                 {
-                    MessageBox.Show("Cập nhật nhân viên thất bại! Vui lòng kiểm tra lại.",
-                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -160,6 +176,11 @@ namespace BadmintonCourtManagement.GUI
             Form parentForm = this.FindForm();
             if (parentForm != null)
                 parentForm.Close();
+        }
+
+        private void Title_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
