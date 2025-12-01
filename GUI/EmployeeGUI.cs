@@ -3,7 +3,6 @@ using BadmintonCourtManagement.DTO;
 using GUI;
 using Mysqlx.Crud;
 using System;
-﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,15 +17,6 @@ namespace BadmintonCourtManagement.GUI
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
         private bool isInsert = false, isUpdate = false, isDelete = false;
         public EmployeeGUI(AccountDTO currentAccount)
-        private EmployeeBUS employeeBUS;
-        private List<EmployeeDTO> currentList = new List<EmployeeDTO>();
-
-        private int currentPage;
-        private int itemsPerPage;
-        private int totalPages;
-
-        // Constructor mặc định – KHỞI TẠO GIỐNG COURT
-        public EmployeeGUI()
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
@@ -48,6 +38,32 @@ namespace BadmintonCourtManagement.GUI
             }
 
             add.Visible = isInsert;
+        }
+
+        private void buttonEnter(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn != null)
+            {
+                btn.BackColor = Color.FromArgb(60, 60, 60);
+            }
+        }
+
+        private int currentPage;
+        private int itemsPerPage;
+        private int totalPages;
+
+        // Constructor mặc định – KHỞI TẠO GIỐNG COURT
+        public EmployeeGUI()
+        {
+            InitializeComponent();
+
+            employeeBUS = new EmployeeBUS();
+            currentPage = 1;
+            itemsPerPage = 8;
+            totalPages = 1;
+
+            ReloadEmployeeList();
         }
 
         // Constructor có AccountDTO – cũng khởi tạo như trên

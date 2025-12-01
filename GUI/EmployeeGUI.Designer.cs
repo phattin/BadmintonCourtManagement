@@ -206,18 +206,14 @@
             // 
             // EmployeeGUI
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
+            AutoScaleDimensions = new SizeF(12F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             AutoSize = true;
-            BackColor = Color.White;
-            Controls.Add(btnAdd);
-            Controls.Add(extraNextButton);
-            Controls.Add(nextButton);
-            Controls.Add(extraPreviousButton);
-            Controls.Add(previousButton);
-            Controls.Add(customPanel1);
-            Controls.Add(lblTitle);
+            Controls.Add(pagination);
+            Controls.Add(cardList);
+            Controls.Add(toolBar);
+            Controls.Add(titlePanel);
             Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(0);
             Name = "EmployeeGUI";
