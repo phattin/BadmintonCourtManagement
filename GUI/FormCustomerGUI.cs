@@ -14,39 +14,115 @@ namespace BadmintonCourtManagement.GUI
         private CustomerBUS customerBUS = new CustomerBUS();
 
         public FormCustomerGUI(string mode, string customerId = null, AccountDTO currentAccount = null)
+{
+    InitializeComponent();
+
+    this.mode = mode;
+    this.customerId = customerId;
+
+    txtCustomerId.Enabled = false;
+    txtCustomerId.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
+
+    // THÊM DÒNG NÀY ĐỂ CHẶN KÝ TỰ KHÔNG HỢP LỆ KHI GÕ
+    txtCustomerName.KeyPress += TxtCustomerName_KeyPress;
+    txtCustomerPhone.KeyPress += txtCustomerPhone_KeyPress;
+
+    if (mode == "Insert")
+    {
+        lblTitle.Text = "THÊM KHÁCH HÀNG";
+        string newId = GenerateNewCustomerId();
+        txtCustomerId.Text = newId;
+        this.customerId = newId;
+    }
+    else if (mode == "Update")
+    {
+        lblTitle.Text = "CẬP NHẬT THÔNG TIN";
+        txtCustomerId.Text = customerId;
+
+        var customer = customerBUS.GetCustomerById(customerId);
+        if (customer != null)
         {
-            InitializeComponent();
+            txtCustomerName.Text = customer.CustomerName;
+            txtCustomerPhone.Text = customer.CustomerPhone;
+        }
+    }
+}
+private void TxtCustomerName_KeyPress(object sender, KeyPressEventArgs e)
+{
+    // Danh sách các ký tự được phép (bao gồm dấu tiếng Việt phổ biến)
+    string allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" +
+                          "ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúý" +
+                          "ĂăĐđĨĩŨũƠơƯưẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ" +
+                          " "; // khoảng trắng và gạch ngang
 
-            this.mode = mode;
-            this.customerId = customerId; // Có thể null khi Insert
+    // Cho phép phím điều khiển (Backspace, Delete, Left/Right Arrow, Ctrl+A, Ctrl+C, v.v.)
+    if (char.IsControl(e.KeyChar))
+    {
+        return;
+    }
 
-            // Tắt chỉnh sửa mã khách hàng
-            txtCustomerId.Enabled = false;
-            txtCustomerId.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
+    // Cho phép khoảng trắng và gạch ngang chỉ khi không phải ở đầu hoặc liên tiếp
+    if (e.KeyChar == ' ' || e.KeyChar == '-')
+    {
+        string currentText = txtCustomerName.Text;
+        int cursorPos = txtCustomerName.SelectionStart;
 
-            if (mode == "Insert")
+        // Không cho nhập khoảng trắng ở đầu hoặc liên tiếp
+        if (e.KeyChar == ' ')
+        {
+            if (cursorPos == 0 || currentText[cursorPos - 1] == ' ')
             {
-                lblTitle.Text = "THÊM KHÁCH HÀNG";
-                
-                // TỰ ĐỘNG TẠO MÃ KHÁCH HÀNG MỚI
-                string newId = GenerateNewCustomerId();
-                txtCustomerId.Text = newId;
-                this.customerId = newId; // Gán luôn để dùng khi lưu
-            }
-            else if (mode == "Update")
-            {
-                lblTitle.Text = "CẬP NHẬT THÔNG TIN";
-
-                txtCustomerId.Text = customerId;
-
-                var customer = customerBUS.GetCustomerById(customerId);
-                if (customer != null)
-                {
-                    txtCustomerName.Text = customer.CustomerName;
-                    txtCustomerPhone.Text = customer.CustomerPhone;
-                }
+                e.Handled = true;
+                return;
             }
         }
+
+        // Không cho nhập gạch ngang ở đầu hoặc liên tiếp
+        if (e.KeyChar == '-')
+        {
+            if (cursorPos == 0 || currentText[cursorPos - 1] == '-' || currentText[cursorPos - 1] == ' ')
+            {
+                e.Handled = true;
+                return;
+            }
+        }
+    }
+
+    // Chặn nếu không phải ký tự được phép
+    if (!allowedChars.Contains(e.KeyChar))
+    {
+        e.Handled = true;
+        // Tùy chọn: hiện thông báo nhỏ
+        ToolTip tt = new ToolTip();
+        tt.Show("Chỉ được nhập chữ cái, khoảng trắng", txtCustomerName, 0, -50, 2000);
+    }
+}
+private void txtCustomerPhone_KeyPress(object sender, KeyPressEventArgs e)
+{
+    // 1. Chỉ cho phép số (0-9) và phím điều khiển (Backspace, Delete, Ctrl+A, v.v.)
+    if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+    {
+        e.Handled = true;
+        ToolTip tt = new ToolTip();
+        tt.Show("Chỉ được nhập số!", txtCustomerPhone, 0, -40, 1500);
+        return;
+    }
+
+    // 2. Không cho nhập quá 10 số (ngăn ngay khi gõ)
+    if (char.IsDigit(e.KeyChar))
+    {
+        string currentText = txtCustomerPhone.Text;
+        int selectionLength = txtCustomerPhone.SelectionLength;
+        int futureLength = currentText.Length + 1 - selectionLength;
+
+        if (futureLength > 10)
+        {
+            e.Handled = true;
+            ToolTip tt = new ToolTip();
+            tt.Show("Số điện thoại phải đúng 10 số!", txtCustomerPhone, 0, -40, 1500);
+        }
+    }
+}
 
         // HÀM TỰ ĐỘNG TẠO MÃ KHÁCH HÀNG MỚI (CUS0001, CUS0002, ...)
         private string GenerateNewCustomerId()
@@ -111,7 +187,7 @@ namespace BadmintonCourtManagement.GUI
 
             if (phone.Length < 10 || phone.Length > 11 || !phone.All(char.IsDigit))
             {
-                MessageBox.Show("Số điện thoại phải là 10 hoặc 11 chữ số.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Số điện thoại phải là 10 số ", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

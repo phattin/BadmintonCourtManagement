@@ -299,10 +299,9 @@ namespace BadmintonCourtManagement.GUI
             textBox1.ForeColor = Color.Black;
             textBox1.Location = new Point(765, 37);
             textBox1.Margin = new Padding(70, 12, 0, 0);
-            textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Tìm sân...";
-            textBox1.Size = new Size(265, 30);
+            textBox1.Size = new Size(265, 24);
             textBox1.TabIndex = 6;
             // 
             // label4
