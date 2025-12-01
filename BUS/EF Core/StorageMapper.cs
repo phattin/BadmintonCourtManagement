@@ -13,7 +13,7 @@ namespace BUS.EF_Core
             return new StorageEntity.Storage
             {
                 StorageId = dto.StorageId,
-                ImportBillId = dto.ImportBillId,
+                ImportBillDetailId = dto.ImportBillDetailId,
                 ProductId = dto.ProductId,
                 Quantity = dto.Quantity,
                 Price = dto.Price,
@@ -29,7 +29,7 @@ namespace BUS.EF_Core
             return new StorageDTO
             {
                 StorageId = entity.StorageId,
-                ImportBillId = entity.ImportBillId,
+                ImportBillDetailId = entity.ImportBillDetailId,
                 ProductId = entity.ProductId,
                 Quantity = entity.Quantity,
                 Price = entity.Price,

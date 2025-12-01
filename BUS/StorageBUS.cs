@@ -33,7 +33,7 @@ namespace BadmintonCourtManagement.BUS
                 StorageList.Add(new StorageDTO()
                 {
                     StorageId = "KH" + (i + 1),
-                    ImportBillId = "NH" + (i + 1),
+                    ImportBillDetailId = "NH" + (i + 1),
                     ProductId = "SP" + (i + 1),
                     Quantity = random.Next(0, 100) + 1,
                     Price = random.Next(0, 1000) + 1,

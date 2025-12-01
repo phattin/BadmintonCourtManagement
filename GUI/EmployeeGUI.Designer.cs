@@ -29,308 +29,180 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeGUI));
-            titlePanel = new TableLayoutPanel();
-            title = new Label();
-            add = new Button();
-            toolBar = new TableLayoutPanel();
-            reset = new Button();
-            endDate = new DateTimePicker();
-            endLabel = new Label();
-            searchBar = new TextBox();
-            startDate = new DateTimePicker();
-            startLabel = new Label();
-            filter = new Button();
-            cardList = new TableLayoutPanel();
-            pagination = new Panel();
-            extraNext = new Button();
-            extraPrevious = new Button();
-            next = new Button();
-            previous = new Button();
-            titlePanel.SuspendLayout();
-            toolBar.SuspendLayout();
-            pagination.SuspendLayout();
+            extraNextButton = new Button();
+            nextButton = new Button();
+            extraPreviousButton = new Button();
+            previousButton = new Button();
+            customPanel1 = new CustomPanel();
+            pEmployeeList = new TableLayoutPanel();
+            customPanel2 = new CustomPanel();
+            customPanel3 = new CustomPanel();
+            textBox1 = new TextBox();
+            lblTitle = new Label();
+            btnAdd = new Label();
+            customPanel1.SuspendLayout();
+            customPanel2.SuspendLayout();
+            customPanel3.SuspendLayout();
             SuspendLayout();
             // 
-            // titlePanel
+            // extraNextButton
             // 
-            titlePanel.ColumnCount = 2;
-            titlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            titlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            titlePanel.Controls.Add(title, 0, 0);
-            titlePanel.Controls.Add(add, 1, 0);
-            titlePanel.Dock = DockStyle.Top;
-            titlePanel.Location = new Point(0, 0);
-            titlePanel.Margin = new Padding(0);
-            titlePanel.Name = "titlePanel";
-            titlePanel.RowCount = 1;
-            titlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            titlePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            titlePanel.Size = new Size(1199, 54);
-            titlePanel.TabIndex = 6;
+            extraNextButton.Anchor = AnchorStyles.Bottom;
+            extraNextButton.BackColor = Color.Transparent;
+            extraNextButton.Cursor = Cursors.Hand;
+            extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
+            extraNextButton.Location = new Point(607, 522);
+            extraNextButton.Margin = new Padding(2);
+            extraNextButton.Name = "extraNextButton";
+            extraNextButton.Size = new Size(37, 32);
+            extraNextButton.TabIndex = 29;
+            extraNextButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            extraNextButton.UseVisualStyleBackColor = false;
+            extraNextButton.Click += extraNextButton_Click;
             // 
-            // title
+            // nextButton
             // 
-            title.Dock = DockStyle.Fill;
-            title.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            title.Location = new Point(0, 0);
-            title.Margin = new Padding(0);
-            title.Name = "title";
-            title.Size = new Size(599, 54);
-            title.TabIndex = 3;
-            title.Text = "Nhân viên";
-            title.TextAlign = ContentAlignment.MiddleLeft;
+            nextButton.Anchor = AnchorStyles.Bottom;
+            nextButton.BackColor = Color.Transparent;
+            nextButton.Cursor = Cursors.Hand;
+            nextButton.Image = (Image)resources.GetObject("nextButton.Image");
+            nextButton.Location = new Point(554, 522);
+            nextButton.Margin = new Padding(2);
+            nextButton.Name = "nextButton";
+            nextButton.Size = new Size(37, 32);
+            nextButton.TabIndex = 28;
+            nextButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            nextButton.UseVisualStyleBackColor = false;
+            nextButton.Click += nextButton_Click;
             // 
-            // add
+            // extraPreviousButton
             // 
-            add.AutoSize = true;
-            add.BackColor = Color.Black;
-            add.Cursor = Cursors.Hand;
-            add.Dock = DockStyle.Right;
-            add.ForeColor = Color.White;
-            add.Location = new Point(1099, 0);
-            add.Margin = new Padding(0, 0, 10, 0);
-            add.Name = "add";
-            add.Size = new Size(90, 54);
-            add.TabIndex = 4;
-            add.Text = "+ Thêm";
-            add.UseVisualStyleBackColor = false;
-            add.Click += add_Click;
-            add.MouseEnter += buttonEnter;
-            add.MouseLeave += buttonLeave;
+            extraPreviousButton.Anchor = AnchorStyles.Bottom;
+            extraPreviousButton.BackColor = Color.Transparent;
+            extraPreviousButton.Cursor = Cursors.Hand;
+            extraPreviousButton.ForeColor = Color.Transparent;
+            extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
+            extraPreviousButton.Location = new Point(429, 522);
+            extraPreviousButton.Margin = new Padding(2);
+            extraPreviousButton.Name = "extraPreviousButton";
+            extraPreviousButton.Size = new Size(37, 32);
+            extraPreviousButton.TabIndex = 27;
+            extraPreviousButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            extraPreviousButton.UseVisualStyleBackColor = false;
+            extraPreviousButton.Click += extraPreviousButton_Click;
             // 
-            // toolBar
+            // previousButton
             // 
-            toolBar.BackColor = Color.FromArgb(0, 120, 103);
-            toolBar.ColumnCount = 7;
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.5029163F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.8008471F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.0972042F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.0855179F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.59355F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.521287F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8.398679F));
-            toolBar.Controls.Add(reset, 6, 0);
-            toolBar.Controls.Add(endDate, 4, 0);
-            toolBar.Controls.Add(endLabel, 3, 0);
-            toolBar.Controls.Add(searchBar, 0, 0);
-            toolBar.Controls.Add(startDate, 2, 0);
-            toolBar.Controls.Add(startLabel, 1, 0);
-            toolBar.Controls.Add(filter, 5, 0);
-            toolBar.Dock = DockStyle.Top;
-            toolBar.Font = new Font("Segoe UI", 9F);
-            toolBar.Location = new Point(0, 54);
-            toolBar.Margin = new Padding(0);
-            toolBar.Name = "toolBar";
-            toolBar.Padding = new Padding(8);
-            toolBar.RowCount = 1;
-            toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            toolBar.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            toolBar.Size = new Size(1199, 88);
-            toolBar.TabIndex = 7;
+            previousButton.Anchor = AnchorStyles.Bottom;
+            previousButton.BackColor = Color.Transparent;
+            previousButton.BackgroundImageLayout = ImageLayout.Stretch;
+            previousButton.Cursor = Cursors.Hand;
+            previousButton.Image = (Image)resources.GetObject("previousButton.Image");
+            previousButton.Location = new Point(481, 522);
+            previousButton.Margin = new Padding(2);
+            previousButton.Name = "previousButton";
+            previousButton.Size = new Size(37, 32);
+            previousButton.TabIndex = 26;
+            previousButton.TextImageRelation = TextImageRelation.TextAboveImage;
+            previousButton.UseVisualStyleBackColor = false;
+            previousButton.Click += previousButton_Click;
             // 
-            // reset
+            // customPanel1
             // 
-            reset.BackColor = Color.FromArgb(0, 120, 103);
-            reset.Cursor = Cursors.Hand;
-            reset.Dock = DockStyle.Fill;
-            reset.FlatAppearance.BorderSize = 0;
-            reset.FlatStyle = FlatStyle.Flat;
-            reset.Image = Properties.Resources.Reset;
-            reset.Location = new Point(1088, 8);
-            reset.Margin = new Padding(0);
-            reset.Name = "reset";
-            reset.Size = new Size(103, 72);
-            reset.TabIndex = 5;
-            reset.UseVisualStyleBackColor = false;
-            reset.MouseEnter += filterButton_MouseEnter;
-            reset.MouseLeave += filterButton_MouseLeave;
+            customPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            customPanel1.BackColor = Color.FromArgb(239, 248, 230);
+            customPanel1.BorderRadius = 20;
+            customPanel1.Controls.Add(pEmployeeList);
+            customPanel1.Controls.Add(customPanel2);
+            customPanel1.Location = new Point(44, 69);
+            customPanel1.Name = "customPanel1";
+            customPanel1.Size = new Size(1003, 439);
+            customPanel1.TabIndex = 24;
             // 
-            // endDate
+            // pEmployeeList
             // 
-            endDate.Cursor = Cursors.Hand;
-            endDate.CustomFormat = "dd/MM/yyyy";
-            endDate.Dock = DockStyle.Fill;
-            endDate.DropDownAlign = LeftRightAlignment.Right;
-            endDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            endDate.Format = DateTimePickerFormat.Custom;
-            endDate.Location = new Point(792, 23);
-            endDate.Margin = new Padding(0, 15, 8, 0);
-            endDate.Name = "endDate";
-            endDate.ShowUpDown = true;
-            endDate.Size = new Size(188, 39);
-            endDate.TabIndex = 3;
+            pEmployeeList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pEmployeeList.ColumnCount = 4;
+            pEmployeeList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pEmployeeList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pEmployeeList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pEmployeeList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            pEmployeeList.Location = new Point(38, 76);
+            pEmployeeList.Margin = new Padding(2);
+            pEmployeeList.Name = "pEmployeeList";
+            pEmployeeList.RowCount = 2;
+            pEmployeeList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pEmployeeList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            pEmployeeList.Size = new Size(927, 329);
+            pEmployeeList.TabIndex = 1;
             // 
-            // endLabel
+            // customPanel2
             // 
-            endLabel.AutoSize = true;
-            endLabel.Dock = DockStyle.Fill;
-            endLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            endLabel.ForeColor = Color.White;
-            endLabel.Location = new Point(646, 8);
-            endLabel.Margin = new Padding(8, 0, 0, 0);
-            endLabel.Name = "endLabel";
-            endLabel.Size = new Size(146, 72);
-            endLabel.TabIndex = 3;
-            endLabel.Text = "Ngày kết thúc:";
-            endLabel.TextAlign = ContentAlignment.MiddleCenter;
+            customPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
+            customPanel2.BorderRadius = 20;
+            customPanel2.Controls.Add(customPanel3);
+            customPanel2.Location = new Point(0, 0);
+            customPanel2.Name = "customPanel2";
+            customPanel2.Size = new Size(1003, 55);
+            customPanel2.TabIndex = 0;
+            customPanel2.Paint += customPanel2_Paint;
             // 
-            // searchBar
+            // customPanel3
             // 
-            searchBar.Cursor = Cursors.IBeam;
-            searchBar.Dock = DockStyle.Fill;
-            searchBar.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            searchBar.Location = new Point(8, 23);
-            searchBar.Margin = new Padding(0, 15, 8, 0);
-            searchBar.Name = "searchBar";
-            searchBar.PlaceholderText = "Tìm kiếm...";
-            searchBar.Size = new Size(281, 39);
-            searchBar.TabIndex = 1;
+            customPanel3.BackColor = Color.White;
+            customPanel3.BorderRadius = 30;
+            customPanel3.Controls.Add(textBox1);
+            customPanel3.Location = new Point(13, 9);
+            customPanel3.Margin = new Padding(3, 2, 3, 2);
+            customPanel3.Name = "customPanel3";
+            customPanel3.Size = new Size(455, 38);
+            customPanel3.TabIndex = 1;
             // 
-            // startDate
+            // textBox1
             // 
-            startDate.Cursor = Cursors.Hand;
-            startDate.CustomFormat = "dd/MM/yyyy";
-            startDate.Dock = DockStyle.Fill;
-            startDate.DropDownAlign = LeftRightAlignment.Right;
-            startDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            startDate.Format = DateTimePickerFormat.Custom;
-            startDate.Location = new Point(448, 23);
-            startDate.Margin = new Padding(0, 15, 8, 0);
-            startDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
-            startDate.Name = "startDate";
-            startDate.ShowUpDown = true;
-            startDate.Size = new Size(182, 39);
-            startDate.TabIndex = 2;
-            startDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.ForeColor = Color.Black;
+            textBox1.Location = new Point(12, 10);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Value";
+            textBox1.Size = new Size(397, 16);
+            textBox1.TabIndex = 0;
+            textBox1.TextChanged += txtBox1_TextChanged;
             // 
-            // startLabel
+            // lblTitle
             // 
-            startLabel.AutoSize = true;
-            startLabel.Dock = DockStyle.Fill;
-            startLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            startLabel.ForeColor = Color.White;
-            startLabel.Location = new Point(297, 8);
-            startLabel.Margin = new Padding(0);
-            startLabel.Name = "startLabel";
-            startLabel.Size = new Size(151, 72);
-            startLabel.TabIndex = 2;
-            startLabel.Text = "Ngày bắt đầu:";
-            startLabel.TextAlign = ContentAlignment.MiddleCenter;
+            lblTitle.AutoSize = true;
+            lblTitle.BackColor = Color.White;
+            lblTitle.Font = new Font("Segoe UI Semibold", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.Black;
+            lblTitle.Location = new Point(41, 21);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Padding = new Padding(9, 8, 9, 8);
+            lblTitle.Size = new Size(133, 46);
+            lblTitle.TabIndex = 23;
+            lblTitle.Text = "Nhân viên";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            lblTitle.UseWaitCursor = true;
             // 
-            // filter
+            // btnAdd
             // 
-            filter.BackColor = Color.FromArgb(0, 120, 103);
-            filter.Cursor = Cursors.Hand;
-            filter.Dock = DockStyle.Fill;
-            filter.FlatAppearance.BorderSize = 0;
-            filter.FlatStyle = FlatStyle.Flat;
-            filter.Image = Properties.Resources.Filter;
-            filter.Location = new Point(988, 8);
-            filter.Margin = new Padding(0);
-            filter.Name = "filter";
-            filter.Size = new Size(100, 72);
-            filter.TabIndex = 4;
-            filter.UseVisualStyleBackColor = false;
-            filter.MouseEnter += filterButton_MouseEnter;
-            filter.MouseLeave += filterButton_MouseLeave;
-            // 
-            // cardList
-            // 
-            cardList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            cardList.AutoScroll = true;
-            cardList.BackColor = Color.FromArgb(239, 248, 230);
-            cardList.ColumnCount = 4;
-            cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            cardList.Font = new Font("Segoe UI", 11F);
-            cardList.Location = new Point(4, 142);
-            cardList.Margin = new Padding(0);
-            cardList.Name = "cardList";
-            cardList.RowCount = 2;
-            cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            cardList.Size = new Size(1195, 580);
-            cardList.TabIndex = 8;
-            // 
-            // pagination
-            // 
-            pagination.Controls.Add(extraNext);
-            pagination.Controls.Add(extraPrevious);
-            pagination.Controls.Add(next);
-            pagination.Controls.Add(previous);
-            pagination.Dock = DockStyle.Bottom;
-            pagination.Location = new Point(0, 722);
-            pagination.Margin = new Padding(0);
-            pagination.Name = "pagination";
-            pagination.Size = new Size(1199, 81);
-            pagination.TabIndex = 9;
-            // 
-            // extraNext
-            // 
-            extraNext.Anchor = AnchorStyles.None;
-            extraNext.BackColor = Color.Transparent;
-            extraNext.Cursor = Cursors.Hand;
-            extraNext.FlatAppearance.BorderSize = 0;
-            extraNext.FlatStyle = FlatStyle.Flat;
-            extraNext.Image = (Image)resources.GetObject("extraNext.Image");
-            extraNext.Location = new Point(696, 12);
-            extraNext.Margin = new Padding(2);
-            extraNext.Name = "extraNext";
-            extraNext.Size = new Size(60, 58);
-            extraNext.TabIndex = 16;
-            extraNext.TextImageRelation = TextImageRelation.ImageAboveText;
-            extraNext.UseVisualStyleBackColor = false;
-            // 
-            // extraPrevious
-            // 
-            extraPrevious.Anchor = AnchorStyles.None;
-            extraPrevious.BackColor = Color.Transparent;
-            extraPrevious.Cursor = Cursors.Hand;
-            extraPrevious.FlatAppearance.BorderSize = 0;
-            extraPrevious.FlatStyle = FlatStyle.Flat;
-            extraPrevious.ForeColor = Color.Transparent;
-            extraPrevious.Image = (Image)resources.GetObject("extraPrevious.Image");
-            extraPrevious.Location = new Point(441, 12);
-            extraPrevious.Margin = new Padding(0);
-            extraPrevious.Name = "extraPrevious";
-            extraPrevious.Size = new Size(60, 58);
-            extraPrevious.TabIndex = 13;
-            extraPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
-            extraPrevious.UseVisualStyleBackColor = false;
-            // 
-            // next
-            // 
-            next.Anchor = AnchorStyles.None;
-            next.BackColor = Color.Transparent;
-            next.Cursor = Cursors.Hand;
-            next.FlatAppearance.BorderSize = 0;
-            next.FlatStyle = FlatStyle.Flat;
-            next.Image = (Image)resources.GetObject("next.Image");
-            next.Location = new Point(611, 12);
-            next.Margin = new Padding(2);
-            next.Name = "next";
-            next.Size = new Size(60, 58);
-            next.TabIndex = 15;
-            next.TextImageRelation = TextImageRelation.ImageAboveText;
-            next.UseVisualStyleBackColor = false;
-            // 
-            // previous
-            // 
-            previous.Anchor = AnchorStyles.None;
-            previous.BackColor = Color.Transparent;
-            previous.Cursor = Cursors.Hand;
-            previous.FlatAppearance.BorderSize = 0;
-            previous.FlatStyle = FlatStyle.Flat;
-            previous.Image = (Image)resources.GetObject("previous.Image");
-            previous.Location = new Point(526, 12);
-            previous.Margin = new Padding(2);
-            previous.Name = "previous";
-            previous.Size = new Size(60, 58);
-            previous.TabIndex = 14;
-            previous.TextImageRelation = TextImageRelation.ImageAboveText;
-            previous.UseVisualStyleBackColor = false;
+            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAdd.AutoSize = true;
+            btnAdd.BackColor = Color.FromArgb(64, 64, 64);
+            btnAdd.Cursor = Cursors.Hand;
+            btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.ForeColor = Color.White;
+            btnAdd.Location = new Point(896, 21);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Padding = new Padding(9, 8, 9, 10);
+            btnAdd.Size = new Size(151, 39);
+            btnAdd.TabIndex = 30;
+            btnAdd.Text = "Thêm nhân viên";
+            btnAdd.TextAlign = ContentAlignment.MiddleCenter;
+            btnAdd.Click += btnAdd_Click;
             // 
             // EmployeeGUI
             // 
@@ -345,34 +217,28 @@
             Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(0);
             Name = "EmployeeGUI";
-            Size = new Size(1199, 803);
-            Load += storageGUI_Load;
-            titlePanel.ResumeLayout(false);
-            titlePanel.PerformLayout();
-            toolBar.ResumeLayout(false);
-            toolBar.PerformLayout();
-            pagination.ResumeLayout(false);
+            Size = new Size(1088, 574);
+            customPanel1.ResumeLayout(false);
+            customPanel2.ResumeLayout(false);
+            customPanel3.ResumeLayout(false);
+            customPanel3.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private TableLayoutPanel titlePanel;
-        private Label title;
-        private Button add;
-        private TableLayoutPanel toolBar;
-        private Button reset;
-        private DateTimePicker endDate;
-        private Label endLabel;
-        private TextBox searchBar;
-        private DateTimePicker startDate;
-        private Label startLabel;
-        private Button filter;
-        private TableLayoutPanel cardList;
-        private Panel pagination;
-        private Button extraNext;
-        private Button extraPrevious;
-        private Button next;
-        private Button previous;
+        private Button extraNextButton;
+        private Button nextButton;
+        private Button extraPreviousButton;
+        private Button previousButton;
+        private CustomPanel customPanel1;
+        private TableLayoutPanel pEmployeeList;
+        private Label lblTitle;
+        private CustomPanel customPanel2;
+        private CustomPanel customPanel3;
+        //private PictureBox btnDelete;
+        private TextBox textBox1;
+        private Label btnAdd;
     }
 }

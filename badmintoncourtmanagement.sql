@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 17, 2025 at 02:01 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th10 30, 2025 lúc 06:56 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,33 +18,34 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `badmintoncourtmanagement`
+-- Cơ sở dữ liệu: `badmintoncourtmanagement`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Cấu trúc bảng cho bảng `account`
 --
 
 CREATE TABLE `account` (
   `Username` varchar(50) NOT NULL,
   `Password` varchar(255) NOT NULL,
+  `EmployeeId` varchar(10) NOT NULL,
   `PermissionId` varchar(10) NOT NULL,
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `account`
+-- Đang đổ dữ liệu cho bảng `account`
 --
 
-INSERT INTO `account` (`Username`, `Password`, `PermissionId`, `IsDeleted`) VALUES
-('admin', 'admin123', 'P00001', 0);
+INSERT INTO `account` (`Username`, `Password`, `EmployeeId`, `PermissionId`, `IsDeleted`) VALUES
+('admin', 'admin123', 'E00001', 'P00001', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billbooking`
+-- Cấu trúc bảng cho bảng `billbooking`
 --
 
 CREATE TABLE `billbooking` (
@@ -56,18 +57,10 @@ CREATE TABLE `billbooking` (
   `PrePayment` double DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `billbooking` (`BillBookingId`, `EmployeeId`, `CustomerId`, `BookingId`, `TotalPrice`, `PrePayment`) VALUES
--- ('BB00001', 'EM00001', 'CU00001', 'BK00001', 120000, 60000),
--- ('BB00002', 'EM00001', 'CU00002', 'BK00002', 160000, 80000),
--- ('BB00003', 'EM00001', 'CU00003', 'BK00003', 180000, 90000),
--- ('BB00004', 'EM00001', 'CU00004', 'BK00004', 120000, 60000),
--- ('BB00005', 'EM00001', 'CU00005', 'BK00005', 160000, 80000);
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billimportproductdetail`
+-- Cấu trúc bảng cho bảng `billimportproductdetail`
 --
 
 CREATE TABLE `billimportproductdetail` (
@@ -81,21 +74,10 @@ CREATE TABLE `billimportproductdetail` (
   `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `billimportproductdetail` (`ImportBillDetailId`, `ImportBillId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `Status`) VALUES
--- ('IBD001', 'IB00001', 'PD00001', 10, 300000, 3000000, 'active'),
--- ('IBD002', 'IB00001', 'PD00006', 20, 50000, 1000000, 'active'),
-
--- ('IBD003', 'IB00002', 'PD00002', 8, 350000, 2800000, 'active'),
--- ('IBD004', 'IB00002', 'PD00007', 15, 40000, 600000, 'active'),
-
--- ('IBD005', 'IB00003', 'PD00003', 5, 450000, 2250000, 'active'),
--- ('IBD006', 'IB00003', 'PD00008', 12, 60000, 720000, 'active');
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billproduct`
+-- Cấu trúc bảng cho bảng `billproduct`
 --
 
 CREATE TABLE `billproduct` (
@@ -106,18 +88,10 @@ CREATE TABLE `billproduct` (
   `Status` enum('paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `TotalPrice`, `DateCreated`, `Status`) VALUES
--- ('BP00001', 'EM00001', 600000, '2025-10-17 09:00:00', 'paid'),
--- ('BP00002', 'EM00001', 450000, '2025-10-17 11:00:00', 'paid'),
--- ('BP00003', 'EM00001', 350000, '2025-10-17 13:30:00', 'unpaid'),
--- ('BP00004', 'EM00001', 900000, '2025-10-18 09:45:00', 'paid'),
--- ('BP00005', 'EM00001', 250000, '2025-10-18 15:10:00', 'paid');
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billproductdetail`
+-- Cấu trúc bảng cho bảng `billproductdetail`
 --
 
 CREATE TABLE `billproductdetail` (
@@ -128,25 +102,10 @@ CREATE TABLE `billproductdetail` (
   `TotalPrice` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `billproductdetail` (`BillProductId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`) VALUES
--- ('BP00001', 'PD00001', 1, 300000, 300000),
--- ('BP00001', 'PD00006', 6, 50000, 300000),
-
--- ('BP00002', 'PD00002', 1, 350000, 350000),
--- ('BP00002', 'PD00007', 2, 50000, 100000),
-
--- ('BP00003', 'PD00003', 1, 350000, 350000),
-
--- ('BP00004', 'PD00001', 2, 300000, 600000),
--- ('BP00004', 'PD00006', 6, 50000, 300000),
-
--- ('BP00005', 'PD00008', 5, 50000, 250000);
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `booking`
+-- Cấu trúc bảng cho bảng `booking`
 --
 
 CREATE TABLE `booking` (
@@ -157,18 +116,10 @@ CREATE TABLE `booking` (
   `EndTime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `booking` (`BookingId`, `CourtId`, `Status`, `StartTime`, `EndTime`) VALUES
--- ('BK00001', 'CO00001', 'successful', '2025-10-17 08:00:00', '2025-10-17 10:00:00'),
--- ('BK00002', 'CO00002', 'successful', '2025-10-17 10:00:00', '2025-10-17 12:00:00'),
--- ('BK00003', 'CO00003', 'played',     '2025-10-17 12:00:00', '2025-10-17 14:00:00'),
--- ('BK00004', 'CO00004', 'successful', '2025-10-18 08:00:00', '2025-10-18 10:00:00'),
--- ('BK00005', 'CO00005', 'played',     '2025-10-18 14:00:00', '2025-10-18 16:00:00');
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brand`
+-- Cấu trúc bảng cho bảng `brand`
 --
 
 CREATE TABLE `brand` (
@@ -177,7 +128,7 @@ CREATE TABLE `brand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `brand`
+-- Đang đổ dữ liệu cho bảng `brand`
 --
 
 INSERT INTO `brand` (`BrandId`, `BrandName`) VALUES
@@ -191,7 +142,7 @@ INSERT INTO `brand` (`BrandId`, `BrandName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `court`
+-- Cấu trúc bảng cho bảng `court`
 --
 
 CREATE TABLE `court` (
@@ -201,7 +152,7 @@ CREATE TABLE `court` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `court`
+-- Đang đổ dữ liệu cho bảng `court`
 --
 
 INSERT INTO `court` (`CourtId`, `CourtName`, `Status`) VALUES
@@ -217,7 +168,7 @@ INSERT INTO `court` (`CourtId`, `CourtName`, `Status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Cấu trúc bảng cho bảng `customer`
 --
 
 CREATE TABLE `customer` (
@@ -227,18 +178,10 @@ CREATE TABLE `customer` (
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `customer` (`CustomerId`, `CustomerName`, `Phone`, `IsDeleted`) VALUES
--- ('CU00001', 'Nguyễn Văn A', '0901000001', 0),
--- ('CU00002', 'Trần Thị B', '0901000002', 0),
--- ('CU00003', 'Lê Văn C', '0901000003', 0),
--- ('CU00004', 'Phạm Thị D', '0901000004', 0),
--- ('CU00005', 'Hoàng Văn E', '0901000005', 0);
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employee`
+-- Cấu trúc bảng cho bảng `employee`
 --
 
 CREATE TABLE `employee` (
@@ -250,14 +193,17 @@ CREATE TABLE `employee` (
   `RoleId` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `employee` (`EmployeeId`, `EmployeeName`, `Phone`, `Address`, `Username`, `RoleId`) VALUES
-('EM00001', 'Admin', '0900000001', 'HCM', 'admin', 'R00001');
+--
+-- Đang đổ dữ liệu cho bảng `employee`
+--
 
+INSERT INTO `employee` (`EmployeeId`, `EmployeeName`, `Phone`, `Address`, `Username`, `RoleId`) VALUES
+('E00001', 'Admin', '0900000001', 'HCM', 'admin', 'R00001');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `function`
+-- Cấu trúc bảng cho bảng `function`
 --
 
 CREATE TABLE `function` (
@@ -266,12 +212,13 @@ CREATE TABLE `function` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `function`
+-- Đang đổ dữ liệu cho bảng `function`
 --
 
 INSERT INTO `function` (`FunctionId`, `FunctionName`) VALUES
 ('F03', 'Bán hàng'),
 ('F05', 'Nhập hàng'),
+('F13', 'Quản lý giá sân'),
 ('F04', 'Quản lý hóa đơn đặt sân'),
 ('F08', 'Quản lý khách hàng'),
 ('F07', 'Quản lý nhà cung cấp'),
@@ -281,34 +228,27 @@ INSERT INTO `function` (`FunctionId`, `FunctionName`) VALUES
 ('F06', 'Quản lý sản phẩm'),
 ('F10', 'Quản lý tài khoản'),
 ('F12', 'Thống kê'),
-('F01', 'Đặt sân'),
-('F13', 'Quản lý giá sân');
+('F01', 'Đặt sân');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `importbill`
+-- Cấu trúc bảng cho bảng `importbill`
 --
 
 CREATE TABLE `importbill` (
   `ImportBillId` varchar(10) NOT NULL,
   `EmployeeId` varchar(10) NOT NULL,
   `SupplierId` varchar(10) NOT NULL,
-  `DateCreated`datetime NOT NULL,
+  `DateCreated` datetime NOT NULL,
   `TotalPrice` double NOT NULL,
-  `Status` enum('pending','delivered', 'cancelled', 'paid', 'unpaid') DEFAULT NULL
+  `Status` enum('pending','delivered','cancelled','paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- INSERT INTO `importbill` (`ImportBillId`, `EmployeeId`, `SupplierId`, `DateCreated`, `TotalPrice`, `Status`) VALUES
--- ('IB00001', 'EM00001', 'SPU00001', '2025-10-17 09:00:00', 5000000, 'delivered'),
--- ('IB00002', 'EM00001', 'SPU00002', '2025-10-17 10:00:00', 3500000, 'delivered'),
--- ('IB00003', 'EM00001', 'SPU00003', '2025-10-17 11:00:00', 4200000, 'delivered');
-
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payment`
+-- Cấu trúc bảng cho bảng `payment`
 --
 
 CREATE TABLE `payment` (
@@ -320,17 +260,10 @@ CREATE TABLE `payment` (
   `RemainingAmount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `payment` (`PaymentId`, `BillProductId`, `PaymentMethod`, `TimePayment`, `AmountPaid`, `RemainingAmount`) VALUES
--- ('PAY001', 'BP00001', 'Cash', '2025-10-17 09:10:00', 600000, 0),
--- ('PAY002', 'BP00002', 'Banking', '2025-10-17 11:20:00', 450000, 0),
--- ('PAY003', 'BP00004', 'Cash', '2025-10-18 09:50:00', 900000, 0),
--- ('PAY004', 'BP00005', 'Banking', '2025-10-18 15:30:00', 250000, 0);
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permission`
+-- Cấu trúc bảng cho bảng `permission`
 --
 
 CREATE TABLE `permission` (
@@ -339,7 +272,7 @@ CREATE TABLE `permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `permission`
+-- Đang đổ dữ liệu cho bảng `permission`
 --
 
 INSERT INTO `permission` (`PermissionId`, `PermissionName`) VALUES
@@ -349,7 +282,7 @@ INSERT INTO `permission` (`PermissionId`, `PermissionName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permissiondetail`
+-- Cấu trúc bảng cho bảng `permissiondetail`
 --
 
 CREATE TABLE `permissiondetail` (
@@ -359,7 +292,7 @@ CREATE TABLE `permissiondetail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `permissiondetail`
+-- Đang đổ dữ liệu cho bảng `permissiondetail`
 --
 
 INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
@@ -415,7 +348,7 @@ INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pricebookingdetail`
+-- Cấu trúc bảng cho bảng `pricebookingdetail`
 --
 
 CREATE TABLE `pricebookingdetail` (
@@ -427,7 +360,7 @@ CREATE TABLE `pricebookingdetail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pricerule`
+-- Cấu trúc bảng cho bảng `pricerule`
 --
 
 CREATE TABLE `pricerule` (
@@ -442,18 +375,10 @@ CREATE TABLE `pricerule` (
   `Status` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `pricerule`
---
-
--- INSERT INTO `pricerule` (`PriceRuleId`, `Price`, `StartTime`, `EndTime`, `StartDate`, `EndDate`, `EndType`, `Description`, `Status`) VALUES
--- ('PR0001', 60000, '05:00:00', '16:00:00', NULL, NULL, 'Weekday', 'Ngày thường', 'Đang áp dụng'),
--- ('PR0002', 80000, '16:00:00', '23:00:00', NULL, NULL, 'Weekday', 'Ngày thường', 'Đang áp dụng');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Cấu trúc bảng cho bảng `product`
 --
 
 CREATE TABLE `product` (
@@ -468,7 +393,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product`
+-- Đang đổ dữ liệu cho bảng `product`
 --
 
 INSERT INTO `product` (`ProductId`, `ProductName`, `SupplierId`, `ProductImg`, `Quantity`, `BrandId`, `TypeId`, `IsDeleted`) VALUES
@@ -489,7 +414,7 @@ INSERT INTO `product` (`ProductId`, `ProductName`, `SupplierId`, `ProductImg`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Cấu trúc bảng cho bảng `role`
 --
 
 CREATE TABLE `role` (
@@ -497,20 +422,23 @@ CREATE TABLE `role` (
   `RoleName` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `role` (`RoleId`, `RoleName`) VALUES
-('R00001', 'Quản lý'),
-('R00002', 'Nhân viên');
+--
+-- Đang đổ dữ liệu cho bảng `role`
+--
 
+INSERT INTO `role` (`RoleId`, `RoleName`) VALUES
+('R00002', 'Nhân viên'),
+('R00001', 'Quản lý');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `storage`
+-- Cấu trúc bảng cho bảng `storage`
 --
 
 CREATE TABLE `storage` (
   `StorageId` varchar(10) NOT NULL,
-  `ImportBillId` varchar(10) NOT NULL,
+  `ImportBillDetailId` varchar(10) NOT NULL,
   `ProductId` varchar(10) NOT NULL,
   `Quantity` int(11) NOT NULL,
   `Price` double NOT NULL,
@@ -519,34 +447,10 @@ CREATE TABLE `storage` (
   `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `storage` (`StorageId`, `ImportBillId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `Status`) VALUES
--- ('KH001', 'IB00001', 'PD00001', 10, 300000, 3000000, 'active'),
--- ('KH002', 'IB00001', 'PD00006', 20, 50000, 1000000, 'active'),
--- ('KH003', 'IB00001', 'PD00002', 8, 350000, 2800000, 'active'),
--- ('KH004', 'IB00001', 'PD00007', 15, 40000, 600000, 'active'),
--- ('KH005', 'IB00001', 'PD00003', 5, 450000, 2250000, 'active'),
--- ('KH006', 'IB00001', 'PD00008', 12, 60000, 720000, 'active'),
--- ('KH007', 'IB00001', 'PD00004', 9, 320000, 2880000, 'active'),
--- ('KH008', 'IB00001', 'PD00005', 7, 400000, 2800000, 'active'),
--- ('KH009', 'IB00001', 'PD00001', 15, 300000, 4500000, 'active'),
--- ('KH010', 'IB00001', 'PD00006', 25, 50000, 1250000, 'active'),
--- ('KH011', 'IB00001', 'PD00002', 10, 350000, 3500000, 'active'),
--- ('KH012', 'IB00001', 'PD00007', 18, 40000, 720000, 'active'),
--- ('KH013', 'IB00001', 'PD00003', 6, 450000, 2700000, 'active'),
--- ('KH014', 'IB00001', 'PD00008', 14, 60000, 840000, 'active'),
--- ('KH015', 'IB00001', 'PD00004', 8, 320000, 2560000, 'active'),
--- ('KH016', 'IB00001', 'PD00005', 10, 400000, 4000000, 'active'),
--- ('KH017', 'IB00001', 'PD00001', 12, 300000, 3600000, 'active'),
--- ('KH018', 'IB00001', 'PD00006', 22, 50000, 1100000, 'active'),
--- ('KH019', 'IB00001', 'PD00002', 7, 350000, 2450000, 'active'),
--- ('KH020', 'IB00001', 'PD00007', 16, 40000, 640000, 'active');
-
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supplier`
+-- Cấu trúc bảng cho bảng `supplier`
 --
 
 CREATE TABLE `supplier` (
@@ -556,6 +460,10 @@ CREATE TABLE `supplier` (
   `Address` varchar(255) DEFAULT NULL,
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `supplier`
+--
 
 INSERT INTO `supplier` (`SupplierId`, `SupplierName`, `Email`, `Address`, `IsDeleted`) VALUES
 ('SPU00001', 'Yonex Supplier', 'yonex@supplier.com', 'Tokyo', 0),
@@ -568,7 +476,7 @@ INSERT INTO `supplier` (`SupplierId`, `SupplierName`, `Email`, `Address`, `IsDel
 -- --------------------------------------------------------
 
 --
--- Table structure for table `typeproduct`
+-- Cấu trúc bảng cho bảng `typeproduct`
 --
 
 CREATE TABLE `typeproduct` (
@@ -577,7 +485,7 @@ CREATE TABLE `typeproduct` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `typeproduct`
+-- Đang đổ dữ liệu cho bảng `typeproduct`
 --
 
 INSERT INTO `typeproduct` (`TypeId`, `TypeName`) VALUES
@@ -586,18 +494,19 @@ INSERT INTO `typeproduct` (`TypeId`, `TypeName`) VALUES
 ('TP00003', 'Grip');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `account`
+-- Chỉ mục cho bảng `account`
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`Username`),
-  ADD KEY `PermissionId` (`PermissionId`);
+  ADD KEY `PermissionId` (`PermissionId`),
+  ADD KEY `account_ibfk_2` (`EmployeeId`);
 
 --
--- Indexes for table `billbooking`
+-- Chỉ mục cho bảng `billbooking`
 --
 ALTER TABLE `billbooking`
   ADD PRIMARY KEY (`BillBookingId`),
@@ -606,71 +515,71 @@ ALTER TABLE `billbooking`
   ADD KEY `BookingId` (`BookingId`);
 
 --
--- Indexes for table `billimportproductdetail`
+-- Chỉ mục cho bảng `billimportproductdetail`
 --
 ALTER TABLE `billimportproductdetail`
-  ADD PRIMARY KEY (`ImportBillId`,`ProductId`),
-  ADD KEY `ProductId` (`ProductId`);
+  ADD PRIMARY KEY (`ImportBillDetailId`),
+  ADD KEY `ProductId` (`ProductId`),
+  ADD KEY `billimportproductdetail_ibfk_1` (`ImportBillId`);
 
 --
--- Indexes for table `billproduct`
+-- Chỉ mục cho bảng `billproduct`
 --
 ALTER TABLE `billproduct`
   ADD PRIMARY KEY (`BillProductId`),
   ADD KEY `EmployeeId` (`EmployeeId`);
 
 --
--- Indexes for table `billproductdetail`
+-- Chỉ mục cho bảng `billproductdetail`
 --
 ALTER TABLE `billproductdetail`
   ADD PRIMARY KEY (`BillProductId`,`ProductId`),
   ADD KEY `ProductId` (`ProductId`);
 
 --
--- Indexes for table `booking`
+-- Chỉ mục cho bảng `booking`
 --
 ALTER TABLE `booking`
   ADD PRIMARY KEY (`BookingId`),
   ADD KEY `CourtId` (`CourtId`);
 
 --
--- Indexes for table `brand`
+-- Chỉ mục cho bảng `brand`
 --
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`BrandId`);
 
 --
--- Indexes for table `court`
+-- Chỉ mục cho bảng `court`
 --
 ALTER TABLE `court`
   ADD PRIMARY KEY (`CourtId`),
   ADD UNIQUE KEY `CourtName` (`CourtName`);
 
 --
--- Indexes for table `customer`
+-- Chỉ mục cho bảng `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`CustomerId`),
   ADD UNIQUE KEY `Phone` (`Phone`);
 
 --
--- Indexes for table `employee`
+-- Chỉ mục cho bảng `employee`
 --
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`EmployeeId`),
   ADD UNIQUE KEY `Phone` (`Phone`),
-  ADD KEY `Username` (`Username`),
   ADD KEY `RoleId` (`RoleId`);
 
 --
--- Indexes for table `function`
+-- Chỉ mục cho bảng `function`
 --
 ALTER TABLE `function`
   ADD PRIMARY KEY (`FunctionId`),
   ADD UNIQUE KEY `FunctionName` (`FunctionName`);
 
 --
--- Indexes for table `importbill`
+-- Chỉ mục cho bảng `importbill`
 --
 ALTER TABLE `importbill`
   ADD PRIMARY KEY (`ImportBillId`),
@@ -678,40 +587,40 @@ ALTER TABLE `importbill`
   ADD KEY `SupplierId` (`SupplierId`);
 
 --
--- Indexes for table `payment`
+-- Chỉ mục cho bảng `payment`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`PaymentId`),
   ADD KEY `BillProductId` (`BillProductId`);
 
 --
--- Indexes for table `permission`
+-- Chỉ mục cho bảng `permission`
 --
 ALTER TABLE `permission`
   ADD PRIMARY KEY (`PermissionId`),
   ADD UNIQUE KEY `PermissionName` (`PermissionName`);
 
 --
--- Indexes for table `permissiondetail`
+-- Chỉ mục cho bảng `permissiondetail`
 --
 ALTER TABLE `permissiondetail`
   ADD KEY `FunctionId` (`FunctionId`);
 
 --
--- Indexes for table `pricebookingdetail`
+-- Chỉ mục cho bảng `pricebookingdetail`
 --
 ALTER TABLE `pricebookingdetail`
   ADD PRIMARY KEY (`PriceRuleId`,`BillBookingId`),
   ADD KEY `BillBookingId` (`BillBookingId`);
 
 --
--- Indexes for table `pricerule`
+-- Chỉ mục cho bảng `pricerule`
 --
 ALTER TABLE `pricerule`
   ADD PRIMARY KEY (`PriceRuleId`);
 
 --
--- Indexes for table `product`
+-- Chỉ mục cho bảng `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`ProductId`),
@@ -720,44 +629,45 @@ ALTER TABLE `product`
   ADD KEY `SupplierId` (`SupplierId`);
 
 --
--- Indexes for table `role`
+-- Chỉ mục cho bảng `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`RoleId`),
   ADD UNIQUE KEY `RoleName` (`RoleName`);
 
 --
--- Indexes for table `storage`
+-- Chỉ mục cho bảng `storage`
 --
 ALTER TABLE `storage`
   ADD PRIMARY KEY (`StorageId`),
-  ADD KEY `ImportBillId` (`ImportBillId`),
+  ADD KEY `ImportBillId` (`ImportBillDetailId`),
   ADD KEY `ProductId` (`ProductId`);
 
 --
--- Indexes for table `supplier`
+-- Chỉ mục cho bảng `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`SupplierId`);
 
 --
--- Indexes for table `typeproduct`
+-- Chỉ mục cho bảng `typeproduct`
 --
 ALTER TABLE `typeproduct`
   ADD PRIMARY KEY (`TypeId`);
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `account`
+-- Các ràng buộc cho bảng `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`PermissionId`) REFERENCES `permission` (`PermissionId`);
+  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`PermissionId`) REFERENCES `permission` (`PermissionId`),
+  ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`EmployeeId`) REFERENCES `employee` (`EmployeeId`);
 
 --
--- Constraints for table `billbooking`
+-- Các ràng buộc cho bảng `billbooking`
 --
 ALTER TABLE `billbooking`
   ADD CONSTRAINT `billbooking_ibfk_1` FOREIGN KEY (`EmployeeId`) REFERENCES `employee` (`EmployeeId`),
@@ -765,70 +675,70 @@ ALTER TABLE `billbooking`
   ADD CONSTRAINT `billbooking_ibfk_3` FOREIGN KEY (`BookingId`) REFERENCES `booking` (`BookingId`);
 
 --
--- Constraints for table `billimportproductdetail`
+-- Các ràng buộc cho bảng `billimportproductdetail`
 --
 ALTER TABLE `billimportproductdetail`
   ADD CONSTRAINT `billimportproductdetail_ibfk_1` FOREIGN KEY (`ImportBillId`) REFERENCES `importbill` (`ImportBillId`),
   ADD CONSTRAINT `billimportproductdetail_ibfk_2` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 
 --
--- Constraints for table `billproduct`
+-- Các ràng buộc cho bảng `billproduct`
 --
 ALTER TABLE `billproduct`
   ADD CONSTRAINT `billproduct_ibfk_1` FOREIGN KEY (`EmployeeId`) REFERENCES `employee` (`EmployeeId`);
 
 --
--- Constraints for table `billproductdetail`
+-- Các ràng buộc cho bảng `billproductdetail`
 --
 ALTER TABLE `billproductdetail`
   ADD CONSTRAINT `billproductdetail_ibfk_1` FOREIGN KEY (`BillProductId`) REFERENCES `billproduct` (`BillProductId`),
   ADD CONSTRAINT `billproductdetail_ibfk_2` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 
 --
--- Constraints for table `booking`
+-- Các ràng buộc cho bảng `booking`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`CourtId`) REFERENCES `court` (`CourtId`);
 
 --
--- Constraints for table `employee`
+-- Các ràng buộc cho bảng `employee`
 --
 ALTER TABLE `employee`
-  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `account` (`Username`),
   ADD CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`RoleId`) REFERENCES `role` (`RoleId`);
 
 --
--- Constraints for table `importbill`
+-- Các ràng buộc cho bảng `importbill`
 --
 ALTER TABLE `importbill`
   ADD CONSTRAINT `importbill_ibfk_1` FOREIGN KEY (`EmployeeId`) REFERENCES `employee` (`EmployeeId`),
   ADD CONSTRAINT `importbill_ibfk_2` FOREIGN KEY (`SupplierId`) REFERENCES `supplier` (`SupplierId`);
 
 --
--- Constraints for table `payment`
+-- Các ràng buộc cho bảng `payment`
 --
 ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`BillProductId`) REFERENCES `billproduct` (`BillProductId`);
 
 --
--- Constraints for table `pricebookingdetail`
+-- Các ràng buộc cho bảng `pricebookingdetail`
 --
 ALTER TABLE `pricebookingdetail`
   ADD CONSTRAINT `pricebookingdetail_ibfk_1` FOREIGN KEY (`PriceRuleId`) REFERENCES `pricerule` (`PriceRuleId`),
   ADD CONSTRAINT `pricebookingdetail_ibfk_2` FOREIGN KEY (`BillBookingId`) REFERENCES `billbooking` (`BillBookingId`);
 
 --
--- Constraints for table `product`
+-- Các ràng buộc cho bảng `product`
+--
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`BrandId`) REFERENCES `brand` (`BrandId`),
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `typeproduct` (`TypeId`),
   ADD CONSTRAINT `product_ibfk_3` FOREIGN KEY (`SupplierId`) REFERENCES `supplier` (`SupplierId`);
 
 --
--- Constraints for table `storage`
+-- Các ràng buộc cho bảng `storage`
 --
 ALTER TABLE `storage`
-  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`ImportBillId`) REFERENCES `importbill` (`ImportBillId`),
+  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`ImportBillDetailId`) REFERENCES `billimportproductdetail` (`ImportBillDetailId`),
   ADD CONSTRAINT `storage_ibfk_2` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 COMMIT;
 

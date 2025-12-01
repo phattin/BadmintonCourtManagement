@@ -163,11 +163,12 @@ namespace BadmintonCourtManagement.GUI
                     p.ProductName,
                     Brand = brandList.FirstOrDefault(b => b.BrandId == p.BrandId)?.BrandName ?? "hi",
                     Type = typeList.FirstOrDefault(t => t.TypeProductId == p.TypeId)?.TypeProductName ?? "bye",
-                    QuantityToBuy = _cart.ContainsKey(p.ProductId) ? _cart[p.ProductId] : 0,
+                    StockQuantity = p.Quantity,
                     Price = storageList.Where(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)
-                                .OrderByDescending(ob => ob.ImportBillId)
+                                .OrderByDescending(ob => ob.ImportBillDetailId)
                                 .Select(ob => ob.Price)
-                                .FirstOrDefault()
+                                .FirstOrDefault(),
+                    QuantityToBuy = _cart.ContainsKey(p.ProductId) ? _cart[p.ProductId] : 0
                 })
                 .OrderBy(x => x.QuantityToBuy) // use OrderByDescending(x => x.QuantityToBuy) for descending order
                 .ThenBy(x => x.ProductName)
@@ -176,6 +177,7 @@ namespace BadmintonCourtManagement.GUI
             table.Columns.Add("ProductName", typeof(string));
             table.Columns.Add("Brand", typeof(string));
             table.Columns.Add("Type", typeof(string));
+            table.Columns.Add("StockQuantity", typeof(decimal));
             table.Columns.Add("Price", typeof(decimal));
             table.Columns.Add("QuantityToBuy", typeof(int));
 
@@ -183,7 +185,8 @@ namespace BadmintonCourtManagement.GUI
             {
                 var price = Convert.ToDecimal(item.Price);
                 var qty = Convert.ToInt32(item.QuantityToBuy);
-                table.Rows.Add(item.ProductName, item.Brand, item.Type, price, qty);
+                var stockQty = Convert.ToDecimal(item.StockQuantity);
+                table.Rows.Add(item.ProductName, item.Brand, item.Type, stockQty, price, qty);
             }
 
             table.DefaultView.Sort = "QuantityToBuy DESC, ProductName ASC";
@@ -299,7 +302,7 @@ namespace BadmintonCourtManagement.GUI
         Name = "QuantityToBuy",
         HeaderText = "SL Mua",
         DataPropertyName = "QuantityToBuy",
-        FillWeight = 15,
+        FillWeight = 7,
         ReadOnly = false,
         DefaultCellStyle = new DataGridViewCellStyle
         {
@@ -309,7 +312,22 @@ namespace BadmintonCourtManagement.GUI
         }
     };
 
-    dtv.Columns.AddRange(colName, colBrand, colType, colPrice, colQty);
+    var colStockQty = new DataGridViewTextBoxColumn
+    {
+        Name = "StockQuantity",
+        HeaderText = "Tồn kho",
+        DataPropertyName = "StockQuantity",
+        FillWeight = 7,
+        ReadOnly = false,
+        DefaultCellStyle = new DataGridViewCellStyle
+        {
+            Alignment = DataGridViewContentAlignment.MiddleCenter,
+            Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+            ForeColor = Color.DarkBlue
+        }
+    };
+
+    dtv.Columns.AddRange(colName, colBrand, colType, colStockQty, colPrice, colQty);
 
     // Làm đẹp header
     dtv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);

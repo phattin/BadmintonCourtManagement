@@ -209,7 +209,7 @@ namespace BadmintonCourtManagement.GUI
 
                     if (item.StorageId.Contains(info, StringComparison.OrdinalIgnoreCase)
                         || item.ProductId.Contains(info, StringComparison.OrdinalIgnoreCase)
-                        || item.ImportBillId.Contains(info, StringComparison.OrdinalIgnoreCase)
+                        || item.ImportBillDetailId.Contains(info, StringComparison.OrdinalIgnoreCase)
                         || item.Status.ToString().Contains(info, StringComparison.OrdinalIgnoreCase))
                     {
                         match = true;
