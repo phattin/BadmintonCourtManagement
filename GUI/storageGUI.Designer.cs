@@ -99,7 +99,7 @@ namespace BadmintonCourtManagement.GUI
             khoHangPage.Controls.Add(cardList);
             khoHangPage.Controls.Add(toolBar);
             khoHangPage.Controls.Add(titlePanel);
-            khoHangPage.Font = new Font("Roboto Condensed", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            khoHangPage.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             khoHangPage.Location = new Point(4, 40);
             khoHangPage.Margin = new Padding(0);
             khoHangPage.Name = "khoHangPage";

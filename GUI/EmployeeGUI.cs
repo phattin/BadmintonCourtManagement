@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DTO;
+using GUI;
+using Mysqlx.Crud;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,8 +14,40 @@ namespace BadmintonCourtManagement.GUI
     public partial class EmployeeGUI : UserControl
     {
         private AccountDTO currentAccount;
-        private EmployeeBUS employeeBUS;
-        private List<EmployeeDTO> currentList = new List<EmployeeDTO>();
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false, isUpdate = false, isDelete = false;
+        public EmployeeGUI(AccountDTO currentAccount)
+        {
+            this.currentAccount = currentAccount;
+            InitializeComponent();
+            CheckPermissions("F09");
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == currentAccount.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                    else if (p.Option == "Delete") isDelete = true;
+                }
+            }
+
+            add.Visible = isInsert;
+        }
+
+        private void buttonEnter(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn != null)
+            {
+                btn.BackColor = Color.FromArgb(60, 60, 60);
+            }
+        }
 
         private int currentPage;
         private int itemsPerPage;
