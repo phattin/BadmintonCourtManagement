@@ -7,15 +7,37 @@ namespace BadmintonCourtManagement.DAO
     {
         private DBConnection db = new DBConnection();
 
+        public string GetMaxId() {
+            string query = "SELECT MAX(ImportBillDetailId) FROM billimportproductdetail WHERE ImportBillDetailId LIKE 'ID%'";
+            try {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                var result = cmd.ExecuteScalar();
+                if (result != DBNull.Value && result != null) {
+                    return result.ToString();
+                }
+                else {
+                    return null;
+                }
+            }
+            catch (Exception ex) {
+                throw new Exception("Error retrieving max ImportBillDetailId: " + ex.Message);
+            } finally {
+                db.CloseConnection();
+            }
+        }
+
+
         // create
         public bool InsertBillImportDetail(BillImportDetailDTO bill)
         {
-            string query = "INSERT INTO billimportproductdetail (ImportBillId, ProductId, Quantity, Price, TotalPrice, Status) VALUES (@ImportBillId, @ProductId, @Quantity, @Price, @TotalPrice, @Status)";
+            string query = "INSERT INTO billimportproductdetail (ImportBillDetailId, ImportBillId, ProductId, Quantity, Price, TotalPrice, Status) VALUES (@ImportBillDetailId, @ImportBillId, @ProductId, @Quantity, @Price, @TotalPrice, @Status)";
             int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@ImportBillDetailId", bill.ImportBillDetailId);
                 cmd.Parameters.AddWithValue("@ImportBillId", bill.ImportBillId);
                 cmd.Parameters.AddWithValue("@ProductId", bill.ProductId);
                 cmd.Parameters.AddWithValue("@Quantity", bill.Quantity);
@@ -49,6 +71,7 @@ namespace BadmintonCourtManagement.DAO
                 {
                     BillImportDetailDTO bill = new BillImportDetailDTO
                     {
+                        ImportBillDetailId = reader["ImportBillDetailId"].ToString(),
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
                         Quantity = int.Parse(reader["Quantity"].ToString()),
@@ -85,6 +108,7 @@ namespace BadmintonCourtManagement.DAO
                 {
                     billDetails.Add(new BillImportDetailDTO
                     {
+                        ImportBillDetailId = reader["ImportBillDetailId"].ToString(),
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
                         Quantity = int.Parse(reader["Quantity"].ToString()),
@@ -120,6 +144,7 @@ namespace BadmintonCourtManagement.DAO
                 {
                     billDetails.Add(new BillImportDetailDTO
                     {
+                        ImportBillDetailId = reader["ImportBillDetailId"].ToString(),
                         ImportBillId = reader["ImportBillId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
                         Quantity = int.Parse(reader["Quantity"].ToString()),
@@ -144,7 +169,7 @@ namespace BadmintonCourtManagement.DAO
         // update
         public bool UpdateBillImportDetail(BillImportDetailDTO bill)
         {
-            string query = "UPDATE billimportproductdetail SET Quantity = @Quantity, Price = @Price, TotalPrice = @TotalPrice, Status = @Status WHERE ImportBillId = @ImportBillId AND ProductId = @ProductId";
+            string query = "UPDATE billimportproductdetail SET Quantity = @Quantity, Price = @Price, TotalPrice = @TotalPrice, Status = @Status WHERE ImportBillId = @ImportBillId AND ProductId = @ProductId AND ImportBillDetailId = @ImportBillDetailId";
             int result = 0;
             try
             {
@@ -156,6 +181,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@Status", bill.Status);
                 cmd.Parameters.AddWithValue("@ImportBillId", bill.ImportBillId);
                 cmd.Parameters.AddWithValue("@ProductId", bill.ProductId);
+                cmd.Parameters.AddWithValue("@ImportBillDetailId", bill.ImportBillDetailId);
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -172,7 +198,7 @@ namespace BadmintonCourtManagement.DAO
         // delete
         public bool DeleteBillImportDetail(BillImportDetailDTO bill)
         {
-            string query = "DELETE FROM billimportproductdetail WHERE ImportBillId = @ImportBillId AND ProductId = @ProductId";
+            string query = "DELETE FROM billimportproductdetail WHERE ImportBillId = @ImportBillId AND ProductId = @ProductId AND ImportBillDetailId = @ImportBillDetailId";
             int result = 0;
             try
             {
@@ -180,6 +206,7 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@ImportBillId", bill.ImportBillId);
                 cmd.Parameters.AddWithValue("@ProductId", bill.ProductId);
+                cmd.Parameters.AddWithValue("@ImportBillDetailId", bill.ImportBillDetailId);
                 result = cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
