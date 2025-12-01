@@ -12,9 +12,10 @@ namespace BadmintonCourtManagement.GUI
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             customPanelMain = new CustomPanel();
+            print = new Label();
             btnClose = new Label();
             dgvDetails = new DataGridView();
             colSTT = new DataGridViewTextBoxColumn();
@@ -39,6 +40,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             customPanelMain.BackColor = Color.FromArgb(239, 248, 230);
             customPanelMain.BorderRadius = 20;
+            customPanelMain.Controls.Add(print);
             customPanelMain.Controls.Add(btnClose);
             customPanelMain.Controls.Add(dgvDetails);
             customPanelMain.Controls.Add(panelHeader);
@@ -49,6 +51,22 @@ namespace BadmintonCourtManagement.GUI
             customPanelMain.Size = new Size(928, 624);
             customPanelMain.TabIndex = 0;
             // 
+            // print
+            // 
+            print.AutoSize = true;
+            print.BackColor = Color.LimeGreen;
+            print.Cursor = Cursors.Hand;
+            print.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            print.ForeColor = Color.White;
+            print.Location = new Point(12, 9);
+            print.Name = "print";
+            print.Padding = new Padding(30, 12, 30, 12);
+            print.Size = new Size(130, 56);
+            print.TabIndex = 4;
+            print.Text = "Print";
+            print.TextAlign = ContentAlignment.MiddleCenter;
+            print.Click += print_Click;
+            // 
             // btnClose
             // 
             btnClose.AutoSize = true;
@@ -56,7 +74,7 @@ namespace BadmintonCourtManagement.GUI
             btnClose.Cursor = Cursors.Hand;
             btnClose.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(766, 22);
+            btnClose.Location = new Point(779, 9);
             btnClose.Name = "btnClose";
             btnClose.Padding = new Padding(30, 12, 30, 12);
             btnClose.Size = new Size(137, 56);
@@ -107,8 +125,8 @@ namespace BadmintonCourtManagement.GUI
             // 
             // colPrice
             // 
-            dataGridViewCellStyle1.Format = "N0";
-            colPrice.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Format = "N0";
+            colPrice.DefaultCellStyle = dataGridViewCellStyle3;
             colPrice.HeaderText = "Đơn giá";
             colPrice.MinimumWidth = 8;
             colPrice.Name = "colPrice";
@@ -116,8 +134,8 @@ namespace BadmintonCourtManagement.GUI
             // 
             // colTotal
             // 
-            dataGridViewCellStyle2.Format = "N0";
-            colTotal.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Format = "N0";
+            colTotal.DefaultCellStyle = dataGridViewCellStyle4;
             colTotal.HeaderText = "Thành tiền";
             colTotal.MinimumWidth = 8;
             colTotal.Name = "colTotal";
@@ -233,5 +251,6 @@ namespace BadmintonCourtManagement.GUI
         private DataGridViewTextBoxColumn colTotal;
         private Label btnClose;
         private TableLayoutPanel tlInfo;
+        private Label print;
     }
 }

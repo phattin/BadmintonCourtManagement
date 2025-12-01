@@ -30,6 +30,7 @@ namespace BadmintonCourtManagement.GUI
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
+            label3 = new Label();
             label1 = new Label();
             txtProductId = new TextBox();
             label2 = new Label();
@@ -41,6 +42,7 @@ namespace BadmintonCourtManagement.GUI
             picProduct = new PictureBox();
             btnSave = new Button();
             btnCancel = new Button();
+            cmbSupplier = new ComboBox();
             btnChooseImage = new Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picProduct).BeginInit();
@@ -51,6 +53,7 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 188F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(label3, 0, 4);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(txtProductId, 1, 0);
             tableLayoutPanel1.Controls.Add(label2, 0, 1);
@@ -59,23 +62,37 @@ namespace BadmintonCourtManagement.GUI
             tableLayoutPanel1.Controls.Add(cmbBrand, 1, 2);
             tableLayoutPanel1.Controls.Add(label6, 0, 3);
             tableLayoutPanel1.Controls.Add(cmbType, 1, 3);
-            tableLayoutPanel1.Controls.Add(picProduct, 0, 4);
-            tableLayoutPanel1.Controls.Add(btnSave, 0, 5);
-            tableLayoutPanel1.Controls.Add(btnCancel, 1, 5);
-            tableLayoutPanel1.Controls.Add(btnChooseImage, 1, 4);
+            tableLayoutPanel1.Controls.Add(picProduct, 0, 5);
+            tableLayoutPanel1.Controls.Add(btnSave, 0, 6);
+            tableLayoutPanel1.Controls.Add(btnCancel, 1, 6);
+            tableLayoutPanel1.Controls.Add(cmbSupplier, 1, 4);
+            tableLayoutPanel1.Controls.Add(btnChooseImage, 1, 5);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(4, 5, 4, 5);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 6;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 90F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 78F));
+            tableLayoutPanel1.RowCount = 7;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.Size = new Size(730, 418);
             tableLayoutPanel1.TabIndex = 0;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label3.Location = new Point(4, 200);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(142, 28);
+            label3.TabIndex = 18;
+            label3.Text = "Nhà cung cấp";
+            label3.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label1
             // 
@@ -104,7 +121,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label2.Location = new Point(4, 62);
+            label2.Location = new Point(4, 50);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(142, 28);
@@ -116,7 +133,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             txtProductName.Dock = DockStyle.Fill;
             txtProductName.Font = new Font("Segoe UI", 10F);
-            txtProductName.Location = new Point(192, 67);
+            txtProductName.Location = new Point(192, 55);
             txtProductName.Margin = new Padding(4, 5, 4, 5);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(534, 34);
@@ -126,7 +143,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label5.Location = new Point(4, 124);
+            label5.Location = new Point(4, 100);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
             label5.Size = new Size(133, 28);
@@ -140,7 +157,7 @@ namespace BadmintonCourtManagement.GUI
             cmbBrand.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBrand.Font = new Font("Segoe UI", 10F);
             cmbBrand.FormattingEnabled = true;
-            cmbBrand.Location = new Point(192, 129);
+            cmbBrand.Location = new Point(192, 105);
             cmbBrand.Margin = new Padding(4, 5, 4, 5);
             cmbBrand.Name = "cmbBrand";
             cmbBrand.Size = new Size(534, 36);
@@ -150,7 +167,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label6.Location = new Point(4, 186);
+            label6.Location = new Point(4, 150);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
             label6.Size = new Size(148, 28);
@@ -164,7 +181,7 @@ namespace BadmintonCourtManagement.GUI
             cmbType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbType.Font = new Font("Segoe UI", 10F);
             cmbType.FormattingEnabled = true;
-            cmbType.Location = new Point(192, 191);
+            cmbType.Location = new Point(192, 155);
             cmbType.Margin = new Padding(4, 5, 4, 5);
             cmbType.Name = "cmbType";
             cmbType.Size = new Size(534, 36);
@@ -174,10 +191,10 @@ namespace BadmintonCourtManagement.GUI
             // 
             picProduct.BorderStyle = BorderStyle.FixedSingle;
             picProduct.Dock = DockStyle.Fill;
-            picProduct.Location = new Point(4, 253);
+            picProduct.Location = new Point(4, 255);
             picProduct.Margin = new Padding(4, 5, 4, 5);
             picProduct.Name = "picProduct";
-            picProduct.Size = new Size(180, 80);
+            picProduct.Size = new Size(180, 73);
             picProduct.SizeMode = PictureBoxSizeMode.Zoom;
             picProduct.TabIndex = 12;
             picProduct.TabStop = false;
@@ -189,7 +206,7 @@ namespace BadmintonCourtManagement.GUI
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(4, 343);
+            btnSave.Location = new Point(4, 338);
             btnSave.Margin = new Padding(4, 5, 4, 5);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(180, 68);
@@ -205,7 +222,7 @@ namespace BadmintonCourtManagement.GUI
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(192, 343);
+            btnCancel.Location = new Point(192, 338);
             btnCancel.Margin = new Padding(4, 5, 4, 5);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(534, 68);
@@ -214,6 +231,18 @@ namespace BadmintonCourtManagement.GUI
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
             // 
+            // cmbSupplier
+            // 
+            cmbSupplier.Dock = DockStyle.Fill;
+            cmbSupplier.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSupplier.Font = new Font("Segoe UI", 10F);
+            cmbSupplier.FormattingEnabled = true;
+            cmbSupplier.Location = new Point(192, 205);
+            cmbSupplier.Margin = new Padding(4, 5, 4, 5);
+            cmbSupplier.Name = "cmbSupplier";
+            cmbSupplier.Size = new Size(534, 36);
+            cmbSupplier.TabIndex = 17;
+            // 
             // btnChooseImage
             // 
             btnChooseImage.BackColor = Color.FromArgb(64, 64, 64);
@@ -221,10 +250,10 @@ namespace BadmintonCourtManagement.GUI
             btnChooseImage.FlatStyle = FlatStyle.Flat;
             btnChooseImage.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnChooseImage.ForeColor = Color.White;
-            btnChooseImage.Location = new Point(192, 253);
+            btnChooseImage.Location = new Point(192, 255);
             btnChooseImage.Margin = new Padding(4, 5, 4, 5);
             btnChooseImage.Name = "btnChooseImage";
-            btnChooseImage.Size = new Size(534, 50);
+            btnChooseImage.Size = new Size(534, 61);
             btnChooseImage.TabIndex = 15;
             btnChooseImage.Text = "Chọn ảnh";
             btnChooseImage.UseVisualStyleBackColor = false;
@@ -264,5 +293,7 @@ namespace BadmintonCourtManagement.GUI
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnChooseImage;
+        private Label label3;
+        private ComboBox cmbSupplier;
     }
 }
