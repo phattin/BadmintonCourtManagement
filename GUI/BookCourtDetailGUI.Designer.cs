@@ -110,7 +110,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel1.Controls.Add(lblCalEnd);
             customPanel1.Controls.Add(timeEndPicker);
             customPanel1.Location = new Point(56, 111);
-            customPanel1.Margin = new Padding(2, 2, 2, 2);
+            customPanel1.Margin = new Padding(2);
             customPanel1.Name = "customPanel1";
             customPanel1.Size = new Size(396, 466);
             customPanel1.TabIndex = 7;
@@ -118,7 +118,7 @@ namespace BadmintonCourtManagement.GUI
             // calBooking
             // 
             calBooking.Location = new Point(29, 58);
-            calBooking.Margin = new Padding(7, 7, 7, 7);
+            calBooking.Margin = new Padding(7);
             calBooking.MaxSelectionCount = 1;
             calBooking.Name = "calBooking";
             calBooking.TabIndex = 0;
@@ -140,7 +140,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             timeStartPicker.Format = DateTimePickerFormat.Time;
             timeStartPicker.Location = new Point(120, 298);
-            timeStartPicker.Margin = new Padding(2, 2, 2, 2);
+            timeStartPicker.Margin = new Padding(2);
             timeStartPicker.Name = "timeStartPicker";
             timeStartPicker.ShowUpDown = true;
             timeStartPicker.Size = new Size(97, 27);
@@ -161,7 +161,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             timeEndPicker.Format = DateTimePickerFormat.Time;
             timeEndPicker.Location = new Point(120, 349);
-            timeEndPicker.Margin = new Padding(2, 2, 2, 2);
+            timeEndPicker.Margin = new Padding(2);
             timeEndPicker.Name = "timeEndPicker";
             timeEndPicker.ShowUpDown = true;
             timeEndPicker.Size = new Size(97, 27);
@@ -188,7 +188,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.Controls.Add(label3);
             customPanel2.Controls.Add(label2);
             customPanel2.Location = new Point(490, 111);
-            customPanel2.Margin = new Padding(2, 2, 2, 2);
+            customPanel2.Margin = new Padding(2);
             customPanel2.Name = "customPanel2";
             customPanel2.Size = new Size(355, 466);
             customPanel2.TabIndex = 8;
@@ -217,7 +217,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel8.Controls.Add(pictureBox5);
             customPanel8.Controls.Add(txtTotalPrice);
             customPanel8.Location = new Point(142, 346);
-            customPanel8.Margin = new Padding(2, 2, 2, 2);
+            customPanel8.Margin = new Padding(2);
             customPanel8.Name = "customPanel8";
             customPanel8.Size = new Size(197, 38);
             customPanel8.TabIndex = 10;
@@ -226,7 +226,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             pictureBox5.Image = Properties.Resources.X;
             pictureBox5.Location = new Point(169, 10);
-            pictureBox5.Margin = new Padding(2, 2, 2, 2);
+            pictureBox5.Margin = new Padding(2);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(13, 14);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -239,7 +239,7 @@ namespace BadmintonCourtManagement.GUI
             txtTotalPrice.Font = new Font("Segoe UI", 9F);
             txtTotalPrice.ForeColor = Color.Black;
             txtTotalPrice.Location = new Point(12, 8);
-            txtTotalPrice.Margin = new Padding(2, 2, 2, 2);
+            txtTotalPrice.Margin = new Padding(2);
             txtTotalPrice.Multiline = true;
             txtTotalPrice.Name = "txtTotalPrice";
             txtTotalPrice.PlaceholderText = "Value";
@@ -253,7 +253,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel7.BorderRadius = 30;
             customPanel7.Controls.Add(txtEndTime);
             customPanel7.Location = new Point(142, 293);
-            customPanel7.Margin = new Padding(2, 2, 2, 2);
+            customPanel7.Margin = new Padding(2);
             customPanel7.Name = "customPanel7";
             customPanel7.Size = new Size(197, 38);
             customPanel7.TabIndex = 9;
@@ -264,7 +264,7 @@ namespace BadmintonCourtManagement.GUI
             txtEndTime.Font = new Font("Segoe UI", 9F);
             txtEndTime.ForeColor = Color.Black;
             txtEndTime.Location = new Point(12, 8);
-            txtEndTime.Margin = new Padding(2, 2, 2, 2);
+            txtEndTime.Margin = new Padding(2);
             txtEndTime.Multiline = true;
             txtEndTime.Name = "txtEndTime";
             txtEndTime.PlaceholderText = "Value";
@@ -279,7 +279,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel6.BorderRadius = 30;
             customPanel6.Controls.Add(txtStartTime);
             customPanel6.Location = new Point(142, 237);
-            customPanel6.Margin = new Padding(2, 2, 2, 2);
+            customPanel6.Margin = new Padding(2);
             customPanel6.Name = "customPanel6";
             customPanel6.Size = new Size(197, 38);
             customPanel6.TabIndex = 7;
@@ -290,7 +290,7 @@ namespace BadmintonCourtManagement.GUI
             txtStartTime.Font = new Font("Segoe UI", 9F);
             txtStartTime.ForeColor = Color.Black;
             txtStartTime.Location = new Point(12, 8);
-            txtStartTime.Margin = new Padding(2, 2, 2, 2);
+            txtStartTime.Margin = new Padding(2);
             txtStartTime.Multiline = true;
             txtStartTime.Name = "txtStartTime";
             txtStartTime.PlaceholderText = "Value";
@@ -305,7 +305,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel5.BorderRadius = 30;
             customPanel5.Controls.Add(txtDate);
             customPanel5.Location = new Point(142, 181);
-            customPanel5.Margin = new Padding(2, 2, 2, 2);
+            customPanel5.Margin = new Padding(2);
             customPanel5.Name = "customPanel5";
             customPanel5.Size = new Size(197, 38);
             customPanel5.TabIndex = 8;
@@ -316,13 +316,14 @@ namespace BadmintonCourtManagement.GUI
             txtDate.Font = new Font("Segoe UI", 9F);
             txtDate.ForeColor = Color.Black;
             txtDate.Location = new Point(12, 8);
-            txtDate.Margin = new Padding(2, 2, 2, 2);
+            txtDate.Margin = new Padding(2);
             txtDate.Multiline = true;
             txtDate.Name = "txtDate";
             txtDate.PlaceholderText = "Value";
             txtDate.ReadOnly = true;
             txtDate.Size = new Size(125, 24);
             txtDate.TabIndex = 0;
+            txtDate.TextChanged += txtDate_TextChanged;
             // 
             // label5
             // 
@@ -361,7 +362,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel4.Controls.Add(pictureBox1);
             customPanel4.Controls.Add(txtPhone);
             customPanel4.Location = new Point(141, 126);
-            customPanel4.Margin = new Padding(2, 2, 2, 2);
+            customPanel4.Margin = new Padding(2);
             customPanel4.Name = "customPanel4";
             customPanel4.Size = new Size(197, 38);
             customPanel4.TabIndex = 7;
@@ -370,7 +371,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             pictureBox1.Image = Properties.Resources.X;
             pictureBox1.Location = new Point(169, 10);
-            pictureBox1.Margin = new Padding(2, 2, 2, 2);
+            pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(13, 14);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -383,7 +384,7 @@ namespace BadmintonCourtManagement.GUI
             txtPhone.Font = new Font("Segoe UI", 9F);
             txtPhone.ForeColor = Color.Black;
             txtPhone.Location = new Point(12, 8);
-            txtPhone.Margin = new Padding(2, 2, 2, 2);
+            txtPhone.Margin = new Padding(2);
             txtPhone.Multiline = true;
             txtPhone.Name = "txtPhone";
             txtPhone.PlaceholderText = "Value";
@@ -397,7 +398,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel9.Controls.Add(pictureBox6);
             customPanel9.Controls.Add(txtCourtID);
             customPanel9.Location = new Point(141, 18);
-            customPanel9.Margin = new Padding(2, 2, 2, 2);
+            customPanel9.Margin = new Padding(2);
             customPanel9.Name = "customPanel9";
             customPanel9.Size = new Size(197, 38);
             customPanel9.TabIndex = 6;
@@ -407,7 +408,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             pictureBox6.Image = Properties.Resources.X;
             pictureBox6.Location = new Point(169, 10);
-            pictureBox6.Margin = new Padding(2, 2, 2, 2);
+            pictureBox6.Margin = new Padding(2);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(13, 14);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -420,7 +421,7 @@ namespace BadmintonCourtManagement.GUI
             txtCourtID.Font = new Font("Segoe UI", 9F);
             txtCourtID.ForeColor = Color.Black;
             txtCourtID.Location = new Point(12, 8);
-            txtCourtID.Margin = new Padding(2, 2, 2, 2);
+            txtCourtID.Margin = new Padding(2);
             txtCourtID.Multiline = true;
             txtCourtID.Name = "txtCourtID";
             txtCourtID.PlaceholderText = "Value";
@@ -445,7 +446,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel3.Controls.Add(btnDelete);
             customPanel3.Controls.Add(txtCustomerName);
             customPanel3.Location = new Point(141, 71);
-            customPanel3.Margin = new Padding(2, 2, 2, 2);
+            customPanel3.Margin = new Padding(2);
             customPanel3.Name = "customPanel3";
             customPanel3.Size = new Size(197, 38);
             customPanel3.TabIndex = 6;
@@ -455,7 +456,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             btnDelete.Image = Properties.Resources.X;
             btnDelete.Location = new Point(169, 10);
-            btnDelete.Margin = new Padding(2, 2, 2, 2);
+            btnDelete.Margin = new Padding(2);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(13, 14);
             btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -468,7 +469,7 @@ namespace BadmintonCourtManagement.GUI
             txtCustomerName.Font = new Font("Segoe UI", 9F);
             txtCustomerName.ForeColor = Color.Black;
             txtCustomerName.Location = new Point(12, 8);
-            txtCustomerName.Margin = new Padding(2, 2, 2, 2);
+            txtCustomerName.Margin = new Padding(2);
             txtCustomerName.Multiline = true;
             txtCustomerName.Name = "txtCustomerName";
             txtCustomerName.PlaceholderText = "Value";
@@ -515,7 +516,7 @@ namespace BadmintonCourtManagement.GUI
             Controls.Add(customPanel1);
             Controls.Add(btnBooking);
             Controls.Add(lblTitle);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "BookCourtDetailGUI";
             Size = new Size(901, 653);
             Load += BookCourtDetail_Load;
