@@ -255,11 +255,11 @@ namespace BadmintonCourtManagement.DAO
             return list;
         }
 
-        // 🔹 Lấy ID kế tiếp (ví dụ EMP001 → EMP002)
+        // 🔹 Lấy ID kế tiếp (ví dụ E00001 → E00002)
         public string GetNextId()
         {
             string query = "SELECT EmployeeId FROM employee ORDER BY EmployeeId DESC LIMIT 1";
-            string nextId = "EMP001";
+            string nextId = "E00001";
 
             try
             {
@@ -269,15 +269,12 @@ namespace BadmintonCourtManagement.DAO
 
                 if (result != null)
                 {
-                    string lastId = result.ToString(); // ví dụ: EMP005
-                    int number = int.Parse(lastId.Substring(3)); // lấy 5
-                    nextId = $"EMP{(number + 1):D3}"; // tạo EMP006
+                    string lastId = result.ToString().Trim(); // ví dụ: "E00005"
+                    int number = int.Parse(lastId.Substring(1)); // lấy toàn bộ phần số: "00005" → 5
+                    nextId = $"E{number + 1:D5}"; // tạo ID mới đúng format 5 chữ số
                 }
             }
-            catch (Exception ex)
-            {
-                //MessageBox.Show("Lỗi khi tạo mã nhân viên mới: " + ex.Message);
-            }
+            catch { }
             finally
             {
                 db.CloseConnection();
@@ -285,5 +282,57 @@ namespace BadmintonCourtManagement.DAO
 
             return nextId;
         }
+
+
+        // Kiểm tra phone đã tồn tại khi thêm mới
+        public bool isPhoneExists(string phone)
+        {
+            string query = "SELECT COUNT(*) FROM employee WHERE Phone = @Phone";
+
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Phone", phone.Trim());
+
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
+        // Kiểm tra phone đã tồn tại khi cập nhật (loại trừ ID hiện tại)
+        public bool isPhoneExistsUpdate(string phone, string employeeId)
+        {
+            string query = "SELECT COUNT(*) FROM employee WHERE Phone = @Phone AND EmployeeId <> @EmployeeId";
+
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Phone", phone.Trim());
+                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
+
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
     }
+
 }

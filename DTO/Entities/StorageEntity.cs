@@ -16,7 +16,7 @@ namespace DTO.Entities
             public string StorageId { get; set; } = "";
 
             [Required]
-            public string ImportBillId { get; set; } = "";
+            public string ImportBillDetailId { get; set; } = "";
 
             [Required]
             public string ProductId { get; set; } = "";
@@ -60,10 +60,10 @@ namespace DTO.Entities
 
             public Storage() {}
 
-            public Storage(string storageId, string importBillId, string productId, int quantity, double price, DateTime createdAt, Option status)
+            public Storage(string storageId, string importBillDetailId, string productId, int quantity, double price, DateTime createdAt, Option status)
             {
                 StorageId = storageId;
-                ImportBillId = importBillId;
+                ImportBillDetailId = importBillDetailId;
                 ProductId = productId;
                 Quantity = quantity;
                 Price = price;

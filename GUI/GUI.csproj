@@ -27,6 +27,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AccountModifyGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AccountGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="AccountAddGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="PriceRuleModifyGUI.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,14 +1,15 @@
+using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DTO;
+using Mysqlx;
+using Mysqlx.Crud;
+using Mysqlx.Resultset;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
-using BadmintonCourtManagement.DTO;
-using BadmintonCourtManagement.BUS;
 using System.Text.RegularExpressions;
-using Mysqlx;
-using System.Data;
-using Mysqlx.Resultset;
+using System.Windows.Forms;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -23,6 +24,8 @@ namespace BadmintonCourtManagement.GUI
         private bool _isRowSelected = false;
         private int _selectedRowIndex = -1;
         private AccountDTO acc;
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false;
 
         protected override void OnHandleCreated(EventArgs e)
         {
@@ -98,11 +101,27 @@ namespace BadmintonCourtManagement.GUI
         public ProductSaleGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
+            CheckPermissions("F03");
             SetupGrid();
             LoadInitialData();
             searchBar.KeyDown += searchEnterEvent;
             this.Resize += ProductSaleGUI_Resize;
             acc = currentAccount;
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == acc.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                }
+            }
+
+            btnAddInvoice.Visible = isInsert;
         }
 
         private void LoadInitialData()
@@ -146,7 +165,7 @@ namespace BadmintonCourtManagement.GUI
                     Type = typeList.FirstOrDefault(t => t.TypeProductId == p.TypeId)?.TypeProductName ?? "bye",
                     StockQuantity = p.Quantity,
                     Price = storageList.Where(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)
-                                .OrderByDescending(ob => ob.ImportBillId)
+                                .OrderByDescending(ob => ob.ImportBillDetailId)
                                 .Select(ob => ob.Price)
                                 .FirstOrDefault(),
                     QuantityToBuy = _cart.ContainsKey(p.ProductId) ? _cart[p.ProductId] : 0
