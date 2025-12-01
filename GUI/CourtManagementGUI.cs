@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DTO;
+using Mysqlx.Crud;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BadmintonCourtManagement.BUS;
-using BadmintonCourtManagement.DTO;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -21,6 +22,8 @@ namespace BadmintonCourtManagement.GUI
         private int currentPage;
         private int itemsPerPage;
         private int totalPages;
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false, isUpdate = false, isDelete = false;
 
         public CourtManagementGUI()
         {
@@ -37,8 +40,25 @@ namespace BadmintonCourtManagement.GUI
             currentPage = 1;
             itemsPerPage = 8;
             totalPages = 1;
-
+            CheckPermissions("F02");
             ReloadCourtList();
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == currentAccount.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                    else if (p.Option == "Delete") isDelete = true;
+                }
+            }
+
+            btnAdd.Visible = isInsert;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) { }
@@ -204,6 +224,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnDelete.Visible = isDelete;
 
             var btnEdit = new Button
             {
@@ -216,6 +237,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnEdit.Visible = isDelete;
 
             btnDelete.Click += (s, e) =>
             {

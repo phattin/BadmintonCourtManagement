@@ -21,10 +21,10 @@ namespace GUI
         public AccountGUI(AccountDTO account)
         {
             this.currentAccount = account;
+            CheckPermissions("F10");
             InitializeComponent();
             ConfigureDataGridView();
             LoadData();
-            CheckPermissions("F10");
         }
         private void CheckPermissions(string functionId)
         {

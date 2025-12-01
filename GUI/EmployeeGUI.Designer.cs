@@ -334,7 +334,7 @@
             // 
             // EmployeeGUI
             // 
-            AutoScaleDimensions = new SizeF(10F, 24F);
+            AutoScaleDimensions = new SizeF(12F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             AutoSize = true;
@@ -342,7 +342,7 @@
             Controls.Add(cardList);
             Controls.Add(toolBar);
             Controls.Add(titlePanel);
-            Font = new Font("Roboto Condensed", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(0);
             Name = "EmployeeGUI";
             Size = new Size(1199, 803);
