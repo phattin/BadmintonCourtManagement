@@ -42,7 +42,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             textBox2 = new TextBox();
             textBox1 = new TextBox();
             ProductTotal = new Label();
-            ProductPriceOut = new Label();
+            ProductProfit = new Label();
             ProductPriceIn = new Label();
             ProductQuantity = new Label();
             QuantityBox = new TextBox();
@@ -157,7 +157,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             InputPanel.Controls.Add(textBox2, 1, 2);
             InputPanel.Controls.Add(textBox1, 1, 1);
             InputPanel.Controls.Add(ProductTotal, 0, 3);
-            InputPanel.Controls.Add(ProductPriceOut, 0, 2);
+            InputPanel.Controls.Add(ProductProfit, 0, 2);
             InputPanel.Controls.Add(ProductPriceIn, 0, 1);
             InputPanel.Controls.Add(ProductQuantity, 0, 0);
             InputPanel.Controls.Add(QuantityBox, 1, 0);
@@ -218,18 +218,18 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             ProductTotal.Text = "Thành tiền:";
             ProductTotal.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ProductPriceOut
+            // ProductProfit
             // 
-            ProductPriceOut.Dock = DockStyle.Fill;
-            ProductPriceOut.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            ProductPriceOut.ForeColor = Color.White;
-            ProductPriceOut.Location = new Point(25, 122);
-            ProductPriceOut.Margin = new Padding(25, 0, 0, 0);
-            ProductPriceOut.Name = "ProductPriceOut";
-            ProductPriceOut.Size = new Size(214, 59);
-            ProductPriceOut.TabIndex = 4;
-            ProductPriceOut.Text = "Giá bán:";
-            ProductPriceOut.TextAlign = ContentAlignment.MiddleLeft;
+            ProductProfit.Dock = DockStyle.Fill;
+            ProductProfit.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            ProductProfit.ForeColor = Color.White;
+            ProductProfit.Location = new Point(25, 122);
+            ProductProfit.Margin = new Padding(25, 0, 0, 0);
+            ProductProfit.Name = "ProductProfit";
+            ProductProfit.Size = new Size(214, 59);
+            ProductProfit.TabIndex = 4;
+            ProductProfit.Text = "Lãi suất (%):";
+            ProductProfit.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ProductPriceIn
             // 
@@ -375,7 +375,7 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         private Label ProductType;
         private Label ProductName;
         private Label ProductTotal;
-        private Label ProductPriceOut;
+        private Label ProductProfit;
         private Label ProductPriceIn;
         private Label ProductQuantity;
         private TextBox QuantityBox;

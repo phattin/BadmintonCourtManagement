@@ -2,6 +2,7 @@ namespace BadmintonCourtManagement.DTO
 {
     public class BillImportDetailDTO
     {
+        private string importBillDetailId = "";
         private string importBillId = "";
         private string productId = "";
         private int quantity = 0;
@@ -10,6 +11,7 @@ namespace BadmintonCourtManagement.DTO
         public enum Option { active, inactive };
         private Option status;
 
+        public string ImportBillDetailId { get => importBillDetailId; set => importBillDetailId = value; }
         public string ImportBillId { get => importBillId; set => importBillId = value; }
         public string ProductId { get => productId; set => productId = value; }
         public int Quantity
@@ -48,8 +50,9 @@ namespace BadmintonCourtManagement.DTO
         public Option Status { get => status; set => status = value; }
 
         public BillImportDetailDTO() { }
-        public BillImportDetailDTO(string importBillId, string productId, int quantity, double price, double totalPrice, Option status)
+        public BillImportDetailDTO(string importBillDetailId, string importBillId, string productId, int quantity, double price, double totalPrice, Option status)
         {
+            ImportBillDetailId = importBillDetailId;
             ImportBillId = importBillId;
             ProductId = productId;
             Quantity = quantity;
