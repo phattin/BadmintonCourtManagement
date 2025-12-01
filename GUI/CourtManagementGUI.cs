@@ -67,19 +67,19 @@ namespace BadmintonCourtManagement.GUI
 
         private void drPanelCourtMN_Paint(object sender, PaintEventArgs e) { }
 
-        private void btncourtDelete_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show(
-                "Bạn có chắc chắn muốn xóa sân này không?",
-                "Xác nhận xóa",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
-            if (result == DialogResult.Yes)
-            {
-                MessageBox.Show("Xóa sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+        //private void btncourtDelete_Click(object sender, EventArgs e)
+        //{
+        //    DialogResult result = MessageBox.Show(
+        //        "Bạn có chắc chắn muốn xóa sân này không?",
+        //        "Xác nhận xóa",
+        //        MessageBoxButtons.YesNo,
+        //        MessageBoxIcon.Question
+        //    );
+        //    if (result == DialogResult.Yes)
+        //    {
+        //        MessageBox.Show("Xóa sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
 
         private void LoadCourts(List<CourtDTO> danhSachSan, int pageNumber)
         {

@@ -15,14 +15,14 @@ namespace BadmintonCourtManagement.DAO
         // create
         public bool InsertStorage(StorageDTO storage)
         {
-            string query = "INSERT INTO storage (StorageId, ImportBillId, ProductId, Quantity, Price, TotalPrice, CreatedAt, Status) VALUES (@StorageId, @ImportBillId, @ProductId, @Quantity, @Price, @TotalPrice, @CreatedAt, @Status)";
+            string query = "INSERT INTO storage (StorageId, ImportBillDetailId, ProductId, Quantity, Price, TotalPrice, CreatedAt, Status) VALUES (@StorageId, @ImportBillDetailId, @ProductId, @Quantity, @Price, @TotalPrice, @CreatedAt, @Status)";
             int result = 0;
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@StorageId", storage.StorageId);
-                cmd.Parameters.AddWithValue("@ImportBillId", storage.ImportBillId);
+                cmd.Parameters.AddWithValue("@ImportBillId", storage.ImportBillDetailId);
                 cmd.Parameters.AddWithValue("@ProductId", storage.ProductId);
                 cmd.Parameters.AddWithValue("@Quantity", storage.Quantity);
                 cmd.Parameters.AddWithValue("@Price", storage.Price);
@@ -57,7 +57,7 @@ namespace BadmintonCourtManagement.DAO
                     StorageDTO storage = new StorageDTO
                     {
                         StorageId = reader["StorageId"].ToString(),
-                        ImportBillId = reader["ImportBillId"].ToString(),
+                        ImportBillDetailId = reader["ImportBillDetailId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
@@ -80,22 +80,22 @@ namespace BadmintonCourtManagement.DAO
             return storageList;
         }
 
-        public List<StorageDTO> GetStorageListByBillImportId(string importBillId)
+        public List<StorageDTO> GetStorageListByBillImportId(string importBillDetailId)
         {
-            string query = "SELECT * FROM storage WHERE ImportBillId = @ImportBillId";
+            string query = "SELECT * FROM storage WHERE ImportBillDetailId = @ImportBillDetailId";
             List<StorageDTO> storageList = new List<StorageDTO>();
             try
             {
                 db.OpenConnection();
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@ImportBillId", importBillId);
+                cmd.Parameters.AddWithValue("@ImportBillDetailId", importBillDetailId);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     storageList.Add(new StorageDTO
                     {
                         StorageId = reader["StorageId"].ToString(),
-                        ImportBillId = reader["ImportBillId"].ToString(),
+                        ImportBillDetailId = reader["ImportBillDetailId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
@@ -108,7 +108,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Error retrieving storage by ImportBillId: " + ex.Message);
+                throw new Exception("Error retrieving storage by ImportBillDetailId: " + ex.Message);
             }
             finally
             {
@@ -132,7 +132,7 @@ namespace BadmintonCourtManagement.DAO
                     storageList.Add(new StorageDTO
                     {
                         StorageId = reader["StorageId"].ToString(),
-                        ImportBillId = reader["ImportBillId"].ToString(),
+                        ImportBillDetailId = reader["ImportBillDetailId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
@@ -169,7 +169,7 @@ namespace BadmintonCourtManagement.DAO
                     storage = new StorageDTO
                     {
                         StorageId = reader["StorageId"].ToString(),
-                        ImportBillId = reader["ImportBillId"].ToString(),
+                        ImportBillDetailId = reader["ImportBillDetailId"].ToString(),
                         ProductId = reader["ProductId"].ToString(),
                         Quantity = int.Parse(reader["Quantity"].ToString()),
                         Price = double.Parse(reader["Price"].ToString()),
