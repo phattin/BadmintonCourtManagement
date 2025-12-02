@@ -209,6 +209,7 @@ namespace BadmintonCourtManagement.GUI
             btnBooking4.TabIndex = 11;
             btnBooking4.Text = "Đặt sân";
             btnBooking4.TextAlign = ContentAlignment.MiddleCenter;
+            btnBooking4.Click += btnBooking4_Click;
             // 
             // customPanel8
             // 

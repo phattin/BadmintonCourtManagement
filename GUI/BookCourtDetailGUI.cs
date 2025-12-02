@@ -238,7 +238,111 @@ namespace BadmintonCourtManagement.GUI
 
         private void txtDate_TextChanged(object sender, EventArgs e)
         {
-            UpdatePrice();  
+            UpdatePrice();
         }
+
+        private void btnBooking4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1️⃣ Validate dữ liệu đầu vào
+                //if (string.IsNullOrWhiteSpace(txtCourtID.Text))
+                //{
+                //    MessageBox.Show("Vui lòng chọn sân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
+
+                if (string.IsNullOrWhiteSpace(txtDate.Text))
+                {
+                    MessageBox.Show("Vui lòng chọn ngày đặt sân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtStartTime.Text) || string.IsNullOrWhiteSpace(txtEndTime.Text))
+                {
+                    MessageBox.Show("Vui lòng chọn giờ bắt đầu và kết thúc", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtTotalPrice.Text))
+                {
+                    MessageBox.Show("Không thể tính giá, vui lòng kiểm tra lại thông tin", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 2️⃣ Parse thông tin booking
+                DateOnly bookingDate = DateOnly.ParseExact(txtDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                TimeOnly startTime = TimeOnly.Parse(txtStartTime.Text);
+                TimeOnly endTime = TimeOnly.Parse(txtEndTime.Text);
+
+                // Tạo DateTime từ DateOnly + TimeOnly
+                DateTime startDateTime = bookingDate.ToDateTime(startTime);
+                DateTime endDateTime = bookingDate.ToDateTime(endTime);
+
+                // 3️⃣ Kiểm tra xem sân đã được đặt trong khung giờ này chưa
+                BookingDAO bookingDAO = new BookingDAO();
+                List<BookingDTO> existingBookings = bookingDAO.GetSuccessfulBookingsByCourtID(txtCourtID.Text);
+
+                foreach (var booking in existingBookings)
+                {
+                    // Kiểm tra trùng lặp thời gian
+                    if ((startDateTime >= booking.StartTime && startDateTime < booking.EndTime) ||
+                        (endDateTime > booking.StartTime && endDateTime <= booking.EndTime) ||
+                        (startDateTime <= booking.StartTime && endDateTime >= booking.EndTime))
+                    {
+                        MessageBox.Show("Sân đã được đặt trong khung giờ này!\n" +
+                            $"Thời gian trùng: {booking.StartTime:dd/MM/yyyy HH:mm} - {booking.EndTime:HH:mm}",
+                            "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
+                // 4️⃣ Tạo BookingId tự động (format: BKyyyyMMddHHmmss)
+                string bookingId = "BK" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                // 5️⃣ Tạo BookingDTO
+                BookingDTO newBooking = new BookingDTO
+                {
+                    BookingId = bookingId,
+                    CourtId = txtCourtID.Text,
+                    Status = BookingDTO.Option.successful, // hoặc pending tùy logic
+                    StartTime = startDateTime,
+                    EndTime = endDateTime
+                };
+
+                // 6️⃣ Insert vào database
+                bool result = bookingDAO.InsertBooking(newBooking);
+
+                if (result)
+                {
+                    MessageBox.Show($"Đặt sân thành công!\n\n" +
+                        $"Mã đặt sân: {bookingId}\n" +
+                        $"Sân: {txtCourtID.Text}\n" +
+                        $"Ngày: {txtDate.Text}\n" +
+                        $"Giờ: {txtStartTime.Text} - {txtEndTime.Text}\n" +
+                        $"Tổng tiền: {txtTotalPrice.Text} VNĐ",
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 7️⃣ Reset form hoặc quay lại trang danh sách
+                    this.Controls.Clear();
+                    var bookingGUI = new BookCourtGUI(currentAccount);
+                    bookingGUI.Dock = DockStyle.Fill;
+                    this.Controls.Add(bookingGUI);
+                }
+                else
+                {
+                    MessageBox.Show("Đặt sân thất bại, vui lòng thử lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
