@@ -76,7 +76,7 @@
             // 
             txtCourtName.Location = new Point(165, 138);
             txtCourtName.Margin = new Padding(3, 2, 3, 2);
-            txtCourtName.Multiline = true;
+            txtCourtName.Multiline = false;
             txtCourtName.Name = "txtCourtName";
             txtCourtName.Size = new Size(183, 22);
             txtCourtName.TabIndex = 3;

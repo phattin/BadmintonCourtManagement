@@ -48,9 +48,10 @@
             // 
             EmployeeID.AutoSize = true;
             EmployeeID.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmployeeID.Location = new Point(183, 149);
+            EmployeeID.Location = new Point(229, 187);
+            EmployeeID.Margin = new Padding(4, 0, 4, 0);
             EmployeeID.Name = "EmployeeID";
-            EmployeeID.Size = new Size(83, 37);
+            EmployeeID.Size = new Size(99, 44);
             EmployeeID.TabIndex = 17;
             EmployeeID.Text = "E00001";
             EmployeeID.UseCompatibleTextRendering = true;
@@ -59,9 +60,10 @@
             // 
             lblEmployeeID.AutoSize = true;
             lblEmployeeID.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEmployeeID.Location = new Point(26, 149);
+            lblEmployeeID.Location = new Point(33, 187);
+            lblEmployeeID.Margin = new Padding(4, 0, 4, 0);
             lblEmployeeID.Name = "lblEmployeeID";
-            lblEmployeeID.Size = new Size(154, 37);
+            lblEmployeeID.Size = new Size(185, 44);
             lblEmployeeID.TabIndex = 16;
             lblEmployeeID.Text = "Mã nhân viên";
             lblEmployeeID.UseCompatibleTextRendering = true;
@@ -71,9 +73,10 @@
             btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel.BackColor = Color.DimGray;
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(232, 587);
+            btnCancel.Location = new Point(290, 733);
+            btnCancel.Margin = new Padding(4, 3, 4, 3);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(106, 40);
+            btnCancel.Size = new Size(133, 50);
             btnCancel.TabIndex = 15;
             btnCancel.Text = "Hủy";
             btnCancel.UseVisualStyleBackColor = false;
@@ -84,9 +87,10 @@
             btnAccept.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnAccept.BackColor = Color.IndianRed;
             btnAccept.ForeColor = Color.White;
-            btnAccept.Location = new Point(85, 587);
+            btnAccept.Location = new Point(106, 733);
+            btnAccept.Margin = new Padding(4, 3, 4, 3);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(106, 40);
+            btnAccept.Size = new Size(133, 50);
             btnAccept.TabIndex = 14;
             btnAccept.Text = "Xác nhận";
             btnAccept.UseVisualStyleBackColor = false;
@@ -95,19 +99,20 @@
             // txtEmployeeName
             // 
             txtEmployeeName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtEmployeeName.Location = new Point(183, 229);
-            txtEmployeeName.Multiline = true;
+            txtEmployeeName.Location = new Point(229, 287);
+            txtEmployeeName.Margin = new Padding(4, 3, 4, 3);
             txtEmployeeName.Name = "txtEmployeeName";
-            txtEmployeeName.Size = new Size(209, 28);
+            txtEmployeeName.Size = new Size(260, 31);
             txtEmployeeName.TabIndex = 12;
             // 
             // lblEmployeeSDT
             // 
             lblEmployeeSDT.AutoSize = true;
             lblEmployeeSDT.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEmployeeSDT.Location = new Point(26, 299);
+            lblEmployeeSDT.Location = new Point(33, 373);
+            lblEmployeeSDT.Margin = new Padding(4, 0, 4, 0);
             lblEmployeeSDT.Name = "lblEmployeeSDT";
-            lblEmployeeSDT.Size = new Size(150, 37);
+            lblEmployeeSDT.Size = new Size(180, 44);
             lblEmployeeSDT.TabIndex = 11;
             lblEmployeeSDT.Text = "Số điện thoại";
             lblEmployeeSDT.UseCompatibleTextRendering = true;
@@ -116,42 +121,44 @@
             // 
             lblEmployeeName.AutoSize = true;
             lblEmployeeName.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEmployeeName.Location = new Point(26, 229);
+            lblEmployeeName.Location = new Point(33, 287);
+            lblEmployeeName.Margin = new Padding(4, 0, 4, 0);
             lblEmployeeName.Name = "lblEmployeeName";
-            lblEmployeeName.Size = new Size(159, 37);
+            lblEmployeeName.Size = new Size(191, 44);
             lblEmployeeName.TabIndex = 10;
             lblEmployeeName.Text = "Tên nhân viên";
             lblEmployeeName.UseCompatibleTextRendering = true;
             // 
             // Title
             // 
-            Title.Anchor = AnchorStyles.Top;
+            Title.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Title.AutoSize = true;
             Title.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Title.Location = new Point(111, 38);
+            Title.Location = new Point(124, 48);
+            Title.Margin = new Padding(4, 0, 4, 0);
             Title.Name = "Title";
-            Title.Size = new Size(216, 47);
+            Title.Size = new Size(259, 56);
             Title.TabIndex = 9;
             Title.Text = "Sửa nhân viên";
             Title.UseCompatibleTextRendering = true;
-            Title.Click += Title_Click;
             // 
             // txtEmployeeAddress
             // 
             txtEmployeeAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtEmployeeAddress.Location = new Point(183, 361);
-            txtEmployeeAddress.Multiline = true;
+            txtEmployeeAddress.Location = new Point(229, 452);
+            txtEmployeeAddress.Margin = new Padding(4, 3, 4, 3);
             txtEmployeeAddress.Name = "txtEmployeeAddress";
-            txtEmployeeAddress.Size = new Size(209, 28);
+            txtEmployeeAddress.Size = new Size(260, 31);
             txtEmployeeAddress.TabIndex = 20;
             // 
             // lblEmployeeRole
             // 
             lblEmployeeRole.AutoSize = true;
             lblEmployeeRole.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEmployeeRole.Location = new Point(26, 431);
+            lblEmployeeRole.Location = new Point(33, 538);
+            lblEmployeeRole.Margin = new Padding(4, 0, 4, 0);
             lblEmployeeRole.Name = "lblEmployeeRole";
-            lblEmployeeRole.Size = new Size(80, 37);
+            lblEmployeeRole.Size = new Size(96, 44);
             lblEmployeeRole.TabIndex = 19;
             lblEmployeeRole.Text = "Vai trò";
             lblEmployeeRole.UseCompatibleTextRendering = true;
@@ -160,9 +167,10 @@
             // 
             lblEmployeeAddress.AutoSize = true;
             lblEmployeeAddress.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEmployeeAddress.Location = new Point(26, 361);
+            lblEmployeeAddress.Location = new Point(33, 452);
+            lblEmployeeAddress.Margin = new Padding(4, 0, 4, 0);
             lblEmployeeAddress.Name = "lblEmployeeAddress";
-            lblEmployeeAddress.Size = new Size(81, 37);
+            lblEmployeeAddress.Size = new Size(98, 44);
             lblEmployeeAddress.TabIndex = 18;
             lblEmployeeAddress.Text = "Địa chỉ";
             lblEmployeeAddress.UseCompatibleTextRendering = true;
@@ -170,24 +178,25 @@
             // txtEmployeeSDT
             // 
             txtEmployeeSDT.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtEmployeeSDT.Location = new Point(183, 299);
-            txtEmployeeSDT.Multiline = true;
+            txtEmployeeSDT.Location = new Point(229, 373);
+            txtEmployeeSDT.Margin = new Padding(4, 3, 4, 3);
             txtEmployeeSDT.Name = "txtEmployeeSDT";
-            txtEmployeeSDT.Size = new Size(209, 28);
+            txtEmployeeSDT.Size = new Size(260, 31);
             txtEmployeeSDT.TabIndex = 21;
             // 
             // RoleOption
             // 
             RoleOption.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             RoleOption.FormattingEnabled = true;
-            RoleOption.Location = new Point(183, 437);
+            RoleOption.Location = new Point(229, 547);
+            RoleOption.Margin = new Padding(4, 3, 4, 3);
             RoleOption.Name = "RoleOption";
-            RoleOption.Size = new Size(209, 28);
+            RoleOption.Size = new Size(260, 33);
             RoleOption.TabIndex = 22;
             // 
             // FormEmployeeGUI
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(RoleOption);
             Controls.Add(txtEmployeeSDT);
@@ -202,9 +211,9 @@
             Controls.Add(lblEmployeeSDT);
             Controls.Add(lblEmployeeName);
             Controls.Add(Title);
-            Margin = new Padding(3, 4, 3, 4);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "FormEmployeeGUI";
-            Size = new Size(419, 661);
+            Size = new Size(524, 827);
             ResumeLayout(false);
             PerformLayout();
         }
