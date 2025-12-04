@@ -38,8 +38,7 @@ namespace BadmintonCourtManagement.GUI
                     else if (p.Option == "Delete") isDelete = true;
                 }
             }
-
-            //add.Visible = isInsert;
+            btnAdd.Visible = isInsert;
         }
 
         private void buttonEnter(object sender, EventArgs e)
@@ -227,6 +226,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnDelete.Visible = isDelete;
 
             var btnEdit = new Button
             {
@@ -239,6 +239,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnEdit.Visible = isUpdate;
 
             // Delete
             btnDelete.Click += (s, e) =>
