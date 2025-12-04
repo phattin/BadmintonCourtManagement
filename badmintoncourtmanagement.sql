@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2025 at 02:01 PM
+-- Generation Time: Dec 04, 2025 at 07:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `account` (
   `Username` varchar(50) NOT NULL,
   `Password` varchar(255) NOT NULL,
+  `EmployeeId` varchar(10) NOT NULL,
   `PermissionId` varchar(10) NOT NULL,
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -38,8 +39,8 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`Username`, `Password`, `PermissionId`, `IsDeleted`) VALUES
-('admin', 'admin123', 'P00001', 0);
+INSERT INTO `account` (`Username`, `Password`, `EmployeeId`, `PermissionId`, `IsDeleted`) VALUES
+('admin', 'admin123', 'E00001', 'P00001', 0);
 
 -- --------------------------------------------------------
 
@@ -55,14 +56,6 @@ CREATE TABLE `billbooking` (
   `TotalPrice` double DEFAULT 0,
   `PrePayment` double DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- INSERT INTO `billbooking` (`BillBookingId`, `EmployeeId`, `CustomerId`, `BookingId`, `TotalPrice`, `PrePayment`) VALUES
--- ('BB00001', 'EM00001', 'CU00001', 'BK00001', 120000, 60000),
--- ('BB00002', 'EM00001', 'CU00002', 'BK00002', 160000, 80000),
--- ('BB00003', 'EM00001', 'CU00003', 'BK00003', 180000, 90000),
--- ('BB00004', 'EM00001', 'CU00004', 'BK00004', 120000, 60000),
--- ('BB00005', 'EM00001', 'CU00005', 'BK00005', 160000, 80000);
-
 
 -- --------------------------------------------------------
 
@@ -81,16 +74,25 @@ CREATE TABLE `billimportproductdetail` (
   `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `billimportproductdetail` (`ImportBillDetailId`, `ImportBillId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `Status`) VALUES
--- ('IBD001', 'IB00001', 'PD00001', 10, 300000, 3000000, 'active'),
--- ('IBD002', 'IB00001', 'PD00006', 20, 50000, 1000000, 'active'),
+--
+-- Dumping data for table `billimportproductdetail`
+--
 
--- ('IBD003', 'IB00002', 'PD00002', 8, 350000, 2800000, 'active'),
--- ('IBD004', 'IB00002', 'PD00007', 15, 40000, 600000, 'active'),
-
--- ('IBD005', 'IB00003', 'PD00003', 5, 450000, 2250000, 'active'),
--- ('IBD006', 'IB00003', 'PD00008', 12, 60000, 720000, 'active');
-
+INSERT INTO `billimportproductdetail` (`ImportBillDetailId`, `ImportBillId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `CreatedAt`, `Status`) VALUES
+('ID00001', 'IB00001', 'PD00001', 20, 460000, 9200000, '2025-12-01 14:49:10', ''),
+('ID00002', 'IB00002', 'PD00001', 20, 400000, 8000000, '2025-12-01 16:41:21', ''),
+('ID00003', 'IB00003', 'PD00005', 30, 580000, 17400000, '2025-12-01 16:56:23', ''),
+('ID00004', 'IB00003', 'PD00006', 30, 290000, 8700000, '2025-12-01 16:56:23', ''),
+('ID00005', 'IB00003', 'PD00004', 30, 590000, 17700000, '2025-12-01 16:56:23', ''),
+('ID00006', 'IB00004', 'PD00002', 50, 740000, 37000000, '2025-12-02 10:03:16', ''),
+('ID00007', 'IB00004', 'PD00007', 25, 980000, 24500000, '2025-12-02 10:03:16', ''),
+('ID00008', 'IB00004', 'PD00009', 35, 720000, 25200000, '2025-12-02 10:03:16', ''),
+('ID00009', 'IB00005', 'PD00003', 20, 450000, 9000000, '2025-12-02 10:04:02', ''),
+('ID00010', 'IB00006', 'PD00010', 40, 680000, 27200000, '2025-12-02 10:04:41', ''),
+('ID00011', 'IB00006', 'PD00011', 40, 660000, 26400000, '2025-12-02 10:04:41', ''),
+('ID00012', 'IB00007', 'PD00008', 35, 840000, 29400000, '2025-12-02 10:05:41', ''),
+('ID00013', 'IB00008', 'PD00012', 45, 560000, 25200000, '2025-12-02 10:06:11', ''),
+('ID00014', 'IB00009', 'PD00013', 100, 150000, 15000000, '2025-12-02 10:06:40', '');
 
 -- --------------------------------------------------------
 
@@ -106,13 +108,28 @@ CREATE TABLE `billproduct` (
   `Status` enum('paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `TotalPrice`, `DateCreated`, `Status`) VALUES
--- ('BP00001', 'EM00001', 600000, '2025-10-17 09:00:00', 'paid'),
--- ('BP00002', 'EM00001', 450000, '2025-10-17 11:00:00', 'paid'),
--- ('BP00003', 'EM00001', 350000, '2025-10-17 13:30:00', 'unpaid'),
--- ('BP00004', 'EM00001', 900000, '2025-10-18 09:45:00', 'paid'),
--- ('BP00005', 'EM00001', 250000, '2025-10-18 15:10:00', 'paid');
+--
+-- Dumping data for table `billproduct`
+--
 
+INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `TotalPrice`, `DateCreated`, `Status`) VALUES
+('BP00001', 'E00001', 1104000, '2025-12-01 14:50:05', 'paid'),
+('BP00002', 'E00001', 1104000, '2025-12-04 13:08:10', 'paid'),
+('BP00003', 'E00001', 2060000, '2025-12-04 13:09:10', 'paid'),
+('BP00004', 'E00001', 2016000, '2025-12-04 13:09:49', 'paid'),
+('BP00005', 'E00001', 888000, '2025-12-04 13:10:01', 'paid'),
+('BP00006', 'E00001', 2967000, '2025-12-04 13:10:29', 'paid'),
+('BP00007', 'E00001', 1728000, '2025-12-04 13:10:57', 'paid'),
+('BP00008', 'E00001', 667000, '2025-12-04 13:11:24', 'paid'),
+('BP00009', 'E00001', 667000, '2025-12-04 13:11:37', 'paid'),
+('BP00010', 'E00001', 1357000, '2025-12-04 13:13:38', 'paid'),
+('BP00011', 'E00001', 888000, '2025-12-04 13:13:55', 'paid'),
+('BP00012', 'E00001', 1529500, '2025-12-04 13:14:49', 'paid'),
+('BP00013', 'E00001', 862500, '2025-12-04 13:15:36', 'paid'),
+('BP00014', 'E00001', 2001000, '2025-12-04 13:15:59', 'paid'),
+('BP00015', 'E00001', 5520000, '2025-12-04 13:16:12', 'paid'),
+('BP00016', 'E00001', 1656000, '2025-12-04 13:20:25', 'paid'),
+('BP00017', 'E00001', 1012000, '2025-12-04 13:46:19', 'paid');
 
 -- --------------------------------------------------------
 
@@ -128,20 +145,36 @@ CREATE TABLE `billproductdetail` (
   `TotalPrice` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `billproductdetail` (`BillProductId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`) VALUES
--- ('BP00001', 'PD00001', 1, 300000, 300000),
--- ('BP00001', 'PD00006', 6, 50000, 300000),
+--
+-- Dumping data for table `billproductdetail`
+--
 
--- ('BP00002', 'PD00002', 1, 350000, 350000),
--- ('BP00002', 'PD00007', 2, 50000, 100000),
-
--- ('BP00003', 'PD00003', 1, 350000, 350000),
-
--- ('BP00004', 'PD00001', 2, 300000, 600000),
--- ('BP00004', 'PD00006', 6, 50000, 300000),
-
--- ('BP00005', 'PD00008', 5, 50000, 250000);
-
+INSERT INTO `billproductdetail` (`BillProductId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`) VALUES
+('BP00001', 'PD00001', 2, 552000, 1104000),
+('BP00002', 'PD00001', 2, 552000, 1104000),
+('BP00003', 'PD00006', 1, 333500, 333500),
+('BP00003', 'PD00009', 1, 864000, 864000),
+('BP00003', 'PD00013', 5, 172500, 862500),
+('BP00004', 'PD00008', 2, 1008000, 2016000),
+('BP00005', 'PD00002', 1, 888000, 888000),
+('BP00006', 'PD00001', 2, 552000, 1104000),
+('BP00006', 'PD00006', 3, 333500, 1000500),
+('BP00006', 'PD00013', 5, 172500, 862500),
+('BP00007', 'PD00009', 2, 864000, 1728000),
+('BP00008', 'PD00005', 1, 667000, 667000),
+('BP00009', 'PD00006', 2, 333500, 667000),
+('BP00010', 'PD00004', 2, 678500, 1357000),
+('BP00011', 'PD00002', 1, 888000, 888000),
+('BP00012', 'PD00004', 1, 678500, 678500),
+('BP00012', 'PD00006', 1, 333500, 333500),
+('BP00012', 'PD00013', 3, 172500, 517500),
+('BP00013', 'PD00004', 2, 678500, 1357000),
+('BP00013', 'PD00010', 2, 782000, 1564000),
+('BP00013', 'PD00013', 5, 172500, 862500),
+('BP00014', 'PD00005', 3, 667000, 2001000),
+('BP00015', 'PD00001', 10, 552000, 5520000),
+('BP00016', 'PD00001', 3, 552000, 1656000),
+('BP00017', 'PD00001', 2, 552000, 1104000);
 
 -- --------------------------------------------------------
 
@@ -156,14 +189,6 @@ CREATE TABLE `booking` (
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- INSERT INTO `booking` (`BookingId`, `CourtId`, `Status`, `StartTime`, `EndTime`) VALUES
--- ('BK00001', 'CO00001', 'successful', '2025-10-17 08:00:00', '2025-10-17 10:00:00'),
--- ('BK00002', 'CO00002', 'successful', '2025-10-17 10:00:00', '2025-10-17 12:00:00'),
--- ('BK00003', 'CO00003', 'played',     '2025-10-17 12:00:00', '2025-10-17 14:00:00'),
--- ('BK00004', 'CO00004', 'successful', '2025-10-18 08:00:00', '2025-10-18 10:00:00'),
--- ('BK00005', 'CO00005', 'played',     '2025-10-18 14:00:00', '2025-10-18 16:00:00');
-
 
 -- --------------------------------------------------------
 
@@ -227,14 +252,6 @@ CREATE TABLE `customer` (
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `customer` (`CustomerId`, `CustomerName`, `Phone`, `IsDeleted`) VALUES
--- ('CU00001', 'Nguyễn Văn A', '0901000001', 0),
--- ('CU00002', 'Trần Thị B', '0901000002', 0),
--- ('CU00003', 'Lê Văn C', '0901000003', 0),
--- ('CU00004', 'Phạm Thị D', '0901000004', 0),
--- ('CU00005', 'Hoàng Văn E', '0901000005', 0);
-
-
 -- --------------------------------------------------------
 
 --
@@ -250,9 +267,13 @@ CREATE TABLE `employee` (
   `RoleId` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `employee` (`EmployeeId`, `EmployeeName`, `Phone`, `Address`, `Username`, `RoleId`) VALUES
-('EM00001', 'Admin', '0900000001', 'HCM', 'admin', 'R00001');
+--
+-- Dumping data for table `employee`
+--
 
+INSERT INTO `employee` (`EmployeeId`, `EmployeeName`, `Phone`, `Address`, `Username`, `RoleId`) VALUES
+('E00001', 'Admin', '0900000001', 'HCM', 'admin', 'R00001'),
+('EMP002', 'Thien', '0987654321', '123 X', '', 'R00002');
 
 -- --------------------------------------------------------
 
@@ -272,6 +293,7 @@ CREATE TABLE `function` (
 INSERT INTO `function` (`FunctionId`, `FunctionName`) VALUES
 ('F03', 'Bán hàng'),
 ('F05', 'Nhập hàng'),
+('F13', 'Quản lý giá sân'),
 ('F04', 'Quản lý hóa đơn đặt sân'),
 ('F08', 'Quản lý khách hàng'),
 ('F07', 'Quản lý nhà cung cấp'),
@@ -281,8 +303,7 @@ INSERT INTO `function` (`FunctionId`, `FunctionName`) VALUES
 ('F06', 'Quản lý sản phẩm'),
 ('F10', 'Quản lý tài khoản'),
 ('F12', 'Thống kê'),
-('F01', 'Đặt sân'),
-('F13', 'Quản lý giá sân');
+('F01', 'Đặt sân');
 
 -- --------------------------------------------------------
 
@@ -294,16 +315,25 @@ CREATE TABLE `importbill` (
   `ImportBillId` varchar(10) NOT NULL,
   `EmployeeId` varchar(10) NOT NULL,
   `SupplierId` varchar(10) NOT NULL,
-  `DateCreated`datetime NOT NULL,
+  `DateCreated` datetime NOT NULL,
   `TotalPrice` double NOT NULL,
-  `Status` enum('pending','delivered', 'cancelled', 'paid', 'unpaid') DEFAULT NULL
+  `Status` enum('pending','delivered','cancelled','paid','unpaid') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `importbill` (`ImportBillId`, `EmployeeId`, `SupplierId`, `DateCreated`, `TotalPrice`, `Status`) VALUES
--- ('IB00001', 'EM00001', 'SPU00001', '2025-10-17 09:00:00', 5000000, 'delivered'),
--- ('IB00002', 'EM00001', 'SPU00002', '2025-10-17 10:00:00', 3500000, 'delivered'),
--- ('IB00003', 'EM00001', 'SPU00003', '2025-10-17 11:00:00', 4200000, 'delivered');
+--
+-- Dumping data for table `importbill`
+--
 
+INSERT INTO `importbill` (`ImportBillId`, `EmployeeId`, `SupplierId`, `DateCreated`, `TotalPrice`, `Status`) VALUES
+('IB00001', 'E00001', 'SPU00001', '2025-12-01 14:49:10', 9200000, 'delivered'),
+('IB00002', 'E00001', 'SPU00001', '2025-12-01 16:41:21', 8000000, 'delivered'),
+('IB00003', 'E00001', 'SPU00001', '2025-12-01 16:56:23', 43800000, 'delivered'),
+('IB00004', 'E00001', 'SPU00001', '2025-12-02 10:03:16', 86700000, 'delivered'),
+('IB00005', 'E00001', 'SPU00002', '2025-12-02 10:04:02', 9000000, 'delivered'),
+('IB00006', 'E00001', 'SPU00003', '2025-12-02 10:04:41', 53600000, 'delivered'),
+('IB00007', 'E00001', 'SPU00001', '2025-12-02 10:05:41', 29400000, 'delivered'),
+('IB00008', 'E00001', 'SPU00003', '2025-12-02 10:06:11', 25200000, 'delivered'),
+('IB00009', 'E00001', 'SPU00002', '2025-12-02 10:06:40', 15000000, 'delivered');
 
 -- --------------------------------------------------------
 
@@ -319,13 +349,6 @@ CREATE TABLE `payment` (
   `AmountPaid` double NOT NULL,
   `RemainingAmount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- INSERT INTO `payment` (`PaymentId`, `BillProductId`, `PaymentMethod`, `TimePayment`, `AmountPaid`, `RemainingAmount`) VALUES
--- ('PAY001', 'BP00001', 'Cash', '2025-10-17 09:10:00', 600000, 0),
--- ('PAY002', 'BP00002', 'Banking', '2025-10-17 11:20:00', 450000, 0),
--- ('PAY003', 'BP00004', 'Cash', '2025-10-18 09:50:00', 900000, 0),
--- ('PAY004', 'BP00005', 'Banking', '2025-10-18 15:30:00', 250000, 0);
-
 
 -- --------------------------------------------------------
 
@@ -363,6 +386,42 @@ CREATE TABLE `permissiondetail` (
 --
 
 INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
+('P00001', 'F01', 'Insert'),
+('P00001', 'F01', 'View'),
+('P00001', 'F02', 'Delete'),
+('P00001', 'F02', 'Update'),
+('P00001', 'F02', 'Insert'),
+('P00001', 'F02', 'View'),
+('P00001', 'F03', 'View'),
+('P00001', 'F03', 'Insert'),
+('P00001', 'F04', 'View'),
+('P00001', 'F05', 'Insert'),
+('P00001', 'F05', 'View'),
+('P00001', 'F06', 'Delete'),
+('P00001', 'F06', 'Update'),
+('P00001', 'F06', 'Insert'),
+('P00001', 'F06', 'View'),
+('P00001', 'F07', 'Delete'),
+('P00001', 'F07', 'Update'),
+('P00001', 'F07', 'Insert'),
+('P00001', 'F07', 'View'),
+('P00001', 'F08', 'Update'),
+('P00001', 'F08', 'Insert'),
+('P00001', 'F08', 'View'),
+('P00001', 'F09', 'Delete'),
+('P00001', 'F09', 'Update'),
+('P00001', 'F09', 'Insert'),
+('P00001', 'F09', 'View'),
+('P00001', 'F10', 'Delete'),
+('P00001', 'F10', 'Update'),
+('P00001', 'F10', 'Insert'),
+('P00001', 'F10', 'View'),
+('P00001', 'F11', 'Delete'),
+('P00001', 'F11', 'Update'),
+('P00001', 'F11', 'Insert'),
+('P00001', 'F11', 'View'),
+('P00001', 'F12', 'View'),
+('P00002', 'F09', 'View'),
 ('P00002', 'F13', 'Delete'),
 ('P00002', 'F13', 'Update'),
 ('P00002', 'F13', 'Insert'),
@@ -374,43 +433,7 @@ INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
 ('P00002', 'F10', 'Delete'),
 ('P00002', 'F10', 'Update'),
 ('P00002', 'F10', 'Insert'),
-('P00002', 'F10', 'View'),
-('P00002', 'F09', 'View'),
-('P00001', 'F12', 'View'),
-('P00001', 'F11', 'Delete'),
-('P00001', 'F11', 'Update'),
-('P00001', 'F11', 'Insert'),
-('P00001', 'F11', 'View'),
-('P00001', 'F10', 'Delete'),
-('P00001', 'F10', 'Update'),
-('P00001', 'F10', 'Insert'),
-('P00001', 'F10', 'View'),
-('P00001', 'F09', 'Delete'),
-('P00001', 'F09', 'Update'),
-('P00001', 'F09', 'Insert'),
-('P00001', 'F09', 'View'),
-('P00001', 'F08', 'Update'),
-('P00001', 'F08', 'Insert'),
-('P00001', 'F08', 'View'),
-('P00001', 'F07', 'Delete'),
-('P00001', 'F07', 'Update'),
-('P00001', 'F07', 'Insert'),
-('P00001', 'F07', 'View'),
-('P00001', 'F06', 'Delete'),
-('P00001', 'F06', 'Update'),
-('P00001', 'F06', 'Insert'),
-('P00001', 'F06', 'View'),
-('P00001', 'F05', 'Insert'),
-('P00001', 'F05', 'View'),
-('P00001', 'F04', 'View'),
-('P00001', 'F03', 'Insert'),
-('P00001', 'F03', 'View'),
-('P00001', 'F02', 'Delete'),
-('P00001', 'F02', 'Update'),
-('P00001', 'F02', 'Insert'),
-('P00001', 'F01', 'Insert'),
-('P00001', 'F01', 'View'),
-('P00001', 'F02', 'View');
+('P00002', 'F10', 'View');
 
 -- --------------------------------------------------------
 
@@ -442,14 +465,6 @@ CREATE TABLE `pricerule` (
   `Status` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `pricerule`
---
-
--- INSERT INTO `pricerule` (`PriceRuleId`, `Price`, `StartTime`, `EndTime`, `StartDate`, `EndDate`, `EndType`, `Description`, `Status`) VALUES
--- ('PR0001', 60000, '05:00:00', '16:00:00', NULL, NULL, 'Weekday', 'Ngày thường', 'Đang áp dụng'),
--- ('PR0002', 80000, '16:00:00', '23:00:00', NULL, NULL, 'Weekday', 'Ngày thường', 'Đang áp dụng');
-
 -- --------------------------------------------------------
 
 --
@@ -472,19 +487,19 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ProductId`, `ProductName`, `SupplierId`, `ProductImg`, `Quantity`, `BrandId`, `TypeId`, `IsDeleted`) VALUES
-('PD00001', 'Yonex Astrox 99', 'SPU00001', 'yonex-astrox-99_2.png', 0, 'BR00001', 'TP00001', 0),
-('PD00002', 'Yonex Nanoflare 700', 'SPU00001', 'yonex-nanoflare-700.png', 0, 'BR00001', 'TP00001', 0),
-('PD00003', 'Kumpoo Power Control E88L', 'SPU00002', 'kumpoo-power-control-e88l.png', 0, 'BR00004', 'TP00001', 0),
-('PD00004', 'Yonex Nanoflare 1000', 'SPU00001', 'yonex-nanoflare-1000z.png', 0, 'BR00001', 'TP00001', 0),
-('PD00005', 'Yonex Astrox 100 Tour VA', 'SPU00001', 'yonex-astrox-100-tour-va.png', 0, 'BR00001', 'TP00001', 0),
-('PD00006', 'Yonex Aerosensa Feather (12pcs)', 'SPU00001', 'yonex-aerosensa-20.png', 0, 'BR00001', 'TP00002', 0),
-('PD00007', 'Yonex Voltric Z Force II LCW Limited', 'SPU00001', 'yonex-voltric-z-force-ii-lcw-limited.jpg', 0, 'BR00001', 'TP00001', 0),
-('PD00008', 'Yonex Doura 10', 'SPU00001', 'yonex-doura-10.png', 0, 'BR00001', 'TP00001', 0),
-('PD00009', 'Yonex ArcSaber 11', 'SPU00001', 'yonex-arcsaber-11.jpg', 0, 'BR00001', 'TP00001', 0),
-('PD00010', 'Lining Woods N90 III', 'SPU00003', 'lining-woods-n90-iii.png', 0, 'BR00003', 'TP00001', 0),
-('PD00011', 'Lining Aeronaut 6000', 'SPU00003', 'lining-aeronaut-6000.jpg', 0, 'BR00003', 'TP00001', 0),
-('PD00012', 'Mizuno Fortius 10 Power', 'SPU00003', 'mizuno-fortius-10-power.jpg', 0, 'BR00005', 'TP00001', 0),
-('PD00013', 'Adidas Spieler Grip', 'SPU00002', 'adidas-spieler-grip.jpg', 0, 'BR00006', 'TP00003', 0);
+('PD00001', 'Yonex Astrox 99', 'SPU00001', 'yonex-astrox-99_2.png', 19, 'BR00001', 'TP00001', 0),
+('PD00002', 'Yonex Nanoflare 700', 'SPU00001', 'yonex-nanoflare-700.png', 48, 'BR00001', 'TP00001', 0),
+('PD00003', 'Kumpoo Power Control E88L', 'SPU00002', 'kumpoo-power-control-e88l.png', 20, 'BR00004', 'TP00001', 0),
+('PD00004', 'Yonex Nanoflare 1000', 'SPU00001', 'yonex-nanoflare-1000z.png', 25, 'BR00001', 'TP00001', 0),
+('PD00005', 'Yonex Astrox 100 Tour VA', 'SPU00001', 'yonex-astrox-100-tour-va.png', 26, 'BR00001', 'TP00001', 0),
+('PD00006', 'Yonex Aerosensa Feather (12pcs)', 'SPU00001', 'yonex-aerosensa-20.png', 23, 'BR00001', 'TP00002', 0),
+('PD00007', 'Yonex Voltric Z Force II LCW Limited', 'SPU00001', 'yonex-voltric-z-force-ii-lcw-limited.jpg', 25, 'BR00001', 'TP00001', 0),
+('PD00008', 'Yonex Doura 10', 'SPU00001', 'yonex-doura-10.png', 33, 'BR00001', 'TP00001', 0),
+('PD00009', 'Yonex ArcSaber 11', 'SPU00001', 'yonex-arcsaber-11.jpg', 32, 'BR00001', 'TP00001', 0),
+('PD00010', 'Lining Woods N90 III', 'SPU00003', 'lining-woods-n90-iii.png', 38, 'BR00003', 'TP00001', 0),
+('PD00011', 'Lining Aeronaut 6000', 'SPU00003', 'lining-aeronaut-6000.jpg', 40, 'BR00003', 'TP00001', 0),
+('PD00012', 'Mizuno Fortius 10 Power', 'SPU00003', 'mizuno-fortius-10-power.jpg', 45, 'BR00005', 'TP00001', 0),
+('PD00013', 'Adidas Spieler Grip', 'SPU00002', 'adidas-spieler-grip.jpg', 82, 'BR00006', 'TP00003', 0);
 
 -- --------------------------------------------------------
 
@@ -497,10 +512,13 @@ CREATE TABLE `role` (
   `RoleName` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `role` (`RoleId`, `RoleName`) VALUES
-('R00001', 'Quản lý'),
-('R00002', 'Nhân viên');
+--
+-- Dumping data for table `role`
+--
 
+INSERT INTO `role` (`RoleId`, `RoleName`) VALUES
+('R00002', 'Nhân viên'),
+('R00001', 'Quản lý');
 
 -- --------------------------------------------------------
 
@@ -510,7 +528,7 @@ INSERT INTO `role` (`RoleId`, `RoleName`) VALUES
 
 CREATE TABLE `storage` (
   `StorageId` varchar(10) NOT NULL,
-  `ImportBillId` varchar(10) NOT NULL,
+  `ImportBillDetailId` varchar(10) NOT NULL,
   `ProductId` varchar(10) NOT NULL,
   `Quantity` int(11) NOT NULL,
   `Price` double NOT NULL,
@@ -519,29 +537,25 @@ CREATE TABLE `storage` (
   `Status` enum('active','inactive') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- INSERT INTO `storage` (`StorageId`, `ImportBillId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `Status`) VALUES
--- ('KH001', 'IB00001', 'PD00001', 10, 300000, 3000000, 'active'),
--- ('KH002', 'IB00001', 'PD00006', 20, 50000, 1000000, 'active'),
--- ('KH003', 'IB00001', 'PD00002', 8, 350000, 2800000, 'active'),
--- ('KH004', 'IB00001', 'PD00007', 15, 40000, 600000, 'active'),
--- ('KH005', 'IB00001', 'PD00003', 5, 450000, 2250000, 'active'),
--- ('KH006', 'IB00001', 'PD00008', 12, 60000, 720000, 'active'),
--- ('KH007', 'IB00001', 'PD00004', 9, 320000, 2880000, 'active'),
--- ('KH008', 'IB00001', 'PD00005', 7, 400000, 2800000, 'active'),
--- ('KH009', 'IB00001', 'PD00001', 15, 300000, 4500000, 'active'),
--- ('KH010', 'IB00001', 'PD00006', 25, 50000, 1250000, 'active'),
--- ('KH011', 'IB00001', 'PD00002', 10, 350000, 3500000, 'active'),
--- ('KH012', 'IB00001', 'PD00007', 18, 40000, 720000, 'active'),
--- ('KH013', 'IB00001', 'PD00003', 6, 450000, 2700000, 'active'),
--- ('KH014', 'IB00001', 'PD00008', 14, 60000, 840000, 'active'),
--- ('KH015', 'IB00001', 'PD00004', 8, 320000, 2560000, 'active'),
--- ('KH016', 'IB00001', 'PD00005', 10, 400000, 4000000, 'active'),
--- ('KH017', 'IB00001', 'PD00001', 12, 300000, 3600000, 'active'),
--- ('KH018', 'IB00001', 'PD00006', 22, 50000, 1100000, 'active'),
--- ('KH019', 'IB00001', 'PD00002', 7, 350000, 2450000, 'active'),
--- ('KH020', 'IB00001', 'PD00007', 16, 40000, 640000, 'active');
+--
+-- Dumping data for table `storage`
+--
 
-
+INSERT INTO `storage` (`StorageId`, `ImportBillDetailId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `CreatedAt`, `Status`) VALUES
+('ST00001', 'ID00001', 'PD00001', 0, 552000, 0, '2025-12-01 14:49:06', 'inactive'),
+('ST00002', 'ID00002', 'PD00001', 19, 460000, 8740000, '2025-12-01 16:41:03', 'active'),
+('ST00003', 'ID00003', 'PD00005', 26, 667000, 17342000, '2025-12-01 16:55:58', 'active'),
+('ST00004', 'ID00004', 'PD00006', 23, 333500, 7670500, '2025-12-01 16:56:04', 'active'),
+('ST00005', 'ID00005', 'PD00004', 25, 678500, 16962500, '2025-12-01 16:56:16', 'active'),
+('ST00006', 'ID00006', 'PD00002', 48, 888000, 42624000, '2025-12-02 10:02:12', 'active'),
+('ST00007', 'ID00007', 'PD00007', 25, 1176000, 29400000, '2025-12-02 10:02:47', 'active'),
+('ST00008', 'ID00008', 'PD00009', 32, 864000, 27648000, '2025-12-02 10:03:10', 'active'),
+('ST00009', 'ID00009', 'PD00003', 20, 517500, 10350000, '2025-12-02 10:03:59', 'active'),
+('ST00010', 'ID00010', 'PD00010', 38, 782000, 29716000, '2025-12-02 10:04:28', 'active'),
+('ST00011', 'ID00011', 'PD00011', 40, 759000, 30360000, '2025-12-02 10:04:38', 'active'),
+('ST00012', 'ID00012', 'PD00008', 33, 1008000, 33264000, '2025-12-02 10:05:29', 'active'),
+('ST00013', 'ID00013', 'PD00012', 45, 644000, 28980000, '2025-12-02 10:06:08', 'active'),
+('ST00014', 'ID00014', 'PD00013', 82, 172500, 14145000, '2025-12-02 10:06:36', 'active');
 
 -- --------------------------------------------------------
 
@@ -556,6 +570,10 @@ CREATE TABLE `supplier` (
   `Address` varchar(255) DEFAULT NULL,
   `IsDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier`
+--
 
 INSERT INTO `supplier` (`SupplierId`, `SupplierName`, `Email`, `Address`, `IsDeleted`) VALUES
 ('SPU00001', 'Yonex Supplier', 'yonex@supplier.com', 'Tokyo', 0),
@@ -594,7 +612,8 @@ INSERT INTO `typeproduct` (`TypeId`, `TypeName`) VALUES
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`Username`),
-  ADD KEY `PermissionId` (`PermissionId`);
+  ADD KEY `PermissionId` (`PermissionId`),
+  ADD KEY `account_ibfk_2` (`EmployeeId`);
 
 --
 -- Indexes for table `billbooking`
@@ -609,8 +628,9 @@ ALTER TABLE `billbooking`
 -- Indexes for table `billimportproductdetail`
 --
 ALTER TABLE `billimportproductdetail`
-  ADD PRIMARY KEY (`ImportBillId`,`ProductId`),
-  ADD KEY `ProductId` (`ProductId`);
+  ADD PRIMARY KEY (`ImportBillDetailId`),
+  ADD KEY `ProductId` (`ProductId`),
+  ADD KEY `billimportproductdetail_ibfk_1` (`ImportBillId`);
 
 --
 -- Indexes for table `billproduct`
@@ -659,7 +679,6 @@ ALTER TABLE `customer`
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`EmployeeId`),
   ADD UNIQUE KEY `Phone` (`Phone`),
-  ADD KEY `Username` (`Username`),
   ADD KEY `RoleId` (`RoleId`);
 
 --
@@ -731,7 +750,7 @@ ALTER TABLE `role`
 --
 ALTER TABLE `storage`
   ADD PRIMARY KEY (`StorageId`),
-  ADD KEY `ImportBillId` (`ImportBillId`),
+  ADD KEY `ImportBillId` (`ImportBillDetailId`),
   ADD KEY `ProductId` (`ProductId`);
 
 --
@@ -754,7 +773,8 @@ ALTER TABLE `typeproduct`
 -- Constraints for table `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`PermissionId`) REFERENCES `permission` (`PermissionId`);
+  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`PermissionId`) REFERENCES `permission` (`PermissionId`),
+  ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`EmployeeId`) REFERENCES `employee` (`EmployeeId`);
 
 --
 -- Constraints for table `billbooking`
@@ -794,7 +814,6 @@ ALTER TABLE `booking`
 -- Constraints for table `employee`
 --
 ALTER TABLE `employee`
-  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `account` (`Username`),
   ADD CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`RoleId`) REFERENCES `role` (`RoleId`);
 
 --
@@ -819,6 +838,7 @@ ALTER TABLE `pricebookingdetail`
 
 --
 -- Constraints for table `product`
+--
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`BrandId`) REFERENCES `brand` (`BrandId`),
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `typeproduct` (`TypeId`),
@@ -828,7 +848,7 @@ ALTER TABLE `product`
 -- Constraints for table `storage`
 --
 ALTER TABLE `storage`
-  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`ImportBillId`) REFERENCES `importbill` (`ImportBillId`),
+  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`ImportBillDetailId`) REFERENCES `billimportproductdetail` (`ImportBillDetailId`),
   ADD CONSTRAINT `storage_ibfk_2` FOREIGN KEY (`ProductId`) REFERENCES `product` (`ProductId`);
 COMMIT;
 

@@ -20,15 +20,49 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         private TypeProductBUS typeBus = new TypeProductBUS();
         private BrandBUS brandBus = new BrandBUS();
         private BillImportBUS billBus = new BillImportBUS();
+        private BillImportDetailBUS detailBillBus = new BillImportDetailBUS();
         // list
         private List<BillImportDetailDTO> productListImported = new List<BillImportDetailDTO>();
         private List<StorageDTO> storageList = new List<StorageDTO>();
         public event Action<BillImportDetailDTO, StorageDTO, bool> ProductImported;
         private HashSet<string> generatedStorageIds = new HashSet<string>();
 
+        private string billId = "";
+        
         public SupplyProductInfo()
         {
             InitializeComponent();
+            GenerateImportBillId();
+        }
+
+        private void GenerateImportBillId()
+        {
+            billId = billBus.GetMaxId();
+
+            if (string.IsNullOrWhiteSpace(billId))
+            {
+                billId = "IB00001";
+            }
+            else
+            {
+                var match = Regex.Match(billId, @"^IB\d+$");
+                if (match.Success)
+                {
+                    string numberPart = billId.Substring(2);
+                    if (int.TryParse(numberPart, out var number))
+                    {
+                        number += productListImported.Count + 1;
+                        if (number < 10)
+                            billId = "IB0000" + number;
+                        else if (number < 100)
+                            billId = "IB000" + number;
+                        else if (number < 1000)
+                            billId = "IB00" + number;
+                        else if (number < 10000)
+                            billId = "IB0" + number;
+                    }
+                }
+            }
         }
 
         public void SetProduct(ProductDTO product)
@@ -92,7 +126,13 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
         private void AddButton_Click(object sender, EventArgs e)
         {
             // validate
+            string productId = ProductID.Text.Replace("Mã sản phẩm: ", "");
+            if (productId == "") {
+                MessageBox.Show("Lỗi: Chưa chọn sản phẩm để nhập hàng");
+                return;
+            }
             // empty check
+            // textBox1 = import price, textBox2 = profit percentage (%), textBox3 = total import cost
             var textfields = new List<TextBox> { QuantityBox, textBox1, textBox2, textBox3 };
             errorProvider1.Clear();
             foreach (var textfield in textfields)
@@ -111,31 +151,34 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 }
             }
 
-            // check price
-            if (double.Parse(textBox1.Text) >= double.Parse(textBox2.Text))
+            // interpret textBox2 as profit percentage
+            if (!int.TryParse(textBox2.Text, out int profitPercent) || profitPercent <= 0)
             {
-                errorProvider1.SetError(textBox2, "Đơn giá nhập phải nhỏ hơn đơn giá bán.");
+                errorProvider1.SetError(textBox2, "Vui lòng nhập phần trăm lợi nhuận hợp lệ (> 0%).");
                 return;
             }
+            double importPriceValue = double.Parse(textBox1.Text);
+            double profit = profitPercent / 100.0;
+            double salePriceValue = Math.Round(importPriceValue * (1 + profit), 2);
 
             // check productId duplicate
             BillImportDetailDTO existingProduct = null;
             StorageDTO existingStorage = null;
             foreach (var item in productListImported)
             {
-                if (item.ProductId == ProductID.Text.Replace("Mã sản phẩm: ", ""))
+                if (item.ProductId == productId)
                 {
                     item.Quantity = int.Parse(QuantityBox.Text);
-                    item.Price = double.Parse(textBox1.Text);
-                    item.TotalPrice = item.Price * item.Quantity;
+                    item.Price = double.Parse(textBox1.Text); // import price
+                    item.TotalPrice = item.Price * item.Quantity; // total import cost
                     existingProduct = item;
                     foreach (var storageItem in storageList)
                     {
                         if (storageItem.ProductId == item.ProductId)
                         {
                             storageItem.Quantity = item.Quantity;
-                            storageItem.Price = item.Price;
-                            storageItem.TotalPrice = item.TotalPrice;
+                            storageItem.Price = salePriceValue; // computed sale price
+                            storageItem.TotalPrice = Math.Round(storageItem.Quantity * salePriceValue, 2);
                             existingStorage = storageItem;
                             break;
                         }
@@ -151,34 +194,46 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             }
             else
             {
-                var billId = billBus.GetMaxId();
+                string detailBillId = detailBillBus.GetMaxId();
 
-                if (string.IsNullOrWhiteSpace(billId))
+                if (string.IsNullOrWhiteSpace(detailBillId))
                 {
-                    billId = "IB00001";
+                    detailBillId = "ID00001";
                 }
                 else
                 {
-                    var match = Regex.Match(billId, @"^([A-Za-z]*)(\d+)$");
+                    var match = Regex.Match(detailBillId, @"^ID\d+$");
                     if (match.Success)
                     {
-                        var prefix = match.Groups[1].Value;
-                        var numberPart = match.Groups[2].Value;
+                        string numberPart = detailBillId.Substring(2);
+
                         if (int.TryParse(numberPart, out var number))
                         {
                             number += productListImported.Count + 1;
-                            billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
+                            if (number < 10)
+                                detailBillId = "ID0000" + number.ToString();
+                            else if (number < 100)
+                                detailBillId = "ID000" + number.ToString();
+                            else if (number < 1000)
+                                detailBillId = "ID00" + number.ToString();
+                            else if (number < 10000)
+                                detailBillId = "ID0" + number.ToString();
                         }
+                    } 
+                    else
+                    {
+                        MessageBox.Show("Mã hóa đơn chi tiết không trùng regex.");  
                     }
                 }
 
                 BillImportDetailDTO newBill = new BillImportDetailDTO
                 {
+                    ImportBillDetailId = detailBillId,
                     ImportBillId = billId,
-                    ProductId = ProductID.Text.Replace("Mã sản phẩm: ", ""),
+                    ProductId = productId,
                     Quantity = int.Parse(QuantityBox.Text),
-                    Price = double.Parse(textBox1.Text),
-                    TotalPrice = double.Parse(textBox3.Text),
+                    Price = double.Parse(textBox1.Text), // import price
+                    TotalPrice = double.Parse(textBox3.Text), // total import cost
                     Status = BillImportDetailDTO.Option.active
                 };
                 productListImported.Add(newBill);
@@ -186,11 +241,12 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
                 StorageDTO newStorage = new StorageDTO
                 {
                     StorageId = GenerateStorageId(),
-                    ImportBillId = billId,
+                    ImportBillDetailId = detailBillId,
                     ProductId = newBill.ProductId,
                     Quantity = newBill.Quantity,
-                    Price = newBill.Price,
-                    TotalPrice = newBill.TotalPrice,
+                    // Store sale price (computed) in storage for selling
+                    Price = salePriceValue,
+                    TotalPrice = Math.Round(newBill.Quantity * salePriceValue, 2),
                     CreatedAt = DateTime.Now,
                     Status = StorageDTO.Option.active
                 };

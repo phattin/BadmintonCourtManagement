@@ -9,7 +9,7 @@ namespace BadmintonCourtManagement.DTO
     public class StorageDTO
     {
         private string storageId = "";
-        private string importBillId = "";
+        private string importBillDetailId = "";
         private string productId = "";
         private int quantity = 0;
         private double price = 0;
@@ -19,7 +19,7 @@ namespace BadmintonCourtManagement.DTO
         private Option status;
 
         public string StorageId {  get => storageId; set => storageId = value; }
-        public string ImportBillId { get => importBillId; set => importBillId = value; }
+        public string ImportBillDetailId { get => importBillDetailId; set => importBillDetailId = value; }
         public string ProductId { get => productId; set => productId = value; }
         public int Quantity
         {
@@ -61,12 +61,12 @@ namespace BadmintonCourtManagement.DTO
 
         public StorageDTO() { }
 
-        public StorageDTO(string storageId, string importBillId, 
+        public StorageDTO(string storageId, string importBillDetailId, 
             string productId, int quantity, double price, 
             DateTime createdAt, Option status)
         {
             StorageId = storageId;
-            ImportBillId = importBillId;
+            ImportBillDetailId = importBillDetailId;
             ProductId = productId;
             Quantity = quantity;
             Price = price;

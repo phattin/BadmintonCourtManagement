@@ -18,7 +18,7 @@ namespace BadmintonCourtManagement.DAO
 				return result.ToString();
 			}
 			else {
-				return null;
+				return "IB00001";
 			}
 		}
 		catch (Exception ex) {

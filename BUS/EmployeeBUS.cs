@@ -27,15 +27,50 @@ namespace BadmintonCourtManagement.BUS
             return employeeDAO.GetEmployeeByUsername(username);
         }
 
+        // 🔹 Kiểm tra tên không chứa số & ký tự đặc biệt
+        private bool IsValidName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return false;
+
+            // Không được chứa số
+            if (name.Any(char.IsDigit))
+                return false;
+
+            // Chỉ cho phép chữ cái tiếng Việt + khoảng trắng
+            string pattern = @"^[\p{L}\s]+$";
+            return System.Text.RegularExpressions.Regex.IsMatch(name, pattern);
+        }
+
         public bool InsertEmployee(EmployeeDTO employee)
         {
+            if (!IsValidName(employee.EmployeeName))
+                throw new ArgumentException("Tên không được chứa số hoặc ký tự đặc biệt");
+            if (employee.EmployeePhone.Length != 10 || !employee.EmployeePhone.All(char.IsDigit))
+                throw new ArgumentException("Số điện thoại phải là 10 chữ số");
+            string[] validPrefixes = { "09", "03", "07", "08", "06", "02" };
+            if (!validPrefixes.Any(prefix => employee.EmployeePhone.StartsWith(prefix)))
+                throw new ArgumentException("Số điện thoại phải bắt đầu bằng 09, 03, 07, 08, 06, 02");
+            if (employeeDAO.isPhoneExists(employee.EmployeePhone))
+                throw new ArgumentException("Số điện thoại đã tồn tại");
+
             return employeeDAO.InsertEmployee(employee);
         }
 
         public bool UpdateEmployee(EmployeeDTO employee)
         {
+            if (!IsValidName(employee.EmployeeName))
+                throw new ArgumentException("Tên không được chứa số hoặc ký tự đặc biệt");
+            if (employee.EmployeePhone.Length != 10 || !employee.EmployeePhone.All(char.IsDigit))
+                throw new ArgumentException("Số điện thoại phải là 10 chữ số");
+            string[] validPrefixes = { "09", "03", "07", "08", "06", "02" };
+            if (!validPrefixes.Any(prefix => employee.EmployeePhone.StartsWith(prefix)))
+                throw new ArgumentException("Số điện thoại phải bắt đầu bằng 09, 03, 07, 08, 06, 02");
+            if (employeeDAO.isPhoneExistsUpdate(employee.EmployeePhone, employee.EmployeeId))
+                throw new ArgumentException("Số điện thoại đã tồn tại");
             return employeeDAO.UpdateEmployee(employee);
         }
+
 
         public bool DeleteEmployee(string id)
         {

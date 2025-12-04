@@ -56,7 +56,7 @@ namespace BadmintonCourtManagement.GUI
             {
                 var allSuppliers = supplierBUS.GetAllSuppliers();
                 if (allSuppliers == null || !allSuppliers.Any())
-                    return "NCC0001";
+                    return "SU0001";
 
                 var validNumbers = allSuppliers
                     .Where(s => s.SupplierId != null)
@@ -72,12 +72,12 @@ namespace BadmintonCourtManagement.GUI
 
                 int nextNumber = validNumbers.Any() ? validNumbers.Max() + 1 : 1;
 
-                return $"NCC{nextNumber:0000}";
+                return $"SU{nextNumber:0000}";
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi tạo mã nhà cung cấp tự động: " + ex.Message);
-                return "NCC" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                return "SU" + DateTime.Now.ToString("yyyyMMddHHmmss");
             }
         }
 
