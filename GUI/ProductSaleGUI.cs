@@ -24,7 +24,6 @@ namespace BadmintonCourtManagement.GUI
         private bool _isRowSelected = false;
         private int _selectedRowIndex = -1;
         private AccountDTO acc;
-        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
         private bool isInsert = false;
 
         protected override void OnHandleCreated(EventArgs e)
@@ -101,18 +100,36 @@ namespace BadmintonCourtManagement.GUI
         public ProductSaleGUI(AccountDTO currentAccount)
         {
             InitializeComponent();
+            acc = currentAccount;
             CheckPermissions("F03");
             SetupGrid();
             LoadInitialData();
             searchBar.KeyDown += searchEnterEvent;
             this.Resize += ProductSaleGUI_Resize;
-            acc = currentAccount;
         }
 
         private void CheckPermissions(string functionId)
         {
-            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+            PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+            
+            if (permissiondetailBUS == null)
+            {
+                MessageBox.Show("PermissionDetailBUS is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+            if (permissionDetails == null)
+            {
+                MessageBox.Show("No permissions found for the given function ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (acc == null)
+            {
+                MessageBox.Show("Account information is missing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             foreach (var p in permissionDetails)
             {
                 if (p.PermissionId == acc.PermissionId)
@@ -379,13 +396,6 @@ namespace BadmintonCourtManagement.GUI
         {
             searchBar.Clear();
             ReloadProductList();
-        }
-
-        // Filter open dialog (reuse existing filter form if needed)
-        private void filterButton_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement brand/type filter for sale context if required.
-            MessageBox.Show("Filter chức năng sẽ được thêm sau.");
         }
 
         private void filterButton_MouseEnter(object sender, EventArgs e)
