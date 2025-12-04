@@ -181,8 +181,8 @@ namespace BadmintonCourtManagement.GUI
                     Brand = brandList.FirstOrDefault(b => b.BrandId == p.BrandId)?.BrandName ?? "hi",
                     Type = typeList.FirstOrDefault(t => t.TypeProductId == p.TypeId)?.TypeProductName ?? "bye",
                     ProductQuantity = p.Quantity,
-                    StockQuantity = storageList.First(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)
-                                .Quantity, //  to show available stock
+                    StockQuantity = storageList.FirstOrDefault(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)?
+                                .Quantity ?? 0, //  to show available stock
                     Price = storageList.Where(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)
                                 // .OrderByDescending(ob => ob.ImportBillDetailId)
                                 .Select(ob => ob.Price)
@@ -416,7 +416,6 @@ namespace BadmintonCourtManagement.GUI
                     {
                         _cart[product.ProductId] = qty;
                         cell.Value = qty;
-                        // updateTotalPrice(productList); // ERROR
                     }
                     else
                     {
@@ -603,12 +602,54 @@ namespace BadmintonCourtManagement.GUI
                 product_bus.UpdateProduct(p);
             }
 
-            foreach (StorageDTO ob in storageList)
+            // Replace the storage update section in createBill method: (AI GENERATED)
+            var relevantStorages = storageList
+                .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
+                .OrderBy(storage => storage.ImportBillDetailId)
+                .ToList();
+            
+            // Group by ProductId to handle each product separately
+            var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
+            
+            foreach (var productGroup in storagesByProduct) // This is the key change - productGroup is IGrouping
             {
-                var qty = selectedItems.FirstOrDefault(kv => kv.Key == ob.ProductId).Value;
-                ob.Quantity -= qty;
-                StorageBUS.UpdateStorage(ob);
+                string productId = productGroup.Key;
+                var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
+                
+                if (purchasedItem.Key == null) continue; // Skip if product not found in selected items
+                
+                int remainingQty = purchasedItem.Value;
+                var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
+                
+                foreach (var storage in productStorages)
+                {
+                    if (remainingQty <= 0) break;
+                    
+                    if (storage.Quantity >= remainingQty)
+                    {
+                        // This storage has enough quantity to fulfill the remaining order
+                        storage.Quantity -= remainingQty;
+                        StorageBUS.UpdateStorage(storage);
+                        remainingQty = 0;
+                    }
+                    else
+                    {
+                        // This storage doesn't have enough, use all of it and move to next
+                        remainingQty -= storage.Quantity;
+                        storage.Quantity = 0;
+                        storage.Status = StorageDTO.Option.inactive;
+                        StorageBUS.UpdateStorage(storage);
+                    }
+                }
+                
+                // If there's still remaining quantity, it means insufficient stock
+                if (remainingQty > 0)
+                {
+                    MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.", 
+                                   "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
+            // END OF AI GENERATED SECTION
         }
 
         // Resize: later adapt number of columns or hide image (when implemented).
@@ -686,58 +727,54 @@ namespace BadmintonCourtManagement.GUI
         }
         /*
             Todolist:
-            - Fix error totalPrice not being updated if customer confirm to buy products from different stocks
             - update quantity in productDTO and storageDTO(s) also
             - if storageDTO have quantity == 0 => inactive (optional)
         */
 
-        private void updateTotalPrice(List<ProductDTO> productList) // Not updating totalPrice when customer confirm to buy products from different stock
+        private void updateTotalPrice(List<ProductDTO> productList) 
         {
             var storageList = StorageBUS.GetAllStorages();
             ProductBUS productBus = new();
             int rowCount = dtv.RowCount;
-            decimal totalPrice = 0m;
+            double totalPrice = 0;
             for (int i = 0; i < rowCount; i++)
             {
                 var qtyObj = dtv.Rows[i].Cells["QuantityToBuy"].Value;
-                var priceObj = dtv.Rows[i].Cells["Price"].Value;
                 var product = productList.FirstOrDefault(p =>
                     string.Equals(p.ProductName, dtv.Rows[i].Cells["ProductName"].Value?.ToString(), StringComparison.OrdinalIgnoreCase));
+                
+                if (product == null) continue;
+                
                 var productIdObj = product.ProductId;
-
                 var storageProduct = storageList
-                .Where(ob => ob.ProductId == productIdObj && ob.Status == StorageDTO.Option.active)
-                .ToList();
+                    .Where(ob => ob.ProductId == productIdObj && ob.Status == StorageDTO.Option.active)
+                    .OrderBy(ob => ob.ImportBillDetailId) // Order by import order (FIFO)
+                    .ToList();
+
+                if (!storageProduct.Any()) continue;
 
                 int qty = 0;
-                long price = 0;
-
                 if (qtyObj != null && int.TryParse(qtyObj.ToString(), out var q))
                     qty = q;
 
-                if (qty <= storageProduct[0].Quantity && priceObj != null && long.TryParse(priceObj.ToString(), out var p))
+                if (qty <= 0) continue;
+
+                // Calculate price using FIFO method across different storage entries
+                int remainingQty = qty;
+                int storageIndex = 0;
+                
+                while (remainingQty > 0 && storageIndex < storageProduct.Count)
                 {
-                    price = p;
-                    totalPrice += qty * price;
+                    var currentStorage = storageProduct[storageIndex];
+                    int availableQty = Math.Min(currentStorage.Quantity, remainingQty);
+                    
+                    // Use the actual price from this storage entry
+                    totalPrice += availableQty * currentStorage.Price;
+                    
+                    remainingQty -= availableQty;
+                    storageIndex++;
                 }
-                else
-                {
-                    // if quantity exceeds stock, use available stock quantity for total price calculation
-                    int j = 0;
-                    do
-                    {    
-                        int availableQty = storageProduct[j].Quantity;
-                        while (availableQty > 0 && qty > 0)
-                        {
-                            totalPrice += availableQty * price;
-                            qty--;
-                            availableQty--;    
-                        }
-                        j++;
-                    } while (qty > 0 && j < storageProduct.Count);
-                }
-            }
-            txt_totalPrice.Text = totalPrice.ToString();            
+            }            txt_totalPrice.Text = totalPrice.ToString();            
         }
 
         private long getPrice(string price)
