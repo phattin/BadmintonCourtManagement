@@ -2,14 +2,18 @@ using System;
 using System.Collections.Generic;
 using BadmintonCourtManagement.DTO;
 using BadmintonCourtManagement.DAO;
+using QuestPDF.Infrastructure;
+using BUS;
+using QuestPDF.Fluent;
 
 namespace BadmintonCourtManagement.BUS
 {
     public class BillImportBUS
     {
         private BillImportDAO dao = new BillImportDAO();
+        private BillImportDetailDAO detailDao = new BillImportDetailDAO();
 
-	public string GetMaxId() {
+        public string GetMaxId() {
 		return dao.GetMaxId();
 	}
         public List<ImportBillDTO> GetAllImportBills()
@@ -61,6 +65,20 @@ namespace BadmintonCourtManagement.BUS
         public List<ImportBillDTO> GetImportBillByDateRange(DateTime startDate, DateTime endDate)
         {
             return dao.GetImportBillByDateRange(startDate, endDate);
+        }
+
+        public bool ExportBill(string supplyId, string exportPath) {
+            ImportBillDTO bill = dao.GetImportBillById(supplyId);
+            List<BillImportDetailDTO> billDetails = detailDao.GetDetailImportByBillImportId(supplyId);
+
+            if (bill.Equals(null) || billDetails.Count <= 0)
+                return false;
+            else
+            {
+                var document = new ExportBillImport { bill = bill, billDetails = billDetails };
+                document.GeneratePdf(exportPath);
+                return true;
+            }
         }
     }
 }
