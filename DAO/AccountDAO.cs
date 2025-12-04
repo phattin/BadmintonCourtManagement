@@ -27,7 +27,8 @@ namespace BadmintonCourtManagement.DAO
                         Username = reader["Username"].ToString(),
                         Password = reader["Password"].ToString(),
                         PermissionId = reader["PermissionId"].ToString(),
-                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"]),
+                        EmployeeId = reader["EmployeeId"].ToString()
                     };
                 }
                 reader.Close();
@@ -70,15 +71,13 @@ namespace BadmintonCourtManagement.DAO
                         Username = reader["Username"].ToString(),
                         Password = reader["Password"].ToString(),
                         PermissionId = reader["PermissionId"].ToString(),
-                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"]),
+                        EmployeeId = reader["EmployeeId"].ToString(),
                     });
                 }
                 reader.Close();
             }
-            finally
-            {
-                db.CloseConnection();
-            }
+            finally { db.CloseConnection(); }
             return list;
         }
 
@@ -98,7 +97,8 @@ namespace BadmintonCourtManagement.DAO
                         Username = reader["Username"].ToString(),
                         Password = reader["Password"].ToString(),
                         PermissionId = reader["PermissionId"].ToString(),
-                        IsDeleted = Convert.ToInt32(reader["IsDeleted"])
+                        IsDeleted = Convert.ToInt32(reader["IsDeleted"]),
+                        EmployeeId = reader["EmployeeId"].ToString()
                     });
                 }
                 reader.Close();
@@ -144,7 +144,7 @@ namespace BadmintonCourtManagement.DAO
         // Thêm account mới
         public bool InsertAccount(AccountDTO account)
         {
-            string query = "INSERT INTO account (Username, Password, PermissionId, IsDeleted) VALUES (@Username, @Password, @PermissionId, 0)";
+            string query = "INSERT INTO account (Username, Password, PermissionId, IsDeleted, EmployeeId) VALUES (@Username, @Password, @PermissionId, 0, @EmployeeId)";
             int result = 0;
             try
             {
@@ -153,6 +153,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@Username", account.Username);
                 cmd.Parameters.AddWithValue("@Password", account.Password);
                 cmd.Parameters.AddWithValue("@PermissionId", account.PermissionId);
+                cmd.Parameters.AddWithValue("@EmployeeId", account.EmployeeId);
                 result = cmd.ExecuteNonQuery();
             }
             finally
@@ -165,7 +166,7 @@ namespace BadmintonCourtManagement.DAO
         // Cập nhật account
         public bool UpdateAccount(AccountDTO account)
         {
-            string query = "UPDATE account SET Password=@Password, PermissionId=@PermissionId WHERE Username=@Username AND IsDeleted=0";
+            string query = "UPDATE account SET Password=@Password, PermissionId=@PermissionId, EmployeeId=@EmployeeId WHERE Username=@Username AND IsDeleted=0";
             int result = 0;
             try
             {
@@ -174,6 +175,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@Username", account.Username);
                 cmd.Parameters.AddWithValue("@Password", account.Password);
                 cmd.Parameters.AddWithValue("@PermissionId", account.PermissionId);
+                cmd.Parameters.AddWithValue("@EmployeeId", account.EmployeeId);
                 result = cmd.ExecuteNonQuery();
             }
             finally
@@ -194,6 +196,32 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@Username", username);
                 result = cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return result > 0;
+        }
+        public bool DeleteAccount1(string username)
+        {
+            string query = "DELETE FROM account WHERE Username = @Username";
+            int result = 0;
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@Username", username);
+                result = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                if (ex.Number == 1451)
+                {
+                    throw new Exception("Không thể xóa vĩnh viễn tài khoản này vì đã phát sinh dữ liệu liên quan");
+                }
+
+                throw new Exception("Lỗi khi xóa tài khoản: " + ex.Message);
             }
             finally
             {

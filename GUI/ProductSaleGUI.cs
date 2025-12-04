@@ -100,13 +100,13 @@ namespace BadmintonCourtManagement.GUI
 
         public ProductSaleGUI(AccountDTO currentAccount)
         {
+            acc = currentAccount;
             InitializeComponent();
             CheckPermissions("F03");
             SetupGrid();
             LoadInitialData();
             searchBar.KeyDown += searchEnterEvent;
             this.Resize += ProductSaleGUI_Resize;
-            acc = currentAccount;
         }
 
         private void CheckPermissions(string functionId)

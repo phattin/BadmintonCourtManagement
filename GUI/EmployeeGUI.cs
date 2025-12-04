@@ -39,7 +39,7 @@ namespace BadmintonCourtManagement.GUI
                 }
             }
 
-            add.Visible = isInsert;
+            //add.Visible = isInsert;
         }
 
         private void buttonEnter(object sender, EventArgs e)

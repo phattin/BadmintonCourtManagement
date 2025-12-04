@@ -17,6 +17,20 @@ namespace BadmintonCourtManagement.BUS
             return employeeDAO.GetAllEmployees();
         }
 
+        public List<EmployeeDTO> GetAllEmployeesNotHaveAccount()
+        {
+            List<EmployeeDTO> employees = employeeDAO.GetAllEmployees();
+            List<EmployeeDTO> employeesNotHaveAccount = new List<EmployeeDTO>();
+            foreach (var employee in employees)
+            {
+                if (string.IsNullOrEmpty(employee.Username))
+                {
+                    employeesNotHaveAccount.Add(employee);
+                }
+            }
+            return employeesNotHaveAccount;
+        }
+
         public EmployeeDTO GetEmployeeById(string id)
         {
             return employeeDAO.GetEmployeeById(id);

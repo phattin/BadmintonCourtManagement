@@ -1,35 +1,31 @@
 ﻿using BadmintonCourtManagement.BUS;
-using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
-using BadmintonCourtManagement.GUI;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace GUI
 {
     public partial class AccountGUI : UserControl
     {
         private AccountDTO currentAccount;
-
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
         private AccountBUS accountBUS = new AccountBUS();
         private BindingList<AccountDTO> accountList;
+        private BindingList<AccountDTO> displayList;
         private bool isInsert = false, isUpdate = false, isDelete = false;
+        private Dictionary<string, string> permissionMap = new Dictionary<string, string>();
+        private Dictionary<string, string> employeeMap = new Dictionary<string, string>();
         public AccountGUI(AccountDTO account)
         {
             this.currentAccount = account;
-            CheckPermissions("F10");
             InitializeComponent();
+            CheckPermissions("F10");
+            LoadMaps();
             ConfigureDataGridView();
             LoadData();
         }
         private void CheckPermissions(string functionId)
         {
             List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
-
             foreach (var p in permissionDetails)
             {
                 if (p.PermissionId == currentAccount.PermissionId)
@@ -57,19 +53,38 @@ namespace GUI
             if (dataGridView1.Columns.Contains("PermissionId"))
                 dataGridView1.Columns["PermissionId"].DataPropertyName = "PermissionId";
 
+            if (dataGridView1.Columns.Contains("EmployeeName"))
+                dataGridView1.Columns["EmployeeName"].DataPropertyName = "EmployeeId";
+
             if (dataGridView1.Columns.Contains("Status"))
                 dataGridView1.Columns["Status"].DataPropertyName = "IsDeleted";
 
             dataGridView1.CellFormatting += DataGridView1_CellFormatting;
         }
+        private void LoadMaps()
+        {
+            permissionMap.Clear();
+            employeeMap.Clear();
+            PermissionBUS pBus = new PermissionBUS();
+            foreach (var p in pBus.GetAllPermissions())
+            {
+                permissionMap[p.PermissionId] = p.PermissionName;
+            }
+            EmployeeBUS eBus = new EmployeeBUS();
+            foreach (var e in eBus.GetAllEmployees())
+            {
+                employeeMap[e.EmployeeId] = e.EmployeeName;
+            }
+        }
         public void LoadData()
         {
+            LoadMaps();
             try
             {
                 var list = accountBUS.GetAllAccount1();
-
                 accountList = new BindingList<AccountDTO>(list);
-                dataGridView1.DataSource = accountList;
+                displayList = new BindingList<AccountDTO>(list);
+                dataGridView1.DataSource = displayList;
             }
             catch (Exception ex)
             {
@@ -83,16 +98,20 @@ namespace GUI
             if (dataGridView1.Columns[e.ColumnIndex].Name == "PermissionId")
             {
                 string id = e.Value.ToString();
-                PermissionBUS permissionBUS = new PermissionBUS();
-                List<PermissionDTO> permissions = permissionBUS.GetAllPermissions();
-                foreach(var permission in permissions)
+                if (permissionMap.ContainsKey(id))
                 {
-                    if(permission.PermissionId == id)
-                    {
-                        e.Value = permission.PermissionName;
-                        e.FormattingApplied = true;
-                        break;
-                    }
+                    e.Value = permissionMap[id];
+                    e.FormattingApplied = true;
+                }
+            }
+
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "EmployeeName")
+            {
+                string id = e.Value.ToString();
+                if (employeeMap.ContainsKey(id))
+                {
+                    e.Value = employeeMap[id];
+                    e.FormattingApplied = true;
                 }
             }
 
@@ -166,7 +185,7 @@ namespace GUI
             }
 
             DialogResult result = MessageBox.Show(
-                $"Bạn có chắc chắn muốn xóa tài khoản này không?",
+                $"Bạn có chắc chắn muốn xóa tài khoản này không?\n\nHành động này không thể hoàn tác.",
                 "Xác nhận xóa",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
@@ -176,9 +195,21 @@ namespace GUI
             {
                 try
                 {
+                    EmployeeBUS employeeBUS = new EmployeeBUS();
                     if (accountBUS.DeleteAccount(selectedItem.Username))
                     {
                         MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        EmployeeDTO currentEmployee = employeeBUS.GetEmployeeById(selectedItem.EmployeeId);
+                        EmployeeDTO updateEmployee = new EmployeeDTO
+                        {
+                            EmployeeId = currentEmployee.EmployeeId,
+                            EmployeeName = currentEmployee.EmployeeName,
+                            EmployeePhone = currentEmployee.EmployeePhone,
+                            Address = currentEmployee.Address,
+                            RoleId = currentEmployee.RoleId,
+                            Username = null
+                        };
+                        employeeBUS.UpdateEmployee(updateEmployee);
                         LoadData();
                     }
                     else
@@ -191,6 +222,38 @@ namespace GUI
                     MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string keyword = textBox1.Text.Trim().ToLower();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                dataGridView1.DataSource = new BindingList<AccountDTO>(accountList);
+                return;
+            }
+
+            var filteredData = accountList.Where(acc =>
+            {
+                bool matchUsername = acc.Username != null && acc.Username.ToLower().Contains(keyword);
+                string permName = "";
+                if (acc.PermissionId != null && permissionMap.ContainsKey(acc.PermissionId))
+                {
+                    permName = permissionMap[acc.PermissionId];
+                }
+                bool matchPermissionName = permName.ToLower().Contains(keyword);
+                string empName = "";
+                if (acc.EmployeeId != null && employeeMap.ContainsKey(acc.EmployeeId))
+                {
+                    empName = employeeMap[acc.EmployeeId];
+                }
+                bool matchEmployeeName = empName.ToLower().Contains(keyword);
+                string statusText = acc.IsDeleted == 0 ? "đang hoạt động" : "ngưng hoạt động";
+                bool matchStatus = statusText.Contains(keyword);
+                return matchUsername || matchPermissionName || matchEmployeeName || matchStatus;
+
+            }).ToList();
+            dataGridView1.DataSource = new BindingList<AccountDTO>(filteredData);
         }
     }
 }

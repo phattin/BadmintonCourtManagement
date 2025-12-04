@@ -15,25 +15,39 @@ namespace GUI
         {
             InitializeComponent();
             LoadPermissionData();
+            LoadEmployeeData();
         }
 
         private void LoadPermissionData()
         {
-            try
-            {
-                PermissionBUS permissionBUS = new PermissionBUS();
-                List<PermissionDTO> permissions = permissionBUS.GetAllPermissions();
+            PermissionBUS permissionBUS = new PermissionBUS();
+            List<PermissionDTO> permissions = permissionBUS.GetAllPermissions();
 
-                comboBoxPermission.DataSource = permissions;
-                comboBoxPermission.DisplayMember = "PermissionName";
-                comboBoxPermission.ValueMember = "PermissionId";
+            comboBoxPermission.DataSource = permissions;
+            comboBoxPermission.DisplayMember = "PermissionName";
+            comboBoxPermission.ValueMember = "PermissionId";
+        }
 
-                if (permissions.Count > 0) comboBoxPermission.SelectedIndex = 0;
-            }
-            catch (Exception ex)
+        private void LoadEmployeeData()
+        {
+            EmployeeBUS employeeBUS = new EmployeeBUS();
+            List<EmployeeDTO> employees = employeeBUS.GetAllEmployeesNotHaveAccount();
+            if (employees == null || employees.Count == 0)
             {
-                MessageBox.Show("Lỗi tải danh sách quyền: " + ex.Message);
+                employees = new List<EmployeeDTO>();
+                EmployeeDTO dummyEmployee = new EmployeeDTO();
+                dummyEmployee.EmployeeName = "-- Không còn nhân viên --";
+                dummyEmployee.EmployeeId = "";
+                employees.Add(dummyEmployee);
+                comboBoxEmployeeName.Enabled = false;
             }
+            else
+            {
+                comboBoxEmployeeName.Enabled = true;
+            }
+            comboBoxEmployeeName.DataSource = employees;
+            comboBoxEmployeeName.DisplayMember = "EmployeeName"; 
+            comboBoxEmployeeName.ValueMember = "EmployeeId";   
         }
 
         private void buttonAccept_Click(object sender, EventArgs e)
@@ -46,8 +60,13 @@ namespace GUI
             {
                 permissionId = comboBoxPermission.SelectedValue.ToString();
             }
+            string employeeId = "";
+            if (comboBoxEmployeeName.SelectedValue != null)
+            {
+                employeeId = comboBoxEmployeeName.SelectedValue.ToString();
+            }
 
-            AccountDTO newAccount = new AccountDTO(username, password, permissionId, 0);
+            AccountDTO newAccount = new AccountDTO(username, password, permissionId, 0, employeeId);
             Dictionary<string, string> errors = accountBUS.ValidateAccount(newAccount);
 
             if (errors.Count > 0)
@@ -60,14 +79,30 @@ namespace GUI
                 {
                     errorProvider1.SetError(labelPassword, errors["Password"]);
                 }
+                if (errors.ContainsKey("EmployeeName"))
+                {
+                    errorProvider1.SetError(labelEmployeeName, errors["EmployeeName"]);
+                }
                 return;
             }
 
             try
             {
+                EmployeeBUS employeeBUS = new EmployeeBUS();
                 if (accountBUS.InsertAccount(newAccount))
                 {
                     MessageBox.Show("Thêm tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    EmployeeDTO currentEmployee = employeeBUS.GetEmployeeById(employeeId);
+                    EmployeeDTO updateEmployee = new EmployeeDTO
+                    {
+                        EmployeeId = currentEmployee.EmployeeId,
+                        EmployeeName = currentEmployee.EmployeeName,
+                        EmployeePhone = currentEmployee.EmployeePhone,
+                        Address = currentEmployee.Address,
+                        RoleId = currentEmployee.RoleId,
+                        Username = username
+                    };
+                    employeeBUS.UpdateEmployee(updateEmployee);
                     this.NewAccount = newAccount;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
