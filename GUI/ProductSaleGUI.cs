@@ -24,7 +24,6 @@ namespace BadmintonCourtManagement.GUI
         private bool _isRowSelected = false;
         private int _selectedRowIndex = -1;
         private AccountDTO acc;
-        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
         private bool isInsert = false;
 
         protected override void OnHandleCreated(EventArgs e)
@@ -102,6 +101,7 @@ namespace BadmintonCourtManagement.GUI
         {
             acc = currentAccount;
             InitializeComponent();
+            acc = currentAccount;
             CheckPermissions("F03");
             SetupGrid();
             LoadInitialData();
@@ -111,8 +111,26 @@ namespace BadmintonCourtManagement.GUI
 
         private void CheckPermissions(string functionId)
         {
-            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+            PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+            
+            if (permissiondetailBUS == null)
+            {
+                MessageBox.Show("PermissionDetailBUS is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+            if (permissionDetails == null)
+            {
+                MessageBox.Show("No permissions found for the given function ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (acc == null)
+            {
+                MessageBox.Show("Account information is missing.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             foreach (var p in permissionDetails)
             {
                 if (p.PermissionId == acc.PermissionId)
@@ -163,9 +181,11 @@ namespace BadmintonCourtManagement.GUI
                     p.ProductName,
                     Brand = brandList.FirstOrDefault(b => b.BrandId == p.BrandId)?.BrandName ?? "hi",
                     Type = typeList.FirstOrDefault(t => t.TypeProductId == p.TypeId)?.TypeProductName ?? "bye",
-                    StockQuantity = p.Quantity,
+                    ProductQuantity = p.Quantity,
+                    StockQuantity = storageList.FirstOrDefault(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)?
+                                .Quantity ?? 0, //  to show available stock
                     Price = storageList.Where(ob => ob.ProductId == p.ProductId && ob.Status == StorageDTO.Option.active)
-                                .OrderByDescending(ob => ob.ImportBillDetailId)
+                                // .OrderByDescending(ob => ob.ImportBillDetailId)
                                 .Select(ob => ob.Price)
                                 .FirstOrDefault(),
                     QuantityToBuy = _cart.ContainsKey(p.ProductId) ? _cart[p.ProductId] : 0
@@ -177,6 +197,7 @@ namespace BadmintonCourtManagement.GUI
             table.Columns.Add("ProductName", typeof(string));
             table.Columns.Add("Brand", typeof(string));
             table.Columns.Add("Type", typeof(string));
+            table.Columns.Add("ProductQuantity", typeof(decimal));
             table.Columns.Add("StockQuantity", typeof(decimal));
             table.Columns.Add("Price", typeof(decimal));
             table.Columns.Add("QuantityToBuy", typeof(int));
@@ -185,8 +206,9 @@ namespace BadmintonCourtManagement.GUI
             {
                 var price = Convert.ToDecimal(item.Price);
                 var qty = Convert.ToInt32(item.QuantityToBuy);
+                var productQty = Convert.ToDecimal(item.ProductQuantity);
                 var stockQty = Convert.ToDecimal(item.StockQuantity);
-                table.Rows.Add(item.ProductName, item.Brand, item.Type, stockQty, price, qty);
+                table.Rows.Add(item.ProductName, item.Brand, item.Type, item.ProductQuantity, stockQty, price, qty);
             }
 
             table.DefaultView.Sort = "QuantityToBuy DESC, ProductName ASC";
@@ -246,146 +268,229 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void SetupGrid()
-{
-    dtv.Columns.Clear();
-    dtv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-    dtv.AllowUserToResizeColumns = false;
-    dtv.AllowUserToResizeRows = false;
-    dtv.RowTemplate.Height = 45;
-    dtv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-    dtv.MultiSelect = false;
-
-    // Thêm các cột với tỷ lệ đẹp (tổng = 100)
-    var colName = new DataGridViewTextBoxColumn
-    {
-        Name = "ProductName",
-        HeaderText = "Tên Sản Phẩm",
-        DataPropertyName = "ProductName",
-        FillWeight = 35,        // Rộng nhất
-        ReadOnly = true
-    };
-
-    var colBrand = new DataGridViewTextBoxColumn
-    {
-        Name = "Brand",
-        HeaderText = "Thương Hiệu",
-        DataPropertyName = "Brand",
-        FillWeight = 20,
-        ReadOnly = true
-    };
-
-    var colType = new DataGridViewTextBoxColumn
-    {
-        Name = "Type",
-        HeaderText = "Loại",
-        DataPropertyName = "Type",
-        FillWeight = 15,
-        ReadOnly = true
-    };
-
-    var colPrice = new DataGridViewTextBoxColumn
-    {
-        Name = "Price",
-        HeaderText = "Đơn Giá",
-        DataPropertyName = "Price",
-        FillWeight = 15,
-        ReadOnly = true,
-        DefaultCellStyle = new DataGridViewCellStyle
         {
-            Alignment = DataGridViewContentAlignment.MiddleRight,
-            Format = "N0"  // 1,234,567 ₫
-        }
-    };
+            dtv.Columns.Clear();
+            dtv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dtv.AllowUserToResizeColumns = false;
+            dtv.AllowUserToResizeRows = false;
+            dtv.RowTemplate.Height = 45;
+            dtv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dtv.MultiSelect = false;
 
-    var colQty = new DataGridViewTextBoxColumn
-    {
-        Name = "QuantityToBuy",
-        HeaderText = "SL Mua",
-        DataPropertyName = "QuantityToBuy",
-        FillWeight = 7,
-        ReadOnly = false,
-        DefaultCellStyle = new DataGridViewCellStyle
-        {
-            Alignment = DataGridViewContentAlignment.MiddleCenter,
-            Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-            ForeColor = Color.DarkBlue
-        }
-    };
-
-    var colStockQty = new DataGridViewTextBoxColumn
-    {
-        Name = "StockQuantity",
-        HeaderText = "Tồn kho",
-        DataPropertyName = "StockQuantity",
-        FillWeight = 7,
-        ReadOnly = false,
-        DefaultCellStyle = new DataGridViewCellStyle
-        {
-            Alignment = DataGridViewContentAlignment.MiddleCenter,
-            Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-            ForeColor = Color.DarkBlue
-        }
-    };
-
-    dtv.Columns.AddRange(colName, colBrand, colType, colStockQty, colPrice, colQty);
-
-    // Làm đẹp header
-    dtv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-    dtv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-    dtv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 120, 103);
-    dtv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-    dtv.EnableHeadersVisualStyles = false;
-
-    // Bắt sự kiện khi người dùng sửa trực tiếp số lượng trên grid
-    dtv.CellEndEdit += (s, e) =>
-    {
-        if (e.ColumnIndex == dtv.Columns["QuantityToBuy"].Index && e.RowIndex >= 0)
-        {
-            var cell = dtv.Rows[e.RowIndex].Cells["QuantityToBuy"];
-            var productNameCell = dtv.Rows[e.RowIndex].Cells["ProductName"];
-
-            if (int.TryParse(cell.Value?.ToString(), out int qty) && qty >= 0)
+            // Thêm các cột với tỷ lệ đẹp (tổng = 100)
+            var colName = new DataGridViewTextBoxColumn
             {
-                var product = productList.FirstOrDefault(p => p.ProductName == productNameCell.Value?.ToString());
-                if (product != null)
+                Name = "ProductName",
+                HeaderText = "Tên Sản Phẩm",
+                DataPropertyName = "ProductName",
+                FillWeight = 35,        // Rộng nhất
+                ReadOnly = true
+            };
+
+            var colBrand = new DataGridViewTextBoxColumn
+            {
+                Name = "Brand",
+                HeaderText = "Thương Hiệu",
+                DataPropertyName = "Brand",
+                FillWeight = 15,
+                ReadOnly = true
+            };
+
+            var colType = new DataGridViewTextBoxColumn
+            {
+                Name = "Type",
+                HeaderText = "Loại",
+                DataPropertyName = "Type",
+                FillWeight = 15,
+                ReadOnly = true
+            };
+
+            var colPrice = new DataGridViewTextBoxColumn
+            {
+                Name = "Price",
+                HeaderText = "Đơn Giá",
+                DataPropertyName = "Price",
+                FillWeight = 10,
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
                 {
-                    if (qty > product.Quantity)
+                    Alignment = DataGridViewContentAlignment.MiddleRight,
+                    Format = "N0"  // 1,234,567 ₫
+                }
+            };
+
+            var colQtyToBuy = new DataGridViewTextBoxColumn
+            {
+                Name = "QuantityToBuy",
+                HeaderText = "SL Mua",
+                DataPropertyName = "QuantityToBuy",
+                FillWeight = 9,
+                ReadOnly = false,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = Color.DarkBlue
+                }
+            };
+
+            var colStockQty = new DataGridViewTextBoxColumn
+            {
+                Name = "StockQuantity",
+                HeaderText = "Tồn kho",
+                DataPropertyName = "StockQuantity",
+                FillWeight = 8,
+                ReadOnly = false,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = Color.DarkBlue
+                }
+            };
+
+            var colQty = new DataGridViewTextBoxColumn
+            {
+                Name = "ProductQuantity",
+                HeaderText = "SL Sản Phẩm",
+                DataPropertyName = "ProductQuantity",
+                FillWeight = 14,
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                    ForeColor = Color.DarkBlue
+                }
+            };
+
+            dtv.Columns.AddRange(colName, colBrand, colType, colQty, colStockQty, colPrice, colQtyToBuy);
+
+            // Làm đẹp header
+            dtv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dtv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dtv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 120, 103);
+            dtv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dtv.EnableHeadersVisualStyles = false;
+
+            // helper to apply quantity change for a specific row
+            Action<DataGridViewRow, int> applyQtyToRow = (row, qty) =>
+            {
+                var cell = row.Cells["QuantityToBuy"];
+                var stockQtyCell = row.Cells["StockQuantity"];
+                var productNameCell = row.Cells["ProductName"];
+
+                if (qty < 0)
+                {
+                    cell.Value = 0;
+                    return;
+                }
+
+                var product = productList.FirstOrDefault(p =>
+                    string.Equals(p.ProductName, productNameCell.Value?.ToString(), StringComparison.OrdinalIgnoreCase));
+
+                if (product == null)
+                {
+                    MessageBox.Show("Sản phẩm không tồn tại trong danh sách.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cell.Value = 0;
+                    return;
+                }
+
+                var stock = 0;
+                int.TryParse(stockQtyCell.Value?.ToString(), out stock);
+
+                if (qty > Convert.ToInt32(product.Quantity))
+                {
+                    MessageBox.Show($"Chỉ còn {product.Quantity} sản phẩm trong kho!", "Vượt tồn kho", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cell.Value = _cart.ContainsKey(product.ProductId) ? _cart[product.ProductId] : 0;
+                }
+                else if (qty > stock)
+                {
+                    var storages = StorageBUS.GetAllStorages();
+                    var productStorage = storages.Where(ob => ob.ProductId == product.ProductId && ob.Status == StorageDTO.Option.active).ToList();
+                    string storageInfo = productStorage.Any()
+                        ? string.Join("\n", productStorage.Select(ob => $"- Giá: {ob.Price}, SL: {ob.Quantity}"))
+                        : "Không có lô hàng khả dụng.";
+                    var firstPrice = productStorage.Any() ? productStorage[0].Price.ToString() : "N/A";
+                    var result = MessageBox.Show($"Chỉ còn {stock} sản phẩm trong lô có giá {firstPrice}!\n\nCác lô đang có trong hệ thống:\n{storageInfo}\n\nBạn có chắc muốn mua sản phẩm của lô khác chứ?", "Vượt tồn kho", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
                     {
-                        MessageBox.Show($"Chỉ còn {product.Quantity} sản phẩm trong kho!", "Vượt tồn kho", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        cell.Value = _cart.ContainsKey(product.ProductId) ? _cart[product.ProductId] : 0;
+                        _cart[product.ProductId] = qty;
+                        cell.Value = qty;
                     }
                     else
                     {
-                        _cart[product.ProductId] = qty;
-                        if (qty == 0) _cart.Remove(product.ProductId);
+                        cell.Value = 0;
+                        _cart.Remove(product.ProductId);
                     }
                 }
-            }
-            else
+                else
+                {
+                    if (qty == 0)
+                        _cart.Remove(product.ProductId);
+                    else
+                        _cart[product.ProductId] = qty;
+
+                    cell.Value = qty;
+                }
+                updateTotalPrice(productList);
+            };
+
+            // Bắt sự kiện khi người dùng sửa trực tiếp số lượng trên grid
+            // dtv.CellEndEdit += (s, e) =>
+            // {
+            //     if (e.ColumnIndex == dtv.Columns["QuantityToBuy"].Index && e.RowIndex >= 0)
+            //     {
+            //         var cell = dtv.Rows[e.RowIndex].Cells["QuantityToBuy"];
+            //         if (int.TryParse(cell.Value?.ToString(), out int qty))
+            //         {
+            //             var row = dtv.Rows[e.RowIndex];
+            //             applyQtyToRow(row, qty);
+            //         }
+            //         else
+            //         {
+            //             dtv.Rows[e.RowIndex].Cells["QuantityToBuy"].Value = 0;
+            //         }
+                    
+            //         updateTotalPrice();
+            //     }
+            // };
+
+            // Cập nhật tổng tiền khi click vào dòng bất kỳ
+            // dtv.SelectionChanged += (s, e) => updateTotalPrice(); // TODO
+
+            // Khi người dùng thay đổi số lượng từ textbox bên ngoài, áp dụng lên dòng đang chọn
+            txt_productQuantity.TextChanged += (s, e) =>
             {
-                cell.Value = 0;
-            }
+                if (!IsRowSelected()) return;
+                var row = SelectedRow;
+                if (row == null) return;
 
-            updateTotalPrice();
+                if (string.IsNullOrWhiteSpace(txt_productQuantity.Text))
+                {
+                    // clear selection quantity
+                    row.Cells["QuantityToBuy"].Value = 0;
+                    updateTotalPrice(productList);
+                    return;
+                }
+
+                if (int.TryParse(txt_productQuantity.Text.Trim(), out int qty))
+                {
+                    applyQtyToRow(row, qty);
+                }
+                else
+                {
+                    row.Cells["QuantityToBuy"].Value = 0;
+                }
+
+                updateTotalPrice(productList);
+            };
         }
-    };
-
-    // Cập nhật tổng tiền khi click vào dòng bất kỳ
-    dtv.SelectionChanged += (s, e) => updateTotalPrice();
-}
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             searchBar.Clear();
             ReloadProductList();
-        }
-
-        // Filter open dialog (reuse existing filter form if needed)
-        private void filterButton_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement brand/type filter for sale context if required.
-            MessageBox.Show("Filter chức năng sẽ được thêm sau.");
         }
 
         private void filterButton_MouseEnter(object sender, EventArgs e)
@@ -498,12 +603,54 @@ namespace BadmintonCourtManagement.GUI
                 product_bus.UpdateProduct(p);
             }
 
-            foreach (StorageDTO ob in storageList)
+            // Replace the storage update section in createBill method: (AI GENERATED)
+            var relevantStorages = storageList
+                .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
+                .OrderBy(storage => storage.ImportBillDetailId)
+                .ToList();
+            
+            // Group by ProductId to handle each product separately
+            var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
+            
+            foreach (var productGroup in storagesByProduct) // This is the key change - productGroup is IGrouping
             {
-                var qty = selectedItems.FirstOrDefault(kv => kv.Key == ob.ProductId).Value;
-                ob.Quantity -= qty;
-                StorageBUS.UpdateStorage(ob);
+                string productId = productGroup.Key;
+                var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
+                
+                if (purchasedItem.Key == null) continue; // Skip if product not found in selected items
+                
+                int remainingQty = purchasedItem.Value;
+                var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
+                
+                foreach (var storage in productStorages)
+                {
+                    if (remainingQty <= 0) break;
+                    
+                    if (storage.Quantity >= remainingQty)
+                    {
+                        // This storage has enough quantity to fulfill the remaining order
+                        storage.Quantity -= remainingQty;
+                        StorageBUS.UpdateStorage(storage);
+                        remainingQty = 0;
+                    }
+                    else
+                    {
+                        // This storage doesn't have enough, use all of it and move to next
+                        remainingQty -= storage.Quantity;
+                        storage.Quantity = 0;
+                        storage.Status = StorageDTO.Option.inactive;
+                        StorageBUS.UpdateStorage(storage);
+                    }
+                }
+                
+                // If there's still remaining quantity, it means insufficient stock
+                if (remainingQty > 0)
+                {
+                    MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.", 
+                                   "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
+            // END OF AI GENERATED SECTION
         }
 
         // Resize: later adapt number of columns or hide image (when implemented).
@@ -576,31 +723,59 @@ namespace BadmintonCourtManagement.GUI
                 }
                 row.Cells["QuantityToBuy"].Value = inputQty;
                 _cart[product.ProductId] = inputQty;
-                updateTotalPrice();
+                updateTotalPrice(productList);
             }
         }
+        /*
+            Todolist:
+            - update quantity in productDTO and storageDTO(s) also
+            - if storageDTO have quantity == 0 => inactive (optional)
+        */
 
-        private void updateTotalPrice()
+        private void updateTotalPrice(List<ProductDTO> productList) 
         {
+            var storageList = StorageBUS.GetAllStorages();
+            ProductBUS productBus = new();
             int rowCount = dtv.RowCount;
-            decimal totalPrice = 0m;
+            double totalPrice = 0;
             for (int i = 0; i < rowCount; i++)
             {
                 var qtyObj = dtv.Rows[i].Cells["QuantityToBuy"].Value;
-                var priceObj = dtv.Rows[i].Cells["Price"].Value;
+                var product = productList.FirstOrDefault(p =>
+                    string.Equals(p.ProductName, dtv.Rows[i].Cells["ProductName"].Value?.ToString(), StringComparison.OrdinalIgnoreCase));
+                
+                if (product == null) continue;
+                
+                var productIdObj = product.ProductId;
+                var storageProduct = storageList
+                    .Where(ob => ob.ProductId == productIdObj && ob.Status == StorageDTO.Option.active)
+                    .OrderBy(ob => ob.ImportBillDetailId) // Order by import order (FIFO)
+                    .ToList();
+
+                if (!storageProduct.Any()) continue;
 
                 int qty = 0;
-                long price = 0;
-
                 if (qtyObj != null && int.TryParse(qtyObj.ToString(), out var q))
                     qty = q;
 
-                if (priceObj != null && long.TryParse(priceObj.ToString(), out var p))
-                    price = p;
+                if (qty <= 0) continue;
 
-                totalPrice += qty * price;
-            }
-            txt_totalPrice.Text = totalPrice.ToString();            
+                // Calculate price using FIFO method across different storage entries
+                int remainingQty = qty;
+                int storageIndex = 0;
+                
+                while (remainingQty > 0 && storageIndex < storageProduct.Count)
+                {
+                    var currentStorage = storageProduct[storageIndex];
+                    int availableQty = Math.Min(currentStorage.Quantity, remainingQty);
+                    
+                    // Use the actual price from this storage entry
+                    totalPrice += availableQty * currentStorage.Price;
+                    
+                    remainingQty -= availableQty;
+                    storageIndex++;
+                }
+            }            txt_totalPrice.Text = totalPrice.ToString();            
         }
 
         private long getPrice(string price)

@@ -270,63 +270,151 @@ namespace BadmintonCourtManagement.DAO
             }
             return result > 0;
         }
-
-        public double? GetPriceToRule(TimeOnly startTime, TimeOnly endTime, DateOnly bookingDate)
+        public PriceRuleDTO GetHolidayPriceRuleByDate(DateOnly bookingDate)
         {
-            var allRules = GetAllPriceRules()
-                .Where(r =>
-                {
-                    if (r.IsActive == 0) return false;
+            PriceRuleDTO result = null; // default là null nếu không phải Holiday
 
-                    if (r.StartDate != null && bookingDate < r.StartDate.Value)
-                        return false;
-
-                    if (r.EndDate != null && bookingDate > r.EndDate.Value)
-                        return false;
-
-                    return true;
-                })
-                .ToList();
-
-            if (!allRules.Any()) return null;
-
-            string[] priorityOrder = { "Holiday", "Weekend", "Weekday" };
-
-            // dùng Trim + ignore case
-            string bestType = priorityOrder
-                .FirstOrDefault(t => allRules.Any(r =>
-                    string.Equals(
-                        (r.EndType ?? string.Empty).Trim(),
-                        t,
-                        StringComparison.OrdinalIgnoreCase)));
-
-            if (bestType == null) return null;
-
-            var candidateRules = allRules
-                .Where(r => string.Equals(
-                        (r.EndType ?? string.Empty).Trim(),
-                        bestType,
-                        StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            if (!candidateRules.Any()) return null;
-
-            TimeSpan start = startTime.ToTimeSpan();
-            TimeSpan end = endTime.ToTimeSpan();
-
-            var matchedRule = candidateRules.FirstOrDefault(r =>
+            try
             {
-                var ruleStart = r.StartTime.ToTimeSpan();
-                var ruleEnd = r.EndTime.ToTimeSpan();
-                return start >= ruleStart && end <= ruleEnd;
-            });
+                db.OpenConnection();
 
-            if (matchedRule == null) return null;
-            // debug thử xem bestType đang là gì
-            //Console.WriteLine($"BestType = {bestType}, chọn PriceRuleId = {matchedRule.PriceRuleId}, EndType = {matchedRule.EndType}");
+                string query = @"SELECT * 
+                         FROM pricerule
+                         WHERE EndType = 'Holiday'
+                         AND Status = 'Active'";
 
-            return matchedRule.Price;
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader["StartDate"] != DBNull.Value && reader["EndDate"] != DBNull.Value)
+                            {
+                                DateOnly startDate = DateOnly.FromDateTime(Convert.ToDateTime(reader["StartDate"]));
+                                DateOnly endDate = DateOnly.FromDateTime(Convert.ToDateTime(reader["EndDate"]));
+
+                                if (bookingDate >= startDate && bookingDate <= endDate)
+                                {
+                                    // tạo DTO từ dữ liệu DB
+                                    result = new PriceRuleDTO
+                                    {
+                                        PriceRuleId = reader["PriceRuleId"].ToString(),
+                                        Price = Convert.ToDouble(reader["Price"]),
+                                        StartTime = reader["StartTime"] != DBNull.Value
+                                            ? TimeOnly.FromTimeSpan((TimeSpan)reader["StartTime"])
+                                            : new TimeOnly(),
+                                        EndTime = reader["EndTime"] != DBNull.Value
+                                            ? TimeOnly.FromTimeSpan((TimeSpan)reader["EndTime"])
+                                            : new TimeOnly(),
+                                        StartDate = startDate,
+                                        EndDate = endDate,
+                                        EndType = reader["EndType"].ToString(),
+                                        Description = reader["Description"] != DBNull.Value
+                                            ? reader["Description"].ToString()
+                                            : "",
+                                        IsActive = string.Equals(reader["Status"]?.ToString(), "Active", StringComparison.OrdinalIgnoreCase) ? 1 : 0
+                                    };
+                                    break; // tìm thấy rule Holiday hợp lệ
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error checking holiday price: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return result; // null nếu không phải holiday
         }
+
+
+        public PriceRuleDTO GetPriceRuleByTime(TimeOnly startTime, TimeOnly endTime, DateOnly bookingDate)
+        {
+            // 1️⃣ Kiểm tra Holiday trước
+            PriceRuleDTO priceHoliday = GetHolidayPriceRuleByDate(bookingDate);
+            if (priceHoliday != null)
+            {
+                return priceHoliday;
+            }
+
+            // 2️⃣ Xác định loại ngày: Weekend hoặc Weekday
+            bool weekend = bookingDate.DayOfWeek == DayOfWeek.Saturday || bookingDate.DayOfWeek == DayOfWeek.Sunday;
+            string endType = weekend ? "Weekend" : "Weekday";
+
+            string qRule = @"SELECT *
+                      FROM pricerule 
+                      WHERE EndType = @EndType
+                      AND Status = 'Active'";
+
+            PriceRuleDTO result = null;
+
+            try
+            {
+                db.OpenConnection();
+                using (MySqlCommand cmd = new MySqlCommand(qRule, db.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@EndType", endType);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            TimeOnly ruleStart = reader["StartTime"] != DBNull.Value
+                                ? TimeOnly.FromTimeSpan((TimeSpan)reader["StartTime"])
+                                : new TimeOnly();
+
+                            TimeOnly ruleEnd = reader["EndTime"] != DBNull.Value
+                                ? TimeOnly.FromTimeSpan((TimeSpan)reader["EndTime"])
+                                : new TimeOnly();
+
+                            // 3️⃣ Kiểm tra giờ đặt có nằm trong khung giờ rule
+                            if (startTime >= ruleStart && endTime <= ruleEnd)
+                            {
+                                result = new PriceRuleDTO
+                                {
+                                    PriceRuleId = reader["PriceRuleId"].ToString(),
+                                    Price = Convert.ToDouble(reader["Price"]),
+                                    StartTime = ruleStart,
+                                    EndTime = ruleEnd,
+                                    StartDate = reader["StartDate"] != DBNull.Value
+                                        ? DateOnly.FromDateTime(Convert.ToDateTime(reader["StartDate"]))
+                                        : null,
+                                    EndDate = reader["EndDate"] != DBNull.Value
+                                        ? DateOnly.FromDateTime(Convert.ToDateTime(reader["EndDate"]))
+                                        : null,
+                                    EndType = reader["EndType"].ToString(),
+                                    Description = reader["Description"] != DBNull.Value
+                                        ? reader["Description"].ToString()
+                                        : "",
+                                    IsActive = string.Equals(reader["Status"]?.ToString(), "Active", StringComparison.OrdinalIgnoreCase) ? 1 : 0
+                                };
+                                break; // lấy rule đầu tiên match
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving price rule: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return result; // null nếu không có rule nào phù hợp
+        }
+
+
+
 
     }
 }
