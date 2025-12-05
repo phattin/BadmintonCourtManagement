@@ -152,6 +152,12 @@ namespace GUI
 
             if (selectedItem == null) return;
 
+            if (selectedItem.Username == currentAccount.Username)
+            {
+                MessageBox.Show("Bạn không thể sửa tài khoản đang đăng nhập!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (selectedItem.IsDeleted == 1)
             {
                 MessageBox.Show("Tài khoản này đã bị xóa, không thể chỉnh sửa.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);

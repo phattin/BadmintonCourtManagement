@@ -37,12 +37,8 @@ namespace GUI
             try
             {
                 EmployeeBUS employeeBUS = new EmployeeBUS();
-
-                // 1. Tạo danh sách nguồn để gán cho ComboBox
                 List<EmployeeDTO> dataSource = new List<EmployeeDTO>();
 
-                // 2. Lấy thông tin nhân viên HIỆN TẠI của tài khoản này
-                // (Bắt buộc phải có để hiển thị giá trị cũ)
                 if (!string.IsNullOrEmpty(currentAccount.EmployeeId))
                 {
                     EmployeeDTO currentEmp = employeeBUS.GetEmployeeById(currentAccount.EmployeeId);
@@ -52,35 +48,22 @@ namespace GUI
                     }
                 }
 
-                // 3. Lấy danh sách các nhân viên KHÁC chưa có tài khoản
                 List<EmployeeDTO> availableEmployees = employeeBUS.GetAllEmployeesNotHaveAccount();
 
                 if (availableEmployees != null && availableEmployees.Count > 0)
                 {
-                    // Nếu có người khác thì thêm vào danh sách chọn
                     dataSource.AddRange(availableEmployees);
-
-                    // Mở khóa cho phép chọn đổi người
                     comboBoxEmployeeName.Enabled = true;
                 }
                 else
                 {
-                    // Nếu KHÔNG còn ai khác (availableEmployees rỗng)
-                    // -> Chỉ có duy nhất nhân viên hiện tại trong danh sách
-
-                    // Khóa ComboBox lại
                     comboBoxEmployeeName.Enabled = false;
-
-                    // (Tùy chọn) Hiện thông báo nhỏ hoặc đổi màu nền để gây chú ý
-                    // toolTip1.SetToolTip(comboBoxEmployeeName, "Không còn nhân viên nào khác để chuyển đổi.");
                 }
 
-                // 4. Gán dữ liệu
                 comboBoxEmployeeName.DataSource = dataSource;
-                comboBoxEmployeeName.DisplayMember = "EmployeeName"; // Hoặc FullName tùy DTO
+                comboBoxEmployeeName.DisplayMember = "EmployeeName";
                 comboBoxEmployeeName.ValueMember = "EmployeeId";
 
-                // 5. Chọn đúng nhân viên hiện tại
                 if (!string.IsNullOrEmpty(currentAccount.EmployeeId))
                 {
                     comboBoxEmployeeName.SelectedValue = currentAccount.EmployeeId;

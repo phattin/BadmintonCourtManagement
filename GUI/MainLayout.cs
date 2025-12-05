@@ -28,7 +28,6 @@ namespace BadmintonCourtManagement.GUI
             Session.OnPermissionChanged += ReloadMenu;
             ReloadMenu();
             this.StartPosition = FormStartPosition.CenterScreen;
-            BookCourt_Click(this, EventArgs.Empty);
         }
 
         private void ReloadMenu()
@@ -40,32 +39,6 @@ namespace BadmintonCourtManagement.GUI
 
             CreateMenuButtons1(viewPermissions);
         }
-
-        private void CreateMenuButtons()
-        {
-            menuManager = new MenuManager();
-            var menuItems = new Dictionary<string, EventHandler>
-            {
-                { "Khách hàng", Customers_Click },
-                { "Phân quyền", Permission_Click },
-                { "Tài khoản", Account_Click },
-                { "Nhân viên", Employee_Click },
-                { "Sản phẩm", Product_Click},
-                { "Hóa đơn", Bill_Click },
-                { "Bán hàng", Sell_Click },
-                { "Kho và Nhập hàng", Storage_Click },
-                { "Quản lý sân", ManageCourts_Click },
-                { "Giá sân", PriceRule_Click },
-                { "Đặt sân", BookCourt_Click },
-                { "Thống kê", Statistics_Click },
-                { "Loại sản phẩm", TypeProduct_Click },
-                { "Nhà cung cấp", Supplier_Click }
-                // { "Hóa đơn sản phẩm", BillProduct_Click }
-            };
-
-            menuManager!.CreateMenuButtons(menuPanel!, menuItems);
-        }
-
         private void CreateMenuButtons1(List<PermissionDetailDTO> viewPermissions)
         {
             menuManager = new MenuManager();
@@ -128,9 +101,14 @@ namespace BadmintonCourtManagement.GUI
                         break;
                 }
             }
-            // Reverse the insertion order so the menu is built in reverse
-            menuItems = menuItems.Reverse().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            menuManager.CreateMenuButtons(menuPanel, menuItems);
+            var firstAction = menuItems.Values.FirstOrDefault();
+
+            var reversedMenuItems = menuItems.Reverse().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            menuManager.CreateMenuButtons(menuPanel, reversedMenuItems);
+            if (firstAction != null)
+            {
+                firstAction.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void OpenChildPanel(UserControl childPanel)
