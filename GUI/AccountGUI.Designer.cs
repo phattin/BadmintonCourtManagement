@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panelTop = new Panel();
             panelTopRight = new Panel();
             flowLayoutPanel = new FlowLayoutPanel();
@@ -46,9 +46,9 @@
             Username = new DataGridViewTextBoxColumn();
             Password = new DataGridViewTextBoxColumn();
             Status = new DataGridViewTextBoxColumn();
-            customPanel2 = new BadmintonCourtManagement.GUI.CustomPanel();
             customPanel3 = new BadmintonCourtManagement.GUI.CustomPanel();
             textBox1 = new TextBox();
+            customPanel2 = new BadmintonCourtManagement.GUI.CustomPanel();
             panelTop.SuspendLayout();
             panelTopRight.SuspendLayout();
             flowLayoutPanel.SuspendLayout();
@@ -56,8 +56,8 @@
             customPanel1.SuspendLayout();
             panelDataGridView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            customPanel2.SuspendLayout();
             customPanel3.SuspendLayout();
+            customPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // panelTop
@@ -183,10 +183,10 @@
             // 
             panelDataGridView.Controls.Add(dataGridView1);
             panelDataGridView.Dock = DockStyle.Fill;
-            panelDataGridView.Location = new Point(0, 55);
+            panelDataGridView.Location = new Point(0, 88);
             panelDataGridView.Name = "panelDataGridView";
             panelDataGridView.Padding = new Padding(20);
-            panelDataGridView.Size = new Size(1103, 641);
+            panelDataGridView.Size = new Size(1103, 608);
             panelDataGridView.TabIndex = 1;
             // 
             // dataGridView1
@@ -194,24 +194,24 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 120, 103);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 120, 103);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { PermissionId, EmployeeName, Username, Password, Status });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.Location = new Point(20, 20);
@@ -221,7 +221,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1063, 601);
+            dataGridView1.Size = new Size(1063, 568);
             dataGridView1.TabIndex = 0;
             // 
             // PermissionId
@@ -254,26 +254,16 @@
             Status.MinimumWidth = 6;
             Status.Name = "Status";
             // 
-            // customPanel2
-            // 
-            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
-            customPanel2.BorderRadius = 20;
-            customPanel2.Controls.Add(customPanel3);
-            customPanel2.Dock = DockStyle.Top;
-            customPanel2.Location = new Point(0, 0);
-            customPanel2.Name = "customPanel2";
-            customPanel2.Size = new Size(1103, 55);
-            customPanel2.TabIndex = 0;
-            // 
             // customPanel3
             // 
             customPanel3.BackColor = Color.White;
             customPanel3.BorderRadius = 30;
             customPanel3.Controls.Add(textBox1);
-            customPanel3.Location = new Point(13, 9);
+            customPanel3.Dock = DockStyle.Left;
+            customPanel3.Location = new Point(25, 25);
             customPanel3.Margin = new Padding(3, 2, 3, 2);
             customPanel3.Name = "customPanel3";
-            customPanel3.Padding = new Padding(10, 2, 0, 0);
+            customPanel3.Padding = new Padding(10, 3, 0, 0);
             customPanel3.Size = new Size(455, 38);
             customPanel3.TabIndex = 1;
             // 
@@ -283,13 +273,25 @@
             textBox1.Dock = DockStyle.Fill;
             textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(10, 2);
+            textBox1.Location = new Point(10, 3);
             textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Tìm kiếm";
             textBox1.Size = new Size(445, 27);
             textBox1.TabIndex = 0;
             textBox1.TextChanged += textBox1_TextChanged;
+            // 
+            // customPanel2
+            // 
+            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
+            customPanel2.BorderRadius = 20;
+            customPanel2.Controls.Add(customPanel3);
+            customPanel2.Dock = DockStyle.Top;
+            customPanel2.Location = new Point(0, 0);
+            customPanel2.Name = "customPanel2";
+            customPanel2.Padding = new Padding(25, 25, 0, 25);
+            customPanel2.Size = new Size(1103, 88);
+            customPanel2.TabIndex = 0;
             // 
             // AccountGUI
             // 
@@ -307,9 +309,9 @@
             customPanel1.ResumeLayout(false);
             panelDataGridView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            customPanel2.ResumeLayout(false);
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
+            customPanel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -330,9 +332,9 @@
         private DataGridViewTextBoxColumn Password;
         private DataGridViewTextBoxColumn Status;
         private BadmintonCourtManagement.GUI.CustomPanel customPanel1;
+        private Panel panelDataGridView;
         private BadmintonCourtManagement.GUI.CustomPanel customPanel2;
         private BadmintonCourtManagement.GUI.CustomPanel customPanel3;
         private TextBox textBox1;
-        private Panel panelDataGridView;
     }
 }
