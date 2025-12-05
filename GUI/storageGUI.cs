@@ -716,11 +716,14 @@ namespace BadmintonCourtManagement.GUI
             {
                 if (item.ImportBillId.Equals(cardTitle.Text.ToString()))
                 {
-                    // TODO: Update SupplyDetailsGUI constructor to accept ImportBillDTO parameter
+                    // Get import bill details
                     BillImportDetailBUS importDetail = new BillImportDetailBUS();
                     List<BillImportDetailDTO> details = importDetail.GetDetailImportBillsByImportBillId(item.ImportBillId);
-                    ImportDetailsGUI supplyDetails = new ImportDetailsGUI(details);
+                    
+                    // Open SupplyDetailsGUI with details
+                    SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI(details);
                     supplyDetails.ShowDialog();
+                    
                     // Refresh list after closing details
                     LoadSupplyList();
                     return;
@@ -761,8 +764,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void NhapHangButtonCard_Click(object sender, EventArgs e)
         {
-            SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
-            supplyDetails.ShowDialog();
+            // Deprecated - use supplyCardButton_Click instead
         }
 
         private void NhapHangBodyCard_Click(object sender, EventArgs e)
@@ -777,8 +779,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void NhapHangButtonCard_Click_1(object sender, EventArgs e)
         {
-            SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI();
-            supplyDetails.ShowDialog();
+            // Deprecated - use supplyCardButton_Click instead
         }
 
         private void AddButton_Click(object sender, EventArgs e)
