@@ -67,6 +67,10 @@ namespace BadmintonCourtManagement.BUS
             {
                 errors.Add("Password", "Vui lòng nhập mật khẩu.");
             }
+            else if (string.IsNullOrWhiteSpace(account.EmployeeId))
+            {
+                errors.Add("EmployeeName", "Vui lòng chọn nhân viên sở hữu tài khoản này.");
+            }
             return errors;
         }
     }

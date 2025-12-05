@@ -82,18 +82,18 @@
             panelTitle.Location = new Point(0, 0);
             panelTitle.Margin = new Padding(0);
             panelTitle.Name = "panelTitle";
-            panelTitle.Size = new Size(980, 56);
+            panelTitle.Size = new Size(432, 56);
             panelTitle.TabIndex = 0;
             // 
             // labelTitle
             // 
-            labelTitle.BackColor = Color.FromArgb(224, 224, 224);
+            labelTitle.BackColor = SystemColors.Control;
             labelTitle.Dock = DockStyle.Fill;
             labelTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTitle.Location = new Point(0, 0);
             labelTitle.Margin = new Padding(0);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(980, 56);
+            labelTitle.Size = new Size(432, 56);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "Sửa giá sân";
             labelTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -102,15 +102,15 @@
             // 
             panel1.Controls.Add(tableLayoutPanel2);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 634);
+            panel1.Location = new Point(0, 635);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(980, 68);
+            panel1.Size = new Size(432, 68);
             panel1.TabIndex = 1;
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.BackColor = Color.FromArgb(224, 224, 224);
+            tableLayoutPanel2.BackColor = SystemColors.Control;
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -123,39 +123,43 @@
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(980, 68);
+            tableLayoutPanel2.Size = new Size(432, 68);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // buttonAccept
             // 
+            buttonAccept.BackColor = Color.FromArgb(0, 120, 103);
             buttonAccept.Dock = DockStyle.Fill;
             buttonAccept.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonAccept.Location = new Point(300, 0);
-            buttonAccept.Margin = new Padding(300, 0, 50, 0);
+            buttonAccept.ForeColor = Color.White;
+            buttonAccept.Location = new Point(50, 0);
+            buttonAccept.Margin = new Padding(50, 0, 50, 0);
             buttonAccept.Name = "buttonAccept";
-            buttonAccept.Size = new Size(140, 68);
+            buttonAccept.Size = new Size(116, 68);
             buttonAccept.TabIndex = 1;
             buttonAccept.Text = "Xác nhận";
-            buttonAccept.UseVisualStyleBackColor = true;
+            buttonAccept.UseVisualStyleBackColor = false;
             buttonAccept.Click += buttonAccept_Click;
             // 
             // buttonCancel
             // 
+            buttonCancel.BackColor = Color.IndianRed;
             buttonCancel.Dock = DockStyle.Fill;
             buttonCancel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonCancel.Location = new Point(540, 0);
-            buttonCancel.Margin = new Padding(50, 0, 300, 0);
+            buttonCancel.ForeColor = Color.White;
+            buttonCancel.Location = new Point(266, 0);
+            buttonCancel.Margin = new Padding(50, 0, 50, 0);
             buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new Size(140, 68);
+            buttonCancel.Size = new Size(116, 68);
             buttonCancel.TabIndex = 2;
             buttonCancel.Text = "Hủy";
-            buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += buttonCancel_Click;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.AutoScroll = true;
-            tableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
+            tableLayoutPanel1.BackColor = SystemColors.Control;
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Controls.Add(panelDes, 0, 6);
@@ -169,7 +173,7 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.Padding = new Padding(20, 0, 17, 0);
+            tableLayoutPanel1.Padding = new Padding(20, 0, 20, 20);
             tableLayoutPanel1.RowCount = 7;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857113F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857151F));
@@ -178,7 +182,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857151F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857151F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857151F));
-            tableLayoutPanel1.Size = new Size(980, 578);
+            tableLayoutPanel1.Size = new Size(432, 579);
             tableLayoutPanel1.TabIndex = 2;
             // 
             // panelDes
@@ -186,10 +190,10 @@
             panelDes.Controls.Add(textBoxDes);
             panelDes.Controls.Add(labelDes);
             panelDes.Dock = DockStyle.Fill;
-            panelDes.Location = new Point(20, 492);
+            panelDes.Location = new Point(20, 474);
             panelDes.Margin = new Padding(0);
             panelDes.Name = "panelDes";
-            panelDes.Size = new Size(943, 86);
+            panelDes.Size = new Size(392, 85);
             panelDes.TabIndex = 8;
             // 
             // textBoxDes
@@ -205,13 +209,13 @@
             // 
             // labelDes
             // 
-            labelDes.BackColor = Color.FromArgb(224, 224, 224);
+            labelDes.BackColor = SystemColors.Control;
             labelDes.Dock = DockStyle.Top;
             labelDes.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelDes.Location = new Point(0, 0);
             labelDes.Margin = new Padding(0);
             labelDes.Name = "labelDes";
-            labelDes.Size = new Size(943, 53);
+            labelDes.Size = new Size(392, 53);
             labelDes.TabIndex = 0;
             labelDes.Text = "Mô tả:";
             labelDes.TextAlign = ContentAlignment.MiddleLeft;
@@ -221,10 +225,10 @@
             panelPrice.Controls.Add(numericUpDown1);
             panelPrice.Controls.Add(labelPrice);
             panelPrice.Dock = DockStyle.Fill;
-            panelPrice.Location = new Point(20, 410);
+            panelPrice.Location = new Point(20, 395);
             panelPrice.Margin = new Padding(0);
             panelPrice.Name = "panelPrice";
-            panelPrice.Size = new Size(943, 82);
+            panelPrice.Size = new Size(392, 79);
             panelPrice.TabIndex = 7;
             // 
             // numericUpDown1
@@ -239,13 +243,13 @@
             // 
             // labelPrice
             // 
-            labelPrice.BackColor = Color.FromArgb(224, 224, 224);
+            labelPrice.BackColor = SystemColors.Control;
             labelPrice.Dock = DockStyle.Top;
             labelPrice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelPrice.Location = new Point(0, 0);
             labelPrice.Margin = new Padding(0);
             labelPrice.Name = "labelPrice";
-            labelPrice.Size = new Size(943, 48);
+            labelPrice.Size = new Size(392, 48);
             labelPrice.TabIndex = 0;
             labelPrice.Text = "Giá:";
             labelPrice.TextAlign = ContentAlignment.MiddleLeft;
@@ -255,10 +259,10 @@
             panelEndType.Controls.Add(comboBoxEndType);
             panelEndType.Controls.Add(labelEndType);
             panelEndType.Dock = DockStyle.Fill;
-            panelEndType.Location = new Point(20, 328);
+            panelEndType.Location = new Point(20, 316);
             panelEndType.Margin = new Padding(0);
             panelEndType.Name = "panelEndType";
-            panelEndType.Size = new Size(943, 82);
+            panelEndType.Size = new Size(392, 79);
             panelEndType.TabIndex = 6;
             // 
             // comboBoxEndType
@@ -274,13 +278,13 @@
             // 
             // labelEndType
             // 
-            labelEndType.BackColor = Color.FromArgb(224, 224, 224);
+            labelEndType.BackColor = SystemColors.Control;
             labelEndType.Dock = DockStyle.Top;
             labelEndType.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelEndType.Location = new Point(0, 0);
             labelEndType.Margin = new Padding(0);
             labelEndType.Name = "labelEndType";
-            labelEndType.Size = new Size(943, 50);
+            labelEndType.Size = new Size(392, 50);
             labelEndType.TabIndex = 0;
             labelEndType.Text = "Thể loại:";
             labelEndType.TextAlign = ContentAlignment.MiddleLeft;
@@ -290,10 +294,10 @@
             panelEndDate.Controls.Add(dateTimePickerEndDate);
             panelEndDate.Controls.Add(labelEndDate);
             panelEndDate.Dock = DockStyle.Fill;
-            panelEndDate.Location = new Point(20, 246);
+            panelEndDate.Location = new Point(20, 237);
             panelEndDate.Margin = new Padding(0);
             panelEndDate.Name = "panelEndDate";
-            panelEndDate.Size = new Size(943, 82);
+            panelEndDate.Size = new Size(392, 79);
             panelEndDate.TabIndex = 5;
             // 
             // dateTimePickerEndDate
@@ -310,13 +314,13 @@
             // 
             // labelEndDate
             // 
-            labelEndDate.BackColor = Color.FromArgb(224, 224, 224);
+            labelEndDate.BackColor = SystemColors.Control;
             labelEndDate.Dock = DockStyle.Top;
             labelEndDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelEndDate.Location = new Point(0, 0);
             labelEndDate.Margin = new Padding(0);
             labelEndDate.Name = "labelEndDate";
-            labelEndDate.Size = new Size(943, 49);
+            labelEndDate.Size = new Size(392, 49);
             labelEndDate.TabIndex = 0;
             labelEndDate.Text = "Ngày kết thúc:";
             labelEndDate.TextAlign = ContentAlignment.MiddleLeft;
@@ -326,10 +330,10 @@
             panelStartDate.Controls.Add(dateTimePickerStartDate);
             panelStartDate.Controls.Add(labelStartDate);
             panelStartDate.Dock = DockStyle.Fill;
-            panelStartDate.Location = new Point(20, 164);
+            panelStartDate.Location = new Point(20, 158);
             panelStartDate.Margin = new Padding(0);
             panelStartDate.Name = "panelStartDate";
-            panelStartDate.Size = new Size(943, 82);
+            panelStartDate.Size = new Size(392, 79);
             panelStartDate.TabIndex = 4;
             // 
             // dateTimePickerStartDate
@@ -346,13 +350,13 @@
             // 
             // labelStartDate
             // 
-            labelStartDate.BackColor = Color.FromArgb(224, 224, 224);
+            labelStartDate.BackColor = SystemColors.Control;
             labelStartDate.Dock = DockStyle.Top;
             labelStartDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelStartDate.Location = new Point(0, 0);
             labelStartDate.Margin = new Padding(0);
             labelStartDate.Name = "labelStartDate";
-            labelStartDate.Size = new Size(943, 47);
+            labelStartDate.Size = new Size(392, 47);
             labelStartDate.TabIndex = 0;
             labelStartDate.Text = "Ngày bắt đầu:";
             labelStartDate.TextAlign = ContentAlignment.MiddleLeft;
@@ -362,10 +366,10 @@
             panelEndTime.Controls.Add(dateTimePickerEndTime);
             panelEndTime.Controls.Add(labelEndTime);
             panelEndTime.Dock = DockStyle.Fill;
-            panelEndTime.Location = new Point(20, 82);
+            panelEndTime.Location = new Point(20, 79);
             panelEndTime.Margin = new Padding(0);
             panelEndTime.Name = "panelEndTime";
-            panelEndTime.Size = new Size(943, 82);
+            panelEndTime.Size = new Size(392, 79);
             panelEndTime.TabIndex = 3;
             // 
             // dateTimePickerEndTime
@@ -382,13 +386,13 @@
             // 
             // labelEndTime
             // 
-            labelEndTime.BackColor = Color.FromArgb(224, 224, 224);
+            labelEndTime.BackColor = SystemColors.Control;
             labelEndTime.Dock = DockStyle.Top;
             labelEndTime.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelEndTime.Location = new Point(0, 0);
             labelEndTime.Margin = new Padding(0);
             labelEndTime.Name = "labelEndTime";
-            labelEndTime.Size = new Size(943, 46);
+            labelEndTime.Size = new Size(392, 46);
             labelEndTime.TabIndex = 0;
             labelEndTime.Text = "Giờ kết thúc:";
             labelEndTime.TextAlign = ContentAlignment.MiddleLeft;
@@ -401,7 +405,7 @@
             panelStartTime.Location = new Point(20, 0);
             panelStartTime.Margin = new Padding(0);
             panelStartTime.Name = "panelStartTime";
-            panelStartTime.Size = new Size(943, 82);
+            panelStartTime.Size = new Size(392, 79);
             panelStartTime.TabIndex = 0;
             // 
             // dateTimePickerStartTime
@@ -418,13 +422,13 @@
             // 
             // labelStartTime
             // 
-            labelStartTime.BackColor = Color.FromArgb(224, 224, 224);
+            labelStartTime.BackColor = SystemColors.Control;
             labelStartTime.Dock = DockStyle.Top;
             labelStartTime.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelStartTime.Location = new Point(0, 0);
             labelStartTime.Margin = new Padding(0);
             labelStartTime.Name = "labelStartTime";
-            labelStartTime.Size = new Size(943, 46);
+            labelStartTime.Size = new Size(392, 46);
             labelStartTime.TabIndex = 0;
             labelStartTime.Text = "Giờ bắt đầu:";
             labelStartTime.TextAlign = ContentAlignment.MiddleLeft;
@@ -437,7 +441,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 56);
             panel2.Name = "panel2";
-            panel2.Size = new Size(980, 578);
+            panel2.Size = new Size(432, 579);
             panel2.TabIndex = 3;
             // 
             // errorProvider1
@@ -449,7 +453,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(980, 702);
+            ClientSize = new Size(432, 703);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(panelTitle);

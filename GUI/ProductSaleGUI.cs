@@ -99,6 +99,7 @@ namespace BadmintonCourtManagement.GUI
 
         public ProductSaleGUI(AccountDTO currentAccount)
         {
+            acc = currentAccount;
             InitializeComponent();
             acc = currentAccount;
             CheckPermissions("F03");
