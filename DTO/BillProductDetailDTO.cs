@@ -2,12 +2,14 @@ namespace BadmintonCourtManagement.DTO
 {
     public class BillProductDetailDTO
     {
+        private string billProductDetailId = "";
         private string billProductId = "";
         private string productId = "";
         private int quantity = 0;
         private double price = 0;
         private double totalPrice = 0;
 
+        public string BillProductDetailId { get => billProductDetailId; set => billProductDetailId = value; }
         public string BillProductId { get => billProductId; set => billProductId = value; }
         public string ProductId { get => productId; set => productId = value; }
         public int Quantity
@@ -47,8 +49,9 @@ namespace BadmintonCourtManagement.DTO
         }
 
         public BillProductDetailDTO() { }
-        public BillProductDetailDTO(string billProductId, string productId, int quantity, double price, double totalPrice)
+        public BillProductDetailDTO(string billProductDetailId, string billProductId, string productId, int quantity, double price, double totalPrice)
         {
+            BillProductDetailId = billProductDetailId;
             BillProductId = billProductId;
             ProductId = productId;
             Quantity = quantity;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2025 at 07:47 AM
+-- Generation Time: Dec 05, 2025 at 11:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`Username`, `Password`, `EmployeeId`, `PermissionId`, `IsDeleted`) VALUES
-('admin', 'admin123', 'E00001', 'P00001', 0);
+('admin', 'admin123', 'E00001', 'P00001', 0),
+('thien', '123456', 'EMP002', 'P00003', 0);
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,8 @@ INSERT INTO `billimportproductdetail` (`ImportBillDetailId`, `ImportBillId`, `Pr
 ('ID00011', 'IB00006', 'PD00011', 40, 660000, 26400000, '2025-12-02 10:04:41', ''),
 ('ID00012', 'IB00007', 'PD00008', 35, 840000, 29400000, '2025-12-02 10:05:41', ''),
 ('ID00013', 'IB00008', 'PD00012', 45, 560000, 25200000, '2025-12-02 10:06:11', ''),
-('ID00014', 'IB00009', 'PD00013', 100, 150000, 15000000, '2025-12-02 10:06:40', '');
+('ID00014', 'IB00009', 'PD00013', 100, 150000, 15000000, '2025-12-02 10:06:40', ''),
+('ID00015', 'IB00010', 'PD00001', 30, 650000, 19500000, '2025-12-05 16:54:05', '');
 
 -- --------------------------------------------------------
 
@@ -129,7 +131,8 @@ INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `TotalPrice`, `DateCre
 ('BP00014', 'E00001', 2001000, '2025-12-04 13:15:59', 'paid'),
 ('BP00015', 'E00001', 5520000, '2025-12-04 13:16:12', 'paid'),
 ('BP00016', 'E00001', 1656000, '2025-12-04 13:20:25', 'paid'),
-('BP00017', 'E00001', 1012000, '2025-12-04 13:46:19', 'paid');
+('BP00017', 'E00001', 1012000, '2025-12-04 13:46:19', 'paid'),
+('BP00018', 'E00001', 10300000, '2025-12-05 17:08:44', 'paid');
 
 -- --------------------------------------------------------
 
@@ -138,6 +141,7 @@ INSERT INTO `billproduct` (`BillProductId`, `EmployeeId`, `TotalPrice`, `DateCre
 --
 
 CREATE TABLE `billproductdetail` (
+  `BillProductDetailId` varchar(10) NOT NULL,
   `BillProductId` varchar(10) NOT NULL,
   `ProductId` varchar(10) NOT NULL,
   `Quantity` int(11) NOT NULL,
@@ -149,32 +153,35 @@ CREATE TABLE `billproductdetail` (
 -- Dumping data for table `billproductdetail`
 --
 
-INSERT INTO `billproductdetail` (`BillProductId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`) VALUES
-('BP00001', 'PD00001', 2, 552000, 1104000),
-('BP00002', 'PD00001', 2, 552000, 1104000),
-('BP00003', 'PD00006', 1, 333500, 333500),
-('BP00003', 'PD00009', 1, 864000, 864000),
-('BP00003', 'PD00013', 5, 172500, 862500),
-('BP00004', 'PD00008', 2, 1008000, 2016000),
-('BP00005', 'PD00002', 1, 888000, 888000),
-('BP00006', 'PD00001', 2, 552000, 1104000),
-('BP00006', 'PD00006', 3, 333500, 1000500),
-('BP00006', 'PD00013', 5, 172500, 862500),
-('BP00007', 'PD00009', 2, 864000, 1728000),
-('BP00008', 'PD00005', 1, 667000, 667000),
-('BP00009', 'PD00006', 2, 333500, 667000),
-('BP00010', 'PD00004', 2, 678500, 1357000),
-('BP00011', 'PD00002', 1, 888000, 888000),
-('BP00012', 'PD00004', 1, 678500, 678500),
-('BP00012', 'PD00006', 1, 333500, 333500),
-('BP00012', 'PD00013', 3, 172500, 517500),
-('BP00013', 'PD00004', 2, 678500, 1357000),
-('BP00013', 'PD00010', 2, 782000, 1564000),
-('BP00013', 'PD00013', 5, 172500, 862500),
-('BP00014', 'PD00005', 3, 667000, 2001000),
-('BP00015', 'PD00001', 10, 552000, 5520000),
-('BP00016', 'PD00001', 3, 552000, 1656000),
-('BP00017', 'PD00001', 2, 552000, 1104000);
+INSERT INTO `billproductdetail` (`BillProductDetailId`, `BillProductId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`) VALUES
+('BPD00001', 'BP00001', 'PD00001', 2, 552000, 1104000),
+('BPD00002', 'BP00002', 'PD00001', 2, 552000, 1104000),
+('BPD00003', 'BP00003', 'PD00006', 1, 333500, 333500),
+('BPD00004', 'BP00003', 'PD00009', 1, 864000, 864000),
+('BPD00005', 'BP00003', 'PD00013', 5, 172500, 862500),
+('BPD00006', 'BP00004', 'PD00008', 2, 1008000, 2016000),
+('BPD00007', 'BP00005', 'PD00002', 1, 888000, 888000),
+('BPD00008', 'BP00006', 'PD00001', 2, 552000, 1104000),
+('BPD00009', 'BP00006', 'PD00006', 3, 333500, 1000500),
+('BPD00010', 'BP00006', 'PD00013', 5, 172500, 862500),
+('BPD00011', 'BP00007', 'PD00009', 2, 864000, 1728000),
+('BPD00012', 'BP00008', 'PD00005', 1, 667000, 667000),
+('BPD00013', 'BP00009', 'PD00006', 2, 333500, 667000),
+('BPD00014', 'BP00010', 'PD00004', 2, 678500, 1357000),
+('BPD00015', 'BP00011', 'PD00002', 1, 888000, 888000),
+('BPD00016', 'BP00012', 'PD00004', 1, 678500, 678500),
+('BPD00017', 'BP00012', 'PD00006', 1, 333500, 333500),
+('BPD00018', 'BP00012', 'PD00013', 3, 172500, 517500),
+('BPD00019', 'BP00013', 'PD00004', 2, 678500, 1357000),
+('BPD00020', 'BP00013', 'PD00010', 2, 782000, 1564000),
+('BPD00021', 'BP00013', 'PD00013', 5, 172500, 862500),
+('BPD00022', 'BP00014', 'PD00005', 3, 667000, 2001000),
+('BPD00023', 'BP00015', 'PD00001', 10, 552000, 5520000),
+('BPD00024', 'BP00016', 'PD00001', 3, 552000, 1656000),
+('BPD00025', 'BP00017', 'PD00001', 1, 552000, 552000),
+('BPD00026', 'BP00017', 'PD00001', 1, 460000, 460000),
+('BPD00027', 'BP00018', 'PD00001', 19, 460000, 8740000),
+('BPD00028', 'BP00018', 'PD00001', 2, 780000, 1560000);
 
 -- --------------------------------------------------------
 
@@ -273,7 +280,7 @@ CREATE TABLE `employee` (
 
 INSERT INTO `employee` (`EmployeeId`, `EmployeeName`, `Phone`, `Address`, `Username`, `RoleId`) VALUES
 ('E00001', 'Admin', '0900000001', 'HCM', 'admin', 'R00001'),
-('EMP002', 'Thien', '0987654321', '123 X', '', 'R00002');
+('EMP002', 'Thien', '0987654321', '123 X', 'thien', 'R00002');
 
 -- --------------------------------------------------------
 
@@ -333,7 +340,8 @@ INSERT INTO `importbill` (`ImportBillId`, `EmployeeId`, `SupplierId`, `DateCreat
 ('IB00006', 'E00001', 'SPU00003', '2025-12-02 10:04:41', 53600000, 'delivered'),
 ('IB00007', 'E00001', 'SPU00001', '2025-12-02 10:05:41', 29400000, 'delivered'),
 ('IB00008', 'E00001', 'SPU00003', '2025-12-02 10:06:11', 25200000, 'delivered'),
-('IB00009', 'E00001', 'SPU00002', '2025-12-02 10:06:40', 15000000, 'delivered');
+('IB00009', 'E00001', 'SPU00002', '2025-12-02 10:06:40', 15000000, 'delivered'),
+('IB00010', 'E00001', 'SPU00001', '2025-12-05 16:54:05', 19500000, 'delivered');
 
 -- --------------------------------------------------------
 
@@ -367,6 +375,7 @@ CREATE TABLE `permission` (
 
 INSERT INTO `permission` (`PermissionId`, `PermissionName`) VALUES
 ('P00002', 'Admin'),
+('P00003', 'Nhân viên bán hàng'),
 ('P00001', 'Quản lý');
 
 -- --------------------------------------------------------
@@ -433,7 +442,16 @@ INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
 ('P00002', 'F10', 'Delete'),
 ('P00002', 'F10', 'Update'),
 ('P00002', 'F10', 'Insert'),
-('P00002', 'F10', 'View');
+('P00002', 'F10', 'View'),
+('P00003', 'F08', 'View'),
+('P00003', 'F07', 'View'),
+('P00003', 'F06', 'View'),
+('P00003', 'F03', 'Insert'),
+('P00003', 'F03', 'View'),
+('P00003', 'F02', 'Update'),
+('P00003', 'F01', 'Insert'),
+('P00003', 'F01', 'View'),
+('P00003', 'F02', 'View');
 
 -- --------------------------------------------------------
 
@@ -487,7 +505,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ProductId`, `ProductName`, `SupplierId`, `ProductImg`, `Quantity`, `BrandId`, `TypeId`, `IsDeleted`) VALUES
-('PD00001', 'Yonex Astrox 99', 'SPU00001', 'yonex-astrox-99_2.png', 19, 'BR00001', 'TP00001', 0),
+('PD00001', 'Yonex Astrox 99', 'SPU00001', 'yonex-astrox-99_2.png', 28, 'BR00001', 'TP00001', 0),
 ('PD00002', 'Yonex Nanoflare 700', 'SPU00001', 'yonex-nanoflare-700.png', 48, 'BR00001', 'TP00001', 0),
 ('PD00003', 'Kumpoo Power Control E88L', 'SPU00002', 'kumpoo-power-control-e88l.png', 20, 'BR00004', 'TP00001', 0),
 ('PD00004', 'Yonex Nanoflare 1000', 'SPU00001', 'yonex-nanoflare-1000z.png', 25, 'BR00001', 'TP00001', 0),
@@ -543,7 +561,7 @@ CREATE TABLE `storage` (
 
 INSERT INTO `storage` (`StorageId`, `ImportBillDetailId`, `ProductId`, `Quantity`, `Price`, `TotalPrice`, `CreatedAt`, `Status`) VALUES
 ('ST00001', 'ID00001', 'PD00001', 0, 552000, 0, '2025-12-01 14:49:06', 'inactive'),
-('ST00002', 'ID00002', 'PD00001', 19, 460000, 8740000, '2025-12-01 16:41:03', 'active'),
+('ST00002', 'ID00002', 'PD00001', 0, 460000, 0, '2025-12-01 16:41:03', 'inactive'),
 ('ST00003', 'ID00003', 'PD00005', 26, 667000, 17342000, '2025-12-01 16:55:58', 'active'),
 ('ST00004', 'ID00004', 'PD00006', 23, 333500, 7670500, '2025-12-01 16:56:04', 'active'),
 ('ST00005', 'ID00005', 'PD00004', 25, 678500, 16962500, '2025-12-01 16:56:16', 'active'),
@@ -555,7 +573,8 @@ INSERT INTO `storage` (`StorageId`, `ImportBillDetailId`, `ProductId`, `Quantity
 ('ST00011', 'ID00011', 'PD00011', 40, 759000, 30360000, '2025-12-02 10:04:38', 'active'),
 ('ST00012', 'ID00012', 'PD00008', 33, 1008000, 33264000, '2025-12-02 10:05:29', 'active'),
 ('ST00013', 'ID00013', 'PD00012', 45, 644000, 28980000, '2025-12-02 10:06:08', 'active'),
-('ST00014', 'ID00014', 'PD00013', 82, 172500, 14145000, '2025-12-02 10:06:36', 'active');
+('ST00014', 'ID00014', 'PD00013', 82, 172500, 14145000, '2025-12-02 10:06:36', 'active'),
+('ST00015', 'ID00015', 'PD00001', 28, 780000, 21840000, '2025-12-05 16:54:01', 'active');
 
 -- --------------------------------------------------------
 
@@ -643,8 +662,9 @@ ALTER TABLE `billproduct`
 -- Indexes for table `billproductdetail`
 --
 ALTER TABLE `billproductdetail`
-  ADD PRIMARY KEY (`BillProductId`,`ProductId`),
-  ADD KEY `ProductId` (`ProductId`);
+  ADD PRIMARY KEY (`BillProductDetailId`),
+  ADD KEY `ProductId` (`ProductId`),
+  ADD KEY `BillProductId` (`BillProductId`);
 
 --
 -- Indexes for table `booking`

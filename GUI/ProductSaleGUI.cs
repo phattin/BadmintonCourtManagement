@@ -535,22 +535,34 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
+        private string generateNewId(string billId)
+        {
+            var match = Regex.Match(billId, @"^([A-Za-z]*)(\d+)$");
+            if (match.Success)
+            {
+                var prefix = match.Groups[1].Value;
+                var numberPart = match.Groups[2].Value;
+                if (int.TryParse(numberPart, out var number))
+                {
+                    number++;
+                    billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
+                }
+            }
+            return billId;
+        }
+
         private void createBill(List<KeyValuePair<string, int>> selectedItems)
         {
             ProductBUS product_bus = new ProductBUS();
             BillProductBUS bill_bus = new BillProductBUS();
             BillProductDetailBUS bill_detail_bus = new BillProductDetailBUS();
             StorageBUS storageBus = new StorageBUS();
-            var selectedIds = selectedItems.Select(kv => kv.Key).ToHashSet();
-            List<ProductDTO> productList = new List<ProductDTO>();
-            foreach (string id in selectedIds)
-            {
-                productList.Add(product_bus.GetProductById(id));
-            }
 
             // bill product
             string billId = bill_bus.GetMaxId();
+            string billDetailId = bill_detail_bus.GetMaxId();
             EmployeeBUS empBus = new EmployeeBUS();
+
             var employee = empBus.GetEmployeeByUsername(acc.Username);
             if (employee == null)
             {
@@ -566,44 +578,24 @@ namespace BadmintonCourtManagement.GUI
             }
             else
             {
-                var match = Regex.Match(billId, @"^([A-Za-z]*)(\d+)$");
-                if (match.Success)
-                {
-                    var prefix = match.Groups[1].Value;
-                    var numberPart = match.Groups[2].Value;
-                    if (int.TryParse(numberPart, out var number))
-                    {
-                        number++;
-                        billId = prefix + number.ToString().PadLeft(numberPart.Length, '0');
-                    }
-                }
+                billId = generateNewId(billId);
+            }
+
+            if (string.IsNullOrWhiteSpace(billDetailId))
+            {
+                billDetailId = "BPD00001";
+            }
+            else
+            {
+                billDetailId = generateNewId(billDetailId);
             }
 
             // inserting bill product 
             BillProductDTO product = new BillProductDTO(billId, employeeId, totalPrice);
             bill_bus.InsertProductBill(product);
 
-            // inserting bill product detail
-            foreach (ProductDTO p in productList)
-            {
-                // get the quantity for this product id from the selectedItems list
-                var qty = selectedItems.First(kv => kv.Key == p.ProductId).Value;
-                if (qty <= 0) continue;
-                StorageDTO storageOb = new StorageDTO();
-                storageOb = storageList.First(ob => ob.ProductId == p.ProductId);
-                BillProductDetailDTO bill_detail = new BillProductDetailDTO(billId, p.ProductId, qty, storageOb.Price, totalPrice);
-                bill_detail_bus.InsertBillProductDetail(bill_detail);
-            }
-
-            // updating product quantity
-            foreach (ProductDTO p in productList)
-            {
-                var qty = selectedItems.First(kv => kv.Key == p.ProductId).Value;
-                p.Quantity -= qty;
-                product_bus.UpdateProduct(p);
-            }
-
-            // Replace the storage update section in createBill method: (AI GENERATED)
+            // ===== AI GENERATED CODE - STORAGE HANDLING =====
+            // Get relevant storages ordered by FIFO
             var relevantStorages = storageList
                 .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
                 .OrderBy(storage => storage.ImportBillDetailId)
@@ -612,12 +604,13 @@ namespace BadmintonCourtManagement.GUI
             // Group by ProductId to handle each product separately
             var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
             
-            foreach (var productGroup in storagesByProduct) // This is the key change - productGroup is IGrouping
+            // Create BillProductDetail entries per storage batch
+            foreach (var productGroup in storagesByProduct)
             {
                 string productId = productGroup.Key;
                 var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
                 
-                if (purchasedItem.Key == null) continue; // Skip if product not found in selected items
+                if (purchasedItem.Key == null) continue;
                 
                 int remainingQty = purchasedItem.Value;
                 var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
@@ -626,31 +619,60 @@ namespace BadmintonCourtManagement.GUI
                 {
                     if (remainingQty <= 0) break;
                     
+                    int qtyFromThisStorage = 0;
+                    
                     if (storage.Quantity >= remainingQty)
                     {
-                        // This storage has enough quantity to fulfill the remaining order
+                        // This storage has enough quantity
+                        qtyFromThisStorage = remainingQty;
                         storage.Quantity -= remainingQty;
                         StorageBUS.UpdateStorage(storage);
                         remainingQty = 0;
                     }
                     else
                     {
-                        // This storage doesn't have enough, use all of it and move to next
+                        // Use all from this storage and move to next
+                        qtyFromThisStorage = storage.Quantity;
                         remainingQty -= storage.Quantity;
                         storage.Quantity = 0;
                         storage.Status = StorageDTO.Option.inactive;
                         StorageBUS.UpdateStorage(storage);
                     }
+                    
+                    // Create BillProductDetail for this storage batch
+                    double subtotal = qtyFromThisStorage * storage.Price;
+                    BillProductDetailDTO bill_detail = new BillProductDetailDTO(
+                        billDetailId, 
+                        billId, 
+                        productId, 
+                        qtyFromThisStorage,  // Quantity from THIS storage
+                        storage.Price,       // Price from THIS storage
+                        subtotal            // Subtotal for THIS batch
+                    );
+                    
+                    bill_detail_bus.InsertBillProductDetail(bill_detail);
+                    
+                    // Generate next detail ID
+                    billDetailId = generateNewId(billDetailId);
                 }
                 
-                // If there's still remaining quantity, it means insufficient stock
                 if (remainingQty > 0)
                 {
                     MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.", 
-                                   "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            // END OF AI GENERATED SECTION
+
+            // updating product quantity
+            var selectedIds = selectedItems.Select(kv => kv.Key).ToHashSet();
+            foreach (string id in selectedIds)
+            {
+                var product_dto = product_bus.GetProductById(id);
+                var qty = selectedItems.First(kv => kv.Key == id).Value;
+                product_dto.Quantity -= qty;
+                product_bus.UpdateProduct(product_dto);
+            }
+            // ===== END OF AI GENERATED CODE =====
         }
 
         // Resize: later adapt number of columns or hide image (when implemented).
