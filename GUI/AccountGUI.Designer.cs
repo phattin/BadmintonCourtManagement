@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panelTop = new Panel();
             panelTopRight = new Panel();
             flowLayoutPanel = new FlowLayoutPanel();
@@ -46,9 +46,9 @@
             Username = new DataGridViewTextBoxColumn();
             Password = new DataGridViewTextBoxColumn();
             Status = new DataGridViewTextBoxColumn();
+            customPanel2 = new BadmintonCourtManagement.GUI.CustomPanel();
             customPanel3 = new BadmintonCourtManagement.GUI.CustomPanel();
             textBox1 = new TextBox();
-            customPanel2 = new BadmintonCourtManagement.GUI.CustomPanel();
             panelTop.SuspendLayout();
             panelTopRight.SuspendLayout();
             flowLayoutPanel.SuspendLayout();
@@ -56,8 +56,8 @@
             customPanel1.SuspendLayout();
             panelDataGridView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            customPanel3.SuspendLayout();
             customPanel2.SuspendLayout();
+            customPanel3.SuspendLayout();
             SuspendLayout();
             // 
             // panelTop
@@ -194,24 +194,24 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.Fixed3D;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 120, 103);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 120, 103);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { PermissionId, EmployeeName, Username, Password, Status });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.Location = new Point(20, 20);
@@ -254,6 +254,18 @@
             Status.MinimumWidth = 6;
             Status.Name = "Status";
             // 
+            // customPanel2
+            // 
+            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
+            customPanel2.BorderRadius = 20;
+            customPanel2.Controls.Add(customPanel3);
+            customPanel2.Dock = DockStyle.Top;
+            customPanel2.Location = new Point(0, 0);
+            customPanel2.Name = "customPanel2";
+            customPanel2.Padding = new Padding(25, 25, 0, 25);
+            customPanel2.Size = new Size(1103, 88);
+            customPanel2.TabIndex = 0;
+            // 
             // customPanel3
             // 
             customPanel3.BackColor = Color.White;
@@ -281,18 +293,6 @@
             textBox1.TabIndex = 0;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
-            // customPanel2
-            // 
-            customPanel2.BackColor = Color.FromArgb(0, 120, 103);
-            customPanel2.BorderRadius = 20;
-            customPanel2.Controls.Add(customPanel3);
-            customPanel2.Dock = DockStyle.Top;
-            customPanel2.Location = new Point(0, 0);
-            customPanel2.Name = "customPanel2";
-            customPanel2.Padding = new Padding(25, 25, 0, 25);
-            customPanel2.Size = new Size(1103, 88);
-            customPanel2.TabIndex = 0;
-            // 
             // AccountGUI
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -309,9 +309,9 @@
             customPanel1.ResumeLayout(false);
             panelDataGridView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            customPanel2.ResumeLayout(false);
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
-            customPanel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
