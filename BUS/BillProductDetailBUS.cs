@@ -6,9 +6,17 @@ namespace BadmintonCourtManagement.BUS
     public class BillProductDetailBUS
     {
         BillProductDetailDAO dao = new BillProductDetailDAO();
+        public string GetMaxId()
+        {
+            return dao.GetMaxId();
+        }
         public bool InsertBillProductDetail(BillProductDetailDTO bill)
         {
             return dao.InsertBillProductDetail(bill);
+        }
+        public BillProductDetailDTO GetDetailById(string id)
+        {
+            return dao.GetDetailById(id);
         }
         public List<BillProductDetailDTO> GetAllDetailProductBills()
         {
