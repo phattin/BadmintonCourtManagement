@@ -1,4 +1,5 @@
 using BadmintonCourtManagement.DTO;
+using QuestPDF.Infrastructure;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -13,6 +14,7 @@ namespace BadmintonCourtManagement.GUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            QuestPDF.Settings.License = LicenseType.Community;
             Application.Run(new LoginGUI());
         }
     }
