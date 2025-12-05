@@ -76,7 +76,7 @@ namespace BadmintonCourtManagement.GUI
             MainPanel.AutoScroll = true;
             MainPanel.BackColor = Color.FromArgb(239, 248, 230);
             MainPanel.Controls.Add(CardListPanel);
-            MainPanel.Controls.Add(toolBar);
+            // MainPanel.Controls.Add(toolBar);
             MainPanel.Controls.Add(SupplyActivePanel);
             MainPanel.Controls.Add(SupplyStatusPanel);
             MainPanel.Controls.Add(headerPanel);
