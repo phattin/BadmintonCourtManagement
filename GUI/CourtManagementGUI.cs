@@ -237,7 +237,7 @@ namespace BadmintonCourtManagement.GUI
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
-            btnEdit.Visible = isDelete;
+            btnEdit.Visible = isUpdate;
 
             btnDelete.Click += (s, e) =>
             {
