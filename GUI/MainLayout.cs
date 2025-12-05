@@ -31,15 +31,19 @@ namespace BadmintonCourtManagement.GUI
             BookCourt_Click(this, EventArgs.Empty);
         }
 
-        private void ReloadMenu()
-        {
-            menuPanel.Controls.Clear();
+            private void ReloadMenu()
+            {
+                menuPanel.Controls.Clear();
 
-            List<PermissionDetailDTO> newPermissions = permissiondetailBUS.GetPermissionDetailsByPermissionId(Session.CurrentUser.PermissionId);
-            List<PermissionDetailDTO> viewPermissions = newPermissions.FindAll(p => p.Option == "View");
+                List<PermissionDetailDTO> newPermissions = permissiondetailBUS.GetPermissionDetailsByPermissionId(Session.CurrentUser.PermissionId);
+                List<PermissionDetailDTO> viewPermissions = newPermissions.FindAll(p => p.Option == "View");
 
-            CreateMenuButtons1(viewPermissions);
-        }
+                CreateMenuButtons1(viewPermissions);
+
+                // BẮT BUỘC TÍNH LẠI VÙNG CUỘN - FIX 99% TRƯỜNG HỢP KHÔNG HIỆN SCROLLBAR
+                menuPanel.PerformLayout();
+                menuPanel.AutoScrollPosition = new Point(0, 0); // Reset về đầu
+            }
 
         private void CreateMenuButtons()
         {
@@ -66,72 +70,58 @@ namespace BadmintonCourtManagement.GUI
             menuManager!.CreateMenuButtons(menuPanel!, menuItems);
         }
 
-        private void CreateMenuButtons1(List<PermissionDetailDTO> viewPermissions)
+private void CreateMenuButtons1(List<PermissionDetailDTO> viewPermissions)
+{
+    menuManager = new MenuManager();
+    var menuItems = new Dictionary<string, EventHandler>();
+
+    foreach (var p in viewPermissions)
+    {
+        switch (p.FunctionId)
         {
-            menuManager = new MenuManager();
-            var menuItems = new Dictionary<string, EventHandler>();
-
-            foreach (var p in viewPermissions)
-            {
-                switch (p.FunctionId)
-                {
-                    case "F01":
-                        menuItems.Add("Đặt sân", BookCourt_Click);
-                        break;
-                    
-                    case "F02":
-                        menuItems.Add("Quản lý sân", ManageCourts_Click);
-                        break;
-
-                    case "F03":
-                        menuItems.Add("Bán hàng", Sell_Click);
-                        break;
-
-                    case "F04":
-                        menuItems.Add("Hóa đơn", Bill_Click);
-                        break;
-                    
-                    case "F05":
-                        menuItems.Add("Kho và Nhập hàng", Storage_Click);
-                        break;
-                    
-                    case "F06":
-                        menuItems.Add("Sản phẩm", Product_Click);
-                        break;
-
-                    case "F07":
-                        menuItems.Add("Quản lý nhà cung cấp", Supplier_Click);
-                        break;
-
-                    case "F08":
-                        menuItems.Add("Khách hàng", Customers_Click);
-                        break;
-
-                    case "F09":
-                        menuItems.Add("Nhân viên", Employee_Click);
-                        break;
-
-                    case "F10":
-                        menuItems.Add("Tài khoản", Account_Click);
-                        break;
-
-                    case "F11":
-                        menuItems.Add("Phân quyền", Permission_Click);
-                        break;
-
-                    case "F12":
-                        menuItems.Add("Thống kê", Statistics_Click);
-                        break;
-
-                    case "F13":
-                        menuItems.Add("Giá sân", PriceRule_Click);
-                        break;
-                }
-            }
-            // Reverse the insertion order so the menu is built in reverse
-            menuItems = menuItems.Reverse().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            menuManager.CreateMenuButtons(menuPanel, menuItems);
+            case "F01": menuItems["Đặt sân"] = BookCourt_Click; break;
+            case "F02": menuItems["Quản lý sân"] = ManageCourts_Click; break;
+            case "F03": menuItems["Bán hàng"] = Sell_Click; break;
+            case "F04": menuItems["Hóa đơn"] = Bill_Click; break;
+            case "F05": menuItems["Kho và Nhập hàng"] = Storage_Click; break;
+            case "F06": menuItems["Sản phẩm"] = Product_Click; break;
+            case "F07": menuItems["Nhà cung cấp"] = Supplier_Click; break;
+            case "F08": menuItems["Khách hàng"] = Customers_Click; break;
+            case "F09": menuItems["Nhân viên"] = Employee_Click; break;
+            case "F10": menuItems["Tài khoản"] = Account_Click; break;
+            case "F11": menuItems["Phân quyền"] = Permission_Click; break;
+            case "F12": menuItems["Thống kê"] = Statistics_Click; break;
+            case "F13": menuItems["Giá sân"] = PriceRule_Click; break;
+            case "F14": menuItems["Loại sản phẩm"] = TypeProduct_Click; break;
         }
+    }
+
+    // BỎ HOÀN TOÀN DÒNG NÀY ĐI (tạm thời để test)
+    // var reversedItems = menuItems.Reverse()...
+
+    // Dùng trực tiếp menuItems (hoặc sắp xếp theo ý bạn)
+    // var orderedItems = menuItems.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+    // Hoặc sắp xếp thủ công nếu muốn thứ tự đẹp:
+    var orderedItems = new Dictionary<string, EventHandler>
+    {
+        { "Đặt sân", BookCourt_Click },
+        { "Quản lý sân", ManageCourts_Click },
+        { "Giá sân", PriceRule_Click },
+        { "Bán hàng", Sell_Click },
+        { "Hóa đơn", Bill_Click },
+        { "Sản phẩm", Product_Click },
+        { "Loại sản phẩm", TypeProduct_Click },
+        { "Kho và Nhập hàng", Storage_Click },
+        { "Nhà cung cấp", Supplier_Click },
+        { "Khách hàng", Customers_Click },
+        { "Nhân viên", Employee_Click },
+        { "Tài khoản", Account_Click },
+        { "Phân quyền", Permission_Click },
+        { "Thống kê", Statistics_Click }
+    };
+
+    menuManager.CreateMenuButtons(menuPanel, orderedItems);
+}
 
         private void OpenChildPanel(UserControl childPanel)
         {
