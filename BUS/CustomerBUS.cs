@@ -61,5 +61,31 @@ namespace BadmintonCourtManagement.BUS
         {
             return dao.GetCustomerByPhone(phone);
         }
+
+        public static bool IsValidVietnamesePhoneNumber(string phone)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
+                return false;
+
+            // Loại bỏ khoảng trắng, dấu gạch ngang, dấu chấm...
+            string cleaned = System.Text.RegularExpressions.Regex.Replace(phone.Trim(), @"[^0-9]", "");
+
+            // Phải đúng 10 chữ số
+            if (cleaned.Length != 10)
+                return false;
+
+            // Danh sách đầu số hợp lệ (cập nhật đến 2025)
+            string[] validPrefixes = new string[]
+            {
+                "02",  // cố định một số tỉnh
+                "03", "05", "07", "08", "09"  // các đầu số di động phổ biến
+                // Nếu muốn chi tiết hơn có thể thêm: 032,033,034,...,089,090,...
+                // nhưng để đơn giản và bao quát thì chỉ cần kiểm tra 2 chữ số đầu
+            };
+
+            string prefix = cleaned.Substring(0, 2);
+            return validPrefixes.Contains(prefix);
+        }
+
     }
 }
