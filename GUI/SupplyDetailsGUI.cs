@@ -199,7 +199,7 @@ namespace BadmintonCourtManagement.GUI
         private void exportButton_Click(object sender, EventArgs e)
         {
             // lấy mã nhập hàng
-            string supplyId = Title.Text.Split(": ")[2];
+            string supplyId = Title.Text.Split(": ")[1];
             //string supplyId = "IB00003";
             MessageBox.Show(supplyId);
 
