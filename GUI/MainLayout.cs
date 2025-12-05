@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
 using GUI;
+using Microsoft.VisualBasic.Logging;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -99,8 +100,14 @@ namespace BadmintonCourtManagement.GUI
                     case "F13":
                         menuItems.Add("Giá sân", PriceRule_Click);
                         break;
+
+                    case "F14":
+                        menuItems.Add("Thương hiệu", Brand_Click);
+                        break;
                 }
             }
+
+            menuItems.Add("Đăng xuất", Logout_Click);
             var firstAction = menuItems.Values.FirstOrDefault();
 
             var reversedMenuItems = menuItems.Reverse().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -130,6 +137,22 @@ namespace BadmintonCourtManagement.GUI
             //menuPanel.BringToFront();
         }
 
+        private void Logout_Click(object? sender, EventArgs e)
+        {
+            DialogResult status = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (status == DialogResult.Yes)
+            {
+                // this.Close();
+                LoginGUI loginGUI = new LoginGUI();
+                loginGUI.Show();
+                this.Hide();
+            }
+        }
+
+        private void Brand_Click(object? sender, EventArgs e)
+        {
+            OpenChildPanel(new BrandGUI(currentAccount));
+        }
         private void Permission_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new PermissionGUI(currentAccount));
