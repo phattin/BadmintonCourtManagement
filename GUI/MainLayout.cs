@@ -28,6 +28,7 @@ namespace BadmintonCourtManagement.GUI
             Session.OnPermissionChanged += ReloadMenu;
             ReloadMenu();
             this.StartPosition = FormStartPosition.CenterScreen;
+            BookCourt_Click(this, EventArgs.Empty);
         }
 
         private void ReloadMenu()
@@ -77,7 +78,7 @@ namespace BadmintonCourtManagement.GUI
                     case "F01":
                         menuItems.Add("Đặt sân", BookCourt_Click);
                         break;
-
+                    
                     case "F02":
                         menuItems.Add("Quản lý sân", ManageCourts_Click);
                         break;
@@ -89,11 +90,11 @@ namespace BadmintonCourtManagement.GUI
                     case "F04":
                         menuItems.Add("Hóa đơn", Bill_Click);
                         break;
-
+                    
                     case "F05":
                         menuItems.Add("Kho và Nhập hàng", Storage_Click);
                         break;
-
+                    
                     case "F06":
                         menuItems.Add("Sản phẩm", Product_Click);
                         break;
@@ -127,6 +128,8 @@ namespace BadmintonCourtManagement.GUI
                         break;
                 }
             }
+            // Reverse the insertion order so the menu is built in reverse
+            menuItems = menuItems.Reverse().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             menuManager.CreateMenuButtons(menuPanel, menuItems);
         }
 
