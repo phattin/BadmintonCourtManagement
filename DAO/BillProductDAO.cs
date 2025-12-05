@@ -175,16 +175,32 @@ namespace BadmintonCourtManagement.DAO
             return list;
         }
 
-        public List<BillProductDTO> Search(string searchCriteria)
+public List<BillProductDTO> Search(string searchCriteria)
+{
+    // Nếu để trống thì trả về rỗng hoặc có thể để trả tất cả (tùy yêu cầu)
+    if (string.IsNullOrWhiteSpace(searchCriteria))
+        return new List<BillProductDTO>();
+
+    // Chỉ tìm theo 2 trường chính xác (mã hóa đơn hoặc mã nhân viên)
+    string query = @"
+        SELECT bp.*, e.EmployeeName, c.CustomerName 
+        FROM billproduct bp
+        LEFT JOIN employee e ON bp.EmployeeId = e.EmployeeId
+        LEFT JOIN customer c ON bp.CustomerId = c.CustomerId
+        WHERE bp.BillProductId LIKE @SearchCriteria 
+           OR bp.EmployeeId LIKE @SearchCriteria";
+
+    var list = new List<BillProductDTO>();
+
+    try
+    {
+        db.OpenConnection();
+        using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
         {
-            string query = "SELECT * FROM BillProduct WHERE EmployeeId LIKE @SearchCriteria or BillProductId LIKE @SearchCriteria";
-            List<BillProductDTO> list = new List<BillProductDTO>();
-            try
+            cmd.Parameters.AddWithValue("@SearchCriteria", "%" + searchCriteria.Trim() + "%");
+
+            using (MySqlDataReader reader = cmd.ExecuteReader())
             {
-                db.OpenConnection();
-                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-                cmd.Parameters.AddWithValue("@SearchCriteria", "%" + searchCriteria + "%");
-                MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     list.Add(new BillProductDTO
@@ -192,22 +208,24 @@ namespace BadmintonCourtManagement.DAO
                         BillProductId = reader["BillProductId"].ToString(),
                         EmployeeId = reader["EmployeeId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        DateCreated = Convert.ToDateTime(reader["DateCreated"]),
-                        Status = (BillProductDTO.Option)Enum.Parse(typeof(BillProductDTO.Option), reader["Status"].ToString())
+                        DateCreated = Convert.ToDateTime(reader["DateCreated"])
+                    
                     });
                 }
-                reader.Close();
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error searching product bills: " + ex.Message);
-            }
-            finally
-            {
-                db.CloseConnection();
-            }
-            return list;
         }
+    }
+    catch (Exception ex)
+    {
+        throw new Exception("Lỗi khi tìm kiếm hóa đơn bán sản phẩm: " + ex.Message, ex);
+    }
+    finally
+    {
+        db.CloseConnection();
+    }
+
+    return list;
+}
 
         // update
         public bool UpdateProductBill(BillProductDTO bill)
