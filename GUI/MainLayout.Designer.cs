@@ -28,10 +28,9 @@
             menuPanel.Dock = DockStyle.Left;
             menuPanel.Location = new Point(0, 0);
             menuPanel.Name = "menuPanel";
-            menuPanel.Size = new Size(279, 719);
+            menuPanel.Width = 279;                    // Chỉ cố định chiều RỘNG
             menuPanel.TabIndex = 1;
             menuPanel.Padding = new Padding(20, 20, 20, 20);
-            menuPanel.Paint += menuPanel_Paint;
             // 
             // contentPanel
             // 
@@ -46,13 +45,15 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1409, 719);
+            // ClientSize = new Size(1409, 719);
             Controls.Add(contentPanel);
             Controls.Add(menuPanel);
             ImeMode = ImeMode.Katakana;
             Name = "MainLayout";
             Text = "MainLayout";
-            WindowState = FormWindowState.Maximized;
+            // WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized;
+            this.MinimumSize = new Size(1200, 700);
             Load += MainLayout_Load;
             ResumeLayout(false);
         }

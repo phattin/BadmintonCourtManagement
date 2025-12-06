@@ -100,11 +100,12 @@ namespace BadmintonCourtManagement.GUI
             // 
             // dateTimePicker2
             // 
-            dateTimePicker2.Location = new Point(35, 35);
-            dateTimePicker2.Margin = new Padding(35, 10, 30, 0);
+            dateTimePicker2.Location = new Point(409, 35);
+            dateTimePicker2.Margin = new Padding(10, 10, 0, 0);
             dateTimePicker2.Name = "dateTimePicker2";
             dateTimePicker2.Size = new Size(310, 31);
             dateTimePicker2.TabIndex = 1;
+            dateTimePicker2.ValueChanged += dateTimePicker2_ValueChanged;
             // 
             // customPanel2
             // 
@@ -119,8 +120,8 @@ namespace BadmintonCourtManagement.GUI
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Controls.Add(dateTimePicker2);
             flowLayoutPanel1.Controls.Add(dateTimePicker1);
+            flowLayoutPanel1.Controls.Add(dateTimePicker2);
             flowLayoutPanel1.Controls.Add(sortFieldComboBox);
             flowLayoutPanel1.Controls.Add(btnGenerate);
             flowLayoutPanel1.Dock = DockStyle.Fill;
@@ -132,8 +133,8 @@ namespace BadmintonCourtManagement.GUI
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(385, 35);
-            dateTimePicker1.Margin = new Padding(10, 10, 0, 0);
+            dateTimePicker1.Location = new Point(35, 35);
+            dateTimePicker1.Margin = new Padding(35, 10, 30, 0);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(334, 31);
             dateTimePicker1.TabIndex = 1;
