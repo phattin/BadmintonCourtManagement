@@ -28,7 +28,6 @@ namespace BadmintonCourtManagement.GUI
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(storageGUI));
             lblTitle = new Label();
             customPanel1 = new CustomPanel();
             pCustomerList = new TableLayoutPanel();
@@ -37,13 +36,20 @@ namespace BadmintonCourtManagement.GUI
             customPanel3 = new CustomPanel();
             btnClearSearch = new PictureBox();
             txtSearch = new TextBox();
+            paginationPanel = new Panel();
+            btnExtraPrevious = new Button();
+            btnPrevious = new Button();
+            btnNext = new Button();
+            btnExtraNext = new Button();
             drPanelCustomer = new Panel();
             lblAddCustomer = new Label();
+            lblPageInfo = new Label();
             customPanel1.SuspendLayout();
             customPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             customPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnClearSearch).BeginInit();
+            paginationPanel.SuspendLayout();
             drPanelCustomer.SuspendLayout();
             SuspendLayout();
             // 
@@ -57,7 +63,7 @@ namespace BadmintonCourtManagement.GUI
             lblTitle.Margin = new Padding(4, 0, 4, 0);
             lblTitle.Name = "lblTitle";
             lblTitle.Padding = new Padding(12, 14, 12, 14);
-            lblTitle.Size = new Size(340, 73);
+            lblTitle.Size = new Size(376, 73);
             lblTitle.TabIndex = 5;
             lblTitle.Text = "Quản lý loại sản phẩm";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -70,6 +76,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel1.BorderRadius = 20;
             customPanel1.Controls.Add(pCustomerList);
             customPanel1.Controls.Add(customPanel2);
+            customPanel1.Controls.Add(paginationPanel);
             customPanel1.Location = new Point(70, 99);
             customPanel1.Margin = new Padding(4, 5, 4, 5);
             customPanel1.Name = "customPanel1";
@@ -116,7 +123,6 @@ namespace BadmintonCourtManagement.GUI
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
-            // pictureBox1.Click += pictureBox1_Click;
             // 
             // customPanel3
             // 
@@ -125,7 +131,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel3.Controls.Add(btnClearSearch);
             customPanel3.Controls.Add(txtSearch);
             customPanel3.Location = new Point(19, 15);
-            customPanel3.Margin = new Padding(4, 4, 4, 4);
+            customPanel3.Margin = new Padding(4);
             customPanel3.Name = "customPanel3";
             customPanel3.Size = new Size(650, 64);
             customPanel3.TabIndex = 1;
@@ -134,7 +140,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             btnClearSearch.Image = Properties.Resources.X;
             btnClearSearch.Location = new Point(612, 24);
-            btnClearSearch.Margin = new Padding(4, 4, 4, 4);
+            btnClearSearch.Margin = new Padding(4);
             btnClearSearch.Name = "btnClearSearch";
             btnClearSearch.Size = new Size(16, 16);
             btnClearSearch.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -148,13 +154,81 @@ namespace BadmintonCourtManagement.GUI
             txtSearch.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtSearch.ForeColor = Color.Black;
             txtSearch.Location = new Point(18, 16);
-            txtSearch.Margin = new Padding(4, 4, 4, 4);
-            txtSearch.Multiline = true;
+            txtSearch.Margin = new Padding(4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Tìm kiếm loại sản phẩm";
-            txtSearch.Size = new Size(588, 30);
+            txtSearch.Size = new Size(588, 24);
             txtSearch.TabIndex = 0;
             txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // paginationPanel
+            // 
+            paginationPanel.BackColor = Color.FromArgb(239, 248, 230);
+            paginationPanel.Controls.Add(btnExtraPrevious);
+            paginationPanel.Controls.Add(btnPrevious);
+            paginationPanel.Controls.Add(btnNext);
+            paginationPanel.Controls.Add(btnExtraNext);
+            paginationPanel.Dock = DockStyle.Bottom;
+            paginationPanel.Location = new Point(0, 718);
+            paginationPanel.Name = "paginationPanel";
+            paginationPanel.Size = new Size(1432, 81);
+            paginationPanel.TabIndex = 2;
+            // 
+            // btnExtraPrevious
+            // 
+            btnExtraPrevious.Anchor = AnchorStyles.None;
+            btnExtraPrevious.BackColor = Color.Transparent;
+            btnExtraPrevious.Cursor = Cursors.Hand;
+            btnExtraPrevious.FlatAppearance.BorderSize = 0;
+            btnExtraPrevious.FlatStyle = FlatStyle.Flat;
+            btnExtraPrevious.Location = new Point(1049, 13);
+            btnExtraPrevious.Name = "btnExtraPrevious";
+            btnExtraPrevious.Size = new Size(60, 58);
+            btnExtraPrevious.TabIndex = 13;
+            btnExtraPrevious.UseVisualStyleBackColor = false;
+            btnExtraPrevious.Click += btnExtraPrevious_Click;
+            // 
+            // btnPrevious
+            // 
+            btnPrevious.Anchor = AnchorStyles.None;
+            btnPrevious.BackColor = Color.Transparent;
+            btnPrevious.Cursor = Cursors.Hand;
+            btnPrevious.FlatAppearance.BorderSize = 0;
+            btnPrevious.FlatStyle = FlatStyle.Flat;
+            btnPrevious.Location = new Point(1139, 13);
+            btnPrevious.Name = "btnPrevious";
+            btnPrevious.Size = new Size(60, 58);
+            btnPrevious.TabIndex = 14;
+            btnPrevious.UseVisualStyleBackColor = false;
+            btnPrevious.Click += btnPrevious_Click;
+            // 
+            // btnNext
+            // 
+            btnNext.Anchor = AnchorStyles.None;
+            btnNext.BackColor = Color.Transparent;
+            btnNext.Cursor = Cursors.Hand;
+            btnNext.FlatAppearance.BorderSize = 0;
+            btnNext.FlatStyle = FlatStyle.Flat;
+            btnNext.Location = new Point(1223, 13);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(60, 58);
+            btnNext.TabIndex = 15;
+            btnNext.UseVisualStyleBackColor = false;
+            btnNext.Click += btnNext_Click;
+            // 
+            // btnExtraNext
+            // 
+            btnExtraNext.Anchor = AnchorStyles.None;
+            btnExtraNext.BackColor = Color.Transparent;
+            btnExtraNext.Cursor = Cursors.Hand;
+            btnExtraNext.FlatAppearance.BorderSize = 0;
+            btnExtraNext.FlatStyle = FlatStyle.Flat;
+            btnExtraNext.Location = new Point(1313, 13);
+            btnExtraNext.Name = "btnExtraNext";
+            btnExtraNext.Size = new Size(60, 58);
+            btnExtraNext.TabIndex = 16;
+            btnExtraNext.UseVisualStyleBackColor = false;
+            btnExtraNext.Click += btnExtraNext_Click;
             // 
             // drPanelCustomer
             // 
@@ -164,8 +238,8 @@ namespace BadmintonCourtManagement.GUI
             drPanelCustomer.Controls.Add(lblTitle);
             drPanelCustomer.Dock = DockStyle.Fill;
             drPanelCustomer.Location = new Point(0, 0);
-            drPanelCustomer.Margin = new Padding(4, 4, 4, 4);
-            drPanelCustomer.Name = "lblAddTypeProduct";
+            drPanelCustomer.Margin = new Padding(4);
+            drPanelCustomer.Name = "drPanelCustomer";
             drPanelCustomer.Size = new Size(1554, 958);
             drPanelCustomer.TabIndex = 0;
             // 
@@ -179,15 +253,22 @@ namespace BadmintonCourtManagement.GUI
             lblAddCustomer.ForeColor = Color.White;
             lblAddCustomer.Location = new Point(1264, 19);
             lblAddCustomer.Margin = new Padding(4, 0, 4, 0);
-            lblAddCustomer.Name = "lblAddTypeProduct";
-            lblAddCustomer.Text = "Thêm loại sản phẩm";
+            lblAddCustomer.Name = "lblAddCustomer";
             lblAddCustomer.Padding = new Padding(12, 14, 12, 16);
-            lblAddCustomer.Size = new Size(238, 62);
+            lblAddCustomer.Size = new Size(267, 62);
             lblAddCustomer.TabIndex = 7;
+            lblAddCustomer.Text = "Thêm loại sản phẩm";
             lblAddCustomer.TextAlign = ContentAlignment.MiddleCenter;
             lblAddCustomer.Click += lblAddTypeProduct_Click;
             // 
-            // CustomerGUI
+            // lblPageInfo
+            // 
+            lblPageInfo.Location = new Point(0, 0);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(100, 23);
+            lblPageInfo.TabIndex = 0;
+            // 
+            // TypeProductGUI
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -197,79 +278,13 @@ namespace BadmintonCourtManagement.GUI
             Name = "TypeProductGUI";
             Size = new Size(1554, 958);
             Load += TypeProducrGUI_Load;
-            // 
-            // paginationPanel
-            // 
-            paginationPanel = new Panel();
-            btnExtraPrevious = new Button();
-            btnPrevious = new Button();
-            btnNext = new Button();
-            btnExtraNext = new Button();
-            lblPageInfo = new Label();
-            paginationPanel.Dock = DockStyle.Bottom;
-            paginationPanel.Height = 81;
-            paginationPanel.BackColor = Color.FromArgb(239, 248, 230);
-            paginationPanel.Controls.Add(btnExtraPrevious);
-            paginationPanel.Controls.Add(btnPrevious);
-            // this.paginationPanel.Controls.Add(this.lblPageInfo);
-            paginationPanel.Controls.Add(btnNext);
-            paginationPanel.Controls.Add(btnExtraNext);
-            // Nút << (Trang đầu)
-            btnExtraPrevious.Anchor = AnchorStyles.None;
-            btnExtraPrevious.BackColor = Color.Transparent;
-            btnExtraPrevious.Cursor = Cursors.Hand;
-            btnExtraPrevious.FlatAppearance.BorderSize = 0;
-            btnExtraPrevious.FlatStyle = FlatStyle.Flat;
-            btnExtraPrevious.Image = (Image)resources.GetObject("extraPreviousButton.Image");
-            btnExtraPrevious.Location = new Point(433, 13);
-            btnExtraPrevious.Size = new Size(60, 58);
-            btnExtraPrevious.TabIndex = 13;
-            btnExtraPrevious.UseVisualStyleBackColor = false;
-            btnExtraPrevious.Click += btnExtraPrevious_Click;
-            // Nút < (Trang trước)
-            btnPrevious.Anchor = AnchorStyles.None;
-            btnPrevious.BackColor = Color.Transparent;
-            btnPrevious.Cursor = Cursors.Hand;
-            btnPrevious.FlatAppearance.BorderSize = 0;
-            btnPrevious.FlatStyle = FlatStyle.Flat;
-            btnPrevious.Image = (Image)resources.GetObject("previousButton.Image");
-            btnPrevious.Location = new Point(523, 13);
-            btnPrevious.Size = new Size(60, 58);
-            btnPrevious.TabIndex = 14;
-            btnPrevious.UseVisualStyleBackColor = false;
-            btnPrevious.Click += btnPrevious_Click;
-            // Nút > (Trang sau)
-            btnNext.Anchor = AnchorStyles.None;
-            btnNext.BackColor = Color.Transparent;
-            btnNext.Cursor = Cursors.Hand;
-            btnNext.FlatAppearance.BorderSize = 0;
-            btnNext.FlatStyle = FlatStyle.Flat;
-            btnNext.Image = (Image)resources.GetObject("nextButton.Image");
-            btnNext.Location = new Point(607, 13);
-            btnNext.Size = new Size(60, 58);
-            btnNext.TabIndex = 15;
-            btnNext.UseVisualStyleBackColor = false;
-            btnNext.Click += btnNext_Click;
-            // Nút >> (Trang cuối)
-            btnExtraNext.Anchor = AnchorStyles.None;
-            btnExtraNext.BackColor = Color.Transparent;
-            btnExtraNext.Cursor = Cursors.Hand;
-            btnExtraNext.FlatAppearance.BorderSize = 0;
-            btnExtraNext.FlatStyle = FlatStyle.Flat;
-            btnExtraNext.Image = (Image)resources.GetObject("extraNextButton.Image");
-            btnExtraNext.Location = new Point(697, 13);
-            btnExtraNext.Size = new Size(60, 58);
-            btnExtraNext.TabIndex = 16;
-            btnExtraNext.UseVisualStyleBackColor = false;
-            btnExtraNext.Click += btnExtraNext_Click;
-            // Thêm paginationPanel vào customPanel1 (chứa pCustomerList)
-            customPanel1.Controls.Add(paginationPanel);
             customPanel1.ResumeLayout(false);
             customPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnClearSearch).EndInit();
+            paginationPanel.ResumeLayout(false);
             drPanelCustomer.ResumeLayout(false);
             drPanelCustomer.PerformLayout();
             ResumeLayout(false);
