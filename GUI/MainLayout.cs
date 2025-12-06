@@ -31,12 +31,12 @@ namespace BadmintonCourtManagement.GUI
             this.StartPosition = FormStartPosition.CenterScreen;
         }
 
-            private void ReloadMenu()
-            {
-                menuPanel.Controls.Clear();
+        private void ReloadMenu()
+        {
+            menuPanel.Controls.Clear();
 
-                List<PermissionDetailDTO> newPermissions = permissiondetailBUS.GetPermissionDetailsByPermissionId(Session.CurrentUser.PermissionId);
-                List<PermissionDetailDTO> viewPermissions = newPermissions.FindAll(p => p.Option == "View");
+            List<PermissionDetailDTO> newPermissions = permissiondetailBUS.GetPermissionDetailsByPermissionId(Session.CurrentUser.PermissionId);
+            List<PermissionDetailDTO> viewPermissions = newPermissions.FindAll(p => p.Option == "View");
 
             CreateMenuButtons1(viewPermissions);
         }
@@ -104,6 +104,10 @@ namespace BadmintonCourtManagement.GUI
                     case "F14":
                         menuItems.Add("Thương hiệu", Brand_Click);
                         break;
+                        
+                    case "F15":
+                        menuItems.Add("Quản lý loại sản phẩm", TypeProduct_Click);
+                        break;
                 }
             }
 
@@ -117,34 +121,6 @@ namespace BadmintonCourtManagement.GUI
                 firstAction.Invoke(this, EventArgs.Empty);
             }
         }
-    }
-
-    // BỎ HOÀN TOÀN DÒNG NÀY ĐI (tạm thời để test)
-    // var reversedItems = menuItems.Reverse()...
-
-    // Dùng trực tiếp menuItems (hoặc sắp xếp theo ý bạn)
-    // var orderedItems = menuItems.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
-    // Hoặc sắp xếp thủ công nếu muốn thứ tự đẹp:
-    var orderedItems = new Dictionary<string, EventHandler>
-    {
-        { "Đặt sân", BookCourt_Click },
-        { "Quản lý sân", ManageCourts_Click },
-        { "Giá sân", PriceRule_Click },
-        { "Bán hàng", Sell_Click },
-        { "Hóa đơn", Bill_Click },
-        { "Sản phẩm", Product_Click },
-        { "Loại sản phẩm", TypeProduct_Click },
-        { "Kho và Nhập hàng", Storage_Click },
-        { "Nhà cung cấp", Supplier_Click },
-        { "Khách hàng", Customers_Click },
-        { "Nhân viên", Employee_Click },
-        { "Tài khoản", Account_Click },
-        { "Phân quyền", Permission_Click },
-        { "Thống kê", Statistics_Click }
-    };
-
-    menuManager.CreateMenuButtons(menuPanel, orderedItems);
-}
 
         private void OpenChildPanel(UserControl childPanel)
         {

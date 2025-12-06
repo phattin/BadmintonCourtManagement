@@ -440,6 +440,8 @@ INSERT INTO `permissiondetail` (`PermissionId`, `FunctionId`, `Option`) VALUES
 ('P00001', 'F14', 'View'),
 ('P00001', 'F14', 'Update'),
 ('P00001', 'F14', 'Delete'),
+('P00001', 'F15', 'View'),
+('P00001', 'F15', 'Insert'),
 ('P00001', 'F15', 'Update'),
 ('P00001', 'F15', 'Delete'),
 ('P00002', 'F09', 'View'),
