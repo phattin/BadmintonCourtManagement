@@ -210,7 +210,7 @@ public List<BillProductDTO> Search(string searchCriteria)
                         BillProductId = reader.GetString("BillProductId"),
                         EmployeeId = reader.GetString("EmployeeId"),
                         // EmployeeName = reader.IsDBNull("EmployeeName") ? "Không xác định" : reader.GetString("EmployeeName"),
-                        // TotalPrice = reader.GetDouble("TotalPrice"),
+                        TotalPrice = reader.GetDouble("TotalPrice"),
                         // DateCreated = reader.GetDateTime("DateCreated"),
                         // Status = reader.IsDBNull("Status") ? "unknown" : reader.GetString("Status")
                         // CustomerName tạm không có vì bảng không hỗ trợ
