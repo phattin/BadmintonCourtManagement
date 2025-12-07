@@ -296,6 +296,111 @@ namespace BadmintonCourtManagement.DAO
             }
             return productList;
         }
+        public bool HasTransactions(string productId)
+        {
+            // Kiểm tra xem sản phẩm này có từng xuất hiện trong hóa đơn bán hàng chưa
+            string query = "SELECT COUNT(*) FROM billproductdetail WHERE ProductId = @ProductId";
+            
+            try
+            {
+                db.OpenConnection();
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi truy vấn CSDL: " + ex.Message);
+                throw new Exception("Lỗi kiểm tra giao dịch sản phẩm trong CSDL", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Lỗi không xác định khi kiểm tra giao dịch sản phẩm", ex);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
+        public bool DatabaseDeleteProduct(string productId)
+        {
+            // Kiểm tra xem sản phẩm có trong hóa đơn chưa
+            if (HasTransactions(productId))
+            {
+                throw new InvalidOperationException("Không thể xóa sản phẩm vì sản phẩm đã có trong hóa đơn bán hàng.");
+            }
+
+            string query = "DELETE FROM product WHERE ProductId = @ProductId";
+
+            try
+            {
+                db.OpenConnection();
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+                    int result = cmd.ExecuteNonQuery();
+                    return result > 0;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Lỗi xóa sản phẩm: " + ex.Message);
+                // Nếu lỗi khóa ngoại thì báo rõ hơn
+                if (ex.Number == 1451) // MySQL error code for foreign key constraint
+                {
+                    throw new InvalidOperationException("Không thể xóa sản phẩm vì đã được sử dụng trong hóa đơn hoặc dữ liệu liên quan.", ex);
+                }
+                throw new Exception("Lỗi cơ sở dữ liệu khi xóa sản phẩm", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi hệ thống khi xóa sản phẩm", ex);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+        public string GenerateNextProductId()  // đổi thành public
+        {
+            const string prefix = "PD";
+            const int digits = 5;
+
+            string query = "SELECT ProductId FROM product WHERE ProductId LIKE 'PD%' ORDER BY CAST(SUBSTRING(ProductId, 3) AS UNSIGNED) DESC LIMIT 1";
+
+            try
+            {
+                db.OpenConnection();
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result == null || result == DBNull.Value)
+                        return prefix + "00001";
+
+                    string lastId = result.ToString();
+                    if (lastId.StartsWith(prefix) && int.TryParse(lastId.Substring(prefix.Length), out int num))
+                    {
+                        return prefix + (num + 1).ToString($"D{digits}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi tạo mã sản phẩm tự động", ex);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return prefix + "00001";
+        }
+
 
     }
 }
