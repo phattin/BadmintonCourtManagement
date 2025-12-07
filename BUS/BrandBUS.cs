@@ -46,5 +46,13 @@ namespace BadmintonCourtManagement.BUS
 
             return dao.DeleteBrand(id);
         }
+
+        public List<BrandDTO> Search(string keyword)
+        {
+            var allBrands = dao.GetAllBrands();
+            return allBrands.FindAll(b => 
+                b.BrandId.Contains(keyword, System.StringComparison.OrdinalIgnoreCase) ||
+                b.BrandName.Contains(keyword, System.StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

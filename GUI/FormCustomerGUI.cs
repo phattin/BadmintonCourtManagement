@@ -173,6 +173,21 @@ private void txtCustomerPhone_KeyPress(object sender, KeyPressEventArgs e)
             string name = txtCustomerName.Text.Trim();
             string phone = txtCustomerPhone.Text.Trim();
 
+            if (!CustomerBUS.IsValidVietnamesePhoneNumber(phone))
+
+                // hoặc tạo phương thức riêng trong form
+            {
+                MessageBox.Show(
+                    "Số điện thoại không hợp lệ!\n\n" +
+                    "Yêu cầu:\n" +
+                    "• Đúng 10 chữ số\n" +
+                    "• Bắt đầu bằng một trong các đầu số: 02, 03, 05, 07, 08, 09",
+                    "Lỗi định dạng số điện thoại",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 MessageBox.Show("Vui lòng nhập tên khách hàng.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);

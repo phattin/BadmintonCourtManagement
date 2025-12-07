@@ -1,4 +1,5 @@
-﻿
+﻿using GUI.ComponentsGUI;
+
 namespace BadmintonCourtManagement.GUI
 {
     partial class SupplyDetailsGUI
@@ -53,8 +54,10 @@ namespace BadmintonCourtManagement.GUI
             SupplyActive = new Label();
             SupplyStatusPanel = new Panel();
             SupplyStatus = new Label();
+            headerPanel = new TableLayoutPanel();
             TitlePanel = new Panel();
             Title = new Label();
+            exportButton = new RoundedButton();
             MainPanel.SuspendLayout();
             CardListPanel.SuspendLayout();
             cardPanel.SuspendLayout();
@@ -64,6 +67,7 @@ namespace BadmintonCourtManagement.GUI
             toolBar.SuspendLayout();
             SupplyActivePanel.SuspendLayout();
             SupplyStatusPanel.SuspendLayout();
+            headerPanel.SuspendLayout();
             TitlePanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -72,10 +76,10 @@ namespace BadmintonCourtManagement.GUI
             MainPanel.AutoScroll = true;
             MainPanel.BackColor = Color.FromArgb(239, 248, 230);
             MainPanel.Controls.Add(CardListPanel);
-            MainPanel.Controls.Add(toolBar);
+            // MainPanel.Controls.Add(toolBar);
             MainPanel.Controls.Add(SupplyActivePanel);
             MainPanel.Controls.Add(SupplyStatusPanel);
-            MainPanel.Controls.Add(TitlePanel);
+            MainPanel.Controls.Add(headerPanel);
             MainPanel.Dock = DockStyle.Fill;
             MainPanel.Location = new Point(35, 39);
             MainPanel.Margin = new Padding(0);
@@ -91,7 +95,7 @@ namespace BadmintonCourtManagement.GUI
             CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             CardListPanel.Controls.Add(cardPanel, 0, 0);
             CardListPanel.Dock = DockStyle.Top;
-            CardListPanel.Location = new Point(0, 225);
+            CardListPanel.Location = new Point(0, 221);
             CardListPanel.Margin = new Padding(0);
             CardListPanel.Name = "CardListPanel";
             CardListPanel.RowCount = 6;
@@ -281,7 +285,7 @@ namespace BadmintonCourtManagement.GUI
             toolBar.Controls.Add(startText, 1, 0);
             toolBar.Controls.Add(filterButton, 5, 0);
             toolBar.Dock = DockStyle.Top;
-            toolBar.Location = new Point(0, 139);
+            toolBar.Location = new Point(0, 135);
             toolBar.Margin = new Padding(0);
             toolBar.Name = "toolBar";
             toolBar.Padding = new Padding(12, 13, 12, 13);
@@ -407,7 +411,7 @@ namespace BadmintonCourtManagement.GUI
             SupplyStatusPanel.Controls.Add(SupplyStatus);
             SupplyStatusPanel.Dock = DockStyle.Top;
             SupplyStatusPanel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            SupplyStatusPanel.Location = new Point(0, 80);
+            SupplyStatusPanel.Location = new Point(0, 76);
             SupplyStatusPanel.Margin = new Padding(0);
             SupplyStatusPanel.Name = "SupplyStatusPanel";
             SupplyStatusPanel.Size = new Size(1081, 59);
@@ -425,14 +429,30 @@ namespace BadmintonCourtManagement.GUI
             SupplyStatus.Text = "Tình trạng: đang hoạt động";
             SupplyStatus.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // headerPanel
+            // 
+            headerPanel.ColumnCount = 2;
+            headerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80.38853F));
+            headerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 19.6114712F));
+            headerPanel.Controls.Add(TitlePanel, 0, 0);
+            headerPanel.Controls.Add(exportButton, 1, 0);
+            headerPanel.Dock = DockStyle.Top;
+            headerPanel.Location = new Point(0, 0);
+            headerPanel.Margin = new Padding(0);
+            headerPanel.Name = "headerPanel";
+            headerPanel.RowCount = 1;
+            headerPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            headerPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            headerPanel.Size = new Size(1081, 76);
+            headerPanel.TabIndex = 1;
+            // 
             // TitlePanel
             // 
             TitlePanel.Controls.Add(Title);
-            TitlePanel.Dock = DockStyle.Top;
             TitlePanel.Location = new Point(0, 0);
             TitlePanel.Margin = new Padding(0);
             TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(1081, 80);
+            TitlePanel.Size = new Size(869, 76);
             TitlePanel.TabIndex = 0;
             // 
             // Title
@@ -442,10 +462,34 @@ namespace BadmintonCourtManagement.GUI
             Title.Location = new Point(0, 0);
             Title.Margin = new Padding(4, 0, 4, 0);
             Title.Name = "Title";
-            Title.Size = new Size(1081, 80);
+            Title.Size = new Size(869, 76);
             Title.TabIndex = 0;
             Title.Text = "Chi tiết: NH0001";
             Title.TextAlign = ContentAlignment.MiddleLeft;
+            Title.Click += Title_Click;
+            // 
+            // exportButton
+            // 
+            exportButton.BackColor = Color.Black;
+            exportButton.BackgroundColor = Color.Black;
+            exportButton.BorderColor = Color.PaleVioletRed;
+            exportButton.BorderRadius = 20;
+            exportButton.BorderSize = 0;
+            exportButton.Cursor = Cursors.Hand;
+            exportButton.Dock = DockStyle.Fill;
+            exportButton.FlatAppearance.BorderSize = 0;
+            exportButton.FlatStyle = FlatStyle.Flat;
+            exportButton.ForeColor = Color.White;
+            exportButton.Location = new Point(872, 3);
+            exportButton.Name = "exportButton";
+            exportButton.Size = new Size(206, 70);
+            exportButton.TabIndex = 1;
+            exportButton.Text = "Xuất Dữ Liệu";
+            exportButton.TextColor = Color.White;
+            exportButton.UseVisualStyleBackColor = false;
+            exportButton.Click += exportButton_Click;
+            exportButton.MouseEnter += buttonEnter;
+            exportButton.MouseHover += buttonLeave;
             // 
             // SupplyDetailsGUI
             // 
@@ -473,6 +517,7 @@ namespace BadmintonCourtManagement.GUI
             toolBar.PerformLayout();
             SupplyActivePanel.ResumeLayout(false);
             SupplyStatusPanel.ResumeLayout(false);
+            headerPanel.ResumeLayout(false);
             TitlePanel.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -480,8 +525,6 @@ namespace BadmintonCourtManagement.GUI
         #endregion
 
         private Panel MainPanel;
-        private Panel TitlePanel;
-        private Label Title;
         private Panel SupplyStatusPanel;
         private Label SupplyStatus;
         private Panel SupplyActivePanel;
@@ -505,5 +548,9 @@ namespace BadmintonCourtManagement.GUI
         private Label productID;
         private Label status;
         private Label createAt;
+        private Panel TitlePanel;
+        private Label Title;
+        private TableLayoutPanel headerPanel;
+        private RoundedButton exportButton;
     }
 }

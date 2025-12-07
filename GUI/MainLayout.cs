@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
 using GUI;
+using Microsoft.VisualBasic.Logging;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -39,32 +40,6 @@ namespace BadmintonCourtManagement.GUI
 
             CreateMenuButtons1(viewPermissions);
         }
-
-        private void CreateMenuButtons()
-        {
-            menuManager = new MenuManager();
-            var menuItems = new Dictionary<string, EventHandler>
-            {
-                { "Khách hàng", Customers_Click },
-                { "Phân quyền", Permission_Click },
-                { "Tài khoản", Account_Click },
-                { "Nhân viên", Employee_Click },
-                { "Sản phẩm", Product_Click},
-                { "Hóa đơn", Bill_Click },
-                { "Bán hàng", Sell_Click },
-                { "Kho và Nhập hàng", Storage_Click },
-                { "Quản lý sân", ManageCourts_Click },
-                { "Giá sân", PriceRule_Click },
-                { "Đặt sân", BookCourt_Click },
-                { "Thống kê", Statistics_Click },
-                { "Loại sản phẩm", TypeProduct_Click },
-                { "Nhà cung cấp", Supplier_Click }
-                // { "Hóa đơn sản phẩm", BillProduct_Click }
-            };
-
-            menuManager!.CreateMenuButtons(menuPanel!, menuItems);
-        }
-
         private void CreateMenuButtons1(List<PermissionDetailDTO> viewPermissions)
         {
             menuManager = new MenuManager();
@@ -77,7 +52,7 @@ namespace BadmintonCourtManagement.GUI
                     case "F01":
                         menuItems.Add("Đặt sân", BookCourt_Click);
                         break;
-
+                    
                     case "F02":
                         menuItems.Add("Quản lý sân", ManageCourts_Click);
                         break;
@@ -89,11 +64,11 @@ namespace BadmintonCourtManagement.GUI
                     case "F04":
                         menuItems.Add("Hóa đơn", Bill_Click);
                         break;
-
+                    
                     case "F05":
                         menuItems.Add("Kho và Nhập hàng", Storage_Click);
                         break;
-
+                    
                     case "F06":
                         menuItems.Add("Sản phẩm", Product_Click);
                         break;
@@ -125,9 +100,26 @@ namespace BadmintonCourtManagement.GUI
                     case "F13":
                         menuItems.Add("Giá sân", PriceRule_Click);
                         break;
+
+                    case "F14":
+                        menuItems.Add("Thương hiệu", Brand_Click);
+                        break;
+                        
+                    case "F15":
+                        menuItems.Add("Quản lý loại sản phẩm", TypeProduct_Click);
+                        break;
                 }
             }
-            menuManager.CreateMenuButtons(menuPanel, menuItems);
+
+            menuItems.Add("Đăng xuất", Logout_Click);
+            var firstAction = menuItems.Values.FirstOrDefault();
+
+            var reversedMenuItems = menuItems.Reverse().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            menuManager.CreateMenuButtons(menuPanel, reversedMenuItems);
+            if (firstAction != null)
+            {
+                firstAction.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void OpenChildPanel(UserControl childPanel)
@@ -149,6 +141,22 @@ namespace BadmintonCourtManagement.GUI
             //menuPanel.BringToFront();
         }
 
+        private void Logout_Click(object? sender, EventArgs e)
+        {
+            DialogResult status = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (status == DialogResult.Yes)
+            {
+                // this.Close();
+                LoginGUI loginGUI = new LoginGUI();
+                loginGUI.Show();
+                this.Hide();
+            }
+        }
+
+        private void Brand_Click(object? sender, EventArgs e)
+        {
+            OpenChildPanel(new BrandGUI(currentAccount));
+        }
         private void Permission_Click(object? sender, EventArgs e)
         {
             OpenChildPanel(new PermissionGUI(currentAccount));

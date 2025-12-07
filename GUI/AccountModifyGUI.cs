@@ -1,8 +1,10 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
+using BadmintonCourtManagement.GUI;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace GUI
 {
@@ -16,23 +18,60 @@ namespace GUI
             InitializeComponent();
             this.currentAccount = account;
             LoadPermissionData();
+            LoadEmployeeData();
             FillData();
         }
 
         private void LoadPermissionData()
         {
+            PermissionBUS permissionBUS = new PermissionBUS();
+            List<PermissionDTO> permissions = permissionBUS.GetAllPermissions();
+
+            comboBoxPermission.DataSource = permissions;
+            comboBoxPermission.DisplayMember = "PermissionName";
+            comboBoxPermission.ValueMember = "PermissionId";
+        }
+
+        private void LoadEmployeeData()
+        {
             try
             {
-                PermissionBUS permissionBUS = new PermissionBUS();
-                List<PermissionDTO> permissions = permissionBUS.GetAllPermissions();
+                EmployeeBUS employeeBUS = new EmployeeBUS();
+                List<EmployeeDTO> dataSource = new List<EmployeeDTO>();
 
-                comboBoxPermission.DataSource = permissions;
-                comboBoxPermission.DisplayMember = "PermissionName";
-                comboBoxPermission.ValueMember = "PermissionId";
+                if (!string.IsNullOrEmpty(currentAccount.EmployeeId))
+                {
+                    EmployeeDTO currentEmp = employeeBUS.GetEmployeeById(currentAccount.EmployeeId);
+                    if (currentEmp != null)
+                    {
+                        dataSource.Add(currentEmp);
+                    }
+                }
+
+                List<EmployeeDTO> availableEmployees = employeeBUS.GetAllEmployeesNotHaveAccount();
+
+                if (availableEmployees != null && availableEmployees.Count > 0)
+                {
+                    dataSource.AddRange(availableEmployees);
+                    comboBoxEmployeeName.Enabled = true;
+                }
+                else
+                {
+                    comboBoxEmployeeName.Enabled = false;
+                }
+
+                comboBoxEmployeeName.DataSource = dataSource;
+                comboBoxEmployeeName.DisplayMember = "EmployeeName";
+                comboBoxEmployeeName.ValueMember = "EmployeeId";
+
+                if (!string.IsNullOrEmpty(currentAccount.EmployeeId))
+                {
+                    comboBoxEmployeeName.SelectedValue = currentAccount.EmployeeId;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải danh sách quyền: " + ex.Message);
+                MessageBox.Show("Lỗi tải danh sách nhân viên: " + ex.Message);
             }
         }
 
@@ -42,6 +81,7 @@ namespace GUI
             textBoxUsername.ReadOnly = true;
 
             comboBoxPermission.SelectedValue = currentAccount.PermissionId;
+            comboBoxEmployeeName.SelectedValue = currentAccount.EmployeeId;
             textBoxPassword.Text = currentAccount.Password;
         }
 
@@ -50,13 +90,17 @@ namespace GUI
             errorProvider1.Clear();
             string inputPassword = textBoxPassword.Text.Trim();
             string permissionId = "";
-
             if (comboBoxPermission.SelectedValue != null)
             {
                 permissionId = comboBoxPermission.SelectedValue.ToString();
             }
+            string employeeId = "";
+            if (comboBoxEmployeeName.SelectedValue != null)
+            {
+                employeeId = comboBoxEmployeeName.SelectedValue.ToString();
+            }
 
-            AccountDTO updateAccount = new AccountDTO(currentAccount.Username, inputPassword, permissionId, 0);
+            AccountDTO updateAccount = new AccountDTO(currentAccount.Username, inputPassword, permissionId, 0, employeeId);
             Dictionary<string, string> errors = accountBUS.ValidateAccount(updateAccount);
 
             if (errors.Count > 0)
@@ -70,8 +114,23 @@ namespace GUI
 
             try
             {
+                string oldEmployeeId = currentAccount.EmployeeId;
+                string newEmployeeId = employeeId;
+                bool isEmployeeChanged = (oldEmployeeId != newEmployeeId);
                 if (accountBUS.UpdateAccount(updateAccount))
                 {
+                    EmployeeBUS employeeBUS = new EmployeeBUS();
+                    if (isEmployeeChanged)
+                    {
+                        EmployeeDTO oldEmp = employeeBUS.GetEmployeeById(oldEmployeeId);
+                        oldEmp.Username = "";
+                        employeeBUS.UpdateEmployee(oldEmp);
+
+                        EmployeeDTO newEmp = employeeBUS.GetEmployeeById(newEmployeeId);
+                        newEmp.Username = currentAccount.Username;
+                        employeeBUS.UpdateEmployee(newEmp);
+                    }
+
                     MessageBox.Show("Cập nhật tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (Session.CurrentUser.Username == currentAccount.Username)
                     {

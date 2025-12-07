@@ -36,6 +36,9 @@
             buttonAccept = new Button();
             buttonCancel = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
+            panelEmployeeName = new Panel();
+            comboBoxEmployeeName = new ComboBox();
+            labelEmployeeName = new Label();
             panelPassword = new Panel();
             textBoxPassword = new TextBox();
             labelPassword = new Label();
@@ -51,6 +54,7 @@
             panel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            panelEmployeeName.SuspendLayout();
             panelPassword.SuspendLayout();
             panelUsername.SuspendLayout();
             panelPermission.SuspendLayout();
@@ -65,84 +69,89 @@
             panelTitle.Location = new Point(0, 0);
             panelTitle.Margin = new Padding(0);
             panelTitle.Name = "panelTitle";
-            panelTitle.Size = new Size(493, 56);
+            panelTitle.Size = new Size(348, 56);
             panelTitle.TabIndex = 0;
             // 
             // labelTitle
             // 
-            labelTitle.BackColor = Color.FromArgb(224, 224, 224);
+            labelTitle.BackColor = SystemColors.Control;
             labelTitle.Dock = DockStyle.Fill;
             labelTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTitle.Location = new Point(0, 0);
             labelTitle.Margin = new Padding(0);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(493, 56);
+            labelTitle.Size = new Size(348, 56);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "Sửa tài khoản";
             labelTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(224, 224, 224);
+            panel1.BackColor = SystemColors.Control;
             panel1.Controls.Add(tableLayoutPanel2);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 302);
+            panel1.Location = new Point(0, 309);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Padding = new Padding(0, 10, 0, 0);
-            panel1.Size = new Size(493, 59);
+            panel1.Padding = new Padding(0, 20, 0, 0);
+            panel1.Size = new Size(348, 59);
             panel1.TabIndex = 1;
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.BackColor = Color.FromArgb(224, 224, 224);
+            tableLayoutPanel2.BackColor = SystemColors.Control;
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.Controls.Add(buttonAccept, 0, 0);
             tableLayoutPanel2.Controls.Add(buttonCancel, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(0, 10);
+            tableLayoutPanel2.Location = new Point(0, 20);
             tableLayoutPanel2.Margin = new Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(493, 49);
+            tableLayoutPanel2.Size = new Size(348, 39);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // buttonAccept
             // 
+            buttonAccept.BackColor = Color.FromArgb(0, 120, 103);
             buttonAccept.Dock = DockStyle.Fill;
             buttonAccept.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonAccept.ForeColor = Color.White;
             buttonAccept.Location = new Point(50, 0);
             buttonAccept.Margin = new Padding(50, 0, 10, 0);
             buttonAccept.Name = "buttonAccept";
-            buttonAccept.Size = new Size(186, 49);
+            buttonAccept.Size = new Size(114, 39);
             buttonAccept.TabIndex = 1;
             buttonAccept.Text = "Xác nhận";
-            buttonAccept.UseVisualStyleBackColor = true;
+            buttonAccept.UseVisualStyleBackColor = false;
             buttonAccept.Click += buttonAccept_Click;
             // 
             // buttonCancel
             // 
+            buttonCancel.BackColor = Color.IndianRed;
             buttonCancel.Dock = DockStyle.Fill;
             buttonCancel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonCancel.Location = new Point(256, 0);
+            buttonCancel.ForeColor = Color.White;
+            buttonCancel.Location = new Point(184, 0);
             buttonCancel.Margin = new Padding(10, 0, 50, 0);
             buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new Size(187, 49);
+            buttonCancel.Size = new Size(114, 39);
             buttonCancel.TabIndex = 2;
             buttonCancel.Text = "Hủy";
-            buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += buttonCancel_Click;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.AutoScroll = true;
-            tableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
+            tableLayoutPanel1.BackColor = SystemColors.Control;
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(panelEmployeeName, 0, 3);
             tableLayoutPanel1.Controls.Add(panelPassword, 0, 1);
             tableLayoutPanel1.Controls.Add(panelUsername, 0, 0);
             tableLayoutPanel1.Controls.Add(panelPermission, 0, 2);
@@ -151,22 +160,58 @@
             tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(20, 0, 17, 0);
-            tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel1.Size = new Size(493, 246);
+            tableLayoutPanel1.RowCount = 4;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.Size = new Size(348, 253);
             tableLayoutPanel1.TabIndex = 2;
+            // 
+            // panelEmployeeName
+            // 
+            panelEmployeeName.Controls.Add(comboBoxEmployeeName);
+            panelEmployeeName.Controls.Add(labelEmployeeName);
+            panelEmployeeName.Dock = DockStyle.Fill;
+            panelEmployeeName.Location = new Point(20, 189);
+            panelEmployeeName.Margin = new Padding(0);
+            panelEmployeeName.Name = "panelEmployeeName";
+            panelEmployeeName.Size = new Size(311, 64);
+            panelEmployeeName.TabIndex = 5;
+            // 
+            // comboBoxEmployeeName
+            // 
+            comboBoxEmployeeName.Dock = DockStyle.Fill;
+            comboBoxEmployeeName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBoxEmployeeName.FormattingEnabled = true;
+            comboBoxEmployeeName.Location = new Point(0, 28);
+            comboBoxEmployeeName.Name = "comboBoxEmployeeName";
+            comboBoxEmployeeName.Size = new Size(311, 36);
+            comboBoxEmployeeName.TabIndex = 3;
+            // 
+            // labelEmployeeName
+            // 
+            labelEmployeeName.AutoSize = true;
+            labelEmployeeName.BackColor = SystemColors.Control;
+            labelEmployeeName.Dock = DockStyle.Top;
+            labelEmployeeName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelEmployeeName.Location = new Point(0, 0);
+            labelEmployeeName.Margin = new Padding(0);
+            labelEmployeeName.Name = "labelEmployeeName";
+            labelEmployeeName.Size = new Size(151, 28);
+            labelEmployeeName.TabIndex = 2;
+            labelEmployeeName.Text = "Chọn nhân viên:";
+            labelEmployeeName.TextAlign = ContentAlignment.TopCenter;
             // 
             // panelPassword
             // 
             panelPassword.Controls.Add(textBoxPassword);
             panelPassword.Controls.Add(labelPassword);
             panelPassword.Dock = DockStyle.Fill;
-            panelPassword.Location = new Point(20, 82);
+            panelPassword.Location = new Point(20, 63);
             panelPassword.Margin = new Padding(0);
             panelPassword.Name = "panelPassword";
-            panelPassword.Size = new Size(456, 82);
+            panelPassword.Size = new Size(311, 63);
             panelPassword.TabIndex = 3;
             // 
             // textBoxPassword
@@ -175,13 +220,13 @@
             textBoxPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxPassword.Location = new Point(0, 28);
             textBoxPassword.Name = "textBoxPassword";
-            textBoxPassword.Size = new Size(456, 34);
+            textBoxPassword.Size = new Size(311, 34);
             textBoxPassword.TabIndex = 1;
             // 
             // labelPassword
             // 
             labelPassword.AutoSize = true;
-            labelPassword.BackColor = Color.FromArgb(224, 224, 224);
+            labelPassword.BackColor = SystemColors.Control;
             labelPassword.Dock = DockStyle.Top;
             labelPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelPassword.Location = new Point(0, 0);
@@ -200,7 +245,7 @@
             panelUsername.Location = new Point(20, 0);
             panelUsername.Margin = new Padding(0);
             panelUsername.Name = "panelUsername";
-            panelUsername.Size = new Size(456, 82);
+            panelUsername.Size = new Size(311, 63);
             panelUsername.TabIndex = 0;
             // 
             // textBoxUsername
@@ -209,13 +254,13 @@
             textBoxUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxUsername.Location = new Point(0, 28);
             textBoxUsername.Name = "textBoxUsername";
-            textBoxUsername.Size = new Size(456, 34);
+            textBoxUsername.Size = new Size(311, 34);
             textBoxUsername.TabIndex = 1;
             // 
             // labelUsername
             // 
             labelUsername.AutoSize = true;
-            labelUsername.BackColor = Color.FromArgb(224, 224, 224);
+            labelUsername.BackColor = SystemColors.Control;
             labelUsername.Dock = DockStyle.Top;
             labelUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelUsername.Location = new Point(0, 0);
@@ -231,10 +276,10 @@
             panelPermission.Controls.Add(comboBoxPermission);
             panelPermission.Controls.Add(labelPermission);
             panelPermission.Dock = DockStyle.Fill;
-            panelPermission.Location = new Point(20, 164);
+            panelPermission.Location = new Point(20, 126);
             panelPermission.Margin = new Padding(0);
             panelPermission.Name = "panelPermission";
-            panelPermission.Size = new Size(456, 82);
+            panelPermission.Size = new Size(311, 63);
             panelPermission.TabIndex = 4;
             // 
             // comboBoxPermission
@@ -244,13 +289,13 @@
             comboBoxPermission.FormattingEnabled = true;
             comboBoxPermission.Location = new Point(0, 28);
             comboBoxPermission.Name = "comboBoxPermission";
-            comboBoxPermission.Size = new Size(456, 36);
+            comboBoxPermission.Size = new Size(311, 36);
             comboBoxPermission.TabIndex = 3;
             // 
             // labelPermission
             // 
             labelPermission.AutoSize = true;
-            labelPermission.BackColor = Color.FromArgb(224, 224, 224);
+            labelPermission.BackColor = SystemColors.Control;
             labelPermission.Dock = DockStyle.Top;
             labelPermission.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelPermission.Location = new Point(0, 0);
@@ -270,7 +315,7 @@
             panel2.Location = new Point(0, 56);
             panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(493, 246);
+            panel2.Size = new Size(348, 253);
             panel2.TabIndex = 3;
             // 
             // errorProvider1
@@ -282,7 +327,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(493, 361);
+            ClientSize = new Size(348, 368);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(panelTitle);
@@ -294,6 +339,8 @@
             panel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
+            panelEmployeeName.ResumeLayout(false);
+            panelEmployeeName.PerformLayout();
             panelPassword.ResumeLayout(false);
             panelPassword.PerformLayout();
             panelUsername.ResumeLayout(false);
@@ -344,5 +391,8 @@
         private Panel panelPermission;
         private ComboBox comboBoxPermission;
         private Label labelPermission;
+        private Panel panelEmployeeName;
+        private ComboBox comboBoxEmployeeName;
+        private Label labelEmployeeName;
     }
 }

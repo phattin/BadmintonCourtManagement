@@ -1,35 +1,54 @@
+using BadmintonCourtManagement.BUS;
+using BadmintonCourtManagement.DTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using BadmintonCourtManagement.BUS;
-using BadmintonCourtManagement.DTO;
 
 namespace BadmintonCourtManagement.GUI
 {
     public partial class TypeProductGUI : UserControl
     {
-        private AccountDTO? currentAccount;
+        private AccountDTO currentAccount;
         private TypeProductBUS typeProductBUS;
+        private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
+        private bool isInsert = false, isUpdate = false, isDelete = false;
 
-        // Biến phân trang
+        // Phân trang
         private int page = 0;
-        private const int itemPerPage = 8; // 2 hàng x 4 cột = 8 loại/trang
+        private const int itemPerPage = 8;
         private int totalPages = 0;
-        private List<TypeProductDTO> currentTypeProductList = new List<TypeProductDTO>();
+        private List<TypeProductDTO> currentTypeProductList;
 
         public TypeProductGUI()
         {
             InitializeComponent();
-            typeProductBUS = new TypeProductBUS();
         }
 
         public TypeProductGUI(AccountDTO currentAccount)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
+            CheckPermissions("F09"); // Thay "F09" bằng mã chức năng thực tế của bạn
             typeProductBUS = new TypeProductBUS();
             LoadTypeProducts(typeProductBUS.GetAllTypeProducts());
+        }
+
+        private void CheckPermissions(string functionId)
+        {
+            List<PermissionDetailDTO> permissionDetails = permissiondetailBUS.GetPermissionDetailsByFunctionId(functionId);
+
+            foreach (var p in permissionDetails)
+            {
+                if (p.PermissionId == currentAccount.PermissionId)
+                {
+                    if (p.Option == "Insert") isInsert = true;
+                    else if (p.Option == "Update") isUpdate = true;
+                    else if (p.Option == "Delete") isDelete = true;
+                }
+            }
+
+            lblAddTypeProduct.Visible = isInsert;
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -42,7 +61,7 @@ namespace BadmintonCourtManagement.GUI
             }
             else
             {
-                LoadTypeProducts(typeProductBUS.GetByTypeName(searchText));
+                 LoadTypeProducts(typeProductBUS.GetByTypeName(searchText));
             }
         }
 
@@ -73,25 +92,23 @@ namespace BadmintonCourtManagement.GUI
 
         private void LoadTypeProducts(List<TypeProductDTO> list)
         {
-            if (pCustomerList == null)
-                return;
-
             currentTypeProductList = list ?? new List<TypeProductDTO>();
             totalPages = (int)Math.Ceiling((double)currentTypeProductList.Count / itemPerPage);
             if (totalPages == 0) totalPages = 1;
             if (page >= totalPages) page = totalPages - 1;
             if (page < 0) page = 0;
 
-            pCustomerList.Controls.Clear();
-            pCustomerList.RowCount = 2;
-            pCustomerList.ColumnCount = 4;
+            pTypeProductList.Controls.Clear();
+            pTypeProductList.RowCount = 2;
+            pTypeProductList.ColumnCount = 4;
 
-            pCustomerList.ColumnStyles.Clear();
-            pCustomerList.RowStyles.Clear();
+            pTypeProductList.ColumnStyles.Clear();
+            pTypeProductList.RowStyles.Clear();
+
             for (int i = 0; i < 4; i++)
-                pCustomerList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+                pTypeProductList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             for (int j = 0; j < 2; j++)
-                pCustomerList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+                pTypeProductList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
             int startIndex = page * itemPerPage;
             int endIndex = Math.Min(startIndex + itemPerPage, currentTypeProductList.Count);
@@ -102,16 +119,11 @@ namespace BadmintonCourtManagement.GUI
                 var panel = CreateTypeProductPanel(item);
                 int row = (i - startIndex) / 4;
                 int col = (i - startIndex) % 4;
-                pCustomerList.Controls.Add(panel, col, row);
+                pTypeProductList.Controls.Add(panel, col, row);
             }
 
-            // Safely position pagination panel inside customPanel1 (if available)
-            if (paginationPanel != null && customPanel1 != null)
-            {
-                int y = Math.Max(0, customPanel1.Height - paginationPanel.Height);
-                paginationPanel.Location = new Point(0, y);
-                paginationPanel.Width = Math.Max(0, customPanel1.Width);
-            }
+            paginationPanel.Location = new Point(0, customPanel1.Height - paginationPanel.Height);
+            paginationPanel.Width = customPanel1.Width;
 
             UpdatePaginationInfo();
         }
@@ -128,7 +140,7 @@ namespace BadmintonCourtManagement.GUI
             {
                 BorderRadius = 10,
                 BackColor = Color.FromArgb(200, 250, 214),
-                Margin = new Padding(5),
+                Margin = new Padding(8),
                 Dock = DockStyle.Fill
             };
 
@@ -136,27 +148,29 @@ namespace BadmintonCourtManagement.GUI
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 1,
-                RowCount = 3
+                RowCount = 4,
+                Padding = new Padding(10)
             };
-            tl.RowStyles.Add(new RowStyle(SizeType.Percent, 33F)); // Mã loại
-            tl.RowStyles.Add(new RowStyle(SizeType.Percent, 33F)); // Tên loại
-            tl.RowStyles.Add(new RowStyle(SizeType.Percent, 34F)); // Nút
+
+            tl.RowStyles.Add(new RowStyle(SizeType.Percent, 30F)); // Mã
+            tl.RowStyles.Add(new RowStyle(SizeType.Percent, 30F)); // Tên
+            tl.RowStyles.Add(new RowStyle(SizeType.Percent, 15F)); // Placeholder
+            tl.RowStyles.Add(new RowStyle(SizeType.Percent, 25F)); // Nút
 
             var lblId = new Label
             {
                 Text = dto.TypeProductId,
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                TextAlign = ContentAlignment.MiddleCenter
+                Font = new Font("Segoe UI", 14F, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill
             };
 
             var lblName = new Label
             {
-                Text = dto.TypeProductName,
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                Text = "Tên: " + dto.TypeProductName,
+                Font = new Font("Segoe UI", 11F),
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.FromArgb(0, 100, 80)
+                Dock = DockStyle.Fill
             };
 
             var buttonPanel = new FlowLayoutPanel
@@ -164,66 +178,52 @@ namespace BadmintonCourtManagement.GUI
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.LeftToRight,
                 AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink,
-                Padding = new Padding(0, 5, 0, 5),
-                Anchor = AnchorStyles.None
+                Anchor = AnchorStyles.None,
+                Padding = new Padding(0, 5, 0, 5)
             };
 
             var btnDelete = new Button
             {
                 Text = "Xóa",
-                Width = 70,
-                Height = 35,
+                Size = new Size(70, 35),
                 BackColor = Color.FromArgb(64, 64, 64),
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnDelete.Visible = isDelete;
 
             var btnEdit = new Button
             {
                 Text = "Sửa",
-                Width = 70,
-                Height = 35,
+                Size = new Size(70, 35),
                 BackColor = Color.FromArgb(64, 64, 64),
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 0, 10, 0)
             };
+            btnEdit.Visible = isUpdate;
 
-            btnDelete.Click += (s, ev) =>
+            btnDelete.Click += (s, e) =>
             {
-                var result = MessageBox.Show(
-                    $"Bạn có chắc muốn xóa loại sản phẩm '{dto.TypeProductName}' không?",
-                    "Xác nhận xóa",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
+                var result = MessageBox.Show($"Xóa loại sản phẩm '{dto.TypeProductName}'?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    try
+                    if (typeProductBUS.DeleteTypeProduct(dto.TypeProductId))
                     {
-                        bool deleted = typeProductBUS.DeleteTypeProduct(dto.TypeProductId);
-                        if (deleted)
-                        {
-                            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            ReloadTypeProductList();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Không thể xóa (có thể đang được sử dụng trong sản phẩm).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ReloadTypeProductList();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Không thể xóa (đang được sử dụng hoặc lỗi CSDL).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             };
 
-            btnEdit.Click += (s, ev) =>
+            btnEdit.Click += (s, e) =>
             {
                 Form dialog = new Form()
                 {
@@ -236,10 +236,11 @@ namespace BadmintonCourtManagement.GUI
                     ShowInTaskbar = false
                 };
 
-            // Trong btnEdit.Click
-            var form = new FormTypeProduct("Update", dto.TypeProductId, currentAccount);
-            form.ShowDialog();
-            ReloadTypeProductList();
+                var form = new FormTypeProduct("Update", dto.TypeProductId, currentAccount);
+
+                form.ShowDialog();
+                ReloadTypeProductList();
+
             };
 
             buttonPanel.Controls.Add(btnDelete);
@@ -247,7 +248,8 @@ namespace BadmintonCourtManagement.GUI
 
             tl.Controls.Add(lblId, 0, 0);
             tl.Controls.Add(lblName, 0, 1);
-            tl.Controls.Add(buttonPanel, 0, 2);
+            tl.Controls.Add(new Label(), 0, 2); // placeholder
+            tl.Controls.Add(buttonPanel, 0, 3);
 
             panel.Controls.Add(tl);
             return panel;
@@ -260,7 +262,6 @@ namespace BadmintonCourtManagement.GUI
 
             btnExtraPrevious.Location = new Point(startX, 13);
             btnPrevious.Location = new Point(startX + 70, 13);
-            lblPageInfo.Location = new Point(startX + 140, 28);
             btnNext.Location = new Point(startX + 260, 13);
             btnExtraNext.Location = new Point(startX + 330, 13);
 
@@ -268,15 +269,15 @@ namespace BadmintonCourtManagement.GUI
             btnPrevious.Enabled = page > 0;
             btnNext.Enabled = page < totalPages - 1;
             btnExtraNext.Enabled = page < totalPages - 1;
-
-            lblPageInfo.Text = $"Trang {page + 1} / {totalPages}";
         }
 
+        // Các nút phân trang
         private void btnExtraPrevious_Click(object sender, EventArgs e) { page = 0; LoadTypeProducts(currentTypeProductList); }
         private void btnPrevious_Click(object sender, EventArgs e) { if (page > 0) page--; LoadTypeProducts(currentTypeProductList); }
         private void btnNext_Click(object sender, EventArgs e) { if (page < totalPages - 1) page++; LoadTypeProducts(currentTypeProductList); }
         private void btnExtraNext_Click(object sender, EventArgs e) { page = totalPages - 1; LoadTypeProducts(currentTypeProductList); }
-        private void TypeProducrGUI_Load(object sender, EventArgs e)
+
+        private void paginationPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }

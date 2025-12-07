@@ -45,7 +45,7 @@ namespace GUI
             panelTop.Location = new Point(0, 0);
             panelTop.Margin = new Padding(0);
             panelTop.Name = "panelTop";
-            panelTop.Size = new Size(586, 133);
+            panelTop.Size = new Size(354, 133);
             panelTop.TabIndex = 0;
             // 
             // labelTitle
@@ -54,7 +54,7 @@ namespace GUI
             labelTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTitle.Location = new Point(0, 0);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(586, 133);
+            labelTitle.Size = new Size(354, 133);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "Mô tả";
             labelTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -66,7 +66,7 @@ namespace GUI
             panelBottom.Location = new Point(0, 133);
             panelBottom.Margin = new Padding(3, 4, 3, 4);
             panelBottom.Name = "panelBottom";
-            panelBottom.Size = new Size(586, 130);
+            panelBottom.Size = new Size(354, 65);
             panelBottom.TabIndex = 1;
             // 
             // labelDescription
@@ -75,7 +75,7 @@ namespace GUI
             labelDescription.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelDescription.Location = new Point(0, 0);
             labelDescription.Name = "labelDescription";
-            labelDescription.Size = new Size(586, 130);
+            labelDescription.Size = new Size(354, 65);
             labelDescription.TabIndex = 0;
             labelDescription.Text = "Giá sân này chỉ dùng cho đấu giải";
             labelDescription.TextAlign = ContentAlignment.TopCenter;
@@ -84,13 +84,13 @@ namespace GUI
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(586, 263);
+            ClientSize = new Size(354, 198);
             Controls.Add(panelBottom);
             Controls.Add(panelTop);
             Margin = new Padding(3, 4, 3, 4);
             Name = "PriceRuleDescriptionGUI";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "PriceRuleDescriptionGUI";
+            Text = "Chi tiết";
             panelTop.ResumeLayout(false);
             panelBottom.ResumeLayout(false);
             ResumeLayout(false);

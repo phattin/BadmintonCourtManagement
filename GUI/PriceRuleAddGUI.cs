@@ -49,10 +49,10 @@ namespace GUI
             if (errors.Count > 0)
             {
                 if (errors.ContainsKey("EndTime"))
-                    errorProvider1.SetError(dateTimePickerEndTime, errors["EndTime"]);
+                    errorProvider1.SetError(labelEndTime, errors["EndTime"]);
 
                 if (errors.ContainsKey("EndDate"))
-                    errorProvider1.SetError(dateTimePickerEndDate, errors["EndDate"]);
+                    errorProvider1.SetError(labelEndDate, errors["EndDate"]);
 
                 return;
             }

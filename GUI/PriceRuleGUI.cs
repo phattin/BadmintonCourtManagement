@@ -1,17 +1,7 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
-using Mysqlx.Crud;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace GUI
 {
@@ -22,13 +12,14 @@ namespace GUI
         private bool isInsert = false, isUpdate = false, isDelete = false;
         private PriceRuleBUS priceruleBUS = new PriceRuleBUS();
         private BindingList<PriceRuleDTO> priceRuleList;
+        private BindingList<PriceRuleDTO> displayList;
         public PriceRuleGUI(AccountDTO account)
         {
             this.currentAccount = account;
             InitializeComponent();
+            CheckPermissions("F13");
             ConfigureDataGridView();
             LoadData();
-            CheckPermissions("F13");
         }
 
         private void CheckPermissions(string functionId)
@@ -53,8 +44,6 @@ namespace GUI
         private void ConfigureDataGridView()
         {
             dataGridView1.AutoGenerateColumns = false;
-
-            ID.DataPropertyName = "PriceRuleId";
             StartTime.DataPropertyName = "StartTime";
             EndTime.DataPropertyName = "EndTime";
             StartDate.DataPropertyName = "StartDate";
@@ -71,10 +60,9 @@ namespace GUI
             try
             {
                 var list = priceruleBUS.GetAllPriceRules();
-
                 priceRuleList = new BindingList<PriceRuleDTO>(list);
-
-                dataGridView1.DataSource = priceRuleList;
+                displayList = new BindingList<PriceRuleDTO>(list);
+                dataGridView1.DataSource = displayList;
             }
             catch (Exception ex)
             {
@@ -210,6 +198,33 @@ namespace GUI
                     desForm.ShowDialog();
                 }
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string keyword = textBox1.Text.Trim().ToLower();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                dataGridView1.DataSource = new BindingList<PriceRuleDTO>(priceRuleList);
+                return;
+            }
+
+            var filteredData = priceRuleList.Where(item =>
+            {
+                bool matchPrice = item.Price.ToString().Contains(keyword);
+                bool matchEndType = item.EndType != null && item.EndType.ToLower().Contains(keyword);
+                bool matchStartTime = item.StartTime.ToString().Contains(keyword);
+                bool matchEndTime = item.EndTime.ToString().Contains(keyword);
+                bool matchStartDate = item.StartDate != null &&
+                                      item.StartDate.Value.ToString("dd/MM/yyyy").Contains(keyword);
+                bool matchEndDate = item.EndDate != null &&
+                                    item.EndDate.Value.ToString("dd/MM/yyyy").Contains(keyword);
+                return matchPrice || matchEndType ||
+                       matchStartTime || matchEndTime ||
+                       matchStartDate || matchEndDate;
+
+            }).ToList();
+            dataGridView1.DataSource = new BindingList<PriceRuleDTO>(filteredData);
         }
     }
 }

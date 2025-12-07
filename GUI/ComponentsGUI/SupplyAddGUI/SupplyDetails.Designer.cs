@@ -34,6 +34,13 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             Body = new Panel();
             MainPanel = new Panel();
             CardListPanel = new RoundedTableLayoutPanel();
+            toolBar = new RoundedTableLayoutPanel();
+            searchBar = new TextBox();
+            filterButton = new Button();
+            SupplyActivePanel = new Panel();
+            SupplyActive = new Label();
+            TitlePanel = new Panel();
+            Title = new Label();
             cardPanel = new RoundedTableLayoutPanel();
             picture = new PictureBox();
             infoPanel = new TableLayoutPanel();
@@ -43,22 +50,14 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             quantity = new Label();
             importDetailID = new Label();
             delete = new RoundedButton();
-            toolBar = new RoundedTableLayoutPanel();
-            searchBar = new TextBox();
-            filterButton = new Button();
-            SupplyActivePanel = new Panel();
-            SupplyActive = new Label();
-            TitlePanel = new Panel();
-            Title = new Label();
             Body.SuspendLayout();
             MainPanel.SuspendLayout();
-            CardListPanel.SuspendLayout();
-            cardPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picture).BeginInit();
-            infoPanel.SuspendLayout();
             toolBar.SuspendLayout();
             SupplyActivePanel.SuspendLayout();
             TitlePanel.SuspendLayout();
+            cardPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picture).BeginInit();
+            infoPanel.SuspendLayout();
             SuspendLayout();
             // 
             // Body
@@ -93,23 +92,109 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             CardListPanel.BorderRadius = 20;
             CardListPanel.ColumnCount = 1;
             CardListPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            // CardListPanel.Controls.Add(cardPanel, 0, 0);
             CardListPanel.Dock = DockStyle.Top;
             CardListPanel.Location = new Point(0, 166);
             CardListPanel.Margin = new Padding(0);
             CardListPanel.Name = "CardListPanel";
-            // CardListPanel.RowCount = 6;
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            // CardListPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            CardListPanel.Size = new Size(1175, 1554);
+            CardListPanel.Size = new Size(1196, 0);
             CardListPanel.TabIndex = 4;
+            // 
+            // toolBar
+            // 
+            toolBar.BackColor = Color.FromArgb(0, 120, 103);
+            toolBar.BorderRadius = 20;
+            toolBar.ColumnCount = 2;
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 88.27107F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.7289314F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            toolBar.Controls.Add(searchBar, 0, 0);
+            toolBar.Controls.Add(filterButton, 1, 0);
+            toolBar.Dock = DockStyle.Top;
+            toolBar.Location = new Point(0, 80);
+            toolBar.Margin = new Padding(0);
+            toolBar.Name = "toolBar";
+            toolBar.Padding = new Padding(12, 13, 12, 13);
+            toolBar.RowCount = 1;
+            toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            toolBar.Size = new Size(1196, 86);
+            toolBar.TabIndex = 3;
+            // 
+            // searchBar
+            // 
+            searchBar.Cursor = Cursors.IBeam;
+            searchBar.Dock = DockStyle.Fill;
+            searchBar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            searchBar.Location = new Point(12, 28);
+            searchBar.Margin = new Padding(0, 15, 0, 0);
+            searchBar.Name = "searchBar";
+            searchBar.PlaceholderText = "Tìm kiếm...";
+            searchBar.Size = new Size(1034, 34);
+            searchBar.TabIndex = 1;
+            // 
+            // filterButton
+            // 
+            filterButton.BackColor = Color.FromArgb(0, 120, 103);
+            filterButton.Cursor = Cursors.Hand;
+            filterButton.Dock = DockStyle.Fill;
+            filterButton.FlatAppearance.BorderSize = 0;
+            filterButton.FlatStyle = FlatStyle.Flat;
+            filterButton.Image = Properties.Resources.Filter;
+            filterButton.Location = new Point(1046, 13);
+            filterButton.Margin = new Padding(0);
+            filterButton.Name = "filterButton";
+            filterButton.Size = new Size(138, 60);
+            filterButton.TabIndex = 4;
+            filterButton.UseVisualStyleBackColor = false;
+            filterButton.MouseEnter += FilterButton_MouseEnter;
+            filterButton.MouseLeave += FilterButton_MouseLeave;
+            // 
+            // SupplyActivePanel
+            // 
+            SupplyActivePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            SupplyActivePanel.AutoSize = true;
+            SupplyActivePanel.Controls.Add(SupplyActive);
+            SupplyActivePanel.Location = new Point(753, 127);
+            SupplyActivePanel.Margin = new Padding(0);
+            SupplyActivePanel.Name = "SupplyActivePanel";
+            SupplyActivePanel.Size = new Size(1317, 98);
+            SupplyActivePanel.TabIndex = 2;
+            // 
+            // SupplyActive
+            // 
+            SupplyActive.Dock = DockStyle.Fill;
+            SupplyActive.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            SupplyActive.ImageAlign = ContentAlignment.MiddleLeft;
+            SupplyActive.Location = new Point(0, 0);
+            SupplyActive.Margin = new Padding(4, 0, 4, 0);
+            SupplyActive.Name = "SupplyActive";
+            SupplyActive.Size = new Size(1317, 98);
+            SupplyActive.TabIndex = 0;
+            SupplyActive.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // TitlePanel
+            // 
+            TitlePanel.Controls.Add(Title);
+            TitlePanel.Dock = DockStyle.Top;
+            TitlePanel.Location = new Point(0, 0);
+            TitlePanel.Margin = new Padding(0);
+            TitlePanel.Name = "TitlePanel";
+            TitlePanel.Size = new Size(1196, 80);
+            TitlePanel.TabIndex = 0;
+            // 
+            // Title
+            // 
+            Title.Dock = DockStyle.Fill;
+            Title.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            Title.Location = new Point(0, 0);
+            Title.Margin = new Padding(4, 0, 4, 0);
+            Title.Name = "Title";
+            Title.Size = new Size(1196, 80);
+            Title.TabIndex = 0;
+            Title.Text = "Chi tiết đơn hàng nhập: ";
+            Title.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // cardPanel
             // 
@@ -252,103 +337,6 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             delete.MouseEnter += buttonEnter;
             delete.MouseLeave += buttonLeave;
             // 
-            // toolBar
-            // 
-            toolBar.BackColor = Color.FromArgb(0, 120, 103);
-            toolBar.BorderRadius = 20;
-            toolBar.ColumnCount = 2;
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 88.27107F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.7289314F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            toolBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            toolBar.Controls.Add(searchBar, 0, 0);
-            toolBar.Controls.Add(filterButton, 1, 0);
-            toolBar.Dock = DockStyle.Top;
-            toolBar.Location = new Point(0, 80);
-            toolBar.Margin = new Padding(0);
-            toolBar.Name = "toolBar";
-            toolBar.Padding = new Padding(12, 13, 12, 13);
-            toolBar.RowCount = 1;
-            toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            toolBar.Size = new Size(1175, 86);
-            toolBar.TabIndex = 3;
-            // 
-            // searchBar
-            // 
-            searchBar.Cursor = Cursors.IBeam;
-            searchBar.Dock = DockStyle.Fill;
-            searchBar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            searchBar.Location = new Point(12, 28);
-            searchBar.Margin = new Padding(0, 15, 0, 0);
-            searchBar.Name = "searchBar";
-            searchBar.PlaceholderText = "Tìm kiếm...";
-            searchBar.Size = new Size(1016, 34);
-            searchBar.TabIndex = 1;
-            // 
-            // filterButton
-            // 
-            filterButton.BackColor = Color.FromArgb(0, 120, 103);
-            filterButton.Cursor = Cursors.Hand;
-            filterButton.Dock = DockStyle.Fill;
-            filterButton.FlatAppearance.BorderSize = 0;
-            filterButton.FlatStyle = FlatStyle.Flat;
-            filterButton.Image = Properties.Resources.Filter;
-            filterButton.Location = new Point(1028, 13);
-            filterButton.Margin = new Padding(0);
-            filterButton.Name = "filterButton";
-            filterButton.Size = new Size(135, 60);
-            filterButton.TabIndex = 4;
-            filterButton.UseVisualStyleBackColor = false;
-            filterButton.MouseEnter += FilterButton_MouseEnter;
-            filterButton.MouseLeave += FilterButton_MouseLeave;
-            // 
-            // SupplyActivePanel
-            // 
-            SupplyActivePanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            SupplyActivePanel.AutoSize = true;
-            SupplyActivePanel.Controls.Add(SupplyActive);
-            SupplyActivePanel.Location = new Point(753, 127);
-            SupplyActivePanel.Margin = new Padding(0);
-            SupplyActivePanel.Name = "SupplyActivePanel";
-            SupplyActivePanel.Size = new Size(1317, 98);
-            SupplyActivePanel.TabIndex = 2;
-            // 
-            // SupplyActive
-            // 
-            SupplyActive.Dock = DockStyle.Fill;
-            SupplyActive.Font = new Font("Roboto Medium", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SupplyActive.ImageAlign = ContentAlignment.MiddleLeft;
-            SupplyActive.Location = new Point(0, 0);
-            SupplyActive.Margin = new Padding(4, 0, 4, 0);
-            SupplyActive.Name = "SupplyActive";
-            SupplyActive.Size = new Size(1317, 98);
-            SupplyActive.TabIndex = 0;
-            SupplyActive.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // TitlePanel
-            // 
-            TitlePanel.Controls.Add(Title);
-            TitlePanel.Dock = DockStyle.Top;
-            TitlePanel.Location = new Point(0, 0);
-            TitlePanel.Margin = new Padding(0);
-            TitlePanel.Name = "TitlePanel";
-            TitlePanel.Size = new Size(1175, 80);
-            TitlePanel.TabIndex = 0;
-            // 
-            // Title
-            // 
-            Title.Dock = DockStyle.Fill;
-            Title.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            Title.Location = new Point(0, 0);
-            Title.Margin = new Padding(4, 0, 4, 0);
-            Title.Name = "Title";
-            Title.Size = new Size(1175, 80);
-            Title.TabIndex = 0;
-            Title.Text = "Chi tiết đơn hàng nhập: ";
-            Title.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // SupplyDetails
             // 
             AutoScaleDimensions = new SizeF(16F, 37F);
@@ -362,14 +350,13 @@ namespace BadmintonCourtManagement.GUI.ComponentsGUI.SupplyAddGUI
             Body.ResumeLayout(false);
             MainPanel.ResumeLayout(false);
             MainPanel.PerformLayout();
-            CardListPanel.ResumeLayout(false);
-            cardPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picture).EndInit();
-            infoPanel.ResumeLayout(false);
             toolBar.ResumeLayout(false);
             toolBar.PerformLayout();
             SupplyActivePanel.ResumeLayout(false);
             TitlePanel.ResumeLayout(false);
+            cardPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picture).EndInit();
+            infoPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 

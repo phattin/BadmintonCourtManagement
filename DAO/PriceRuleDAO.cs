@@ -99,14 +99,14 @@ namespace BadmintonCourtManagement.DAO
                     priceRule.EndType = reader["EndType"].ToString();
                     priceRule.Description = reader["Description"].ToString();
 
-                    // Status là varchar: "Active" / "Inactive" / null
-                    string statusStr = reader["Status"] == DBNull.Value
-                        ? string.Empty
-                        : reader["Status"].ToString();
-
-                    priceRule.IsActive = string.Equals(statusStr, "Active", StringComparison.OrdinalIgnoreCase)
-                        ? 1
-                        : 0;
+                    if (reader["Status"] != DBNull.Value)
+                    {
+                        priceRule.IsActive = Convert.ToInt32(reader["Status"]);
+                    }
+                    else
+                    {
+                        priceRule.IsActive = 0;
+                    }
 
                     priceRules.Add(priceRule);
                 }
