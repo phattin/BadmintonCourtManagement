@@ -15,7 +15,7 @@ namespace BadmintonCourtManagement.GUI
         private int currentPage;
         private int itemsPerPage;
         private int totalPages;
-        // =====================================
+        // ===================================
 
         public BookCourtGUI(AccountDTO account)
         {
@@ -36,8 +36,8 @@ namespace BadmintonCourtManagement.GUI
         {
             currentList = courtBUS.GetActiveCourts();
 
-            // DEBUG: Kiểm tra xem có bao nhiêu sân active
-            MessageBox.Show($"Số sân hoạt động: {currentList.Count}");
+            //// DEBUG: Kiểm tra xem có bao nhiêu sân active
+            //MessageBox.Show($"Số sân hoạt động: {currentList.Count}");
 
             LoadCourts(currentList, 1);
         }
@@ -188,20 +188,13 @@ namespace BadmintonCourtManagement.GUI
         private CustomPanel CreateCourtPanel(CourtDTO courtDTO)
         {
             List<BookingDTO> successfulBookingList = bookingBUS.GetSuccessfulBookingsByCourtID(courtDTO.CourtId);
-            BookingDTO nextBooking = new BookingDTO();
-            string nextBookingStartTime = "";
-            string nextBookingEndTime = "";
-            if (successfulBookingList.Count > 0)
-            {
-                nextBooking = successfulBookingList.OrderBy(b => b.StartTime).First();
-                nextBookingStartTime = nextBooking.StartTime.ToString("HH:mm");
-                nextBookingEndTime = nextBooking.EndTime.ToString("HH:mm");
-            }
+            bool hasBooking = successfulBookingList.Count > 0;
 
             var panel = new CustomPanel
             {
                 BorderRadius = 10,
-                BackColor = Color.FromArgb(200, 250, 214),
+                // Đỏ nếu có booking, xanh lá nếu trống
+                BackColor = hasBooking ? Color.FromArgb(255, 176, 163) : Color.FromArgb(200, 250, 214),
                 Margin = new Padding(5),
                 Dock = DockStyle.Fill
             };
@@ -213,10 +206,11 @@ namespace BadmintonCourtManagement.GUI
                 RowCount = 3
             };
 
-            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
-            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));  // Tên sân
+            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));  // Danh sách booking (tăng lên)
+            tlCourt.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));  // Nút đặt sân
 
+            // ========== TÊN SÂN ==========
             var lblName = new Label
             {
                 Text = courtDTO.CourtName,
@@ -225,20 +219,69 @@ namespace BadmintonCourtManagement.GUI
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            string bookingTimeText = "";
-            if (nextBookingStartTime != "" && nextBookingEndTime != "")
-                bookingTimeText = "Tình trạng: Đã đặt\nBooking tiếp theo: " + nextBookingStartTime + "-" + nextBookingEndTime;
-            else
-                bookingTimeText = "Tình trạng: Trống\nBooking tiếp theo: Không có";
-
-            var lblInfo = new Label
+            // ========== DANH SÁCH BOOKING ==========
+            var pnlBookingList = new Panel
             {
-                Text = bookingTimeText,
                 Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 9F),
-                TextAlign = ContentAlignment.MiddleCenter
+                AutoScroll = true,
+                Padding = new Padding(5)
             };
 
+            if (hasBooking)
+            {
+                // Sắp xếp booking theo thời gian
+                var sortedBookings = successfulBookingList.OrderBy(b => b.StartTime).ToList();
+
+                // Tạo FlowLayoutPanel để hiển thị danh sách booking
+                var flowLayout = new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    FlowDirection = FlowDirection.TopDown,
+                    WrapContents = false,
+                    AutoScroll = true,
+                    Padding = new Padding(5)
+                };
+
+                // Thêm tiêu đề
+                var lblTitle = new Label
+                {
+                    Text = $"Tình trạng: Đã đặt ({sortedBookings.Count} booking)",
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    AutoSize = true,
+                    ForeColor = Color.DarkRed
+                };
+                flowLayout.Controls.Add(lblTitle);
+
+                // Thêm từng booking
+                foreach (var booking in sortedBookings)
+                {
+                    var lblBooking = new Label
+                    {
+                        Text = $"• {booking.StartTime:dd/MM/yyyy HH:mm} - {booking.EndTime:HH:mm}",
+                        Font = new Font("Segoe UI", 8.5F),
+                        AutoSize = true,
+                        Padding = new Padding(10, 2, 0, 2)
+                    };
+                    flowLayout.Controls.Add(lblBooking);
+                }
+
+                pnlBookingList.Controls.Add(flowLayout);
+            }
+            else
+            {
+                // Không có booking
+                var lblEmpty = new Label
+                {
+                    Text = "Tình trạng: Trống\nChưa có booking nào",
+                    Dock = DockStyle.Fill,
+                    Font = new Font("Segoe UI", 9F),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    ForeColor = Color.Green
+                };
+                pnlBookingList.Controls.Add(lblEmpty);
+            }
+
+            // ========== NÚT ĐẶT SÂN ==========
             var btnBooking = new Button
             {
                 Text = "Đặt sân",
@@ -260,14 +303,14 @@ namespace BadmintonCourtManagement.GUI
                 this.Controls.Add(bookingCourtDetailGUI);
             };
 
+            // ========== THÊM VÀO LAYOUT ==========
             tlCourt.Controls.Add(lblName, 0, 0);
-            tlCourt.Controls.Add(lblInfo, 0, 1);
+            tlCourt.Controls.Add(pnlBookingList, 0, 1);
             tlCourt.Controls.Add(btnBooking, 0, 2);
 
             panel.Controls.Add(tlCourt);
 
             return panel;
         }
-
     }
 }

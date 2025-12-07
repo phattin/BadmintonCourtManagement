@@ -135,6 +135,7 @@ namespace BadmintonCourtManagement.GUI
             statusFilter.Size = new Size(149, 23);
             statusFilter.TabIndex = 3;
             statusFilter.SelectedIndexChanged += statusFilter_SelectedIndexChanged;
+            statusFilter.SelectedIndex = 2;
             // 
             // customPanel3
             // 

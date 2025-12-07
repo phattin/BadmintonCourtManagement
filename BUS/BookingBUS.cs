@@ -55,5 +55,12 @@ namespace BadmintonCourtManagement.BUS
 
             return dao.DeleteBooking(id);
         }
+
+        // 🔹 Lấy BookingId tiếp theo
+        public string GetNextBookingId()
+        {
+            return dao.GetNextBookingId();
+        }
+
     }
 }

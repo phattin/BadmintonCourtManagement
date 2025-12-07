@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using BadmintonCourtManagement.DTO;
 
 namespace BadmintonCourtManagement.DAO
@@ -230,7 +230,7 @@ namespace BadmintonCourtManagement.DAO
                 MySqlCommand cmd = new MySqlCommand(query, db.Connection);
                 cmd.Parameters.AddWithValue("@BookingId", bookingId);
                 MySqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read()) // ch? ??c 1 d�ng duy nh?t
+                if (reader.Read()) // ch? ??c 1 dòng duy nh?t
                 {
                     booking = new BookingDTO
                     {
@@ -340,5 +340,44 @@ namespace BadmintonCourtManagement.DAO
             }
             return result > 0;
         }
+
+        // 🔹 Lấy BookingId tiếp theo
+        public string GetNextBookingId()
+        {
+            string query = "SELECT BookingId FROM booking ORDER BY BookingId DESC LIMIT 1";
+            string nextId = "BK00000001";  // ID đầu tiên
+
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    string lastId = reader["BookingId"].ToString(); // VD: BK00000005
+
+                    if (lastId.StartsWith("BK") && int.TryParse(lastId.Substring(2), out int numericPart))
+                    {
+                        nextId = "BK" + (numericPart + 1).ToString("D8"); // D8 => 8 chữ số: 00000006
+                    }
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                // log lỗi nếu cần
+                return nextId; // vẫn trả về nextId hiện tại
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return nextId;
+        }
+
+
     }
 }
