@@ -134,7 +134,7 @@
             Title.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Title.AutoSize = true;
             Title.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Title.Location = new Point(124, 48);
+            Title.Location = new Point(320, 48);
             Title.Margin = new Padding(4, 0, 4, 0);
             Title.Name = "Title";
             Title.Size = new Size(259, 56);

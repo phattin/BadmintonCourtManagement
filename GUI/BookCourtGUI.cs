@@ -34,9 +34,14 @@ namespace BadmintonCourtManagement.GUI
 
         private void ReloadCourtList()
         {
-            currentList = courtBUS.GetAllCourts();
+            currentList = courtBUS.GetActiveCourts();
+
+            // DEBUG: Kiểm tra xem có bao nhiêu sân active
+            MessageBox.Show($"Số sân hoạt động: {currentList.Count}");
+
             LoadCourts(currentList, 1);
         }
+
 
         private void PCourtList_Resize(object? sender, EventArgs e)
         {
@@ -55,7 +60,18 @@ namespace BadmintonCourtManagement.GUI
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            currentList = courtBUS.Search(textBox1.Text);
+            // TÌM KIẾM CHỈ TRONG SÂN HOẠT ĐỘNG
+            string keyword = textBox1.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                currentList = courtBUS.GetActiveCourts();
+            }
+            else
+            {
+                // Tìm kiếm và lọc chỉ lấy sân hoạt động
+                var searchResults = courtBUS.Search(keyword);
+                currentList = searchResults.Where(c => c.Status == CourtDTO.Option.active).ToList();
+            }
             LoadCourts(currentList, 1);
         }
 

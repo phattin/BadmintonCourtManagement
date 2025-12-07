@@ -333,7 +333,15 @@ namespace BadmintonCourtManagement.GUI
 
         private void statusFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedStatus = statusFilter.SelectedItem.ToString();
+            // Kiểm tra nếu courtBUS chưa được khởi tạo (trong lúc InitializeComponent)
+            if (courtBUS == null)
+                return;
+
+            string selectedStatus = statusFilter.SelectedItem?.ToString();
+
+            // Kiểm tra nếu chưa chọn gì
+            if (string.IsNullOrEmpty(selectedStatus))
+                return;
 
             string statusCode = "all";
             if (selectedStatus == "Hoạt động")
@@ -342,8 +350,14 @@ namespace BadmintonCourtManagement.GUI
                 statusCode = "maintenance";
 
             currentList = courtBUS.FilterByStatus(statusCode);
+
+            // Đảm bảo currentList không null
+            if (currentList == null)
+                currentList = new List<CourtDTO>();
+
             LoadCourts(currentList, 1);
         }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {

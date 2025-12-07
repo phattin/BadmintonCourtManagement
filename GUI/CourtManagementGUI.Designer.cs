@@ -35,7 +35,6 @@ namespace BadmintonCourtManagement.GUI
             customPanel1 = new CustomPanel();
             pCourtList = new TableLayoutPanel();
             customPanel2 = new CustomPanel();
-            pictureBox1 = new PictureBox();
             customPanel4 = new CustomPanel();
             statusFilter = new ComboBox();
             customPanel3 = new CustomPanel();
@@ -50,7 +49,6 @@ namespace BadmintonCourtManagement.GUI
             btnAdd = new Label();
             customPanel1.SuspendLayout();
             customPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             customPanel4.SuspendLayout();
             customPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
@@ -94,7 +92,7 @@ namespace BadmintonCourtManagement.GUI
             pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pCourtList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pCourtList.Location = new Point(38, 76);
-            pCourtList.Margin = new Padding(2, 2, 2, 2);
+            pCourtList.Margin = new Padding(2);
             pCourtList.Name = "pCourtList";
             pCourtList.RowCount = 2;
             pCourtList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
@@ -108,7 +106,6 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             customPanel2.BackColor = Color.FromArgb(0, 120, 103);
             customPanel2.BorderRadius = 20;
-            customPanel2.Controls.Add(pictureBox1);
             customPanel2.Controls.Add(customPanel4);
             customPanel2.Controls.Add(customPanel3);
             customPanel2.Location = new Point(0, 0);
@@ -116,25 +113,13 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.Size = new Size(1003, 55);
             customPanel2.TabIndex = 0;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(948, 9);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(36, 35);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 3;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
-            // 
             // customPanel4
             // 
             customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             customPanel4.BackColor = Color.White;
             customPanel4.BorderRadius = 10;
             customPanel4.Controls.Add(statusFilter);
-            customPanel4.Location = new Point(770, 16);
+            customPanel4.Location = new Point(847, 16);
             customPanel4.Margin = new Padding(3, 2, 3, 2);
             customPanel4.Name = "customPanel4";
             customPanel4.Size = new Size(149, 23);
@@ -310,7 +295,6 @@ namespace BadmintonCourtManagement.GUI
             Load += CourtManagementGUI_Load;
             customPanel1.ResumeLayout(false);
             customPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             customPanel4.ResumeLayout(false);
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
@@ -330,7 +314,6 @@ namespace BadmintonCourtManagement.GUI
         private CustomPanel customPanel3;
         private PictureBox btnDelete;
         private TextBox textBox1;
-        private PictureBox pictureBox1;
         private CustomPanel customPanel4;
         private Panel drPanelCourtMN;
         private Label btnAdd;
