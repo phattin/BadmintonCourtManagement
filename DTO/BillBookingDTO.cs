@@ -2,32 +2,63 @@ namespace BadmintonCourtManagement.DTO
 {
     public class BillBookingDTO
     {
-        private string billBookingId = "";
-        private string bookingId = "";
-        private double totalPrice;
-        private string employeeId = "";
-        private string customerId = "";
-        private DateTime dateCreated = DateTime.Now;
-        private double prePaid = 0;
+        // Thông tin hóa đơn
+        public string BillBookingId { get; set; } = "";
+        public string BookingId { get; set; } = "";
+        public string EmployeeId { get; set; } = "";
+        public string CustomerId { get; set; } = "";
+        public double TotalPrice { get; set; } = 0;
+        public double PrePayment { get; set; } = 0;         // Tiền đặt cọc / trả trước
+        public double RemainingAmount => TotalPrice - PrePayment; // Tiền còn lại phải thu
 
-        public string BillBookingId { get => billBookingId; set => billBookingId = value; }
-        public string BookingId { get => bookingId; set => bookingId = value; }
-        public double TotalPrice { get => totalPrice; set => totalPrice = value; }
-        public string EmployeeId { get => employeeId; set => employeeId = value; }
-        public string CustomerId { get => customerId; set => customerId = value; }
-        public DateTime DateCreated { get => dateCreated; set => dateCreated = value; }
-        public double PrePaid { get => prePaid; set => prePaid = value; }
+        // Thông tin bổ sung để hiển thị (JOIN từ các bảng khác)
+        public string EmployeeName { get; set; } = "";
+        public string CustomerName { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string CourtId { get; set; } = "";
+        public string CourtName { get; set; } = "";
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public string BookingStatus { get; set; } = "successful"; // successful / played
+        public DateTime DateCreated { get; set; } = DateTime.Now;
 
+        // Constructor mặc định
         public BillBookingDTO() { }
-        public BillBookingDTO(string billBookingId, string bookingId, double totalPrice, string employeeId, string customerId, DateTime dateCreated, double prePaid)
+
+        // Constructor đầy đủ (khi chỉ cần dữ liệu chính)
+        public BillBookingDTO(string billBookingId, string bookingId, string employeeId, 
+            string customerId, double totalPrice, double prePayment)
         {
-            this.BillBookingId = billBookingId;
-            this.BookingId = bookingId;
-            this.TotalPrice = totalPrice;
-            this.EmployeeId = employeeId;
-            this.CustomerId = customerId;
-            this.DateCreated = dateCreated;
-            this.PrePaid = prePaid;
+            BillBookingId = billBookingId;
+            BookingId = bookingId;
+            EmployeeId = employeeId;
+            CustomerId = customerId;
+            TotalPrice = totalPrice;
+            PrePayment = prePayment;
+        }
+
+        // Constructor dùng khi lấy dữ liệu chi tiết để hiển thị trên grid/card
+        public BillBookingDTO(string billBookingId, string bookingId, string employeeId, string employeeName,
+            string customerId, string customerName, string phone,
+            string courtId, string courtName,
+            DateTime startTime, DateTime endTime, string bookingStatus,
+            double totalPrice, double prePayment, DateTime dateCreated)
+        {
+            BillBookingId = billBookingId;
+            BookingId = bookingId;
+            EmployeeId = employeeId;
+            EmployeeName = employeeName;
+            CustomerId = customerId;
+            CustomerName = customerName;
+            Phone = phone;
+            CourtId = courtId;
+            CourtName = courtName;
+            StartTime = startTime;
+            EndTime = endTime;
+            BookingStatus = bookingStatus;
+            TotalPrice = totalPrice;
+            PrePayment = prePayment;
+            DateCreated = dateCreated;
         }
     }
 }

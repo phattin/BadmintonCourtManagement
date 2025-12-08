@@ -108,6 +108,10 @@ namespace BadmintonCourtManagement.GUI
                     case "F15":
                         menuItems.Add("Quản lý loại sản phẩm", TypeProduct_Click);
                         break;
+                    case "F16":
+                        menuItems.Add("Quản lý hóa đơn đặt sân", BillBooking_Click);
+                        break;
+                    
                 }
             }
 
@@ -229,10 +233,10 @@ namespace BadmintonCourtManagement.GUI
         {
             OpenChildPanel(new SupplierGUI(currentAccount));
         }
-        // private void BillProduct_Click(object? sender, EventArgs e)
-        // {
-        //     OpenChildPanel(new BillProductGUI(currentAccount));
-        // }
+        private void BillBooking_Click(object? sender, EventArgs e)
+        {
+            OpenChildPanel(new BillBookingGUI(currentAccount));
+        }
 
         private void MainLayout_Load(object sender, EventArgs e)
         {
