@@ -305,5 +305,40 @@ namespace BadmintonCourtManagement.DAO
             return list;
         }
 
+        // 🔹 Lấy danh sách sân đang hoạt động (dùng cho UI đặt sân)
+        public List<CourtDTO> GetActiveCourts()
+        {
+            List<CourtDTO> list = new List<CourtDTO>();
+            string query = "SELECT * FROM court WHERE Status = @status";
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                cmd.Parameters.AddWithValue("@status", "active");
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    CourtDTO court = new CourtDTO
+                    {
+                        CourtId = reader["CourtId"].ToString(),
+                        CourtName = reader["CourtName"].ToString(),
+                        Status = (CourtDTO.Option)Enum.Parse(typeof(CourtDTO.Option), reader["Status"].ToString())
+                    };
+                    list.Add(court);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Lỗi khi lấy danh sách sân hoạt động: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return list;
+        }
+
+
     }
 }

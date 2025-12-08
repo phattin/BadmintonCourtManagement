@@ -50,8 +50,11 @@ namespace BadmintonCourtManagement.GUI
         { "F09", "Employee" },
         { "F10", "Account" },
         { "F11", "Permission" },
-        { "F12", "Statistic" }
-    };
+        { "F12", "Statistic" },
+        { "F13", "PriceRule"  },
+        { "F14", "Brand"   },
+        { "F15", "TypeProduct"}
+        };
 
             // Lấy chi tiết quyền
             var permissionDetails = permissionDetailBUS.GetPermissionDetailsByPermissionId(permissionId);
@@ -276,7 +279,10 @@ namespace BadmintonCourtManagement.GUI
                 { "Employee", "F09" },
                 { "Account", "F10" },
                 { "Permission", "F11" },
-                { "Statistic", "F12" }
+                { "Statistic", "F12" },
+                { "PriceRule", "F13"  },
+                { "Brand", "F14"   },
+                { "TypeProduct", "F15"}
             };
             foreach (var option in selectedOptions)
             {
@@ -350,6 +356,16 @@ namespace BadmintonCourtManagement.GUI
                 }
 
             }
+        }
+
+        private void chbViewPermission_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox7_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

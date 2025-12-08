@@ -29,7 +29,7 @@
             btnTimeFinish = new BadmintonCourtManagement.GUI.ComponentsGUI.TimePicker();
             lbltimeFinish = new Label();
             customPanel1 = new CustomPanel();
-            textBox1 = new TextBox();
+            txtSearch = new TextBox();
             customPanel3 = new CustomPanel();
             btnTimeStart = new BadmintonCourtManagement.GUI.ComponentsGUI.TimePicker();
             lbltimeStart = new Label();
@@ -159,6 +159,7 @@
             customPanel5.TabIndex = 11;
             // 
             // customPanel4
+            // 
             customPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             customPanel4.BackColor = Color.White;
             customPanel4.BorderRadius = 10;
@@ -168,15 +169,14 @@
             customPanel4.Name = "customPanel4";
             customPanel4.Size = new Size(113, 38);
             customPanel4.TabIndex = 3;
-            //customPanel4.Paint += customPanel4_Paint;
-
+            // 
             // btnTimeFinish
             // 
-            btnTimeFinish.Location = new Point(83, 5);
+            btnTimeFinish.Location = new Point(85, 5);
             btnTimeFinish.Margin = new Padding(2);
             btnTimeFinish.Name = "btnTimeFinish";
             btnTimeFinish.SelectedTime = new DateTime(2025, 10, 3, 15, 16, 6, 16);
-            btnTimeFinish.Size = new Size(28, 27);
+            btnTimeFinish.Size = new Size(26, 27);
             btnTimeFinish.TabIndex = 10;
             btnTimeFinish.ValueChanged += btnTimeFinish_ValueChanged;
             btnTimeFinish.Load += btnTimeFinish_Load;
@@ -190,28 +190,29 @@
             lbltimeFinish.Size = new Size(77, 17);
             lbltimeFinish.TabIndex = 2;
             lbltimeFinish.Text = "Giờ kết thúc";
+            lbltimeFinish.Click += lbltimeFinish_Click;
             // 
             // customPanel1
             // 
             customPanel1.BackColor = Color.White;
             customPanel1.BorderRadius = 30;
-            customPanel1.Controls.Add(textBox1);
+            customPanel1.Controls.Add(txtSearch);
             customPanel1.Location = new Point(21, 21);
             customPanel1.Name = "customPanel1";
             customPanel1.Size = new Size(247, 38);
             customPanel1.TabIndex = 0;
             // 
-            // textBox1
+            // txtSearch
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(12, 8);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Value";
-            textBox1.Size = new Size(125, 20);
-            textBox1.TabIndex = 0;
-            textBox1.TextChanged += textBox1_TextChanged;
+            txtSearch.BorderStyle = BorderStyle.None;
+            txtSearch.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.ForeColor = Color.Black;
+            txtSearch.Location = new Point(12, 8);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Value";
+            txtSearch.Size = new Size(125, 20);
+            txtSearch.TabIndex = 0;
+            txtSearch.KeyDown += TxtSearch_KeyDown;
             // 
             // customPanel3
             // 
@@ -338,7 +339,7 @@
         private ComponentsGUI.TimePicker btnTimeFinish;
         private Label lbltimeFinish;
         private CustomPanel customPanel1;
-        private TextBox textBox1;
+        private TextBox txtSearch;
         private CustomPanel customPanel3;
         private ComponentsGUI.TimePicker btnTimeStart;
         private Label lbltimeStart;
