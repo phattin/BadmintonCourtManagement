@@ -116,11 +116,21 @@ namespace BadmintonCourtManagement.GUI
 
         private void btnBooking_Click(object sender, EventArgs e)
         {
+            // Đóng form popup nếu có
+            Form parentForm = this.FindForm();
+            if (parentForm != null)
+            {
+                parentForm.Close();
+                return;
+            }
+
+            // Trường hợp dùng nhúng trực tiếp (fallback)
             this.Controls.Clear();
             var bookingGUI = new BookCourtGUI(currentAccount);
             bookingGUI.Dock = DockStyle.Fill;
             this.Controls.Add(bookingGUI);
         }
+
 
         // Validate giờ bắt đầu
         private void txtStartTime_TextChanged(object sender, EventArgs e)
@@ -278,8 +288,8 @@ namespace BadmintonCourtManagement.GUI
                 double prePayment = double.Parse(txtPrePayment.Text);
 
 
-                    // 2️⃣ Parse thông tin booking (giữ nguyên)
-                    DateOnly bookingDate = DateOnly.ParseExact(txtDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                // 2️⃣ Parse thông tin booking (giữ nguyên)
+                DateOnly bookingDate = DateOnly.ParseExact(txtDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 TimeOnly startTime = TimeOnly.Parse(txtStartTime.Text);
                 TimeOnly endTime = TimeOnly.Parse(txtEndTime.Text);
 
@@ -394,7 +404,7 @@ namespace BadmintonCourtManagement.GUI
                 // Thêm vào pricebookingdetail
                 foreach (PriceBookingDetailDTO ruleDetail in priceBookingDetails)
                 {
-                    if(!PriceBookingDetailBUS.InsertPriceBookingDetail(ruleDetail))
+                    if (!PriceBookingDetailBUS.InsertPriceBookingDetail(ruleDetail))
                         MessageBox.Show("Đặt sân thành công nhưng lưu chi tiết giá thất bại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 MessageBox.Show($"Đặt sân thành công!\n\n" +
@@ -415,6 +425,14 @@ namespace BadmintonCourtManagement.GUI
             {
                 MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            // 11️⃣ Quay lại trang danh sách
+            Form parentForm = this.FindForm();
+            if (parentForm != null)
+            {
+                parentForm.Close();   // đóng popup, BookCourtGUI tự reload ở ngoài
+            }
+
         }
 
         private void txtTotalPrice_TextChanged(object sender, EventArgs e)
