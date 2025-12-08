@@ -32,11 +32,9 @@ namespace BadmintonCourtManagement.GUI
             pSignIn = new Panel();
             panel3 = new Panel();
             txtPassword = new TextBox();
-            txtPassword.Text = "admin123"; // Default password for testing
             pIconPassword = new PictureBox();
             panel2 = new Panel();
             txtUsername = new TextBox();
-            txtUsername.Text = "admin"; // Default username for testing
             pIconUser = new PictureBox();
             bSignIn = new Button();
             lblTitle = new Label();
@@ -89,6 +87,7 @@ namespace BadmintonCourtManagement.GUI
             txtPassword.Size = new Size(411, 32);
             txtPassword.TabIndex = 3;
             txtPassword.Tag = "";
+            txtPassword.Text = "admin123";
             txtPassword.UseSystemPasswordChar = true;
             txtPassword.TextChanged += txtPassword_TextChanged;
             txtPassword.KeyDown += txtPassword_KeyDown;
@@ -130,6 +129,7 @@ namespace BadmintonCourtManagement.GUI
             txtUsername.Size = new Size(414, 32);
             txtUsername.TabIndex = 3;
             txtUsername.Tag = "";
+            txtUsername.Text = "admin";
             txtUsername.TextChanged += txtUsername_TextChanged;
             txtUsername.KeyDown += txtUsername_KeyDown;
             // 
@@ -222,6 +222,8 @@ namespace BadmintonCourtManagement.GUI
             Controls.Add(lblWelcome);
             Controls.Add(pSignIn);
             Margin = new Padding(2);
+            MaximumSize = new Size(944, 691);
+            MinimumSize = new Size(944, 691);
             Name = "LoginGUI";
             Text = "Đăng nhập";
             Load += LoginGUI_Load;
