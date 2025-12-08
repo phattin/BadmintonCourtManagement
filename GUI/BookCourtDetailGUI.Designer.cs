@@ -22,14 +22,12 @@ namespace BadmintonCourtManagement.GUI
             btnBooking = new Label();
             customPanel1 = new CustomPanel();
             calBooking = new MonthCalendar();
-            lblCalStart = new Label();
-            timeStartPicker = new DateTimePicker();
-            lblCalEnd = new Label();
-            timeEndPicker = new DateTimePicker();
             customPanel2 = new CustomPanel();
+            customPanel10 = new CustomPanel();
+            txtPrePayment = new TextBox();
+            lblPrePayment = new Label();
             btnBooking4 = new Label();
             customPanel8 = new CustomPanel();
-            pictureBox5 = new PictureBox();
             txtTotalPrice = new TextBox();
             customPanel7 = new CustomPanel();
             txtEndTime = new TextBox();
@@ -41,31 +39,25 @@ namespace BadmintonCourtManagement.GUI
             label4 = new Label();
             label6 = new Label();
             customPanel4 = new CustomPanel();
-            pictureBox1 = new PictureBox();
             txtPhone = new TextBox();
             customPanel9 = new CustomPanel();
-            pictureBox6 = new PictureBox();
             txtCourtID = new TextBox();
             lblCourtID = new Label();
             customPanel3 = new CustomPanel();
-            btnDelete = new PictureBox();
             txtCustomerName = new TextBox();
             label1 = new Label();
             label3 = new Label();
             label2 = new Label();
             customPanel1.SuspendLayout();
             customPanel2.SuspendLayout();
+            customPanel10.SuspendLayout();
             customPanel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             customPanel7.SuspendLayout();
             customPanel6.SuspendLayout();
             customPanel5.SuspendLayout();
             customPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             customPanel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             customPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)btnDelete).BeginInit();
             SuspendLayout();
             // 
             // lblTitle
@@ -105,19 +97,20 @@ namespace BadmintonCourtManagement.GUI
             customPanel1.BackColor = Color.WhiteSmoke;
             customPanel1.BorderRadius = 20;
             customPanel1.Controls.Add(calBooking);
-            customPanel1.Controls.Add(lblCalStart);
-            customPanel1.Controls.Add(timeStartPicker);
-            customPanel1.Controls.Add(lblCalEnd);
-            customPanel1.Controls.Add(timeEndPicker);
+            customPanel1.Controls.Add(label4);
+            customPanel1.Controls.Add(label5);
+            customPanel1.Controls.Add(customPanel6);
+            customPanel1.Controls.Add(customPanel7);
             customPanel1.Location = new Point(56, 111);
             customPanel1.Margin = new Padding(2);
             customPanel1.Name = "customPanel1";
-            customPanel1.Size = new Size(396, 466);
+            customPanel1.Size = new Size(396, 454);
             customPanel1.TabIndex = 7;
             // 
             // calBooking
             // 
-            calBooking.Location = new Point(29, 58);
+            calBooking.Enabled = false;
+            calBooking.Location = new Point(68, 48);
             calBooking.Margin = new Padding(7);
             calBooking.MaxSelectionCount = 1;
             calBooking.Name = "calBooking";
@@ -125,60 +118,15 @@ namespace BadmintonCourtManagement.GUI
             calBooking.DateChanged += calBooking_DateChanged;
             calBooking.DateSelected += calBooking_DateSelected;
             // 
-            // lblCalStart
-            // 
-            lblCalStart.AutoSize = true;
-            lblCalStart.Location = new Point(29, 301);
-            lblCalStart.Margin = new Padding(2, 0, 2, 0);
-            lblCalStart.Name = "lblCalStart";
-            lblCalStart.Size = new Size(87, 20);
-            lblCalStart.TabIndex = 1;
-            lblCalStart.Text = "Giờ bắt đầu";
-            lblCalStart.Click += lblCalStart_Click;
-            // 
-            // timeStartPicker
-            // 
-            timeStartPicker.Format = DateTimePickerFormat.Time;
-            timeStartPicker.Location = new Point(120, 298);
-            timeStartPicker.Margin = new Padding(2);
-            timeStartPicker.Name = "timeStartPicker";
-            timeStartPicker.ShowUpDown = true;
-            timeStartPicker.Size = new Size(97, 27);
-            timeStartPicker.TabIndex = 2;
-            timeStartPicker.ValueChanged += timeStartPicker_ValueChanged;
-            // 
-            // lblCalEnd
-            // 
-            lblCalEnd.AutoSize = true;
-            lblCalEnd.Location = new Point(29, 350);
-            lblCalEnd.Margin = new Padding(2, 0, 2, 0);
-            lblCalEnd.Name = "lblCalEnd";
-            lblCalEnd.Size = new Size(88, 20);
-            lblCalEnd.TabIndex = 3;
-            lblCalEnd.Text = "Giờ kết thúc";
-            // 
-            // timeEndPicker
-            // 
-            timeEndPicker.Format = DateTimePickerFormat.Time;
-            timeEndPicker.Location = new Point(120, 349);
-            timeEndPicker.Margin = new Padding(2);
-            timeEndPicker.Name = "timeEndPicker";
-            timeEndPicker.ShowUpDown = true;
-            timeEndPicker.Size = new Size(97, 27);
-            timeEndPicker.TabIndex = 4;
-            timeEndPicker.ValueChanged += timeEndPicker_ValueChanged;
-            // 
             // customPanel2
             // 
             customPanel2.BackColor = Color.WhiteSmoke;
             customPanel2.BorderRadius = 20;
+            customPanel2.Controls.Add(customPanel10);
+            customPanel2.Controls.Add(lblPrePayment);
             customPanel2.Controls.Add(btnBooking4);
             customPanel2.Controls.Add(customPanel8);
-            customPanel2.Controls.Add(customPanel7);
-            customPanel2.Controls.Add(customPanel6);
             customPanel2.Controls.Add(customPanel5);
-            customPanel2.Controls.Add(label5);
-            customPanel2.Controls.Add(label4);
             customPanel2.Controls.Add(label6);
             customPanel2.Controls.Add(customPanel4);
             customPanel2.Controls.Add(customPanel9);
@@ -190,9 +138,44 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.Location = new Point(490, 111);
             customPanel2.Margin = new Padding(2);
             customPanel2.Name = "customPanel2";
-            customPanel2.Size = new Size(355, 466);
+            customPanel2.Size = new Size(355, 454);
             customPanel2.TabIndex = 8;
             customPanel2.Paint += customPanel2_Paint;
+            // 
+            // customPanel10
+            // 
+            customPanel10.BackColor = Color.White;
+            customPanel10.BorderRadius = 30;
+            customPanel10.Controls.Add(txtPrePayment);
+            customPanel10.Location = new Point(142, 285);
+            customPanel10.Margin = new Padding(2);
+            customPanel10.Name = "customPanel10";
+            customPanel10.Size = new Size(197, 38);
+            customPanel10.TabIndex = 19;
+            // 
+            // txtPrePayment
+            // 
+            txtPrePayment.BorderStyle = BorderStyle.None;
+            txtPrePayment.Font = new Font("Segoe UI", 9F);
+            txtPrePayment.ForeColor = Color.Black;
+            txtPrePayment.Location = new Point(12, 8);
+            txtPrePayment.Margin = new Padding(2);
+            txtPrePayment.Multiline = true;
+            txtPrePayment.Name = "txtPrePayment";
+            txtPrePayment.PlaceholderText = "Value";
+            txtPrePayment.Size = new Size(146, 24);
+            txtPrePayment.TabIndex = 0;
+            txtPrePayment.Text = "0";
+            // 
+            // lblPrePayment
+            // 
+            lblPrePayment.AutoSize = true;
+            lblPrePayment.Location = new Point(20, 293);
+            lblPrePayment.Margin = new Padding(2, 0, 2, 0);
+            lblPrePayment.Name = "lblPrePayment";
+            lblPrePayment.Size = new Size(64, 20);
+            lblPrePayment.TabIndex = 20;
+            lblPrePayment.Text = "Tiền cọc";
             // 
             // btnBooking4
             // 
@@ -201,7 +184,7 @@ namespace BadmintonCourtManagement.GUI
             btnBooking4.Cursor = Cursors.Hand;
             btnBooking4.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBooking4.ForeColor = Color.White;
-            btnBooking4.Location = new Point(142, 406);
+            btnBooking4.Location = new Point(142, 368);
             btnBooking4.Margin = new Padding(2, 0, 2, 0);
             btnBooking4.Name = "btnBooking4";
             btnBooking4.Padding = new Padding(14, 8, 13, 11);
@@ -215,24 +198,12 @@ namespace BadmintonCourtManagement.GUI
             // 
             customPanel8.BackColor = SystemColors.Control;
             customPanel8.BorderRadius = 30;
-            customPanel8.Controls.Add(pictureBox5);
             customPanel8.Controls.Add(txtTotalPrice);
-            customPanel8.Location = new Point(142, 346);
+            customPanel8.Location = new Point(142, 237);
             customPanel8.Margin = new Padding(2);
             customPanel8.Name = "customPanel8";
             customPanel8.Size = new Size(197, 38);
             customPanel8.TabIndex = 10;
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.Image = Properties.Resources.X;
-            pictureBox5.Location = new Point(169, 10);
-            pictureBox5.Margin = new Padding(2);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(13, 14);
-            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox5.TabIndex = 0;
-            pictureBox5.TabStop = false;
             // 
             // txtTotalPrice
             // 
@@ -247,13 +218,14 @@ namespace BadmintonCourtManagement.GUI
             txtTotalPrice.ReadOnly = true;
             txtTotalPrice.Size = new Size(125, 24);
             txtTotalPrice.TabIndex = 0;
+            txtTotalPrice.TextChanged += txtTotalPrice_TextChanged;
             // 
             // customPanel7
             // 
             customPanel7.BackColor = SystemColors.Control;
             customPanel7.BorderRadius = 30;
             customPanel7.Controls.Add(txtEndTime);
-            customPanel7.Location = new Point(142, 293);
+            customPanel7.Location = new Point(152, 360);
             customPanel7.Margin = new Padding(2);
             customPanel7.Name = "customPanel7";
             customPanel7.Size = new Size(197, 38);
@@ -279,7 +251,7 @@ namespace BadmintonCourtManagement.GUI
             customPanel6.BackColor = SystemColors.Control;
             customPanel6.BorderRadius = 30;
             customPanel6.Controls.Add(txtStartTime);
-            customPanel6.Location = new Point(142, 237);
+            customPanel6.Location = new Point(152, 304);
             customPanel6.Margin = new Padding(2);
             customPanel6.Name = "customPanel6";
             customPanel6.Size = new Size(197, 38);
@@ -329,7 +301,7 @@ namespace BadmintonCourtManagement.GUI
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(20, 301);
+            label5.Location = new Point(30, 368);
             label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
             label5.Size = new Size(88, 20);
@@ -339,7 +311,7 @@ namespace BadmintonCourtManagement.GUI
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(20, 245);
+            label4.Location = new Point(30, 312);
             label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
             label4.Size = new Size(87, 20);
@@ -349,7 +321,7 @@ namespace BadmintonCourtManagement.GUI
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(20, 354);
+            label6.Location = new Point(20, 245);
             label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
             label6.Size = new Size(72, 20);
@@ -360,24 +332,12 @@ namespace BadmintonCourtManagement.GUI
             // 
             customPanel4.BackColor = Color.White;
             customPanel4.BorderRadius = 30;
-            customPanel4.Controls.Add(pictureBox1);
             customPanel4.Controls.Add(txtPhone);
             customPanel4.Location = new Point(141, 126);
             customPanel4.Margin = new Padding(2);
             customPanel4.Name = "customPanel4";
             customPanel4.Size = new Size(197, 38);
             customPanel4.TabIndex = 7;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.X;
-            pictureBox1.Location = new Point(169, 10);
-            pictureBox1.Margin = new Padding(2);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(13, 14);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // txtPhone
             // 
@@ -389,14 +349,14 @@ namespace BadmintonCourtManagement.GUI
             txtPhone.Multiline = true;
             txtPhone.Name = "txtPhone";
             txtPhone.PlaceholderText = "Value";
-            txtPhone.Size = new Size(125, 24);
+            txtPhone.Size = new Size(169, 24);
             txtPhone.TabIndex = 0;
+            txtPhone.TextChanged += txtPhone_TextChanged;
             // 
             // customPanel9
             // 
             customPanel9.BackColor = SystemColors.Control;
             customPanel9.BorderRadius = 30;
-            customPanel9.Controls.Add(pictureBox6);
             customPanel9.Controls.Add(txtCourtID);
             customPanel9.Location = new Point(141, 18);
             customPanel9.Margin = new Padding(2);
@@ -404,17 +364,6 @@ namespace BadmintonCourtManagement.GUI
             customPanel9.Size = new Size(197, 38);
             customPanel9.TabIndex = 6;
             customPanel9.Paint += customPanel3_Paint;
-            // 
-            // pictureBox6
-            // 
-            pictureBox6.Image = Properties.Resources.X;
-            pictureBox6.Location = new Point(169, 10);
-            pictureBox6.Margin = new Padding(2);
-            pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(13, 14);
-            pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox6.TabIndex = 0;
-            pictureBox6.TabStop = false;
             // 
             // txtCourtID
             // 
@@ -444,7 +393,6 @@ namespace BadmintonCourtManagement.GUI
             // 
             customPanel3.BackColor = SystemColors.Control;
             customPanel3.BorderRadius = 30;
-            customPanel3.Controls.Add(btnDelete);
             customPanel3.Controls.Add(txtCustomerName);
             customPanel3.Location = new Point(141, 71);
             customPanel3.Margin = new Padding(2);
@@ -452,17 +400,6 @@ namespace BadmintonCourtManagement.GUI
             customPanel3.Size = new Size(197, 38);
             customPanel3.TabIndex = 6;
             customPanel3.Paint += customPanel3_Paint;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Image = Properties.Resources.X;
-            btnDelete.Location = new Point(169, 10);
-            btnDelete.Margin = new Padding(2);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(13, 14);
-            btnDelete.SizeMode = PictureBoxSizeMode.StretchImage;
-            btnDelete.TabIndex = 0;
-            btnDelete.TabStop = false;
             // 
             // txtCustomerName
             // 
@@ -475,7 +412,7 @@ namespace BadmintonCourtManagement.GUI
             txtCustomerName.Name = "txtCustomerName";
             txtCustomerName.PlaceholderText = "Value";
             txtCustomerName.ReadOnly = true;
-            txtCustomerName.Size = new Size(125, 24);
+            txtCustomerName.Size = new Size(169, 24);
             txtCustomerName.TabIndex = 0;
             // 
             // label1
@@ -525,9 +462,10 @@ namespace BadmintonCourtManagement.GUI
             customPanel1.PerformLayout();
             customPanel2.ResumeLayout(false);
             customPanel2.PerformLayout();
+            customPanel10.ResumeLayout(false);
+            customPanel10.PerformLayout();
             customPanel8.ResumeLayout(false);
             customPanel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             customPanel7.ResumeLayout(false);
             customPanel7.PerformLayout();
             customPanel6.ResumeLayout(false);
@@ -536,13 +474,10 @@ namespace BadmintonCourtManagement.GUI
             customPanel5.PerformLayout();
             customPanel4.ResumeLayout(false);
             customPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             customPanel9.ResumeLayout(false);
             customPanel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             customPanel3.ResumeLayout(false);
             customPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)btnDelete).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -560,10 +495,8 @@ namespace BadmintonCourtManagement.GUI
         private Label label2;
         private Label label1;
         private CustomPanel customPanel3;
-        private PictureBox btnDelete;
         private TextBox txtCustomerName;
         private CustomPanel customPanel8;
-        private PictureBox pictureBox5;
         private TextBox txtTotalPrice;
         private CustomPanel customPanel7;
         private TextBox txtEndTime;
@@ -572,19 +505,16 @@ namespace BadmintonCourtManagement.GUI
         private CustomPanel customPanel5;
         private TextBox txtDate;
         private CustomPanel customPanel4;
-        private PictureBox pictureBox1;
         private TextBox txtPhone;
         private Label btnBooking4;
         private CustomPanel customPanel9;
-        private PictureBox pictureBox6;
         private TextBox txtCourtID;
         private Label lblCourtID;
 
         // Khu chọn lịch & giờ bên trái
         private MonthCalendar calBooking;
-        private DateTimePicker timeStartPicker;
-        private DateTimePicker timeEndPicker;
-        private Label lblCalStart;
-        private Label lblCalEnd;
+        private CustomPanel customPanel10;
+        private TextBox txtPrePayment;
+        private Label lblPrePayment;
     }
 }

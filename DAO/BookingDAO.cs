@@ -378,6 +378,86 @@ namespace BadmintonCourtManagement.DAO
             return nextId;
         }
 
+        public List<BookingDTO> Filter(DateOnly date, TimeOnly startTime, TimeOnly endTime)
+        {
+            List<BookingDTO> result = new List<BookingDTO>();
+            string query = "SELECT * FROM booking";
+
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var booking = new BookingDTO
+                    {
+                        BookingId = reader["BookingId"].ToString(),
+                        CourtId = reader["CourtId"].ToString(),
+                        Status = reader["Status"] != DBNull.Value
+                            ? (BookingDTO.Option)Enum.Parse(typeof(BookingDTO.Option), reader["Status"].ToString())
+                            : default,
+                        StartTime = DateTime.Parse(reader["StartTime"].ToString()),
+                        EndTime = DateTime.Parse(reader["EndTime"].ToString()),
+                    };
+
+                    // Lấy ngày trong DB
+                    DateOnly bookingDate = DateOnly.FromDateTime(booking.StartTime);
+
+                    // ❗ Chỉ lấy booking có đúng ngày
+                    if (bookingDate != date)
+                        continue;
+
+                    // Tách giờ từ DB
+                    TimeOnly dbStart = TimeOnly.FromDateTime(booking.StartTime);
+                    TimeOnly dbEnd = TimeOnly.FromDateTime(booking.EndTime);
+
+                    bool addBooking = false;
+
+                    // 🟦 Nếu endTime không được chọn → lọc theo startTime
+                    if (endTime == default)
+                    {
+                        if (dbStart >= startTime)
+                            addBooking = true;
+                    }
+                    else
+                    {
+                        // 🟩 Khoảng thời gian giao nhau
+                        if (dbStart < endTime && dbEnd > startTime)
+                            addBooking = true;
+                    }
+
+                    // 🟥 Nếu startTime nằm trong khoảng DB
+                    if (dbStart <= startTime && startTime < dbEnd)
+                        addBooking = true;
+
+                    // 🟥 Nếu endTime nằm trong khoảng DB
+                    if (endTime != default && dbStart < endTime && endTime <= dbEnd)
+                        addBooking = true;
+
+                    if (addBooking)
+                    {
+                        booking.Status = BookingDTO.Option.playing;
+                        result.Add(booking);
+                    }
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error filtering bookings: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+
+            return result;
+        }
+
+
 
     }
 }

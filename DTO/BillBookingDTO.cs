@@ -8,7 +8,12 @@
         public string CustomerId { get; set; } = "";
         public string BookingId { get; set; } = "";
         public double TotalPrice { get; set; } = 0;
-        public double PrePayment { get; set; } = 0;  // Đổi từ PrePaid sang PrePayment
+        public double PrePayment { get; set; } = 0; 
+        public double RemainingAmount
+        {
+            get { return TotalPrice - PrePayment; }
+        }
+
 
         // Constructors
         public BillBookingDTO() { }

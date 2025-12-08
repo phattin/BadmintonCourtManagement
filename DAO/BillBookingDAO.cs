@@ -126,8 +126,8 @@ namespace BadmintonCourtManagement.DAO
         public bool InsertBillBooking(BillBookingDTO bill)
         {
             string query = @"INSERT INTO billbooking 
-                            (BillBookingId, EmployeeId, CustomerId, BookingId, TotalPrice, PrePayment) 
-                            VALUES (@billBookingId, @employeeId, @customerId, @bookingId, @totalPrice, @prePayment)";
+                            (BillBookingId, EmployeeId, CustomerId, BookingId, TotalPrice, PrePayment, RemainingAmount) 
+                            VALUES (@billBookingId, @employeeId, @customerId, @bookingId, @totalPrice, @prePayment, @remainingAmount)";
             try
             {
                 db.OpenConnection();
@@ -138,12 +138,12 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@bookingId", bill.BookingId);
                 cmd.Parameters.AddWithValue("@totalPrice", bill.TotalPrice);
                 cmd.Parameters.AddWithValue("@prePayment", bill.PrePayment);
+                cmd.Parameters.AddWithValue("@remainingAmount", bill.RemainingAmount);
                 int result = cmd.ExecuteNonQuery();
                 return result > 0;
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("Lỗi khi thêm hóa đơn: " + ex.Message);
                 return false;
             }
             finally

@@ -62,5 +62,11 @@ namespace BadmintonCourtManagement.BUS
             return dao.GetNextBookingId();
         }
 
+        public List<BookingDTO> Filter(DateOnly date, TimeOnly start, TimeOnly end)
+        {
+            return dao.Filter(date, start, end);
+        }
+
+
     }
 }

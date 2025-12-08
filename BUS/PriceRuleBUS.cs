@@ -84,5 +84,10 @@ namespace BadmintonCourtManagement.BUS
 
             return "PR" + nextNumber.ToString("D4");
         }
+
+        public PriceRuleDTO GetPriceRuleByTime(TimeOnly startTime, TimeOnly endTime, DateOnly bookingDate)
+        {
+            return dao.GetPriceRuleByTime(startTime, endTime, bookingDate);
+        }
     }
 }
