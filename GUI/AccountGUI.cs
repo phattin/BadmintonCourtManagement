@@ -213,7 +213,6 @@ namespace GUI
                             EmployeePhone = currentEmployee.EmployeePhone,
                             Address = currentEmployee.Address,
                             RoleId = currentEmployee.RoleId,
-                            Username = null
                         };
                         employeeBUS.UpdateEmployee(updateEmployee);
                         LoadData();
