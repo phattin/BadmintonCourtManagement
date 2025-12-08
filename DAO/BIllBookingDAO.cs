@@ -86,7 +86,7 @@ namespace BadmintonCourtManagement.DAO
             string whereClause = string.IsNullOrWhiteSpace(keyword) ? "" : @"
                 WHERE bb.BillBookingId LIKE @key
                    OR c.CustomerName LIKE @key
-                   OR c.Phone LIKE @key
+
                    OR ct.CourtName LIKE @key";
 
             string orderByClause = sortBy switch
