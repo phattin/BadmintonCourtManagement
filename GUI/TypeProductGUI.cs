@@ -206,22 +206,56 @@ namespace BadmintonCourtManagement.GUI
             };
             btnEdit.Visible = isUpdate;
 
-            btnDelete.Click += (s, e) =>
-            {
-                var result = MessageBox.Show($"Xóa loại sản phẩm '{dto.TypeProductName}'?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    if (typeProductBUS.DeleteTypeProduct(dto.TypeProductId))
-                    {
-                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ReloadTypeProductList();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không thể xóa (đang được sử dụng hoặc lỗi CSDL).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            };
+btnDelete.Click += (s, e) =>
+{
+    // 1. Kiểm tra quyền xóa (đã có sẵn isDelete)
+    if (!isDelete) return;
+
+    // 2. Kiểm tra đang được sử dụng không
+    bool inUse = typeProductBUS.IsTypeProductInUse(dto.TypeProductId);
+
+    if (inUse)
+    {
+        MessageBox.Show(
+            $"Không thể xóa loại sản phẩm '{dto.TypeProductName}' vì đang có sản phẩm thuộc loại này!",
+            "Không thể xóa",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Warning);
+        return;
+    }
+
+    // 3. Nếu không dùng → hỏi xác nhận
+    var confirmResult = MessageBox.Show(
+        $"Bạn có chắc chắn muốn xóa loại sản phẩm:\n\n{dto.TypeProductName} ({dto.TypeProductId})?\n\nHành động này không thể hoàn tác!",
+        "Xác nhận xóa",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question);
+
+    if (confirmResult != DialogResult.Yes)
+        return;
+
+    // 4. Thực hiện xóa
+    bool deleteSuccess = typeProductBUS.DeleteTypeProduct(dto.TypeProductId);
+
+    if (deleteSuccess)
+    {
+        MessageBox.Show(
+            "Xóa loại sản phẩm thành công!",
+            "Thành công",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information);
+
+        ReloadTypeProductList(); // Tải lại danh sách
+    }
+    else
+    {
+        MessageBox.Show(
+            "Xóa thất bại! Có thể do lỗi cơ sở dữ liệu hoặc ràng buộc khác.",
+            "Lỗi",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error);
+    }
+};
 
             btnEdit.Click += (s, e) =>
             {

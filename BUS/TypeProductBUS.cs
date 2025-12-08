@@ -52,6 +52,12 @@ namespace BadmintonCourtManagement.BUS
         {
             return dao.GetByTypeName(keyword);
         }
+
+
+        public bool IsTypeProductInUse(string typeProductId)
+        {
+             return dao.IsTypeProductInUse(typeProductId);
+        }
         
     }
 }

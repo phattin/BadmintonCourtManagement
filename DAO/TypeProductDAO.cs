@@ -149,7 +149,33 @@ namespace BadmintonCourtManagement.DAO
             }
             return result > 0;
         }
+// Hàm kiểm tra loại sản phẩm có đang được sử dụng không (trong bảng Product)
+        public bool IsTypeProductInUse(string typeProductId)
+        {
+            string query = @"
+                SELECT COUNT(*) 
+                FROM product 
+                WHERE TypeId = @TypeId";
 
+            try
+            {
+                db.OpenConnection();
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@TypeId", typeProductId);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+            catch
+            {
+                return true; // Nếu có lỗi → an toàn là coi như đang dùng
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
     }
 
 
