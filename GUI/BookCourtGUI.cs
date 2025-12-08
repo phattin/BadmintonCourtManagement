@@ -409,22 +409,18 @@ namespace BadmintonCourtManagement.GUI
 
             btnBooking.Click += (s, e) =>
             {
-                // === Validate giờ ===
+                // === Validate giờ (giữ nguyên như bạn đang làm) ===
                 if (!TimeOnly.TryParse(lbltimeStart.Text, out TimeOnly startTime) ||
                     !TimeOnly.TryParse(lbltimeFinish.Text, out TimeOnly endTime))
                 {
                     MessageBox.Show("Giờ không hợp lệ! Định dạng phải HH:mm.");
                     return;
                 }
-
-                // Giờ kết thúc < giờ bắt đầu
                 if (endTime <= startTime)
                 {
                     MessageBox.Show("Giờ kết thúc phải lớn hơn giờ bắt đầu!");
                     return;
                 }
-
-                // Phút hợp lệ
                 int[] allowedMinutes = { 0, 15, 30, 45 };
                 if (!allowedMinutes.Contains(startTime.Minute) || !allowedMinutes.Contains(endTime.Minute))
                 {
@@ -432,8 +428,6 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
-                // === Validate ngày giờ không được trong quá khứ ===
-                // === Validate ngày ===
                 DateTime tempDate;
                 if (!DateTime.TryParseExact(
                         lblDate.Text,
@@ -446,38 +440,44 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
 
-                // chuyển sang DateOnly
                 DateOnly bookingDate = DateOnly.FromDateTime(tempDate);
-
-                // tạo DateTime start
                 DateTime bookingStart = new DateTime(
-                    bookingDate.Year,
-                    bookingDate.Month,
-                    bookingDate.Day,
-                    startTime.Hour,
-                    startTime.Minute,
-                    0
-                );
+                    bookingDate.Year, bookingDate.Month, bookingDate.Day,
+                    startTime.Hour, startTime.Minute, 0);
 
-                // kiểm tra quá khứ
                 if (bookingStart <= DateTime.Now)
                 {
                     MessageBox.Show("Không được đặt vào thời gian trong quá khứ!");
                     return;
                 }
 
-                // === Mở giao diện đặt sân ===
-                this.Controls.Clear();
-                var bookingCourtDetailGUI = new BookCourtDetailGUI(
+                // === Mở popup BookCourtDetailGUI ===
+                Form dialog = new Form()
+                {
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent,
+                    Size = new Size(800, 500),     // chỉnh cho vừa UI chi tiết
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    ShowInTaskbar = false
+                };
+
+                var detail = new BookCourtDetailGUI(
                     currentAccount,
                     courtDTO,
                     lblDate.Text,
                     lbltimeStart.Text,
                     lbltimeFinish.Text
                 );
-                bookingCourtDetailGUI.Dock = DockStyle.Fill;
-                this.Controls.Add(bookingCourtDetailGUI);
+                detail.Dock = DockStyle.Fill;
+
+                dialog.Controls.Add(detail);
+                dialog.ShowDialog();
+
+                // sau khi popup đóng, nếu muốn refresh lại list sân:
+                ReloadCourtList();
             };
+
 
             // ================== ADD TO LAYOUT ==================
             tlCourt.Controls.Add(lblName, 0, 0);
