@@ -33,15 +33,5 @@ namespace BadmintonCourtManagement.DTO
             this.Address = employeeAddress;
             this.RoleId = roleId;
         }
-
-        public EmployeeDTO(string employeeId, string employeeName, string employeePhone, string employeeAddress, string roleId, string username)
-        {
-            this.EmployeeId = employeeId;
-            this.EmployeeName = employeeName;
-            this.EmployeePhone = employeePhone;
-            this.Address = employeeAddress;
-            this.RoleId = roleId;
-            this.Username = username;
-        }
     }
 }

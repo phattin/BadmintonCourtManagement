@@ -153,7 +153,7 @@ namespace BadmintonCourtManagement.GUI
             btnAddInvoice.TabIndex = 2;
             btnAddInvoice.Text = "Thêm / Bán";
             btnAddInvoice.TextAlign = ContentAlignment.MiddleCenter;
-            btnAddInvoice.Click += btnAddProduct_Click;
+            //btnAddInvoice.Click += btnAddProduct_Click;
             // 
             // titlePanel
             // 

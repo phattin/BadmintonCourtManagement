@@ -1,5 +1,6 @@
 ﻿using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
+using System.Linq;
 
 namespace BadmintonCourtManagement.BUS
 {
@@ -20,15 +21,13 @@ namespace BadmintonCourtManagement.BUS
         public List<EmployeeDTO> GetAllEmployeesNotHaveAccount()
         {
             List<EmployeeDTO> employees = employeeDAO.GetAllEmployees();
-            List<EmployeeDTO> employeesNotHaveAccount = new List<EmployeeDTO>();
-            foreach (var employee in employees)
-            {
-                if (string.IsNullOrEmpty(employee.Username))
-                {
-                    employeesNotHaveAccount.Add(employee);
-                }
-            }
-            return employeesNotHaveAccount;
+            List<AccountDTO> accounts = new AccountDAO().GetAllAccount1();
+            var accountEmployeeIds = accounts.Select(a => a.EmployeeId).ToHashSet();
+            List<EmployeeDTO> result = employees
+                                        .Where(e => !accountEmployeeIds.Contains(e.EmployeeId))
+                                        .ToList();
+
+            return result;
         }
 
         public EmployeeDTO GetEmployeeById(string id)
@@ -36,10 +35,10 @@ namespace BadmintonCourtManagement.BUS
             return employeeDAO.GetEmployeeById(id);
         }
 
-        public EmployeeDTO GetEmployeeByUsername(string username)
-        {
-            return employeeDAO.GetEmployeeByUsername(username);
-        }
+        //public EmployeeDTO GetEmployeeByUsername(string username)
+        //{
+        //    return employeeDAO.GetEmployeeByUsername(username);
+        //}
 
         // 🔹 Kiểm tra tên không chứa số & ký tự đặc biệt
         private bool IsValidName(string name)
