@@ -188,7 +188,7 @@ namespace BadmintonCourtManagement.DAO
         public string GetNextId()
         {
             string query = "SELECT CustomerId FROM customer ORDER BY CustomerId DESC LIMIT 1";
-            string nextId = "CUO00001";
+            string nextId = "CU00001";
             try
             {
                 db.OpenConnection();

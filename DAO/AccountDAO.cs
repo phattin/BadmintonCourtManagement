@@ -129,6 +129,7 @@ namespace BadmintonCourtManagement.DAO
                         Username = reader["Username"].ToString(),
                         Password = reader["Password"].ToString(),
                         PermissionId = reader["PermissionId"].ToString(),
+                        EmployeeId = reader["EmployeeId"].ToString(),
                         IsDeleted = Convert.ToInt32(reader["IsDeleted"])
                     };
                 }

@@ -21,9 +21,12 @@ namespace BadmintonCourtManagement.BUS
         {
             List<EmployeeDTO> employees = employeeDAO.GetAllEmployees();
             List<EmployeeDTO> employeesNotHaveAccount = new List<EmployeeDTO>();
+            AccountBUS accountBUS = new AccountBUS();
             foreach (var employee in employees)
             {
-                if (string.IsNullOrEmpty(employee.Username))
+                List<AccountDTO> accounts = accountBUS.GetAllAccount();
+                bool hasAccount = accounts.Any(acc => acc.EmployeeId == employee.EmployeeId);
+                if (!hasAccount)
                 {
                     employeesNotHaveAccount.Add(employee);
                 }
@@ -36,10 +39,10 @@ namespace BadmintonCourtManagement.BUS
             return employeeDAO.GetEmployeeById(id);
         }
 
-        public EmployeeDTO GetEmployeeByUsername(string username)
-        {
-            return employeeDAO.GetEmployeeByUsername(username);
-        }
+        // public EmployeeDTO GetEmployeeByUsername(string username)
+        // {
+        //     return employeeDAO.GetEmployeeByUsername(username);
+        // }
 
         // 🔹 Kiểm tra tên không chứa số & ký tự đặc biệt
         private bool IsValidName(string name)

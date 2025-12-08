@@ -337,21 +337,19 @@ namespace BadmintonCourtManagement.DAO
 
         public PriceRuleDTO GetPriceRuleByTime(TimeOnly startTime, TimeOnly endTime, DateOnly bookingDate)
         {
-            // 1️⃣ Kiểm tra Holiday trước
             PriceRuleDTO priceHoliday = GetHolidayPriceRuleByDate(bookingDate);
             if (priceHoliday != null)
             {
                 return priceHoliday;
             }
 
-            // 2️⃣ Xác định loại ngày: Weekend hoặc Weekday
             bool weekend = bookingDate.DayOfWeek == DayOfWeek.Saturday || bookingDate.DayOfWeek == DayOfWeek.Sunday;
             string endType = weekend ? "Weekend" : "Weekday";
 
             string qRule = @"SELECT *
                       FROM pricerule 
                       WHERE EndType = @EndType
-                      AND Status = 'Active'";
+                      AND Status = 1";
 
             PriceRuleDTO result = null;
 
@@ -374,7 +372,6 @@ namespace BadmintonCourtManagement.DAO
                                 ? TimeOnly.FromTimeSpan((TimeSpan)reader["EndTime"])
                                 : new TimeOnly();
 
-                            // 3️⃣ Kiểm tra giờ đặt có nằm trong khung giờ rule
                             if (startTime >= ruleStart && endTime <= ruleEnd)
                             {
                                 result = new PriceRuleDTO
@@ -395,7 +392,7 @@ namespace BadmintonCourtManagement.DAO
                                         : "",
                                     IsActive = string.Equals(reader["Status"]?.ToString(), "Active", StringComparison.OrdinalIgnoreCase) ? 1 : 0
                                 };
-                                break; // lấy rule đầu tiên match
+                                break; 
                             }
                         }
                     }
@@ -410,7 +407,7 @@ namespace BadmintonCourtManagement.DAO
                 db.CloseConnection();
             }
 
-            return result; // null nếu không có rule nào phù hợp
+            return result;
         }
 
 
