@@ -173,7 +173,7 @@ namespace BadmintonCourtManagement.GUI
                 totalPrice += bill.TotalPrice;
             }
             // create new bill import
-            newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, employeeBus.GetEmployeeByUsername(currentAcc.Username).EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
+            newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, currentAcc.EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
 
             // insert new bill import
             billImportBus.InsertBillImport(newBill);

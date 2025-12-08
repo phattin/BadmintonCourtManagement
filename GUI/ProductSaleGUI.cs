@@ -563,7 +563,7 @@ namespace BadmintonCourtManagement.GUI
             string billDetailId = bill_detail_bus.GetMaxId();
             EmployeeBUS empBus = new EmployeeBUS();
 
-            var employee = empBus.GetEmployeeByUsername(acc.Username);
+            var employee = empBus.GetEmployeeById(acc.EmployeeId);
             if (employee == null)
             {
                 MessageBox.Show("Không tìm thấy nhân viên tương ứng với tài khoản này.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
