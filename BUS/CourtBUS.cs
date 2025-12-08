@@ -83,5 +83,11 @@ namespace BadmintonCourtManagement.BUS
             return courtDAO.FilterByStatus(status);
         }
 
+        public List<CourtDTO> GetActiveCourts()
+        {
+            return courtDAO.GetActiveCourts();
+        }
+
+
     }
 }

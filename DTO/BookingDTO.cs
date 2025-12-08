@@ -6,7 +6,7 @@ namespace BadmintonCourtManagement.DTO
         private string courtId = "";
         private DateTime startTime = DateTime.Now;
         private DateTime endTime = DateTime.Now;
-        public enum Option { successful, played };
+        public enum Option { successful, played, playing };
         private Option status = Option.played;
 
         public string BookingId { get => bookingId; set => bookingId = value; }

@@ -26,18 +26,25 @@ namespace BadmintonCourtManagement.GUI
             CourtID.Text = courtId;
 
             Status.Items.Clear();
-            Status.Items.Add("Hoạt động");
-            Status.Items.Add("Bảo trì");
 
             if (mode == "Insert")
             {
                 Title.Text = "Thêm sân";
                 txtCourtName.Text = "";
+
+                // Chỉ thêm "Hoạt động" cho form Thêm
+                Status.Items.Add("Hoạt động");
                 Status.SelectedIndex = 0;
+                Status.Enabled = false; // Không cho thay đổi
             }
             else if (mode == "Update")
             {
                 Title.Text = "Sửa sân";
+
+                // Thêm cả 2 options cho form Sửa
+                Status.Items.Add("Hoạt động");
+                Status.Items.Add("Bảo trì");
+                Status.Enabled = true; // Cho phép thay đổi
 
                 // Load thông tin sân
                 var court = courtBUS.GetCourtById(courtId);
@@ -60,9 +67,6 @@ namespace BadmintonCourtManagement.GUI
             }
 
             string courtName = txtCourtName.Text.Trim();
-            var status = Status.SelectedItem.ToString() == "Hoạt động"
-                ? CourtDTO.Option.active
-                : CourtDTO.Option.maintenance;
 
             // ---- THÊM MỚI ----
             if (mode == "Insert")
@@ -71,7 +75,7 @@ namespace BadmintonCourtManagement.GUI
                 {
                     CourtId = courtId,
                     CourtName = courtName,
-                    Status = status
+                    Status = CourtDTO.Option.active  // Luôn là active
                 }))
                 {
                     MessageBox.Show("Thêm sân thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -90,6 +94,10 @@ namespace BadmintonCourtManagement.GUI
             // ---- CẬP NHẬT ----
             else if (mode == "Update")
             {
+                var status = Status.SelectedItem.ToString() == "Hoạt động"
+                    ? CourtDTO.Option.active
+                    : CourtDTO.Option.maintenance;
+
                 if (courtBUS.UpdateCourt(new CourtDTO
                 {
                     CourtId = courtId,
@@ -98,7 +106,6 @@ namespace BadmintonCourtManagement.GUI
                 }))
                 {
                     MessageBox.Show("Cập nhật sân thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    // Đóng form
                     Form parentForm = this.FindForm();
                     if (parentForm != null)
                     {
