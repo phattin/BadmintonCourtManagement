@@ -11,151 +11,190 @@ namespace BadmintonCourtManagement.GUI
     public partial class BillBookingGUI : UserControl
     {
         private AccountDTO? currentAccount;
-        private BillBookingBUS billBookingBUS = new BillBookingBUS();
+
+        // Danh sách dữ liệu gốc (chỉ load 1 lần)
+        private List<BillBookingDTO> masterList = new();
+        private List<BillBookingDTO> filteredList = new();
 
         // Phân trang
-        private int page = 0;
-        private const int itemsPerPage = 8;
+        private int currentPage = 0;
+        private const int ItemsPerPage = 10;
         private int totalPages = 0;
-        private List<BillBookingDTO> currentBillList = new List<BillBookingDTO>();
 
         public BillBookingGUI()
         {
             InitializeComponent();
+            InitializeCustomComponents();
         }
 
         public BillBookingGUI(AccountDTO currentAccount) : this()
         {
             this.currentAccount = currentAccount;
-            LoadBills(BillBookingBUS.GetAll());
+            LoadAllBills();
         }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e)
+        private void InitializeCustomComponents()
         {
-            page = 0;
-            LoadBills();
+            // Cấu hình DataGridView
+            dgvBills.AllowUserToAddRows = false;
+            dgvBills.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvBills.MultiSelect = false;
+            dgvBills.ReadOnly = true;
+            dgvBills.RowHeadersVisible = false;
+            dgvBills.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // ComboBox sắp xếp
+            cmbSort.SelectedIndex = 0;
+
+            // DateTimePicker mặc định 30 ngày gần nhất
+            dtpFrom.Value = DateTime.Today.AddDays(-30);
+            dtpTo.Value = DateTime.Today.AddDays(1);
+
+
         }
 
-        private void btnClearSearch_Click(object sender, EventArgs e)
+        private void LoadAllBills()
         {
-            txtSearch.Clear();
-            page = 0;
-            LoadBills(BillBookingBUS.GetAll());
-        
+            masterList = BillBookingBUS.GetAllNewest(); // Chỉ gọi 1 lần
+            ApplyFiltersAndRefresh();
         }
 
-        private void LoadBills(List<BillBookingDTO>? list = null)
+        private void ApplyFiltersAndRefresh()
         {
-            if (list == null)
-                list = BillBookingBUS.GetAll();
+            filteredList = new List<BillBookingDTO>(masterList);
 
-            currentBillList = list;
+            string keyword = txtSearch.Text.Trim().ToLower();
 
-            // Áp dụng tìm kiếm
-            string keyword = txtSearch.Text.Trim();
+            // 1. Tìm kiếm
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = BillBookingBUS.Search(keyword);
+                filteredList = filteredList.Where(b =>
+                    b.BillBookingId.ToLower().Contains(keyword) ||
+                    (b.CustomerName?.ToLower().Contains(keyword) ?? false) ||
+                    (b.Phone?.Contains(keyword) ?? false) ||
+                    (b.CourtName?.ToLower().Contains(keyword) ?? false)
+                ).ToList();
             }
 
-            // Áp dụng lọc ngày (theo ngày đặt sân)
+            // 2. Lọc theo ngày (ngày chơi)
             DateTime from = dtpFrom.Value.Date;
             DateTime to = dtpTo.Value.Date.AddDays(1).AddSeconds(-1);
-            list = list.Where(b => b.StartTime >= from && b.StartTime <= to).ToList();
+            filteredList = filteredList
+                .Where(b => b.StartTime >= from && b.StartTime <= to)
+                .ToList();
 
-            // Sắp xếp
-            switch (cmbSort.SelectedIndex)
+            // 3. Sắp xếp theo ComboBox
+            filteredList = cmbSort.SelectedIndex switch
             {
-                case 0: list = list.OrderByDescending(b => b.StartTime).ToList(); break;  // Mới nhất
-                case 1: list = list.OrderBy(b => b.StartTime).ToList(); break;             // Cũ nhất
-                case 2: list = list.OrderByDescending(b => b.TotalPrice).ToList(); break; // Tổng tiền giảm
-                case 3: list = list.OrderBy(b => b.TotalPrice).ToList(); break;            // Tổng tiền tăng
-            }
+                0 => filteredList.OrderByDescending(b => b.StartTime).ToList(),
+                1 => filteredList.OrderBy(b => b.StartTime).ToList(),
+                2 => filteredList.OrderByDescending(b => b.TotalPrice).ToList(),
+                3 => filteredList.OrderBy(b => b.TotalPrice).ToList(),
+                _ => filteredList.OrderByDescending(b => b.StartTime).ToList()
+            };
 
-            // Phân trang
-            totalPages = (int)Math.Ceiling((double)list.Count / itemsPerPage);
-            var pageItems = list.Skip(page * itemsPerPage).Take(itemsPerPage).ToList();
+            // 4. Phân trang
+            currentPage = 0;
+            totalPages = (int)Math.Ceiling(filteredList.Count / (double)ItemsPerPage);
+            DisplayCurrentPage();
+        }
 
+        private void DisplayCurrentPage()
+        {
             dgvBills.Rows.Clear();
+
+            var pageItems = filteredList
+                .Skip(currentPage * ItemsPerPage)
+                .Take(ItemsPerPage)
+                .ToList();
+
             foreach (var bill in pageItems)
             {
-                string statusText = bill.BookingStatus == "played" ? "Đã chơi" : "Đã đặt";
-                string prePaid = bill.PrePayment > 0 ? bill.PrePayment.ToString("N0") + "đ" : "Chưa cọc";
+                string statusText = bill.Status == BillBookingDTO.BookingStatus.played ? "Đã chơi" : "Đã đặt";
+                string statusColor = bill.Status == BillBookingDTO.BookingStatus.played ? "#E8F5E5E" : "#4CAF50";
 
-                int rowId = dgvBills.Rows.Add(
+                string prePaidText = bill.PrePayment > 0
+                    ? bill.PrePayment.ToString("N0") + "đ"
+                    : "Chưa cọc";
+
+                string remaining = bill.RemainingAmount > 0
+                    ? $"(Còn nợ: {bill.RemainingAmount:N0}đ)"
+                    : "(Đã thanh toán đủ)";
+
+                int rowIndex = dgvBills.Rows.Add(
                     bill.BillBookingId,
                     bill.StartTime.ToString("dd/MM/yyyy HH:mm"),
-                    bill.CourtName,
-                    bill.CustomerName,
+                    bill.CourtName ?? "Chưa xác định",
+                    bill.CustomerName ?? "Khách lẻ",
                     bill.TotalPrice.ToString("N0") + "đ",
-                    prePaid,
+                    prePaidText,
                     statusText,
                     "Xem chi tiết"
                 );
 
-                var row = dgvBills.Rows[rowId];
+                var row = dgvBills.Rows[rowIndex];
                 row.Tag = bill;
 
+                // // Tô màu trạng thái
+                // if (bill.Status == BillBookingDTO.BookingStatus.played)
+                // {
+                //     row.DefaultCellStyle.BackColor = Color.FromArgb(240, 255, 240); // Xanh nhạt
+                //     row.DefaultCellStyle.SelectionBackColor = Color.FromArgb(200, 255, 200);
+                // }
+                // else if (bill.RemainingAmount > 0)
+                // {
+                //     row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 220); // Vàng nhạt
+                //     row.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 255, 180);
+                // }
+
                 // Nút "Xem chi tiết"
-                var btnCell = new DataGridViewButtonCell
+                var btnCell = row.Cells[colAction.Index] as DataGridViewButtonCell;
+                if (btnCell != null)
                 {
-                    Value = "Xem chi tiết",
-                    Style = new DataGridViewCellStyle
-                    {
-                        BackColor = Color.FromArgb(0, 120, 103),
-                        ForeColor = Color.White,
-                        Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                        Alignment = DataGridViewContentAlignment.MiddleCenter
-                    }
-                };
-                dgvBills.Rows[rowId].Cells[7] = btnCell;
-            }
-
-
-        }
-
-        private void dgvBills_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 7 && e.RowIndex >= 0) // Cột "Xem chi tiết"
-            {
-                var bill = dgvBills.Rows[e.RowIndex].Tag as BillBookingDTO;
-                if (bill != null)
-                {
-                    var form = new FormBillBookingDetail(bill.BillBookingId, currentAccount!);
-                    form.ShowDialog();
-                    LoadBills(); // Refresh sau khi xem/sửa
+                    btnCell.Value = "Xem chi tiết";
+                    btnCell.Style.BackColor = Color.FromArgb(0, 120, 103);
+                    btnCell.Style.ForeColor = Color.White;
+                    btnCell.Style.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                    btnCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    btnCell.Style.Padding = new Padding(0, 5, 0, 5);
                 }
             }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+
+
+        // ==================== SỰ KIỆN ====================
+
+        private void txtSearch_TextChanged(object sender, EventArgs e) => ApplyFiltersAndRefresh();
+        private void btnClearSearch_Click(object sender, EventArgs e)
         {
-            page = 0;
-            LoadBills();
+            txtSearch.Clear();
+            ApplyFiltersAndRefresh();
         }
 
-     
-        // === PHÂN TRANG ===
-        private void btnExtraPrevious_Click(object sender, EventArgs e) { page = 0; LoadBills(currentBillList); }
-        private void btnPrevious_Click(object sender, EventArgs e) { if (page > 0) page--; LoadBills(currentBillList); }
-        private void btnNext_Click(object sender, EventArgs e) { if (page < totalPages - 1) page++; LoadBills(currentBillList); }
-        private void btnExtraNext_Click(object sender, EventArgs e) { page = Math.Max(0, totalPages - 1); LoadBills(currentBillList); }
+        private void btnSearch_Click(object sender, EventArgs e) => ApplyFiltersAndRefresh();
 
-        private void cmbSort_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbSort_SelectedIndexChanged(object sender, EventArgs e) => ApplyFiltersAndRefresh();
+
+        private void dtpFrom_ValueChanged(object sender, EventArgs e) => ApplyFiltersAndRefresh();
+        private void dtpTo_ValueChanged(object sender, EventArgs e) => ApplyFiltersAndRefresh();
+
+        // Phân trang
+        private void dgvBills_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string keyword = txtSearch.Text.Trim();
-            List<BillBookingDTO> list = cmbSort.SelectedIndex switch
+            if (e.RowIndex < 0 || e.ColumnIndex != colAction.Index) return;
+
+            if (dgvBills.Rows[e.RowIndex].Tag is BillBookingDTO bill)
             {
-                0 => string.IsNullOrEmpty(keyword) ? BillBookingBUS.GetAllNewest() : BillBookingBUS.SearchNewest(keyword),
-                1 => string.IsNullOrEmpty(keyword) ? BillBookingBUS.GetAllOldest() : BillBookingBUS.SearchOldest(keyword),
-                2 => string.IsNullOrEmpty(keyword) ? BillBookingBUS.GetAllPriceDesc() : BillBookingBUS.SearchPriceDesc(keyword),
-                3 => string.IsNullOrEmpty(keyword) ? BillBookingBUS.GetAllPriceAsc() : BillBookingBUS.SearchPriceAsc(keyword),
-                _ => BillBookingBUS.GetAllNewest()
-            };
-            LoadBills(list);
+                var detailForm = new FormBillBookingDetail(bill.BillBookingId, currentAccount!);
+                if (detailForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadAllBills(); // Refresh nếu có thay đổi (ví dụ: cập nhật trạng thái, thanh toán)
+                }
+            }
         }
 
-        private void dtpFrom_ValueChanged(object sender, EventArgs e) => LoadBills(currentBillList);
-        private void dtpTo_ValueChanged(object sender, EventArgs e) => LoadBills(currentBillList);
+        // Nút làm mới (nếu bạn có)
+        private void btnRefresh_Click(object sender, EventArgs e) => LoadAllBills();
     }
 }
