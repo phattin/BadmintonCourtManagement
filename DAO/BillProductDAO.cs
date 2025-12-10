@@ -177,39 +177,43 @@ namespace BadmintonCourtManagement.DAO
 
 public List<BillProductDTO> Search(string searchCriteria)
 {
-    // Nếu để trống thì trả về rỗng hoặc có thể để trả tất cả (tùy yêu cầu)
-    if (string.IsNullOrWhiteSpace(searchCriteria))
-        return new List<BillProductDTO>();
+    var list = new List<BillProductDTO>();
 
-    // Chỉ tìm theo 2 trường chính xác (mã hóa đơn hoặc mã nhân viên)
+    // Nếu để trống → trả về tất cả (hợp lý hơn cho chức năng tìm kiếm)
+    bool hasSearch = !string.IsNullOrWhiteSpace(searchCriteria);
+    string searchValue = hasSearch ? $"%{searchCriteria.Trim()}%" : "%";
+
+    // SỬA: Bỏ JOIN customer vì bảng billproduct KHÔNG có CustomerId
     string query = @"
-        SELECT bp.*, e.EmployeeName, c.CustomerName 
+        SELECT bp.*, e.EmployeeName
         FROM billproduct bp
         LEFT JOIN employee e ON bp.EmployeeId = e.EmployeeId
-        LEFT JOIN customer c ON bp.CustomerId = c.CustomerId
-        WHERE bp.BillProductId LIKE @SearchCriteria 
-           OR bp.EmployeeId LIKE @SearchCriteria";
-
-    var list = new List<BillProductDTO>();
+        WHERE (@HasSearch = 0 
+            OR bp.BillProductId LIKE @SearchValue 
+            OR bp.EmployeeId LIKE @SearchValue)
+        ORDER BY bp.DateCreated DESC";
 
     try
     {
         db.OpenConnection();
-        using (MySqlCommand cmd = new MySqlCommand(query, db.Connection))
+        using (var cmd = new MySqlCommand(query, db.Connection))
         {
-            cmd.Parameters.AddWithValue("@SearchCriteria", "%" + searchCriteria.Trim() + "%");
+            cmd.Parameters.AddWithValue("@SearchValue", searchValue);
+            cmd.Parameters.AddWithValue("@HasSearch", hasSearch ? 1 : 0);
 
-            using (MySqlDataReader reader = cmd.ExecuteReader())
+            using (var reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     list.Add(new BillProductDTO
                     {
-                        BillProductId = reader["BillProductId"].ToString(),
-                        EmployeeId = reader["EmployeeId"].ToString(),
-                        TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        DateCreated = Convert.ToDateTime(reader["DateCreated"])
-                    
+                        BillProductId = reader.GetString("BillProductId"),
+                        EmployeeId = reader.GetString("EmployeeId"),
+                        // EmployeeName = reader.IsDBNull("EmployeeName") ? "Không xác định" : reader.GetString("EmployeeName"),
+                        TotalPrice = reader.GetDouble("TotalPrice"),
+                        DateCreated = reader.GetDateTime("DateCreated"),
+                        // Status = reader.IsDBNull("Status") ? "unknown" : reader.GetString("Status")
+                        // CustomerName tạm không có vì bảng không hỗ trợ
                     });
                 }
             }

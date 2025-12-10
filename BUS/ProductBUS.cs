@@ -117,5 +117,49 @@ namespace BadmintonCourtManagement.BUS
                 return false;
             }
         }
+        public bool HasTransactions(string productId)
+        {
+            try
+            {
+                return dao.HasTransactions(productId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductBUS\n" + ex);
+                return false;
+            }
+        }
+        public bool DatabaseDeleteProduct(string productId)
+        {
+            try
+            {
+                var existing = dao.GetProductById(productId);
+                if (existing == null)
+                    throw new Exception("Sản phẩm không tồn tại!");
+
+                return dao.DatabaseDeleteProduct(productId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductBUS\n" + ex);
+                return false;
+            }
+        }
+       
+        public string GenerateNextProductId()
+        {
+            try
+            {
+                return dao.GenerateNextProductId();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi hệ thống: " + ex.Message);
+                throw new Exception("Error in ProductBUS\n" + ex);
+                return string.Empty;
+            }
+        }
     }
 }

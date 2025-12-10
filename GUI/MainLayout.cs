@@ -104,6 +104,10 @@ namespace BadmintonCourtManagement.GUI
                     case "F14":
                         menuItems.Add("Thương hiệu", Brand_Click);
                         break;
+                        
+                    case "F15":
+                        menuItems.Add("Quản lý loại sản phẩm", TypeProduct_Click);
+                        break;
                 }
             }
 

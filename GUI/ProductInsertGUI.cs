@@ -122,8 +122,8 @@ namespace GUI
             }
 
             ProductBUS productBUS = new ProductBUS();
-            List<ProductDTO> products = productBUS.GetAllProducts();
-            string productId = GenerateNextProductId(products);
+            // List<ProductDTO> products = productBUS.GetAllProducts();
+            string productId = productBUS.GenerateNextProductId();
 
             // Đúng thứ tự tham số của ProductDTO
             ProductDTO productDTO = new ProductDTO(
@@ -162,27 +162,27 @@ namespace GUI
             ResetForm();
         }
 
-        private string GenerateNextProductId(List<ProductDTO> products)
-        {
-            const string prefix = "PD";
-            const int digits = 5;
+        // private string GenerateNextProductId(List<ProductDTO> products)
+        // {
+        //     const string prefix = "PD";
+        //     const int digits = 5;
 
-            if (products == null || products.Count == 0)
-                return prefix + 1.ToString($"D{digits}");
+        //     if (products == null || products.Count == 0)
+        //         return prefix + 1.ToString($"D{digits}");
 
-            int maxNumber = 0;
-            foreach (var p in products)
-            {
-                if (p == null || string.IsNullOrEmpty(p.ProductId)) continue;
-                if (!p.ProductId.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) continue;
+        //     int maxNumber = 0;
+        //     foreach (var p in products)
+        //     {
+        //         if (p == null || string.IsNullOrEmpty(p.ProductId)) continue;
+        //         if (!p.ProductId.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) continue;
 
-                string numericPart = p.ProductId.Substring(prefix.Length);
-                if (int.TryParse(numericPart, out int n))
-                    if (n > maxNumber) maxNumber = n;
-            }
+        //         string numericPart = p.ProductId.Substring(prefix.Length);
+        //         if (int.TryParse(numericPart, out int n))
+        //             if (n > maxNumber) maxNumber = n;
+        //     }
 
-            return prefix + (maxNumber + 1).ToString($"D{digits}");
-        }
+        //     return prefix + (maxNumber + 1).ToString($"D{digits}");
+        // }
 
         // Lớp hỗ trợ lưu Text + Value cho ComboBox
         private class ComboBoxItem

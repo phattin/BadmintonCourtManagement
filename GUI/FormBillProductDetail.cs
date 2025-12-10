@@ -86,58 +86,66 @@ namespace BadmintonCourtManagement.GUI
         }
 private void print_Click(object sender, EventArgs e)
 {
-    try
+    // Lấy mã hóa đơn bán hàng
+    string billId = _billId; // đã có sẵn từ constructor
+
+    // Hiển thị dialog lưu file PDF
+    SaveFileDialog saveFileDialog = new SaveFileDialog();
+    saveFileDialog.Filter = "PDF Files|*.pdf";
+    saveFileDialog.FileName = $"HoaDonBanHang_{billId}.pdf";
+    saveFileDialog.Title = "Chọn nơi lưu file PDF hóa đơn";
+
+    if (saveFileDialog.ShowDialog() != DialogResult.OK)
     {
-        // Đường dẫn tuyệt đối đến thư mục ORDER (cùng cấp với file exe)
-        // string orderFolder = Path.Combine(Application.StartupPath, "ORDER");
-        string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
-        string orderFolder = Path.Combine(projectRoot, "ORDER");                              
-
-        // Tạo thư mục nếu chưa tồn tại (dù bạn nói đã tạo rồi, nhưng cứ kiểm tra cho chắc)
-        if (!Directory.Exists(orderFolder))
-            Directory.CreateDirectory(orderFolder);
-
-        // Tên file đẹp, không trùng: HD_BP001_20251129_143022.png
-        string fileName = $"HD_{_billId}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
-        string fullPath = Path.Combine(orderFolder, fileName);
-
-        // Ẩn tạm 2 nút để ảnh hóa đơn sạch sẽ, đẹp như in thật
-        bool printWasVisible = print.Visible;
-        bool closeWasVisible = btnClose.Visible;
-
-        print.Visible = false;
-        btnClose.Visible = false;
-        customPanelMain.Refresh();
-        Application.DoEvents();
-
-        // Chụp ảnh toàn bộ panel hóa đơn
-        using (Bitmap bitmap = new Bitmap(customPanelMain.Width, customPanelMain.Height))
-        {
-            customPanelMain.DrawToBitmap(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
-            bitmap.Save(fullPath, System.Drawing.Imaging.ImageFormat.Png);
-        }
-
-        // Hiện lại nút
-        print.Visible = printWasVisible;
-        btnClose.Visible = closeWasVisible;
-
-        // Thông báo + tự động mở thư mục ORDER luôn
-        MessageBox.Show(
-            $"Đã xuất hóa đơn thành công!\n\n" +
-            $"Tên file: {fileName}\n" +
-            $"Lưu tại: {orderFolder}\n\n" +
-            $"Thư mục ORDER sẽ tự động mở để bạn kiểm tra.",
-            "Xuất hóa đơn thành công",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information);
-
-        // Mở thư mục ORDER để nhân viên thấy file vừa xuất
-        System.Diagnostics.Process.Start("explorer.exe", orderFolder);
+        MessageBox.Show("Vui lòng chọn đường dẫn để xuất file!", "Thông báo", 
+            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        return;
     }
-    catch (Exception ex)
+
+    string path = saveFileDialog.FileName;
+
+    // Kiểm tra file đã tồn tại
+    if (File.Exists(path))
     {
-        MessageBox.Show("Lỗi khi xuất hóa đơn:\n" + ex.Message, "Lỗi",
+        if (MessageBox.Show("File đã tồn tại. Bạn có muốn ghi đè không?", "Xác nhận", 
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        {
+            return;
+        }
+    }
+
+    // Gọi BUS để xuất PDF (tạo phương thức này nếu chưa có)
+    BillProductBUS billProductBUS = new BillProductBUS();
+    bool result = billProductBUS.ExportBillPdf(billId, path);
+
+    if (!result)
+    {
+        MessageBox.Show("Xuất file PDF thất bại!", "Lỗi", 
             MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+    else
+    {
+        MessageBox.Show("Xuất file PDF thành công!", "Thành công", 
+            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        // Hỏi có muốn mở file không
+        if (MessageBox.Show("Bạn có muốn mở file PDF vừa xuất không?", "Mở file", 
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                {
+                    FileName = path,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể mở file:\n" + ex.Message, "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
 
