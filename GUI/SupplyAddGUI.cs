@@ -152,14 +152,14 @@ namespace BadmintonCourtManagement.GUI
             this.infoProductPanel.RemoveImportedProduct(product);
         }
 
-        //private void Done_Click(object sender, EventArgs e)
-        //{
-        //    ImportBillDTO newBill = null;
-        //    // bus
-        //    BillImportBUS billImportBus = new BillImportBUS();
-        //    ProductBUS productBus = new ProductBUS();
-        //    EmployeeBUS employeeBus = new EmployeeBUS();
-        //    BillImportDetailBUS billDetailBus = new BillImportDetailBUS();
+        private void Done_Click(object sender, EventArgs e)
+        {
+            ImportBillDTO newBill = null;
+            // bus
+            BillImportBUS billImportBus = new BillImportBUS();
+            ProductBUS productBus = new ProductBUS();
+            EmployeeBUS employeeBus = new EmployeeBUS();
+            BillImportDetailBUS billDetailBus = new BillImportDetailBUS();
 
             if (storages == null || importDetails == null)
             {
@@ -175,33 +175,33 @@ namespace BadmintonCourtManagement.GUI
             // create new bill import
             newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, currentAcc.EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
 
-        //    // insert new bill import
-        //    billImportBus.InsertBillImport(newBill);
+            // insert new bill import
+            billImportBus.InsertBillImport(newBill);
 
-        //    // inset bill import details
-        //    foreach (var bill_detail in importDetails)
-        //    {
-        //        billDetailBus.InsertBillImportDetail(bill_detail);
-        //    }
+            // inset bill import details
+            foreach (var bill_detail in importDetails)
+            {
+                billDetailBus.InsertBillImportDetail(bill_detail);
+            }
 
-        //    // insert storages
-        //    foreach (var s in storages)
-        //    {
-        //        StorageBUS.InsertStorage(s);
-        //    }
+            // insert storages
+            foreach (var s in storages)
+            {
+                StorageBUS.InsertStorage(s);
+            }
 
-        //    // update product quantities
-        //    foreach (var bill_detail in importDetails)
-        //    {
-        //        var product = productBus.GetProductById(bill_detail.ProductId);
-        //        int quantityInStock = product.Quantity + bill_detail.Quantity;
-        //        product.Quantity = quantityInStock;
-        //        productBus.UpdateProduct(product);
-        //    }
+            // update product quantities
+            foreach (var bill_detail in importDetails)
+            {
+                var product = productBus.GetProductById(bill_detail.ProductId);
+                int quantityInStock = product.Quantity + bill_detail.Quantity;
+                product.Quantity = quantityInStock;
+                productBus.UpdateProduct(product);
+            }
 
-        //    MessageBox.Show("Đã hoàn tất nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    this.Close();
-        //}
+            MessageBox.Show("Đã hoàn tất nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
+        }
 
         private void SupplyAddGUI_Load(object sender, EventArgs e)
         {

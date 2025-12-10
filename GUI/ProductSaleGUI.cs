@@ -551,17 +551,17 @@ namespace BadmintonCourtManagement.GUI
             return billId;
         }
 
-        //private void createBill(List<KeyValuePair<string, int>> selectedItems)
-        //{
-        //    ProductBUS product_bus = new ProductBUS();
-        //    BillProductBUS bill_bus = new BillProductBUS();
-        //    BillProductDetailBUS bill_detail_bus = new BillProductDetailBUS();
-        //    StorageBUS storageBus = new StorageBUS();
+        private void createBill(List<KeyValuePair<string, int>> selectedItems)
+        {
+            ProductBUS product_bus = new ProductBUS();
+            BillProductBUS bill_bus = new BillProductBUS();
+            BillProductDetailBUS bill_detail_bus = new BillProductDetailBUS();
+            StorageBUS storageBus = new StorageBUS();
 
-        //    // bill product
-        //    string billId = bill_bus.GetMaxId();
-        //    string billDetailId = bill_detail_bus.GetMaxId();
-        //    EmployeeBUS empBus = new EmployeeBUS();
+            // bill product
+            string billId = bill_bus.GetMaxId();
+            string billDetailId = bill_detail_bus.GetMaxId();
+            EmployeeBUS empBus = new EmployeeBUS();
 
             var employee = empBus.GetEmployeeById(acc.EmployeeId);
             if (employee == null)
@@ -572,108 +572,108 @@ namespace BadmintonCourtManagement.GUI
             string employeeId = employee.EmployeeId;
             double totalPrice = double.Parse(txt_totalPrice.Text);
 
-        //    if (string.IsNullOrWhiteSpace(billId))
-        //    {
-        //        billId = "BP00001";
-        //    }
-        //    else
-        //    {
-        //        billId = generateNewId(billId);
-        //    }
+            if (string.IsNullOrWhiteSpace(billId))
+            {
+                billId = "BP00001";
+            }
+            else
+{
+    billId = generateNewId(billId);
+}
 
-        //    if (string.IsNullOrWhiteSpace(billDetailId))
-        //    {
-        //        billDetailId = "BPD00001";
-        //    }
-        //    else
-        //    {
-        //        billDetailId = generateNewId(billDetailId);
-        //    }
+if (string.IsNullOrWhiteSpace(billDetailId))
+{
+    billDetailId = "BPD00001";
+}
+else
+{
+    billDetailId = generateNewId(billDetailId);
+}
 
-        //    // inserting bill product 
-        //    BillProductDTO product = new BillProductDTO(billId, employeeId, totalPrice);
-        //    bill_bus.InsertProductBill(product);
+// inserting bill product 
+BillProductDTO product = new BillProductDTO(billId, employeeId, totalPrice);
+bill_bus.InsertProductBill(product);
 
-        //    // ===== AI GENERATED CODE - STORAGE HANDLING =====
-        //    // Get relevant storages ordered by FIFO
-        //    var relevantStorages = storageList
-        //        .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
-        //        .OrderBy(storage => storage.ImportBillDetailId)
-        //        .ToList();
-            
-        //    // Group by ProductId to handle each product separately
-        //    var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
-            
-        //    // Create BillProductDetail entries per storage batch
-        //    foreach (var productGroup in storagesByProduct)
-        //    {
-        //        string productId = productGroup.Key;
-        //        var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
-                
-        //        if (purchasedItem.Key == null) continue;
-                
-        //        int remainingQty = purchasedItem.Value;
-        //        var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
-                
-        //        foreach (var storage in productStorages)
-        //        {
-        //            if (remainingQty <= 0) break;
-                    
-        //            int qtyFromThisStorage = 0;
-                    
-        //            if (storage.Quantity >= remainingQty)
-        //            {
-        //                // This storage has enough quantity
-        //                qtyFromThisStorage = remainingQty;
-        //                storage.Quantity -= remainingQty;
-        //                StorageBUS.UpdateStorage(storage);
-        //                remainingQty = 0;
-        //            }
-        //            else
-        //            {
-        //                // Use all from this storage and move to next
-        //                qtyFromThisStorage = storage.Quantity;
-        //                remainingQty -= storage.Quantity;
-        //                storage.Quantity = 0;
-        //                storage.Status = StorageDTO.Option.inactive;
-        //                StorageBUS.UpdateStorage(storage);
-        //            }
-                    
-        //            // Create BillProductDetail for this storage batch
-        //            double subtotal = qtyFromThisStorage * storage.Price;
-        //            BillProductDetailDTO bill_detail = new BillProductDetailDTO(
-        //                billDetailId, 
-        //                billId, 
-        //                productId, 
-        //                qtyFromThisStorage,  // Quantity from THIS storage
-        //                storage.Price,       // Price from THIS storage
-        //                subtotal            // Subtotal for THIS batch
-        //            );
-                    
-        //            bill_detail_bus.InsertBillProductDetail(bill_detail);
-                    
-        //            // Generate next detail ID
-        //            billDetailId = generateNewId(billDetailId);
-        //        }
-                
-        //        if (remainingQty > 0)
-        //        {
-        //            MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.", 
-        //                        "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        }
-        //    }
+// ===== AI GENERATED CODE - STORAGE HANDLING =====
+// Get relevant storages ordered by FIFO
+var relevantStorages = storageList
+    .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
+    .OrderBy(storage => storage.ImportBillDetailId)
+    .ToList();
 
-        //    // updating product quantity
-        //    var selectedIds = selectedItems.Select(kv => kv.Key).ToHashSet();
-        //    foreach (string id in selectedIds)
-        //    {
-        //        var product_dto = product_bus.GetProductById(id);
-        //        var qty = selectedItems.First(kv => kv.Key == id).Value;
-        //        product_dto.Quantity -= qty;
-        //        product_bus.UpdateProduct(product_dto);
-        //    }
-        //    // ===== END OF AI GENERATED CODE =====
-        //}
+// Group by ProductId to handle each product separately
+var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
+
+// Create BillProductDetail entries per storage batch
+foreach (var productGroup in storagesByProduct)
+{
+    string productId = productGroup.Key;
+    var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
+
+    if (purchasedItem.Key == null) continue;
+
+    int remainingQty = purchasedItem.Value;
+    var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
+
+    foreach (var storage in productStorages)
+    {
+        if (remainingQty <= 0) break;
+
+        int qtyFromThisStorage = 0;
+
+        if (storage.Quantity >= remainingQty)
+        {
+            // This storage has enough quantity
+            qtyFromThisStorage = remainingQty;
+            storage.Quantity -= remainingQty;
+            StorageBUS.UpdateStorage(storage);
+            remainingQty = 0;
+        }
+        else
+        {
+            // Use all from this storage and move to next
+            qtyFromThisStorage = storage.Quantity;
+            remainingQty -= storage.Quantity;
+            storage.Quantity = 0;
+            storage.Status = StorageDTO.Option.inactive;
+            StorageBUS.UpdateStorage(storage);
+        }
+
+        // Create BillProductDetail for this storage batch
+        double subtotal = qtyFromThisStorage * storage.Price;
+        BillProductDetailDTO bill_detail = new BillProductDetailDTO(
+            billDetailId,
+            billId,
+            productId,
+            qtyFromThisStorage,  // Quantity from THIS storage
+            storage.Price,       // Price from THIS storage
+            subtotal            // Subtotal for THIS batch
+        );
+
+        bill_detail_bus.InsertBillProductDetail(bill_detail);
+
+        // Generate next detail ID
+        billDetailId = generateNewId(billDetailId);
+    }
+
+    if (remainingQty > 0)
+    {
+        MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.",
+                    "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
+}
+
+// updating product quantity
+var selectedIds = selectedItems.Select(kv => kv.Key).ToHashSet();
+foreach (string id in selectedIds)
+{
+    var product_dto = product_bus.GetProductById(id);
+    var qty = selectedItems.First(kv => kv.Key == id).Value;
+    product_dto.Quantity -= qty;
+    product_bus.UpdateProduct(product_dto);
+}
+            // ===== END OF AI GENERATED CODE =====
+        }
 
         // Resize: later adapt number of columns or hide image (when implemented).
         private void ProductSaleGUI_Resize(object sender, EventArgs e)
