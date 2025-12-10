@@ -91,7 +91,7 @@ namespace BadmintonCourtManagement.GUI
                             card.Controls.Add(cardBody);
                             card.Controls.Add(cardTitle);
                             card.Dock = DockStyle.Fill;
-                            card.Padding = new Padding(20,10,20,10);
+                            card.Padding = new Padding(20, 10, 20, 10);
                             card.Name = "card";
                             card.TabIndex = 0;
 
@@ -485,7 +485,7 @@ namespace BadmintonCourtManagement.GUI
                             cardBody.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardBody.Name = "cardBody";
                             cardBody.Size = new Size(374, 180);
-                            cardBody.Text = 
+                            cardBody.Text =
                                 "Mã nhân viên: " + supplyList[i].EmployeeId + "\r\n" +
                                 "Mã nhà cung cấp: " + supplyList[i].SupplierId + "\r\n" +
                                 "Ngày tạo: " + supplyList[i].DateCreated.ToString("dd/MM/yyyy") + "\r\n" +
@@ -719,11 +719,11 @@ namespace BadmintonCourtManagement.GUI
                     // Get import bill details
                     BillImportDetailBUS importDetail = new BillImportDetailBUS();
                     List<BillImportDetailDTO> details = importDetail.GetDetailImportBillsByImportBillId(item.ImportBillId);
-                    
+
                     // Open SupplyDetailsGUI with details
                     SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI(details);
                     supplyDetails.ShowDialog();
-                    
+
                     // Refresh list after closing details
                     LoadSupplyList();
                     return;

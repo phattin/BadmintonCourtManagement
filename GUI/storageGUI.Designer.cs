@@ -641,6 +641,7 @@ namespace BadmintonCourtManagement.GUI
             supplyTitlePanel.ColumnCount = 2;
             supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             supplyTitlePanel.Controls.Add(supplyTitle, 0, 0);
             supplyTitlePanel.Controls.Add(supplyAdd, 1, 0);
             supplyTitlePanel.Dock = DockStyle.Top;
@@ -650,7 +651,6 @@ namespace BadmintonCourtManagement.GUI
             supplyTitlePanel.Padding = new Padding(0, 4, 0, 4);
             supplyTitlePanel.RowCount = 1;
             supplyTitlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            supplyTitlePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             supplyTitlePanel.Size = new Size(1131, 54);
             supplyTitlePanel.TabIndex = 5;
             // 
