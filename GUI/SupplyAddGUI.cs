@@ -161,19 +161,19 @@ namespace BadmintonCourtManagement.GUI
         //    EmployeeBUS employeeBus = new EmployeeBUS();
         //    BillImportDetailBUS billDetailBus = new BillImportDetailBUS();
 
-        //    if (storages == null || importDetails == null)
-        //    {
-        //        MessageBox.Show("Lỗi: Chưa chọn sản phẩm để nhập hàng");
-        //        return;
-        //    }
-        //    string importBillId = importDetails[0].ImportBillId;
-        //    double totalPrice = 0;
-        //    foreach (var bill in importDetails)
-        //    {
-        //        totalPrice += bill.TotalPrice;
-        //    }
-        //    // create new bill import
-        //    newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, employeeBus.GetEmployeeByUsername(currentAcc.Username).EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
+            if (storages == null || importDetails == null)
+            {
+                MessageBox.Show("Lỗi: Chưa chọn sản phẩm để nhập hàng");
+                return;
+            }
+            string importBillId = importDetails[0].ImportBillId;
+            double totalPrice = 0;
+            foreach (var bill in importDetails)
+            {
+                totalPrice += bill.TotalPrice;
+            }
+            // create new bill import
+            newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, currentAcc.EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
 
         //    // insert new bill import
         //    billImportBus.InsertBillImport(newBill);

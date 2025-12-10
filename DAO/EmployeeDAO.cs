@@ -33,7 +33,7 @@ namespace BadmintonCourtManagement.DAO
                         EmployeeName = reader["EmployeeName"].ToString(),
                         EmployeePhone = reader["Phone"].ToString().Trim(),
                         Address = reader["Address"].ToString(),
-                        RoleId = reader["RoleId"].ToString()
+                        RoleId = reader["RoleId"].ToString(),
                     };
                     list.Add(employee);
                 }
@@ -73,7 +73,7 @@ namespace BadmintonCourtManagement.DAO
                         EmployeeName = reader["EmployeeName"].ToString(),
                         EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
-                        RoleId = reader["RoleId"].ToString()
+                        RoleId = reader["RoleId"].ToString(),
                     };
                 }
 
@@ -91,45 +91,44 @@ namespace BadmintonCourtManagement.DAO
             return employee;
         }
 
-        //public EmployeeDTO GetEmployeeByUsername(string username)
-        //{
-        //    string query = "SELECT * FROM employee join account on employee.EmployeeId = account.EmployeeId WHERE account.Username = @Username";
-        //    EmployeeDTO employee = null;
+        // public EmployeeDTO GetEmployeeByUsername(string username)
+        // {
+        //     string query = "SELECT * FROM employee join account on employee.EmployeeId = account.EmployeeId WHERE account.Username = @Username";
+        //     EmployeeDTO employee = null;
 
-        //    try
-        //    {
-        //        db.OpenConnection();
-        //        MySqlCommand cmd = new MySqlCommand(query, db.Connection);
-        //        cmd.Parameters.AddWithValue("@Username", username);
-        //        MySqlDataReader reader = cmd.ExecuteReader();
+        //     try
+        //     {
+        //         db.OpenConnection();
+        //         MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+        //         cmd.Parameters.AddWithValue("@Username", username);
+        //         MySqlDataReader reader = cmd.ExecuteReader();
 
-        //        if (reader.Read())
-        //        {
-        //            var phoneValue = reader["Phone"].ToString().Trim();
-        //            employee = new EmployeeDTO
-        //            {
-        //                EmployeeId = reader["EmployeeId"].ToString(),
-        //                EmployeeName = reader["EmployeeName"].ToString(),
-        //                EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
-        //                Address = reader["Address"].ToString(),
-        //                RoleId = reader["RoleId"].ToString(),
-        //                Username = reader["Username"].ToString()
-        //            };
-        //        }
+        //         if (reader.Read())
+        //         {
+        //             var phoneValue = reader["Phone"].ToString().Trim();
+        //             employee = new EmployeeDTO
+        //             {
+        //                 EmployeeId = reader["EmployeeId"].ToString(),
+        //                 EmployeeName = reader["EmployeeName"].ToString(),
+        //                 EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
+        //                 Address = reader["Address"].ToString(),
+        //                 RoleId = reader["RoleId"].ToString(),
+        //             };
+        //         }
 
-        //        reader.Close();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //MessageBox.Show("Lỗi khi lấy thông tin nhân viên: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        db.CloseConnection();
-        //    }
+        //         reader.Close();
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         //MessageBox.Show("Lỗi khi lấy thông tin nhân viên: " + ex.Message);
+        //     }
+        //     finally
+        //     {
+        //         db.CloseConnection();
+        //     }
 
-        //    return employee;
-        //}
+        //     return employee;
+        // }
 
         // 🔹 Thêm nhân viên mới
         public bool InsertEmployee(EmployeeDTO employee)
@@ -235,8 +234,7 @@ namespace BadmintonCourtManagement.DAO
                         EmployeeName = reader["EmployeeName"].ToString(),
                         EmployeePhone = string.IsNullOrEmpty(phoneValue) ? "0987654321" : phoneValue,
                         Address = reader["Address"].ToString(),
-                        RoleId = reader["RoleId"].ToString(),
-                        Username = reader["Username"].ToString()
+                        RoleId = reader["RoleId"].ToString()
                     };
                     list.Add(employee);
                 }

@@ -7,14 +7,14 @@ namespace BadmintonCourtManagement.DTO
         private string employeePhone = "";
         private string employeeAddress = "";
         private string roleId = "";
-        private string? username;
+        // private string? username;
 
         public string EmployeeId { get => employeeId; set => employeeId = value; }
         public string EmployeeName { get => employeeName; set => employeeName = value; }
         public string EmployeePhone { get => employeePhone; set => employeePhone = value; }
         public string Address { get => employeeAddress; set => employeeAddress = value; }
         public string RoleId { get => roleId; set => roleId = value; }
-        public string Username { get => username; set => username = value; }
+        // public string Username { get => username; set => username = value; }
 
         public EmployeeDTO()                                
         {
@@ -33,5 +33,15 @@ namespace BadmintonCourtManagement.DTO
             this.Address = employeeAddress;
             this.RoleId = roleId;
         }
+
+        // public EmployeeDTO(string employeeId, string employeeName, string employeePhone, string employeeAddress, string roleId, string username)
+        // {
+        //     this.EmployeeId = employeeId;
+        //     this.EmployeeName = employeeName;
+        //     this.EmployeePhone = employeePhone;
+        //     this.Address = employeeAddress;
+        //     this.RoleId = roleId;
+        //     this.Username = username;
+        // }
     }
 }
