@@ -33,7 +33,8 @@ namespace BadmintonCourtManagement.DAO
                         CustomerId = reader["CustomerId"].ToString(),
                         BookingId = reader["BookingId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        PrePayment = Convert.ToDouble(reader["PrePayment"])
+                        PrePayment = Convert.ToDouble(reader["PrePayment"]),
+                        DateCreated = Convert.ToDateTime(reader["DateCreated"])
                     };
                     list.Add(bill);
                 }
@@ -70,7 +71,8 @@ namespace BadmintonCourtManagement.DAO
                         CustomerId = reader["CustomerId"].ToString(),
                         BookingId = reader["BookingId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        PrePayment = Convert.ToDouble(reader["PrePayment"])
+                        PrePayment = Convert.ToDouble(reader["PrePayment"]),
+                        DateCreated = Convert.ToDateTime(reader["DateCreated"])
                     };
                 }
                 reader.Close();
@@ -106,7 +108,8 @@ namespace BadmintonCourtManagement.DAO
                         CustomerId = reader["CustomerId"].ToString(),
                         BookingId = reader["BookingId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        PrePayment = Convert.ToDouble(reader["PrePayment"])
+                        PrePayment = Convert.ToDouble(reader["PrePayment"]),
+                        DateCreated = Convert.ToDateTime(reader["DateCreated"])
                     };
                 }
                 reader.Close();
@@ -126,8 +129,8 @@ namespace BadmintonCourtManagement.DAO
         public bool InsertBillBooking(BillBookingDTO bill)
         {
             string query = @"INSERT INTO billbooking 
-                            (BillBookingId, EmployeeId, CustomerId, BookingId, TotalPrice, PrePayment, RemainingAmount) 
-                            VALUES (@billBookingId, @employeeId, @customerId, @bookingId, @totalPrice, @prePayment, @remainingAmount)";
+                            (BillBookingId, EmployeeId, CustomerId, BookingId, TotalPrice, PrePayment, RemainingAmount, DateCreated) 
+                            VALUES (@billBookingId, @employeeId, @customerId, @bookingId, @totalPrice, @prePayment, @remainingAmount, @dateCreated)";
             try
             {
                 db.OpenConnection();
@@ -139,6 +142,7 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@totalPrice", bill.TotalPrice);
                 cmd.Parameters.AddWithValue("@prePayment", bill.PrePayment);
                 cmd.Parameters.AddWithValue("@remainingAmount", bill.RemainingAmount);
+                cmd.Parameters.AddWithValue("@dateCreated", bill.DateCreated);
                 int result = cmd.ExecuteNonQuery();
                 return result > 0;
             }
@@ -233,7 +237,8 @@ namespace BadmintonCourtManagement.DAO
                         CustomerId = reader["CustomerId"].ToString(),
                         BookingId = reader["BookingId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        PrePayment = Convert.ToDouble(reader["PrePayment"])
+                        PrePayment = Convert.ToDouble(reader["PrePayment"]),
+                        DateCreated = Convert.ToDateTime(reader["DateCreated"])
                     };
                     list.Add(bill);
                 }
@@ -300,7 +305,8 @@ namespace BadmintonCourtManagement.DAO
                         CustomerId = reader["CustomerId"].ToString(),
                         BookingId = reader["BookingId"].ToString(),
                         TotalPrice = Convert.ToDouble(reader["TotalPrice"]),
-                        PrePayment = Convert.ToDouble(reader["PrePayment"])
+                        PrePayment = Convert.ToDouble(reader["PrePayment"]),
+                        DateCreated = Convert.ToDateTime(reader["DateCreated"])
                     };
                     list.Add(bill);
                 }

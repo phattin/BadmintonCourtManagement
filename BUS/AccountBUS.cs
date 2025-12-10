@@ -53,7 +53,7 @@ namespace BadmintonCourtManagement.BUS
             if (existing == null)
                 throw new Exception("Account không tồn tại!");
 
-            return dao.DeleteAccount(username);
+            return dao.DeleteAccount1(username);
         }
 
         public Dictionary<string, string> ValidateAccount(AccountDTO account)

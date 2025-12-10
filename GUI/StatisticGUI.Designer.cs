@@ -79,9 +79,10 @@ namespace BadmintonCourtManagement.GUI
             lblSummaryTitle.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
             lblSummaryTitle.ForeColor = Color.Black;
             lblSummaryTitle.Location = new Point(0, 0);
+            lblSummaryTitle.Margin = new Padding(2, 0, 2, 0);
             lblSummaryTitle.Name = "lblSummaryTitle";
-            lblSummaryTitle.Padding = new Padding(10, 0, 0, 0);
-            lblSummaryTitle.Size = new Size(1364, 84);
+            lblSummaryTitle.Padding = new Padding(8, 0, 0, 0);
+            lblSummaryTitle.Size = new Size(1090, 67);
             lblSummaryTitle.TabIndex = 0;
             lblSummaryTitle.Text = "Tổng Quan Doanh Thu";
             lblSummaryTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -92,18 +93,18 @@ namespace BadmintonCourtManagement.GUI
             sortFieldComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             sortFieldComboBox.FormattingEnabled = true;
             sortFieldComboBox.Items.AddRange(new object[] { "Số lượng sản phẩm giảm dần", "Số lượng sản phẩm tăng dần", "Doanh thu tăng dần", "Doanh thu giảm dần" });
-            sortFieldComboBox.Location = new Point(789, 35);
-            sortFieldComboBox.Margin = new Padding(70, 10, 0, 0);
+            sortFieldComboBox.Location = new Point(633, 28);
+            sortFieldComboBox.Margin = new Padding(56, 8, 0, 0);
             sortFieldComboBox.Name = "sortFieldComboBox";
-            sortFieldComboBox.Size = new Size(265, 33);
+            sortFieldComboBox.Size = new Size(213, 28);
             sortFieldComboBox.TabIndex = 3;
             // 
             // dateTimePicker2
             // 
-            dateTimePicker2.Location = new Point(409, 35);
-            dateTimePicker2.Margin = new Padding(10, 10, 0, 0);
+            dateTimePicker2.Location = new Point(328, 28);
+            dateTimePicker2.Margin = new Padding(8, 8, 0, 0);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(310, 31);
+            dateTimePicker2.Size = new Size(249, 27);
             dateTimePicker2.TabIndex = 1;
             dateTimePicker2.ValueChanged += dateTimePicker2_ValueChanged;
             // 
@@ -113,9 +114,10 @@ namespace BadmintonCourtManagement.GUI
             customPanel2.BorderRadius = 20;
             customPanel2.Controls.Add(flowLayoutPanel1);
             customPanel2.Dock = DockStyle.Top;
-            customPanel2.Location = new Point(70, 84);
+            customPanel2.Location = new Point(56, 67);
+            customPanel2.Margin = new Padding(2, 2, 2, 2);
             customPanel2.Name = "customPanel2";
-            customPanel2.Size = new Size(1364, 98);
+            customPanel2.Size = new Size(1090, 78);
             customPanel2.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -126,17 +128,18 @@ namespace BadmintonCourtManagement.GUI
             flowLayoutPanel1.Controls.Add(btnGenerate);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(0, 0);
+            flowLayoutPanel1.Margin = new Padding(2, 2, 2, 2);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(0, 25, 0, 0);
-            flowLayoutPanel1.Size = new Size(1364, 98);
+            flowLayoutPanel1.Padding = new Padding(0, 20, 0, 0);
+            flowLayoutPanel1.Size = new Size(1090, 78);
             flowLayoutPanel1.TabIndex = 2;
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(35, 35);
-            dateTimePicker1.Margin = new Padding(35, 10, 30, 0);
+            dateTimePicker1.Location = new Point(28, 28);
+            dateTimePicker1.Margin = new Padding(28, 8, 24, 0);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(334, 31);
+            dateTimePicker1.Size = new Size(268, 27);
             dateTimePicker1.TabIndex = 1;
             // 
             // btnGenerate
@@ -147,11 +150,11 @@ namespace BadmintonCourtManagement.GUI
             btnGenerate.Cursor = Cursors.Hand;
             btnGenerate.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnGenerate.ForeColor = Color.WhiteSmoke;
-            btnGenerate.Location = new Point(1154, 25);
-            btnGenerate.Margin = new Padding(100, 0, 10, 10);
+            btnGenerate.Location = new Point(926, 20);
+            btnGenerate.Margin = new Padding(80, 0, 8, 8);
             btnGenerate.Name = "btnGenerate";
-            btnGenerate.Padding = new Padding(20, 8, 20, 8);
-            btnGenerate.Size = new Size(163, 48);
+            btnGenerate.Padding = new Padding(16, 6, 16, 6);
+            btnGenerate.Size = new Size(134, 40);
             btnGenerate.TabIndex = 4;
             btnGenerate.Text = "Thống Kê";
             btnGenerate.TextAlign = ContentAlignment.MiddleCenter;
@@ -162,10 +165,11 @@ namespace BadmintonCourtManagement.GUI
             customPanel1.BorderRadius = 20;
             customPanel1.Controls.Add(dgTopProducts);
             customPanel1.Dock = DockStyle.Fill;
-            customPanel1.Location = new Point(70, 84);
+            customPanel1.Location = new Point(56, 67);
+            customPanel1.Margin = new Padding(2, 2, 2, 2);
             customPanel1.Name = "customPanel1";
-            customPanel1.Padding = new Padding(37, 98, 37, 20);
-            customPanel1.Size = new Size(1364, 619);
+            customPanel1.Padding = new Padding(30, 78, 30, 16);
+            customPanel1.Size = new Size(1090, 493);
             customPanel1.TabIndex = 1;
             // 
             // dgTopProducts
@@ -174,13 +178,14 @@ namespace BadmintonCourtManagement.GUI
             dgTopProducts.BackgroundColor = Color.White;
             dgTopProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgTopProducts.Dock = DockStyle.Fill;
-            dgTopProducts.Location = new Point(37, 98);
+            dgTopProducts.Location = new Point(30, 78);
+            dgTopProducts.Margin = new Padding(2, 2, 2, 2);
             dgTopProducts.Name = "dgTopProducts";
             dgTopProducts.ReadOnly = true;
             dgTopProducts.RowHeadersVisible = false;
             dgTopProducts.RowHeadersWidth = 62;
             dgTopProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgTopProducts.Size = new Size(1290, 501);
+            dgTopProducts.Size = new Size(1030, 399);
             dgTopProducts.TabIndex = 2;
             // 
             // label1
@@ -190,9 +195,10 @@ namespace BadmintonCourtManagement.GUI
             label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
             label1.ForeColor = Color.Black;
             label1.Location = new Point(0, 0);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Padding = new Padding(10);
-            label1.Size = new Size(1364, 84);
+            label1.Padding = new Padding(8, 8, 8, 8);
+            label1.Size = new Size(1090, 67);
             label1.TabIndex = 4;
             label1.Text = "Thống Kê Sản Phẩm";
             label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -203,8 +209,9 @@ namespace BadmintonCourtManagement.GUI
             drPanelCourtMN.Controls.Add(tabControl1);
             drPanelCourtMN.Dock = DockStyle.Fill;
             drPanelCourtMN.Location = new Point(0, 0);
+            drPanelCourtMN.Margin = new Padding(2, 2, 2, 2);
             drPanelCourtMN.Name = "drPanelCourtMN";
-            drPanelCourtMN.Size = new Size(1512, 741);
+            drPanelCourtMN.Size = new Size(1210, 593);
             drPanelCourtMN.TabIndex = 0;
             // 
             // tabControl1
@@ -214,9 +221,10 @@ namespace BadmintonCourtManagement.GUI
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
+            tabControl1.Margin = new Padding(2, 2, 2, 2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1512, 741);
+            tabControl1.Size = new Size(1210, 593);
             tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -225,10 +233,11 @@ namespace BadmintonCourtManagement.GUI
             tabPage1.Controls.Add(customPanel2);
             tabPage1.Controls.Add(customPanel1);
             tabPage1.Controls.Add(panel1);
-            tabPage1.Location = new Point(4, 34);
+            tabPage1.Location = new Point(4, 29);
+            tabPage1.Margin = new Padding(2, 2, 2, 2);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(70, 0, 70, 0);
-            tabPage1.Size = new Size(1504, 703);
+            tabPage1.Padding = new Padding(56, 0, 56, 0);
+            tabPage1.Size = new Size(1202, 560);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Sản Phẩm";
             // 
@@ -236,9 +245,10 @@ namespace BadmintonCourtManagement.GUI
             // 
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(70, 0);
+            panel1.Location = new Point(56, 0);
+            panel1.Margin = new Padding(2, 2, 2, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1364, 84);
+            panel1.Size = new Size(1090, 67);
             panel1.TabIndex = 5;
             // 
             // tabPage2
@@ -246,10 +256,11 @@ namespace BadmintonCourtManagement.GUI
             tabPage2.Controls.Add(customPanel4);
             tabPage2.Controls.Add(panel2);
             tabPage2.Controls.Add(customPanel10);
-            tabPage2.Location = new Point(4, 34);
+            tabPage2.Location = new Point(4, 29);
+            tabPage2.Margin = new Padding(2, 2, 2, 2);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(70, 0, 70, 0);
-            tabPage2.Size = new Size(1504, 703);
+            tabPage2.Padding = new Padding(56, 0, 56, 0);
+            tabPage2.Size = new Size(1202, 560);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Sân";
             // 
@@ -259,9 +270,10 @@ namespace BadmintonCourtManagement.GUI
             customPanel4.BorderRadius = 20;
             customPanel4.Controls.Add(flowLayoutPanel2);
             customPanel4.Dock = DockStyle.Top;
-            customPanel4.Location = new Point(70, 84);
+            customPanel4.Location = new Point(56, 67);
+            customPanel4.Margin = new Padding(2, 2, 2, 2);
             customPanel4.Name = "customPanel4";
-            customPanel4.Size = new Size(1364, 98);
+            customPanel4.Size = new Size(1090, 78);
             customPanel4.TabIndex = 1;
             // 
             // flowLayoutPanel2
@@ -272,25 +284,26 @@ namespace BadmintonCourtManagement.GUI
             flowLayoutPanel2.Controls.Add(label4);
             flowLayoutPanel2.Dock = DockStyle.Fill;
             flowLayoutPanel2.Location = new Point(0, 0);
+            flowLayoutPanel2.Margin = new Padding(2, 2, 2, 2);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Padding = new Padding(0, 25, 0, 0);
-            flowLayoutPanel2.Size = new Size(1364, 98);
+            flowLayoutPanel2.Padding = new Padding(0, 20, 0, 0);
+            flowLayoutPanel2.Size = new Size(1090, 78);
             flowLayoutPanel2.TabIndex = 2;
             // 
             // dateTimePicker3
             // 
-            dateTimePicker3.Location = new Point(35, 35);
-            dateTimePicker3.Margin = new Padding(35, 10, 30, 0);
+            dateTimePicker3.Location = new Point(28, 28);
+            dateTimePicker3.Margin = new Padding(28, 8, 24, 0);
             dateTimePicker3.Name = "dateTimePicker3";
-            dateTimePicker3.Size = new Size(310, 31);
+            dateTimePicker3.Size = new Size(249, 27);
             dateTimePicker3.TabIndex = 1;
             // 
             // dateTimePicker4
             // 
-            dateTimePicker4.Location = new Point(385, 35);
-            dateTimePicker4.Margin = new Padding(10, 10, 0, 0);
+            dateTimePicker4.Location = new Point(309, 28);
+            dateTimePicker4.Margin = new Padding(8, 8, 0, 0);
             dateTimePicker4.Name = "dateTimePicker4";
-            dateTimePicker4.Size = new Size(310, 31);
+            dateTimePicker4.Size = new Size(249, 27);
             dateTimePicker4.TabIndex = 1;
             // 
             // textBox1
@@ -298,11 +311,11 @@ namespace BadmintonCourtManagement.GUI
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.Font = new Font("Segoe UI", 9F);
             textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(765, 37);
-            textBox1.Margin = new Padding(70, 12, 0, 0);
+            textBox1.Location = new Point(614, 30);
+            textBox1.Margin = new Padding(56, 10, 0, 0);
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Tìm sân...";
-            textBox1.Size = new Size(265, 24);
+            textBox1.Size = new Size(212, 20);
             textBox1.TabIndex = 6;
             // 
             // label4
@@ -313,11 +326,11 @@ namespace BadmintonCourtManagement.GUI
             label4.Cursor = Cursors.Hand;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label4.ForeColor = Color.WhiteSmoke;
-            label4.Location = new Point(1130, 25);
-            label4.Margin = new Padding(100, 0, 10, 10);
+            label4.Location = new Point(906, 20);
+            label4.Margin = new Padding(80, 0, 8, 8);
             label4.Name = "label4";
-            label4.Padding = new Padding(20, 8, 20, 8);
-            label4.Size = new Size(163, 48);
+            label4.Padding = new Padding(16, 6, 16, 6);
+            label4.Size = new Size(134, 40);
             label4.TabIndex = 6;
             label4.Text = "Thống Kê";
             label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -326,9 +339,10 @@ namespace BadmintonCourtManagement.GUI
             // 
             panel2.Controls.Add(label5);
             panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(70, 0);
+            panel2.Location = new Point(56, 0);
+            panel2.Margin = new Padding(2, 2, 2, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1364, 84);
+            panel2.Size = new Size(1090, 67);
             panel2.TabIndex = 6;
             // 
             // label5
@@ -338,9 +352,10 @@ namespace BadmintonCourtManagement.GUI
             label5.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
             label5.ForeColor = Color.Black;
             label5.Location = new Point(0, 0);
+            label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Padding = new Padding(10);
-            label5.Size = new Size(1364, 84);
+            label5.Padding = new Padding(8, 8, 8, 8);
+            label5.Size = new Size(1090, 67);
             label5.TabIndex = 4;
             label5.Text = "Thống Kê Sân";
             label5.TextAlign = ContentAlignment.MiddleLeft;
@@ -351,10 +366,11 @@ namespace BadmintonCourtManagement.GUI
             customPanel10.BorderRadius = 20;
             customPanel10.Controls.Add(dataGridView1);
             customPanel10.Dock = DockStyle.Fill;
-            customPanel10.Location = new Point(70, 0);
+            customPanel10.Location = new Point(56, 0);
+            customPanel10.Margin = new Padding(2, 2, 2, 2);
             customPanel10.Name = "customPanel10";
-            customPanel10.Padding = new Padding(37, 183, 37, 20);
-            customPanel10.Size = new Size(1364, 703);
+            customPanel10.Padding = new Padding(30, 146, 30, 16);
+            customPanel10.Size = new Size(1090, 560);
             customPanel10.TabIndex = 2;
             // 
             // dataGridView1
@@ -363,13 +379,14 @@ namespace BadmintonCourtManagement.GUI
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(37, 183);
+            dataGridView1.Location = new Point(30, 146);
+            dataGridView1.Margin = new Padding(2, 2, 2, 2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1290, 500);
+            dataGridView1.Size = new Size(1030, 398);
             dataGridView1.TabIndex = 2;
             // 
             // tabPage3
@@ -377,10 +394,11 @@ namespace BadmintonCourtManagement.GUI
             tabPage3.BackColor = Color.White;
             tabPage3.Controls.Add(customPanelSummary);
             tabPage3.Controls.Add(panelSummaryHeader);
-            tabPage3.Location = new Point(4, 34);
+            tabPage3.Location = new Point(4, 29);
+            tabPage3.Margin = new Padding(2, 2, 2, 2);
             tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(70, 0, 70, 0);
-            tabPage3.Size = new Size(1504, 703);
+            tabPage3.Padding = new Padding(56, 0, 56, 0);
+            tabPage3.Size = new Size(1202, 560);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Tổng Quan";
             // 
@@ -389,19 +407,21 @@ namespace BadmintonCourtManagement.GUI
             customPanelSummary.BackColor = Color.FromArgb(239, 248, 230);
             customPanelSummary.BorderRadius = 20;
             customPanelSummary.Dock = DockStyle.Fill;
-            customPanelSummary.Location = new Point(70, 84);
+            customPanelSummary.Location = new Point(56, 67);
+            customPanelSummary.Margin = new Padding(2, 2, 2, 2);
             customPanelSummary.Name = "customPanelSummary";
-            customPanelSummary.Padding = new Padding(20);
-            customPanelSummary.Size = new Size(1364, 619);
+            customPanelSummary.Padding = new Padding(16, 16, 16, 16);
+            customPanelSummary.Size = new Size(1090, 493);
             customPanelSummary.TabIndex = 0;
             // 
             // panelSummaryHeader
             // 
             panelSummaryHeader.Controls.Add(lblSummaryTitle);
             panelSummaryHeader.Dock = DockStyle.Top;
-            panelSummaryHeader.Location = new Point(70, 0);
+            panelSummaryHeader.Location = new Point(56, 0);
+            panelSummaryHeader.Margin = new Padding(2, 2, 2, 2);
             panelSummaryHeader.Name = "panelSummaryHeader";
-            panelSummaryHeader.Size = new Size(1364, 84);
+            panelSummaryHeader.Size = new Size(1090, 67);
             panelSummaryHeader.TabIndex = 1;
             // 
             // label2
@@ -415,14 +435,14 @@ namespace BadmintonCourtManagement.GUI
             // 
             dtpSummaryStart.Location = new Point(0, 0);
             dtpSummaryStart.Name = "dtpSummaryStart";
-            dtpSummaryStart.Size = new Size(200, 31);
+            dtpSummaryStart.Size = new Size(200, 27);
             dtpSummaryStart.TabIndex = 0;
             // 
             // dtpSummaryEnd
             // 
             dtpSummaryEnd.Location = new Point(0, 0);
             dtpSummaryEnd.Name = "dtpSummaryEnd";
-            dtpSummaryEnd.Size = new Size(200, 31);
+            dtpSummaryEnd.Size = new Size(200, 27);
             dtpSummaryEnd.TabIndex = 0;
             // 
             // lblGenerateSummary
@@ -441,13 +461,13 @@ namespace BadmintonCourtManagement.GUI
             // 
             // StatisticGUI
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             Controls.Add(drPanelCourtMN);
-            Margin = new Padding(4, 5, 4, 5);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "StatisticGUI";
-            Size = new Size(1512, 741);
+            Size = new Size(1210, 593);
             Load += StatisticGUI_Load;
             customPanel2.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);

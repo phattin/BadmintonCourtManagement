@@ -88,20 +88,9 @@ namespace GUI
 
             try
             {
-                EmployeeBUS employeeBUS = new EmployeeBUS();
                 if (accountBUS.InsertAccount(newAccount))
                 {
                     MessageBox.Show("Thêm tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    EmployeeDTO currentEmployee = employeeBUS.GetEmployeeById(employeeId);
-                    EmployeeDTO updateEmployee = new EmployeeDTO
-                    {
-                        EmployeeId = currentEmployee.EmployeeId,
-                        EmployeeName = currentEmployee.EmployeeName,
-                        EmployeePhone = currentEmployee.EmployeePhone,
-                        Address = currentEmployee.Address,
-                        RoleId = currentEmployee.RoleId,
-                    };
-                    employeeBUS.UpdateEmployee(updateEmployee);
                     this.NewAccount = newAccount;
                     this.DialogResult = DialogResult.OK;
                     this.Close();

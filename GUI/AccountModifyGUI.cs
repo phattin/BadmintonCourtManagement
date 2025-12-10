@@ -122,6 +122,7 @@ namespace GUI
                         Session.CurrentUser = updateAccount;
                         Session.TriggerPermissionChange();
                     }
+
                     this.currentAccount = updateAccount;
                     this.DialogResult = DialogResult.OK;
                     this.Close();

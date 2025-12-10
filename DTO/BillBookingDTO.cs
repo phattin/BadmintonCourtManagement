@@ -13,7 +13,7 @@
         {
             get { return TotalPrice - PrePayment; }
         }
-
+        public DateTime DateCreated { get; set; } = DateTime.Now;
 
         // Constructors
         public BillBookingDTO() { }
@@ -27,6 +27,7 @@
             BookingId = bookingId;
             TotalPrice = totalPrice;
             PrePayment = prePayment;
+
         }
     }
 }

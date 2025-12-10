@@ -84,7 +84,7 @@ namespace BadmintonCourtManagement.GUI
             done.UseVisualStyleBackColor = false;
             done.MouseEnter += buttonEnter;
             done.MouseLeave += buttonLeave;
-            done.Click += Done_Click;
+            //done.Click += Done_Click;
             // 
             // listDetailPanel
             // 

@@ -218,7 +218,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void Statistics_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new StatisticGUI(currentAccount));
+            //OpenChildPanel(new StatisticGUI(currentAccount));
+            OpenChildPanel(new StatisticMainGUI());
         }
         private void TypeProduct_Click(object? sender, EventArgs e)
         {

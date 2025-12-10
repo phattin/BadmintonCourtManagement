@@ -205,16 +205,6 @@ namespace GUI
                     if (accountBUS.DeleteAccount(selectedItem.Username))
                     {
                         MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        EmployeeDTO currentEmployee = employeeBUS.GetEmployeeById(selectedItem.EmployeeId);
-                        EmployeeDTO updateEmployee = new EmployeeDTO
-                        {
-                            EmployeeId = currentEmployee.EmployeeId,
-                            EmployeeName = currentEmployee.EmployeeName,
-                            EmployeePhone = currentEmployee.EmployeePhone,
-                            Address = currentEmployee.Address,
-                            RoleId = currentEmployee.RoleId,
-                        };
-                        employeeBUS.UpdateEmployee(updateEmployee);
                         LoadData();
                     }
                     else
