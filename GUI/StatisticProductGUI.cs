@@ -47,7 +47,7 @@ namespace GUI
             DateTime fromDate = dateTimePicker1.Value.Date;
             DateTime toDate = dateTimePicker2.Value.Date;
 
-            var statisticResult = listBillProducts
+            var query = listBillProducts
                 .Where(b =>
                     (b.Status == BillProductDTO.Option.paid) &&
                     b.DateCreated.Date >= fromDate &&
@@ -81,22 +81,19 @@ namespace GUI
                     TenSP = g.Key.ProductName,
                     TongSoLuong = g.Sum(x => x.Quantity),
                     TongTien = g.Sum(x => x.TotalPrice)
-                })
-                .ToList();
+                });
 
-            List<dynamic> sortedResult = new List<dynamic>();
-
-            switch (cbbSort.SelectedIndex)
+            var sortedResult = cbbSort.SelectedIndex switch
             {
-                case 0: sortedResult = statisticResult.OrderByDescending(x => x.TongTien).ToList<dynamic>(); break;
-                case 1: sortedResult = statisticResult.OrderBy(x => x.TongTien).ToList<dynamic>(); break;
-                case 2: sortedResult = statisticResult.OrderByDescending(x => x.TongSoLuong).ToList<dynamic>(); break;
-                case 3: sortedResult = statisticResult.OrderBy(x => x.TongSoLuong).ToList<dynamic>(); break;
-                default: sortedResult = statisticResult.OrderByDescending(x => x.TongTien).ToList<dynamic>(); break;
-            }
+                0 => query.OrderByDescending(x => x.TongTien).ToList(),
+                1 => query.OrderBy(x => x.TongTien).ToList(),
+                2 => query.OrderByDescending(x => x.TongSoLuong).ToList(),
+                3 => query.OrderBy(x => x.TongSoLuong).ToList(),
+                _ => query.OrderByDescending(x => x.TongTien).ToList()
+            };
 
-            originalData = sortedResult;
-            FilterData(textBox1.Text.Trim());
+            dataGridView1.DataSource = sortedResult;
+            DrawChart(sortedResult);
         }
 
         private void DrawChart(System.Collections.IList data)
@@ -124,38 +121,6 @@ namespace GUI
             {
                 chartArea.AxisX.ScaleView.ZoomReset();
             }
-        }
-
-        private void FilterData(string keyword)
-        {
-            if (originalData == null) return;
-
-            var dataList = originalData.Cast<dynamic>();
-            var filteredList = dataList;
-
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                keyword = keyword.ToLower();
-
-                filteredList = dataList.Where(item =>
-                    item.TenSP.ToLower().Contains(keyword) ||
-                    item.MaSP.ToLower().Contains(keyword) ||
-                    item.TongSoLuong.ToString().Contains(keyword) ||
-                    item.TongTien.ToString().Contains(keyword)
-                ).ToList();
-            }
-            else
-            {
-                filteredList = dataList.ToList();
-            }
-
-            dataGridView1.DataSource = filteredList.ToList();
-            DrawChart(dataList.ToList());
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            FilterData(textBox1.Text.Trim());
         }
     }
 }

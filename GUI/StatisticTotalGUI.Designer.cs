@@ -55,7 +55,6 @@
             panel2 = new Panel();
             label3 = new Label();
             label2 = new Label();
-            panel7 = new Panel();
             label1 = new Label();
             customPanel2 = new BadmintonCourtManagement.GUI.CustomPanel();
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -171,7 +170,6 @@
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(tableLayoutPanel2);
-            panel1.Controls.Add(panel7);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
@@ -189,16 +187,16 @@
             tableLayoutPanel2.Controls.Add(panel3, 0, 1);
             tableLayoutPanel2.Controls.Add(panel2, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(0, 30);
+            tableLayoutPanel2.Location = new Point(0, 56);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.Padding = new Padding(0, 10, 0, 0);
             tableLayoutPanel2.RowCount = 5;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel2.Size = new Size(503, 112);
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.Size = new Size(503, 426);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // panel6
@@ -208,28 +206,28 @@
             panel6.Controls.Add(label10);
             panel6.Controls.Add(label11);
             panel6.Dock = DockStyle.Fill;
-            panel6.Location = new Point(3, 273);
+            panel6.Location = new Point(3, 345);
             panel6.Name = "panel6";
-            panel6.Size = new Size(497, 59);
+            panel6.Size = new Size(497, 78);
             panel6.TabIndex = 4;
             // 
             // label10
             // 
             label10.Dock = DockStyle.Fill;
-            label10.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label10.Location = new Point(0, 31);
+            label10.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.Location = new Point(0, 45);
             label10.Name = "label10";
-            label10.Size = new Size(497, 28);
+            label10.Size = new Size(497, 33);
             label10.TabIndex = 1;
             label10.Text = "label10";
             // 
             // label11
             // 
             label11.Dock = DockStyle.Top;
-            label11.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label11.Location = new Point(0, 0);
             label11.Name = "label11";
-            label11.Size = new Size(497, 31);
+            label11.Size = new Size(497, 45);
             label11.TabIndex = 0;
             label11.Text = "Tổng kết:";
             // 
@@ -240,28 +238,28 @@
             panel5.Controls.Add(label8);
             panel5.Controls.Add(label9);
             panel5.Dock = DockStyle.Fill;
-            panel5.Location = new Point(3, 208);
+            panel5.Location = new Point(3, 262);
             panel5.Name = "panel5";
-            panel5.Size = new Size(497, 59);
+            panel5.Size = new Size(497, 77);
             panel5.TabIndex = 3;
             // 
             // label8
             // 
             label8.Dock = DockStyle.Fill;
-            label8.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label8.Location = new Point(0, 31);
+            label8.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Location = new Point(0, 45);
             label8.Name = "label8";
-            label8.Size = new Size(497, 28);
+            label8.Size = new Size(497, 32);
             label8.TabIndex = 1;
             label8.Text = "label8";
             // 
             // label9
             // 
             label9.Dock = DockStyle.Top;
-            label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label9.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.Location = new Point(0, 0);
             label9.Name = "label9";
-            label9.Size = new Size(497, 31);
+            label9.Size = new Size(497, 45);
             label9.TabIndex = 0;
             label9.Text = "Tổng tiền nhập hàng:";
             // 
@@ -272,28 +270,28 @@
             panel4.Controls.Add(label6);
             panel4.Controls.Add(label7);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(3, 143);
+            panel4.Location = new Point(3, 179);
             panel4.Name = "panel4";
-            panel4.Size = new Size(497, 59);
+            panel4.Size = new Size(497, 77);
             panel4.TabIndex = 2;
             // 
             // label6
             // 
             label6.Dock = DockStyle.Fill;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(0, 31);
+            label6.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(0, 45);
             label6.Name = "label6";
-            label6.Size = new Size(497, 28);
+            label6.Size = new Size(497, 32);
             label6.TabIndex = 1;
             label6.Text = "label6";
             // 
             // label7
             // 
             label7.Dock = DockStyle.Top;
-            label7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(0, 0);
             label7.Name = "label7";
-            label7.Size = new Size(497, 31);
+            label7.Size = new Size(497, 45);
             label7.TabIndex = 0;
             label7.Text = "Tổng doanh thu:";
             // 
@@ -304,28 +302,28 @@
             panel3.Controls.Add(label4);
             panel3.Controls.Add(label5);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(3, 78);
+            panel3.Location = new Point(3, 96);
             panel3.Name = "panel3";
-            panel3.Size = new Size(497, 59);
+            panel3.Size = new Size(497, 77);
             panel3.TabIndex = 1;
             // 
             // label4
             // 
             label4.Dock = DockStyle.Fill;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(0, 31);
+            label4.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(0, 45);
             label4.Name = "label4";
-            label4.Size = new Size(497, 28);
+            label4.Size = new Size(497, 32);
             label4.TabIndex = 1;
             label4.Text = "label4";
             // 
             // label5
             // 
             label5.Dock = DockStyle.Top;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(0, 0);
             label5.Name = "label5";
-            label5.Size = new Size(497, 31);
+            label5.Size = new Size(497, 45);
             label5.TabIndex = 0;
             label5.Text = "Doanh thu bán hàng:";
             // 
@@ -338,45 +336,36 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(3, 13);
             panel2.Name = "panel2";
-            panel2.Size = new Size(497, 59);
+            panel2.Size = new Size(497, 77);
             panel2.TabIndex = 0;
             // 
             // label3
             // 
             label3.Dock = DockStyle.Fill;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(0, 31);
+            label3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(0, 45);
             label3.Name = "label3";
-            label3.Size = new Size(497, 28);
+            label3.Size = new Size(497, 32);
             label3.TabIndex = 1;
             label3.Text = "label3";
             // 
             // label2
             // 
             label2.Dock = DockStyle.Top;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
-            label2.Size = new Size(497, 31);
+            label2.Size = new Size(497, 45);
             label2.TabIndex = 0;
             label2.Text = "Doanh thu đặt sân:";
-            // 
-            // panel7
-            // 
-            panel7.BackColor = Color.FromArgb(239, 248, 230);
-            panel7.Dock = DockStyle.Bottom;
-            panel7.Location = new Point(0, 142);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(503, 340);
-            panel7.TabIndex = 1;
             // 
             // label1
             // 
             label1.Dock = DockStyle.Top;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(0, 0);
             label1.Name = "label1";
-            label1.Size = new Size(503, 30);
+            label1.Size = new Size(503, 56);
             label1.TabIndex = 0;
             label1.Text = "Báo cáo";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -505,6 +494,5 @@
         private Label label5;
         private Panel panel2;
         private Label label3;
-        private Panel panel7;
     }
 }

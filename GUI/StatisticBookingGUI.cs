@@ -17,7 +17,6 @@ namespace GUI
 {
     public partial class StatisticBookingGUI : UserControl
     {
-        private System.Collections.IList originalData;
         public StatisticBookingGUI()
         {
             InitializeComponent();
@@ -86,8 +85,8 @@ namespace GUI
                 .OrderBy(x => x.MaSan)
                 .ToList();
 
-            originalData = statisticResult;
-            FilterData(textBox1.Text.Trim());
+            dataGridView1.DataSource = statisticResult;
+            DrawChart(statisticResult);
         }
 
         private void DrawChart(System.Collections.IList data)
@@ -115,38 +114,6 @@ namespace GUI
             {
                 chartArea.AxisX.ScaleView.ZoomReset();
             }
-        }
-
-        private void FilterData(string keyword)
-        {
-            if (originalData == null) return;
-
-            var dataList = originalData.Cast<dynamic>();
-            var filteredList = dataList;
-
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                keyword = keyword.ToLower();
-
-                filteredList = dataList.Where(item =>
-                    item.TenSan.ToLower().Contains(keyword) ||
-                    item.MaSan.ToLower().Contains(keyword) ||
-                    item.TongSoLanDat.ToString().Contains(keyword) ||
-                    item.TongTien.ToString().Contains(keyword)
-                ).ToList();
-            }
-            else
-            {
-                filteredList = dataList.ToList();
-            }
-
-            dataGridView1.DataSource = filteredList.ToList();
-            DrawChart(dataList.ToList());
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            FilterData(textBox1.Text.Trim());
         }
     }
 }
