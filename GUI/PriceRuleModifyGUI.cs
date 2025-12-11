@@ -59,8 +59,8 @@ namespace GUI
             errorProvider1.Clear();
 
             double price = (double)numericUpDown1.Value;
-            TimeOnly startTime = TimeOnly.FromDateTime(dateTimePickerStartTime.Value);
-            TimeOnly endTime = TimeOnly.FromDateTime(dateTimePickerEndTime.Value);
+            TimeOnly startTime = new TimeOnly(dateTimePickerStartTime.Value.Hour, dateTimePickerStartTime.Value.Minute, 0);
+            TimeOnly endTime = new TimeOnly(dateTimePickerEndTime.Value.Hour, dateTimePickerEndTime.Value.Minute, 0);
             DateOnly? startDate = null;
             if (dateTimePickerStartDate.Checked)
             {
@@ -89,6 +89,28 @@ namespace GUI
             }
             try
             {
+                List<PriceRuleDTO> allRules = bus.GetAllPriceRules();
+                var overlappingRule = allRules.FirstOrDefault(r =>
+                    r.EndType == endType &&
+                    r.PriceRuleId != currentPriceRule.PriceRuleId &&
+                    (startTime < r.EndTime && endTime > r.StartTime) &&
+                    (
+                       (startDate == null || r.EndDate == null || startDate <= r.EndDate) &&
+                       (endDate == null || r.StartDate == null || endDate >= r.StartDate)
+                    )
+                );
+
+                if (overlappingRule != null)
+                {
+                    string msg = $"Bị trùng với mã: {overlappingRule.PriceRuleId}\n" +
+                                 $"Loại: {overlappingRule.EndType}\n" +
+                                 $"Giờ: {overlappingRule.StartTime} - {overlappingRule.EndTime}\n" +
+                                 $"Ngày: {(overlappingRule.StartDate?.ToString() ?? "NULL")} - {(overlappingRule.EndDate?.ToString() ?? "NULL")}";
+
+                    MessageBox.Show(msg, "Tìm thấy nguyên nhân trùng!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (bus.UpdatePriceRule(updateDto))
                 {
                     MessageBox.Show("Sửa giá sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

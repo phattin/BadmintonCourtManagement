@@ -86,7 +86,7 @@ namespace BadmintonCourtManagement.DAO
                 
                 // Safely parse nullable enum
                 Status = reader["Status"] is DBNull || reader["Status"] == null 
-                    ? BillProductDTO.Option.Unpaid  // or make Status nullable: Option?
+                    ? BillProductDTO.Option.unpaid  // or make Status nullable: Option?
                     : Enum.Parse<BillProductDTO.Option>(reader["Status"].ToString(), ignoreCase: true)
                     });
                 }

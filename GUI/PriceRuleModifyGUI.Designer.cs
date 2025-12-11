@@ -200,22 +200,23 @@
             // 
             textBoxDes.BackColor = Color.White;
             textBoxDes.BorderStyle = BorderStyle.None;
-            textBoxDes.Dock = DockStyle.Left;
+            textBoxDes.Dock = DockStyle.Fill;
             textBoxDes.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxDes.Location = new Point(0, 53);
+            textBoxDes.Location = new Point(0, 28);
             textBoxDes.Name = "textBoxDes";
-            textBoxDes.Size = new Size(920, 27);
+            textBoxDes.Size = new Size(392, 27);
             textBoxDes.TabIndex = 1;
             // 
             // labelDes
             // 
+            labelDes.AutoSize = true;
             labelDes.BackColor = SystemColors.Control;
             labelDes.Dock = DockStyle.Top;
             labelDes.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelDes.Location = new Point(0, 0);
             labelDes.Margin = new Padding(0);
             labelDes.Name = "labelDes";
-            labelDes.Size = new Size(392, 53);
+            labelDes.Size = new Size(68, 28);
             labelDes.TabIndex = 0;
             labelDes.Text = "Mô tả:";
             labelDes.TextAlign = ContentAlignment.MiddleLeft;
@@ -233,23 +234,24 @@
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Dock = DockStyle.Left;
+            numericUpDown1.Dock = DockStyle.Fill;
             numericUpDown1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDown1.Location = new Point(0, 48);
+            numericUpDown1.Location = new Point(0, 28);
             numericUpDown1.Maximum = new decimal(new int[] { 1000000000, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(920, 34);
+            numericUpDown1.Size = new Size(392, 34);
             numericUpDown1.TabIndex = 1;
             // 
             // labelPrice
             // 
+            labelPrice.AutoSize = true;
             labelPrice.BackColor = SystemColors.Control;
             labelPrice.Dock = DockStyle.Top;
             labelPrice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelPrice.Location = new Point(0, 0);
             labelPrice.Margin = new Padding(0);
             labelPrice.Name = "labelPrice";
-            labelPrice.Size = new Size(392, 48);
+            labelPrice.Size = new Size(45, 28);
             labelPrice.TabIndex = 0;
             labelPrice.Text = "Giá:";
             labelPrice.TextAlign = ContentAlignment.MiddleLeft;
@@ -267,24 +269,25 @@
             // 
             // comboBoxEndType
             // 
-            comboBoxEndType.Dock = DockStyle.Left;
+            comboBoxEndType.Dock = DockStyle.Fill;
             comboBoxEndType.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBoxEndType.FormattingEnabled = true;
             comboBoxEndType.Items.AddRange(new object[] { "Holiday", "Weekday", "Weekend" });
-            comboBoxEndType.Location = new Point(0, 50);
+            comboBoxEndType.Location = new Point(0, 28);
             comboBoxEndType.Name = "comboBoxEndType";
-            comboBoxEndType.Size = new Size(920, 36);
+            comboBoxEndType.Size = new Size(392, 36);
             comboBoxEndType.TabIndex = 1;
             // 
             // labelEndType
             // 
+            labelEndType.AutoSize = true;
             labelEndType.BackColor = SystemColors.Control;
             labelEndType.Dock = DockStyle.Top;
             labelEndType.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelEndType.Location = new Point(0, 0);
             labelEndType.Margin = new Padding(0);
             labelEndType.Name = "labelEndType";
-            labelEndType.Size = new Size(392, 50);
+            labelEndType.Size = new Size(84, 28);
             labelEndType.TabIndex = 0;
             labelEndType.Text = "Thể loại:";
             labelEndType.TextAlign = ContentAlignment.MiddleLeft;
@@ -303,24 +306,25 @@
             // dateTimePickerEndDate
             // 
             dateTimePickerEndDate.CustomFormat = "dd/MM/yyyy";
-            dateTimePickerEndDate.Dock = DockStyle.Left;
+            dateTimePickerEndDate.Dock = DockStyle.Fill;
             dateTimePickerEndDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePickerEndDate.Format = DateTimePickerFormat.Custom;
-            dateTimePickerEndDate.Location = new Point(0, 49);
+            dateTimePickerEndDate.Location = new Point(0, 28);
             dateTimePickerEndDate.Name = "dateTimePickerEndDate";
             dateTimePickerEndDate.ShowCheckBox = true;
-            dateTimePickerEndDate.Size = new Size(920, 34);
+            dateTimePickerEndDate.Size = new Size(392, 34);
             dateTimePickerEndDate.TabIndex = 2;
             // 
             // labelEndDate
             // 
+            labelEndDate.AutoSize = true;
             labelEndDate.BackColor = SystemColors.Control;
             labelEndDate.Dock = DockStyle.Top;
             labelEndDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelEndDate.Location = new Point(0, 0);
             labelEndDate.Margin = new Padding(0);
             labelEndDate.Name = "labelEndDate";
-            labelEndDate.Size = new Size(392, 49);
+            labelEndDate.Size = new Size(138, 28);
             labelEndDate.TabIndex = 0;
             labelEndDate.Text = "Ngày kết thúc:";
             labelEndDate.TextAlign = ContentAlignment.MiddleLeft;
@@ -339,24 +343,25 @@
             // dateTimePickerStartDate
             // 
             dateTimePickerStartDate.CustomFormat = "dd/MM/yyyy";
-            dateTimePickerStartDate.Dock = DockStyle.Left;
+            dateTimePickerStartDate.Dock = DockStyle.Fill;
             dateTimePickerStartDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePickerStartDate.Format = DateTimePickerFormat.Custom;
-            dateTimePickerStartDate.Location = new Point(0, 47);
+            dateTimePickerStartDate.Location = new Point(0, 28);
             dateTimePickerStartDate.Name = "dateTimePickerStartDate";
             dateTimePickerStartDate.ShowCheckBox = true;
-            dateTimePickerStartDate.Size = new Size(920, 34);
+            dateTimePickerStartDate.Size = new Size(392, 34);
             dateTimePickerStartDate.TabIndex = 1;
             // 
             // labelStartDate
             // 
+            labelStartDate.AutoSize = true;
             labelStartDate.BackColor = SystemColors.Control;
             labelStartDate.Dock = DockStyle.Top;
             labelStartDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelStartDate.Location = new Point(0, 0);
             labelStartDate.Margin = new Padding(0);
             labelStartDate.Name = "labelStartDate";
-            labelStartDate.Size = new Size(392, 47);
+            labelStartDate.Size = new Size(135, 28);
             labelStartDate.TabIndex = 0;
             labelStartDate.Text = "Ngày bắt đầu:";
             labelStartDate.TextAlign = ContentAlignment.MiddleLeft;
@@ -375,24 +380,25 @@
             // dateTimePickerEndTime
             // 
             dateTimePickerEndTime.CustomFormat = "HH:mm:ss";
-            dateTimePickerEndTime.Dock = DockStyle.Left;
+            dateTimePickerEndTime.Dock = DockStyle.Fill;
             dateTimePickerEndTime.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePickerEndTime.Format = DateTimePickerFormat.Custom;
-            dateTimePickerEndTime.Location = new Point(0, 46);
+            dateTimePickerEndTime.Location = new Point(0, 28);
             dateTimePickerEndTime.Name = "dateTimePickerEndTime";
             dateTimePickerEndTime.ShowUpDown = true;
-            dateTimePickerEndTime.Size = new Size(920, 34);
+            dateTimePickerEndTime.Size = new Size(392, 34);
             dateTimePickerEndTime.TabIndex = 1;
             // 
             // labelEndTime
             // 
+            labelEndTime.AutoSize = true;
             labelEndTime.BackColor = SystemColors.Control;
             labelEndTime.Dock = DockStyle.Top;
             labelEndTime.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelEndTime.Location = new Point(0, 0);
             labelEndTime.Margin = new Padding(0);
             labelEndTime.Name = "labelEndTime";
-            labelEndTime.Size = new Size(392, 46);
+            labelEndTime.Size = new Size(122, 28);
             labelEndTime.TabIndex = 0;
             labelEndTime.Text = "Giờ kết thúc:";
             labelEndTime.TextAlign = ContentAlignment.MiddleLeft;
@@ -411,24 +417,25 @@
             // dateTimePickerStartTime
             // 
             dateTimePickerStartTime.CustomFormat = "HH:mm:ss";
-            dateTimePickerStartTime.Dock = DockStyle.Left;
+            dateTimePickerStartTime.Dock = DockStyle.Fill;
             dateTimePickerStartTime.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePickerStartTime.Format = DateTimePickerFormat.Custom;
-            dateTimePickerStartTime.Location = new Point(0, 46);
+            dateTimePickerStartTime.Location = new Point(0, 28);
             dateTimePickerStartTime.Name = "dateTimePickerStartTime";
             dateTimePickerStartTime.ShowUpDown = true;
-            dateTimePickerStartTime.Size = new Size(920, 34);
+            dateTimePickerStartTime.Size = new Size(392, 34);
             dateTimePickerStartTime.TabIndex = 1;
             // 
             // labelStartTime
             // 
+            labelStartTime.AutoSize = true;
             labelStartTime.BackColor = SystemColors.Control;
             labelStartTime.Dock = DockStyle.Top;
             labelStartTime.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelStartTime.Location = new Point(0, 0);
             labelStartTime.Margin = new Padding(0);
             labelStartTime.Name = "labelStartTime";
-            labelStartTime.Size = new Size(392, 46);
+            labelStartTime.Size = new Size(119, 28);
             labelStartTime.TabIndex = 0;
             labelStartTime.Text = "Giờ bắt đầu:";
             labelStartTime.TextAlign = ContentAlignment.MiddleLeft;
@@ -468,12 +475,18 @@
             panelDes.ResumeLayout(false);
             panelDes.PerformLayout();
             panelPrice.ResumeLayout(false);
+            panelPrice.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             panelEndType.ResumeLayout(false);
+            panelEndType.PerformLayout();
             panelEndDate.ResumeLayout(false);
+            panelEndDate.PerformLayout();
             panelStartDate.ResumeLayout(false);
+            panelStartDate.PerformLayout();
             panelEndTime.ResumeLayout(false);
+            panelEndTime.PerformLayout();
             panelStartTime.ResumeLayout(false);
+            panelStartTime.PerformLayout();
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);

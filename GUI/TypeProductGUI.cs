@@ -29,7 +29,7 @@ namespace BadmintonCourtManagement.GUI
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
-            CheckPermissions("F09"); // Thay "F09" bằng mã chức năng thực tế của bạn
+            CheckPermissions("F15");
             typeProductBUS = new TypeProductBUS();
             LoadTypeProducts(typeProductBUS.GetAllTypeProducts());
         }

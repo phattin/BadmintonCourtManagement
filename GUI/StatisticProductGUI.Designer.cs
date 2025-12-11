@@ -350,6 +350,7 @@
             textBox1.PlaceholderText = "Tìm kiếm";
             textBox1.Size = new Size(479, 27);
             textBox1.TabIndex = 0;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // StatisticProductGUI
             // 

@@ -15,6 +15,7 @@ namespace GUI
 {
     public partial class StatisticProductGUI : UserControl
     {
+        private System.Collections.IList originalData;
         public StatisticProductGUI()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace GUI
             }
 
             BillProductBUS billProductBUS = new BillProductBUS();
-            var listBillProducts = billProductBUS.GetAllProductBills(); 
+            var listBillProducts = billProductBUS.GetAllProductBills();
             BillProductDetailBUS billDetailBUS = new BillProductDetailBUS();
             var listBillDetails = billDetailBUS.GetAllDetailProductBills();
             ProductBUS productBUS = new ProductBUS();
@@ -48,7 +49,7 @@ namespace GUI
 
             var statisticResult = listBillProducts
                 .Where(b =>
-                    (b.Status == BillProductDTO.Option.paid) && 
+                    (b.Status == BillProductDTO.Option.paid) &&
                     b.DateCreated.Date >= fromDate &&
                     b.DateCreated.Date <= toDate
                 )
@@ -60,7 +61,7 @@ namespace GUI
                         {
                             detail.ProductId,
                             detail.Quantity,
-                            detail.TotalPrice 
+                            detail.TotalPrice
                         })
                 // JOIN 2: Nối với bảng Product để lấy Tên Sản Phẩm
                 .Join(listProducts,
@@ -78,8 +79,8 @@ namespace GUI
                 {
                     MaSP = g.Key.ProductId,
                     TenSP = g.Key.ProductName,
-                    TongSoLuong = g.Sum(x => x.Quantity),      
-                    TongTien = g.Sum(x => x.TotalPrice)        
+                    TongSoLuong = g.Sum(x => x.Quantity),
+                    TongTien = g.Sum(x => x.TotalPrice)
                 })
                 .ToList();
 
@@ -94,8 +95,8 @@ namespace GUI
                 default: sortedResult = statisticResult.OrderByDescending(x => x.TongTien).ToList<dynamic>(); break;
             }
 
-            dataGridView1.DataSource = sortedResult;
-            DrawChart(sortedResult);
+            originalData = sortedResult;
+            FilterData(textBox1.Text.Trim());
         }
 
         private void DrawChart(System.Collections.IList data)
@@ -123,6 +124,38 @@ namespace GUI
             {
                 chartArea.AxisX.ScaleView.ZoomReset();
             }
+        }
+
+        private void FilterData(string keyword)
+        {
+            if (originalData == null) return;
+
+            var dataList = originalData.Cast<dynamic>();
+            var filteredList = dataList;
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                keyword = keyword.ToLower();
+
+                filteredList = dataList.Where(item =>
+                    item.TenSP.ToLower().Contains(keyword) ||
+                    item.MaSP.ToLower().Contains(keyword) ||
+                    item.TongSoLuong.ToString().Contains(keyword) ||
+                    item.TongTien.ToString().Contains(keyword)
+                ).ToList();
+            }
+            else
+            {
+                filteredList = dataList.ToList();
+            }
+
+            dataGridView1.DataSource = filteredList.ToList();
+            DrawChart(dataList.ToList());
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            FilterData(textBox1.Text.Trim());
         }
     }
 }

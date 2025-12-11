@@ -29,7 +29,7 @@ namespace BadmintonCourtManagement.GUI
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
-            CheckPermissions("F06");
+            CheckPermissions("F14");
             brandBUS = new BrandBUS();
             LoadBrands(brandBUS.GetAllBrands());
         }

@@ -1,6 +1,7 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,7 @@ namespace GUI
 {
     public partial class StatisticBookingGUI : UserControl
     {
+        private System.Collections.IList originalData;
         public StatisticBookingGUI()
         {
             InitializeComponent();
@@ -65,18 +67,18 @@ namespace GUI
                         })
                 // --- JOIN 2: Kết quả trên + Court (Lấy tên sân) ---
                 .Join(listCourts,
-                        temp => temp.CourtId,       
-                        court => court.CourtId,    
+                        temp => temp.CourtId,
+                        court => court.CourtId,
                         (temp, court) => new
                         {
-                            court.CourtName,        
-                            temp.TotalPrice,        
-                            court.CourtId           
+                            court.CourtName,
+                            temp.TotalPrice,
+                            court.CourtId
                         })
                 .GroupBy(x => new { x.CourtId, x.CourtName })
                 .Select(g => new
                 {
-                    MaSan = g.Key.CourtId,      
+                    MaSan = g.Key.CourtId,
                     TenSan = g.Key.CourtName,
                     TongSoLanDat = g.Count(),
                     TongTien = g.Sum(x => x.TotalPrice)
@@ -84,9 +86,8 @@ namespace GUI
                 .OrderBy(x => x.MaSan)
                 .ToList();
 
-            dataGridView1.DataSource = statisticResult;
-            DrawChart(statisticResult);
-            chartStatistic.Visible = true;
+            originalData = statisticResult;
+            FilterData(textBox1.Text.Trim());
         }
 
         private void DrawChart(System.Collections.IList data)
@@ -107,13 +108,45 @@ namespace GUI
             int viewSize = 5;
             if (data.Count > viewSize)
             {
-                chartArea.AxisX.ScaleView.Zoom(0, viewSize); 
-                chartArea.AxisX.ScrollBar.IsPositionedInside = false; 
+                chartArea.AxisX.ScaleView.Zoom(0, viewSize);
+                chartArea.AxisX.ScrollBar.IsPositionedInside = false;
             }
             else
             {
                 chartArea.AxisX.ScaleView.ZoomReset();
             }
+        }
+
+        private void FilterData(string keyword)
+        {
+            if (originalData == null) return;
+
+            var dataList = originalData.Cast<dynamic>();
+            var filteredList = dataList;
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                keyword = keyword.ToLower();
+
+                filteredList = dataList.Where(item =>
+                    item.TenSan.ToLower().Contains(keyword) ||
+                    item.MaSan.ToLower().Contains(keyword) ||
+                    item.TongSoLanDat.ToString().Contains(keyword) ||
+                    item.TongTien.ToString().Contains(keyword)
+                ).ToList();
+            }
+            else
+            {
+                filteredList = dataList.ToList();
+            }
+
+            dataGridView1.DataSource = filteredList.ToList();
+            DrawChart(dataList.ToList());
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            FilterData(textBox1.Text.Trim());
         }
     }
 }

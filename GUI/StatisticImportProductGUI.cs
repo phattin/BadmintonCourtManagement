@@ -14,6 +14,7 @@ namespace GUI
 {
     public partial class StatisticImportProductGUI : UserControl
     {
+        private System.Collections.IList originalData;
         public StatisticImportProductGUI()
         {
             InitializeComponent();
@@ -92,8 +93,8 @@ namespace GUI
                 default: sortedResult = query.OrderByDescending(x => x.TongChiPhi).ToList<dynamic>(); break;
             }
 
-            dataGridView1.DataSource = sortedResult;
-            DrawChart(sortedResult);
+            originalData = sortedResult;
+            FilterData(textBox1.Text.Trim());
         }
 
         private void DrawChart(System.Collections.IList data)
@@ -121,6 +122,38 @@ namespace GUI
             {
                 chartArea.AxisX.ScaleView.ZoomReset();
             }
+        }
+
+        private void FilterData(string keyword)
+        {
+            if (originalData == null) return;
+
+            var dataList = originalData.Cast<dynamic>();
+            var filteredList = dataList;
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                keyword = keyword.ToLower();
+
+                filteredList = dataList.Where(item =>
+                    item.TenSP.ToLower().Contains(keyword) ||
+                    item.MaSP.ToLower().Contains(keyword) ||
+                    item.TongSoLuong.ToString().Contains(keyword) ||
+                    item.TongChiPhi.ToString().Contains(keyword)
+                ).ToList();
+            }
+            else
+            {
+                filteredList = dataList.ToList();
+            }
+
+            dataGridView1.DataSource = filteredList.ToList();
+            DrawChart(dataList.ToList());
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            FilterData(textBox1.Text.Trim());
         }
     }
 }
