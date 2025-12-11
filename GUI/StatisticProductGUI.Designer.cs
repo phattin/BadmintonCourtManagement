@@ -52,8 +52,6 @@
             dateTimePicker2 = new DateTimePicker();
             cbbSort = new ComboBox();
             buttonTK = new Button();
-            customPanel3 = new BadmintonCourtManagement.GUI.CustomPanel();
-            textBox1 = new TextBox();
             panelBottom.SuspendLayout();
             customPanel1.SuspendLayout();
             panelDataGridView.SuspendLayout();
@@ -65,7 +63,6 @@
             ((System.ComponentModel.ISupportInitialize)chartStatistic).BeginInit();
             customPanel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
-            customPanel3.SuspendLayout();
             SuspendLayout();
             // 
             // labelTitle
@@ -130,6 +127,10 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.BackgroundColor = Color.White;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 120, 103);
@@ -253,7 +254,6 @@
             customPanel2.BorderRadius = 20;
             customPanel2.Controls.Add(tableLayoutPanel1);
             customPanel2.Controls.Add(buttonTK);
-            customPanel2.Controls.Add(customPanel3);
             customPanel2.Dock = DockStyle.Top;
             customPanel2.Location = new Point(0, 0);
             customPanel2.Name = "customPanel2";
@@ -271,11 +271,11 @@
             tableLayoutPanel1.Controls.Add(dateTimePicker2, 1, 0);
             tableLayoutPanel1.Controls.Add(cbbSort, 2, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(514, 25);
+            tableLayoutPanel1.Location = new Point(25, 25);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(387, 38);
+            tableLayoutPanel1.Size = new Size(876, 38);
             tableLayoutPanel1.TabIndex = 2;
             // 
             // dateTimePicker1
@@ -286,7 +286,7 @@
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.Location = new Point(3, 3);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(122, 34);
+            dateTimePicker1.Size = new Size(285, 34);
             dateTimePicker1.TabIndex = 0;
             // 
             // dateTimePicker2
@@ -295,20 +295,21 @@
             dateTimePicker2.Dock = DockStyle.Fill;
             dateTimePicker2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker2.Format = DateTimePickerFormat.Custom;
-            dateTimePicker2.Location = new Point(131, 3);
+            dateTimePicker2.Location = new Point(294, 3);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(122, 34);
+            dateTimePicker2.Size = new Size(285, 34);
             dateTimePicker2.TabIndex = 1;
             // 
             // cbbSort
             // 
             cbbSort.Dock = DockStyle.Fill;
+            cbbSort.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbSort.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbbSort.FormattingEnabled = true;
             cbbSort.Items.AddRange(new object[] { "Doanh thu giảm dần", "Doanh thu tăng dần", "Số lượng sản phẩm giảm dần", "Số lượng sản phẩm tăng dần" });
-            cbbSort.Location = new Point(259, 3);
+            cbbSort.Location = new Point(585, 3);
             cbbSort.Name = "cbbSort";
-            cbbSort.Size = new Size(125, 36);
+            cbbSort.Size = new Size(288, 36);
             cbbSort.TabIndex = 2;
             // 
             // buttonTK
@@ -324,32 +325,6 @@
             buttonTK.Text = "Thống kê";
             buttonTK.UseVisualStyleBackColor = false;
             buttonTK.Click += buttonTK_Click;
-            // 
-            // customPanel3
-            // 
-            customPanel3.BackColor = Color.White;
-            customPanel3.BorderRadius = 30;
-            customPanel3.Controls.Add(textBox1);
-            customPanel3.Dock = DockStyle.Left;
-            customPanel3.Location = new Point(25, 25);
-            customPanel3.Margin = new Padding(3, 2, 3, 2);
-            customPanel3.Name = "customPanel3";
-            customPanel3.Padding = new Padding(10, 3, 0, 0);
-            customPanel3.Size = new Size(489, 38);
-            customPanel3.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(10, 3);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Tìm kiếm";
-            textBox1.Size = new Size(479, 27);
-            textBox1.TabIndex = 0;
             // 
             // StatisticProductGUI
             // 
@@ -370,8 +345,6 @@
             ((System.ComponentModel.ISupportInitialize)chartStatistic).EndInit();
             customPanel2.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
-            customPanel3.ResumeLayout(false);
-            customPanel3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -389,8 +362,6 @@
         private DateTimePicker dateTimePicker1;
         private DateTimePicker dateTimePicker2;
         private Button buttonTK;
-        private BadmintonCourtManagement.GUI.CustomPanel customPanel3;
-        private TextBox textBox1;
         private ComboBox cbbSort;
         private DataGridViewTextBoxColumn ProductId;
         private DataGridViewTextBoxColumn ProductName;

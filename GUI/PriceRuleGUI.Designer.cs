@@ -194,6 +194,10 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -219,6 +223,7 @@
             dataGridView1.Location = new Point(20, 20);
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 40;
@@ -232,42 +237,49 @@
             StartTime.HeaderText = "Giờ bắt đầu";
             StartTime.MinimumWidth = 6;
             StartTime.Name = "StartTime";
+            StartTime.ReadOnly = true;
             // 
             // EndTime
             // 
             EndTime.HeaderText = "Giờ kết thúc";
             EndTime.MinimumWidth = 6;
             EndTime.Name = "EndTime";
+            EndTime.ReadOnly = true;
             // 
             // StartDate
             // 
             StartDate.HeaderText = "Ngày bắt đầu";
             StartDate.MinimumWidth = 6;
             StartDate.Name = "StartDate";
+            StartDate.ReadOnly = true;
             // 
             // EndDate
             // 
             EndDate.HeaderText = "Ngày kết thúc";
             EndDate.MinimumWidth = 6;
             EndDate.Name = "EndDate";
+            EndDate.ReadOnly = true;
             // 
             // EndType
             // 
             EndType.HeaderText = "Thể loại";
             EndType.MinimumWidth = 6;
             EndType.Name = "EndType";
+            EndType.ReadOnly = true;
             // 
             // Price
             // 
             Price.HeaderText = "Giá";
             Price.MinimumWidth = 6;
             Price.Name = "Price";
+            Price.ReadOnly = true;
             // 
             // Status
             // 
             Status.HeaderText = "Tình trạng";
             Status.MinimumWidth = 6;
             Status.Name = "Status";
+            Status.ReadOnly = true;
             // 
             // Function
             // 
@@ -275,6 +287,7 @@
             Function.HeaderText = "Chi tiết";
             Function.MinimumWidth = 6;
             Function.Name = "Function";
+            Function.ReadOnly = true;
             Function.Text = "Xem";
             Function.UseColumnTextForButtonValue = true;
             Function.Width = 124;

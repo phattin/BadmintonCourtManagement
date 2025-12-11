@@ -79,18 +79,16 @@ namespace GUI
                     TenSP = g.Key.ProductName,
                     TongSoLuong = g.Sum(x => x.Quantity),
                     TongChiPhi = g.Sum(x => x.TotalPrice)
-                })
-                .ToList();
+                });
 
-            List<dynamic> sortedResult = new List<dynamic>();
-            switch (cbbSort.SelectedIndex)
+            var sortedResult = cbbSort.SelectedIndex switch
             {
-                case 0: sortedResult = query.OrderByDescending(x => x.TongChiPhi).ToList<dynamic>(); break;
-                case 1: sortedResult = query.OrderBy(x => x.TongChiPhi).ToList<dynamic>(); break;
-                case 2: sortedResult = query.OrderByDescending(x => x.TongSoLuong).ToList<dynamic>(); break;
-                case 3: sortedResult = query.OrderBy(x => x.TongSoLuong).ToList<dynamic>(); break;
-                default: sortedResult = query.OrderByDescending(x => x.TongChiPhi).ToList<dynamic>(); break;
-            }
+                0 => query.OrderByDescending(x => x.TongChiPhi).ToList(),
+                1 => query.OrderBy(x => x.TongChiPhi).ToList(),
+                2 => query.OrderByDescending(x => x.TongSoLuong).ToList(),
+                3 => query.OrderBy(x => x.TongSoLuong).ToList(),
+                _ => query.OrderByDescending(x => x.TongChiPhi).ToList()
+            };
 
             dataGridView1.DataSource = sortedResult;
             DrawChart(sortedResult);

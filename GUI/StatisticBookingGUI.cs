@@ -1,6 +1,7 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -65,18 +66,18 @@ namespace GUI
                         })
                 // --- JOIN 2: Kết quả trên + Court (Lấy tên sân) ---
                 .Join(listCourts,
-                        temp => temp.CourtId,       
-                        court => court.CourtId,    
+                        temp => temp.CourtId,
+                        court => court.CourtId,
                         (temp, court) => new
                         {
-                            court.CourtName,        
-                            temp.TotalPrice,        
-                            court.CourtId           
+                            court.CourtName,
+                            temp.TotalPrice,
+                            court.CourtId
                         })
                 .GroupBy(x => new { x.CourtId, x.CourtName })
                 .Select(g => new
                 {
-                    MaSan = g.Key.CourtId,      
+                    MaSan = g.Key.CourtId,
                     TenSan = g.Key.CourtName,
                     TongSoLanDat = g.Count(),
                     TongTien = g.Sum(x => x.TotalPrice)
@@ -86,7 +87,6 @@ namespace GUI
 
             dataGridView1.DataSource = statisticResult;
             DrawChart(statisticResult);
-            chartStatistic.Visible = true;
         }
 
         private void DrawChart(System.Collections.IList data)
@@ -107,8 +107,8 @@ namespace GUI
             int viewSize = 5;
             if (data.Count > viewSize)
             {
-                chartArea.AxisX.ScaleView.Zoom(0, viewSize); 
-                chartArea.AxisX.ScrollBar.IsPositionedInside = false; 
+                chartArea.AxisX.ScaleView.Zoom(0, viewSize);
+                chartArea.AxisX.ScrollBar.IsPositionedInside = false;
             }
             else
             {

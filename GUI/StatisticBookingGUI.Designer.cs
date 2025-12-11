@@ -52,8 +52,6 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             dateTimePicker1 = new DateTimePicker();
             dateTimePicker2 = new DateTimePicker();
-            customPanel3 = new BadmintonCourtManagement.GUI.CustomPanel();
-            textBox1 = new TextBox();
             panelTop.SuspendLayout();
             panelBottom.SuspendLayout();
             customPanel1.SuspendLayout();
@@ -66,7 +64,6 @@
             ((System.ComponentModel.ISupportInitialize)chartStatistic).BeginInit();
             customPanel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
-            customPanel3.SuspendLayout();
             SuspendLayout();
             // 
             // panelTop
@@ -154,6 +151,10 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.BackgroundColor = Color.White;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 120, 103);
@@ -274,7 +275,6 @@
             customPanel2.BorderRadius = 20;
             customPanel2.Controls.Add(tableLayoutPanel1);
             customPanel2.Controls.Add(buttonTK);
-            customPanel2.Controls.Add(customPanel3);
             customPanel2.Dock = DockStyle.Top;
             customPanel2.Location = new Point(0, 0);
             customPanel2.Name = "customPanel2";
@@ -290,12 +290,12 @@
             tableLayoutPanel1.Controls.Add(dateTimePicker1, 0, 0);
             tableLayoutPanel1.Controls.Add(dateTimePicker2, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(555, 25);
+            tableLayoutPanel1.Location = new Point(25, 25);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(358, 38);
+            tableLayoutPanel1.Size = new Size(888, 38);
             tableLayoutPanel1.TabIndex = 2;
             // 
             // dateTimePicker1
@@ -306,7 +306,7 @@
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.Location = new Point(3, 3);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(173, 34);
+            dateTimePicker1.Size = new Size(438, 34);
             dateTimePicker1.TabIndex = 0;
             // 
             // dateTimePicker2
@@ -315,36 +315,10 @@
             dateTimePicker2.Dock = DockStyle.Fill;
             dateTimePicker2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker2.Format = DateTimePickerFormat.Custom;
-            dateTimePicker2.Location = new Point(182, 3);
+            dateTimePicker2.Location = new Point(447, 3);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(173, 34);
+            dateTimePicker2.Size = new Size(438, 34);
             dateTimePicker2.TabIndex = 1;
-            // 
-            // customPanel3
-            // 
-            customPanel3.BackColor = Color.White;
-            customPanel3.BorderRadius = 30;
-            customPanel3.Controls.Add(textBox1);
-            customPanel3.Dock = DockStyle.Left;
-            customPanel3.Location = new Point(25, 25);
-            customPanel3.Margin = new Padding(3, 2, 3, 2);
-            customPanel3.Name = "customPanel3";
-            customPanel3.Padding = new Padding(10, 3, 0, 0);
-            customPanel3.Size = new Size(530, 38);
-            customPanel3.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.Black;
-            textBox1.Location = new Point(10, 3);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Tìm kiếm";
-            textBox1.Size = new Size(520, 27);
-            textBox1.TabIndex = 0;
             // 
             // StatisticBookingGUI
             // 
@@ -366,8 +340,6 @@
             ((System.ComponentModel.ISupportInitialize)chartStatistic).EndInit();
             customPanel2.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
-            customPanel3.ResumeLayout(false);
-            customPanel3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -380,8 +352,6 @@
         private Button buttonTK;
         private BadmintonCourtManagement.GUI.CustomPanel customPanel1;
         private BadmintonCourtManagement.GUI.CustomPanel customPanel2;
-        private BadmintonCourtManagement.GUI.CustomPanel customPanel3;
-        private TextBox textBox1;
         private TableLayoutPanel tableLayoutPanel1;
         private DateTimePicker dateTimePicker1;
         private DateTimePicker dateTimePicker2;

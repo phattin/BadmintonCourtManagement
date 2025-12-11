@@ -28,8 +28,8 @@ namespace GUI
             errorProvider1.Clear();
 
             double price = (double)numericUpDown1.Value;
-            TimeOnly startTime = TimeOnly.FromDateTime(dateTimePickerStartTime.Value);
-            TimeOnly endTime = TimeOnly.FromDateTime(dateTimePickerEndTime.Value);
+            TimeOnly startTime = new TimeOnly(dateTimePickerStartTime.Value.Hour, dateTimePickerStartTime.Value.Minute, 0);
+            TimeOnly endTime = new TimeOnly(dateTimePickerEndTime.Value.Hour, dateTimePickerEndTime.Value.Minute, 0);
             DateOnly? startDate = null;
             if (dateTimePickerStartDate.Checked)
             {
@@ -60,6 +60,27 @@ namespace GUI
             {
                 string newId = bus.GeneratePriceRuleId();
                 PriceRuleDTO newPriceRule = new PriceRuleDTO(newId, price, startTime, endTime, startDate, endDate, endType, description, 1);
+
+                List<PriceRuleDTO> allRules = bus.GetAllPriceRules();
+                var overlappingRule = allRules.FirstOrDefault(r =>
+                    r.EndType == endType &&
+                    (startTime < r.EndTime && endTime > r.StartTime) &&
+                    (
+                       (startDate == null || r.EndDate == null || startDate <= r.EndDate) &&
+                       (endDate == null || r.StartDate == null || endDate >= r.StartDate)
+                    )
+                );
+
+                if (overlappingRule != null)
+                {
+                    string msg = $"Bị trùng với mã: {overlappingRule.PriceRuleId}\n" +
+                                 $"Loại: {overlappingRule.EndType}\n" +
+                                 $"Giờ: {overlappingRule.StartTime} - {overlappingRule.EndTime}\n" +
+                                 $"Ngày: {(overlappingRule.StartDate?.ToString() ?? "NULL")} - {(overlappingRule.EndDate?.ToString() ?? "NULL (Áp dụng cho tất cả các ngày)")}";
+
+                    MessageBox.Show(msg, "Lỗi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 if (bus.InsertPriceRule(newPriceRule))
                 {

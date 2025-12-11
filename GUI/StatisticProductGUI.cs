@@ -15,6 +15,7 @@ namespace GUI
 {
     public partial class StatisticProductGUI : UserControl
     {
+        private System.Collections.IList originalData;
         public StatisticProductGUI()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace GUI
             }
 
             BillProductBUS billProductBUS = new BillProductBUS();
-            var listBillProducts = billProductBUS.GetAllProductBills(); 
+            var listBillProducts = billProductBUS.GetAllProductBills();
             BillProductDetailBUS billDetailBUS = new BillProductDetailBUS();
             var listBillDetails = billDetailBUS.GetAllDetailProductBills();
             ProductBUS productBUS = new ProductBUS();
@@ -46,9 +47,9 @@ namespace GUI
             DateTime fromDate = dateTimePicker1.Value.Date;
             DateTime toDate = dateTimePicker2.Value.Date;
 
-            var statisticResult = listBillProducts
+            var query = listBillProducts
                 .Where(b =>
-                    (b.Status == BillProductDTO.Option.paid) && 
+                    (b.Status == BillProductDTO.Option.paid) &&
                     b.DateCreated.Date >= fromDate &&
                     b.DateCreated.Date <= toDate
                 )
@@ -60,7 +61,7 @@ namespace GUI
                         {
                             detail.ProductId,
                             detail.Quantity,
-                            detail.TotalPrice 
+                            detail.TotalPrice
                         })
                 // JOIN 2: Nối với bảng Product để lấy Tên Sản Phẩm
                 .Join(listProducts,
@@ -78,21 +79,18 @@ namespace GUI
                 {
                     MaSP = g.Key.ProductId,
                     TenSP = g.Key.ProductName,
-                    TongSoLuong = g.Sum(x => x.Quantity),      
-                    TongTien = g.Sum(x => x.TotalPrice)        
-                })
-                .ToList();
+                    TongSoLuong = g.Sum(x => x.Quantity),
+                    TongTien = g.Sum(x => x.TotalPrice)
+                });
 
-            List<dynamic> sortedResult = new List<dynamic>();
-
-            switch (cbbSort.SelectedIndex)
+            var sortedResult = cbbSort.SelectedIndex switch
             {
-                case 0: sortedResult = statisticResult.OrderByDescending(x => x.TongTien).ToList<dynamic>(); break;
-                case 1: sortedResult = statisticResult.OrderBy(x => x.TongTien).ToList<dynamic>(); break;
-                case 2: sortedResult = statisticResult.OrderByDescending(x => x.TongSoLuong).ToList<dynamic>(); break;
-                case 3: sortedResult = statisticResult.OrderBy(x => x.TongSoLuong).ToList<dynamic>(); break;
-                default: sortedResult = statisticResult.OrderByDescending(x => x.TongTien).ToList<dynamic>(); break;
-            }
+                0 => query.OrderByDescending(x => x.TongTien).ToList(),
+                1 => query.OrderBy(x => x.TongTien).ToList(),
+                2 => query.OrderByDescending(x => x.TongSoLuong).ToList(),
+                3 => query.OrderBy(x => x.TongSoLuong).ToList(),
+                _ => query.OrderByDescending(x => x.TongTien).ToList()
+            };
 
             dataGridView1.DataSource = sortedResult;
             DrawChart(sortedResult);
