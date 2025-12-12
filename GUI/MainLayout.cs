@@ -27,8 +27,11 @@ namespace BadmintonCourtManagement.GUI
         private List<BrandDTO> brandList = new List<BrandDTO>();
         private List<ImportBillDTO> importBillList = new List<ImportBillDTO>();
 
-        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<ProductDTO> productList, List<BrandDTO> brandList, List<ImportBillDTO> importBillList)
+        private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
+
+        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<TypeProductDTO> typeProductList, List<ProductDTO> productList, List<BrandDTO> brandList, List<ImportBillDTO> importBillList)
         {
+            this.typeProductList = typeProductList;
             this.currentAccount = account;
             this.storageList = storageList;
             this.productList = productList;
@@ -233,7 +236,7 @@ namespace BadmintonCourtManagement.GUI
         }
         private void TypeProduct_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new TypeProductGUI(currentAccount));
+            OpenChildPanel(new TypeProductGUI(currentAccount, typeProductList));
         }
         
         private void Supplier_Click(object? sender, EventArgs e)

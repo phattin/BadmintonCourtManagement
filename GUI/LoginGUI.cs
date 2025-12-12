@@ -21,6 +21,7 @@ namespace BadmintonCourtManagement.GUI
         private List<BrandDTO> brandList = new List<BrandDTO>();
         private List<ImportBillDTO> importBillList = new List<ImportBillDTO>();
         // private List<ImportBillDTO>
+        private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
 
         public LoginGUI()
         {
@@ -34,6 +35,7 @@ namespace BadmintonCourtManagement.GUI
             productList = new ProductBUS().GetAllProducts();
             brandList = new BrandBUS().GetAllBrands();
             importBillList = new BillImportBUS().GetAllImportBills();
+            typeProductList = new TypeProductBUS().GetAllTypeProducts();
         }
 
         private void lblWelcome_Click(object sender, EventArgs e)
