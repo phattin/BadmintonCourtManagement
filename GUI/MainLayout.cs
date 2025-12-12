@@ -216,6 +216,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Storage_Click(object? sender, EventArgs e)
         {
+            storageList = StorageBUS.GetAllStorages();
             OpenChildPanel(new storageGUI(currentAccount, storageList, importBillList));
         }
 
