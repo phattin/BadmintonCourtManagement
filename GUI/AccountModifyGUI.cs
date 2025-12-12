@@ -114,29 +114,15 @@ namespace GUI
 
             try
             {
-                string oldEmployeeId = currentAccount.EmployeeId;
-                string newEmployeeId = employeeId;
-                bool isEmployeeChanged = (oldEmployeeId != newEmployeeId);
                 if (accountBUS.UpdateAccount(updateAccount))
                 {
-                    EmployeeBUS employeeBUS = new EmployeeBUS();
-                    if (isEmployeeChanged)
-                    {
-                        EmployeeDTO oldEmp = employeeBUS.GetEmployeeById(oldEmployeeId);
-                        oldEmp.Username = "";
-                        employeeBUS.UpdateEmployee(oldEmp);
-
-                        EmployeeDTO newEmp = employeeBUS.GetEmployeeById(newEmployeeId);
-                        newEmp.Username = currentAccount.Username;
-                        employeeBUS.UpdateEmployee(newEmp);
-                    }
-
                     MessageBox.Show("Cập nhật tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (Session.CurrentUser.Username == currentAccount.Username)
                     {
                         Session.CurrentUser = updateAccount;
                         Session.TriggerPermissionChange();
                     }
+
                     this.currentAccount = updateAccount;
                     this.DialogResult = DialogResult.OK;
                     this.Close();

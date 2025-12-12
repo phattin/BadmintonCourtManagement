@@ -61,8 +61,13 @@ namespace BadmintonCourtManagement.BUS
             if (dto.EndTime <= dto.StartTime)
                 errors.Add("EndTime", "Giờ kết thúc phải lớn hơn giờ bắt đầu.");
 
-            if (dto.EndDate < dto.StartDate)
-                errors.Add("EndDate", "Ngày kết thúc phải lớn hơn ngày bắt đầu.");
+            if (dto.StartDate != null && dto.EndDate != null)
+            {
+                if (dto.EndDate < dto.StartDate)
+                {
+                    errors.Add("EndDate", "Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu.");
+                }
+            }
 
             return errors;
         }

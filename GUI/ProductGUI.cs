@@ -24,14 +24,13 @@ namespace BadmintonCourtManagement.GUI
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
         private bool isInsert = false, isUpdate = false;
 
-        public ProductGUI(AccountDTO currentAccount)
+        public ProductGUI(AccountDTO currentAccount, List<ProductDTO> productList)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
+            this.productList = productList;
             CheckPermissions("F06");
-            productList = new List<ProductDTO>();
             ProductBUS productBUS = new ProductBUS();
-            productList = productBUS.GetAllProducts();
             LoadProducts(productList);
             searchBar.KeyDown += searchEnterEvent;
             this.Resize += ProductGUI_Resize;
@@ -298,6 +297,23 @@ namespace BadmintonCourtManagement.GUI
                 dialog.Controls.Add(updateForm);
                 dialog.ShowDialog();
 
+                if (updateForm.ResultProduct != null)
+                {
+                    if (updateForm.ResultProduct.Quantity == -1 && updateForm.ResultProduct.IsDeleted == 1)
+                    {
+                        // If quantity is -1 after update => no transaction, remove from list
+                        productList.RemoveAll(p => p.ProductId == updateForm.ResultProduct.ProductId);
+                    }
+                    else
+                    {
+                        // Update the product in the list
+                        int idx = productList.FindIndex(p => p.ProductId == updateForm.ResultProduct.ProductId);
+                        if (idx >= 0)
+                            productList[idx] = updateForm.ResultProduct;
+                        else
+                            productList.Add(updateForm.ResultProduct);
+                    }
+                }
                 // Sau khi đóng form sửa → reload danh sách
                 ReloadProductList();
             };
@@ -317,8 +333,6 @@ namespace BadmintonCourtManagement.GUI
         }
         private void ReloadProductList()
         {
-            ProductBUS productBus = new ProductBUS();
-            productList = productBus.GetAllProducts();
             page = 0;
             LoadProducts(productList);
         }
@@ -401,69 +415,14 @@ namespace BadmintonCourtManagement.GUI
         {
             searchBar.Clear();
         }
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label4_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click_2(object sender, EventArgs e)
-        {
-
 
         }
 
@@ -517,6 +476,7 @@ namespace BadmintonCourtManagement.GUI
             dialog.ShowDialog();
         }
 
+        // Add product button
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
             var brands = LoadBrands();
@@ -555,6 +515,13 @@ namespace BadmintonCourtManagement.GUI
 
             dialog.Controls.Add(insertForm);
             dialog.ShowDialog();
+
+            if (insertForm.ResultProduct != null)
+            {
+                productList.Add(insertForm.ResultProduct);
+                page = 0;
+                ReloadProductList();
+            }
         }
 
         private void ProductGUI_Resize(object sender, EventArgs e)

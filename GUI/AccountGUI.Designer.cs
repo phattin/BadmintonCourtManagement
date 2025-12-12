@@ -191,6 +191,10 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.Fixed3D;
@@ -217,6 +221,7 @@
             dataGridView1.Location = new Point(20, 20);
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 40;
@@ -229,30 +234,35 @@
             PermissionId.HeaderText = "Quyền hạn";
             PermissionId.MinimumWidth = 6;
             PermissionId.Name = "PermissionId";
+            PermissionId.ReadOnly = true;
             // 
             // EmployeeName
             // 
             EmployeeName.HeaderText = "Tên nhân viên";
             EmployeeName.MinimumWidth = 6;
             EmployeeName.Name = "EmployeeName";
+            EmployeeName.ReadOnly = true;
             // 
             // Username
             // 
             Username.HeaderText = "Tài khoản";
             Username.MinimumWidth = 6;
             Username.Name = "Username";
+            Username.ReadOnly = true;
             // 
             // Password
             // 
             Password.HeaderText = "Mật khẩu";
             Password.MinimumWidth = 6;
             Password.Name = "Password";
+            Password.ReadOnly = true;
             // 
             // Status
             // 
             Status.HeaderText = "Tình trạng";
             Status.MinimumWidth = 6;
             Status.Name = "Status";
+            Status.ReadOnly = true;
             // 
             // customPanel2
             // 

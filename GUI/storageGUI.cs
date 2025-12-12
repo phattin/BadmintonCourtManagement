@@ -33,10 +33,12 @@ namespace BadmintonCourtManagement.GUI
         private int supplyItemPerPage = 8;
         private Boolean supplyIsFiltered = false;
 
-        public storageGUI(AccountDTO currentAccount)
+        public storageGUI(AccountDTO currentAccount, List<StorageDTO> storageList, List<ImportBillDTO> importBillList)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
+            this.storageList = storageList;
+            this.supplyList = importBillList;
             this.Load += StorageGUI_Load;
         }
 
@@ -44,7 +46,7 @@ namespace BadmintonCourtManagement.GUI
         private void StorageGUI_Load(object sender, EventArgs e)
         {
             // lấy danh sách kho hàng
-            storageList = StorageBUS.GetAllStorages();
+            //storageList = StorageBUS.GetAllStorages();
             oldList = storageList;
             searchList = oldList;
             page = 0;
@@ -57,7 +59,7 @@ namespace BadmintonCourtManagement.GUI
         // Load import bill list
         private void LoadSupplyList()
         {
-            supplyList = new BillImportBUS().GetAllImportBills();
+            // supplyList = new BillImportBUS().GetAllImportBills();
             supplyOldList = supplyList;
             supplySearchList = supplyOldList;
             supplyPage = 0;
@@ -91,7 +93,7 @@ namespace BadmintonCourtManagement.GUI
                             card.Controls.Add(cardBody);
                             card.Controls.Add(cardTitle);
                             card.Dock = DockStyle.Fill;
-                            card.Padding = new Padding(20,10,20,10);
+                            card.Padding = new Padding(20, 10, 20, 10);
                             card.Name = "card";
                             card.TabIndex = 0;
 
@@ -250,18 +252,6 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
-        // hàm reset item
-        private void Reset_Click(object sender, EventArgs e)
-        {
-            page = 0;
-            storageList = oldList;
-            searchList = oldList;
-            Pagination();
-            isFiltered = false;
-            searchBar.Text = "";
-            StorageGUI_Load(sender, e);
-        }
-
         // hàm lọc theo ngày
         private void filterButton_Click(object sender, EventArgs e)
         {
@@ -323,6 +313,28 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
             }
+        }
+
+        // hàm reset item
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            page = 0;
+            storageList = oldList;
+            searchList = oldList;
+            Pagination();
+            isFiltered = false;
+            searchBar.Text = "";
+            StorageGUI_Load(sender, e);
+        }
+
+        // hàm đọc lại list kho
+        public void ReloadStorage() {
+            page = 0;
+            storageList = oldList;
+            searchList = oldList;
+            Pagination();
+            isFiltered = false;
+            searchBar.Text = "";
         }
 
         // các hàm tạm
@@ -485,7 +497,7 @@ namespace BadmintonCourtManagement.GUI
                             cardBody.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
                             cardBody.Name = "cardBody";
                             cardBody.Size = new Size(374, 180);
-                            cardBody.Text = 
+                            cardBody.Text =
                                 "Mã nhân viên: " + supplyList[i].EmployeeId + "\r\n" +
                                 "Mã nhà cung cấp: " + supplyList[i].SupplierId + "\r\n" +
                                 "Ngày tạo: " + supplyList[i].DateCreated.ToString("dd/MM/yyyy") + "\r\n" +
@@ -719,11 +731,11 @@ namespace BadmintonCourtManagement.GUI
                     // Get import bill details
                     BillImportDetailBUS importDetail = new BillImportDetailBUS();
                     List<BillImportDetailDTO> details = importDetail.GetDetailImportBillsByImportBillId(item.ImportBillId);
-                    
+
                     // Open SupplyDetailsGUI with details
                     SupplyDetailsGUI supplyDetails = new SupplyDetailsGUI(details);
                     supplyDetails.ShowDialog();
-                    
+
                     // Refresh list after closing details
                     LoadSupplyList();
                     return;
@@ -734,8 +746,14 @@ namespace BadmintonCourtManagement.GUI
         // Thêm đơn nhập hàng mới
         private void supplyAdd_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList, supplyList);
             supplyAdd.ShowDialog();
+            if (supplyAdd.ResultBill != null)
+            {
+                // Avoid duplicates: remove any existing with same id then add
+                supplyList.RemoveAll(b => b.ImportBillId == supplyAdd.ResultBill.ImportBillId);
+                supplyList.Add(supplyAdd.ResultBill);
+            }
             // Refresh list after closing add form
             LoadSupplyList();
         }
@@ -784,13 +802,13 @@ namespace BadmintonCourtManagement.GUI
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList, supplyList);
             supplyAdd.ShowDialog();
         }
 
         private void AddButton_Click_1(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList, supplyList);
             supplyAdd.ShowDialog();
         }
 

@@ -21,9 +21,22 @@ namespace BadmintonCourtManagement.GUI
         private MenuManager menuManager;
         private Panel menuPanel, contentPanel;
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
-        public MainLayout(AccountDTO account)
+
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<ProductDTO> productList = new List<ProductDTO>();
+        private List<BrandDTO> brandList = new List<BrandDTO>();
+        private List<ImportBillDTO> importBillList = new List<ImportBillDTO>();
+
+        private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
+
+        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<TypeProductDTO> typeProductList, List<ProductDTO> productList, List<BrandDTO> brandList, List<ImportBillDTO> importBillList)
         {
+            this.typeProductList = typeProductList;
             this.currentAccount = account;
+            this.storageList = storageList;
+            this.productList = productList;
+            this.brandList = brandList;
+            this.importBillList = importBillList;
             InitializeComponent();
             Session.CurrentUser = account;
             Session.OnPermissionChanged += ReloadMenu;
@@ -155,7 +168,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Brand_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new BrandGUI(currentAccount));
+            OpenChildPanel(new BrandGUI(currentAccount, brandList));
         }
         private void Permission_Click(object? sender, EventArgs e)
         {
@@ -203,7 +216,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Storage_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new storageGUI(currentAccount));
+            OpenChildPanel(new storageGUI(currentAccount, storageList, importBillList));
         }
 
         private void Employee_Click(object? sender, EventArgs e)
@@ -213,16 +226,17 @@ namespace BadmintonCourtManagement.GUI
 
         private void Product_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new ProductGUI(currentAccount));
+            OpenChildPanel(new ProductGUI(currentAccount, productList));
         }
 
         private void Statistics_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new StatisticGUI(currentAccount));
+            //OpenChildPanel(new StatisticGUI(currentAccount));
+            OpenChildPanel(new StatisticMainGUI());
         }
         private void TypeProduct_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new TypeProductGUI(currentAccount));
+            OpenChildPanel(new TypeProductGUI(currentAccount, typeProductList));
         }
         
         private void Supplier_Click(object? sender, EventArgs e)

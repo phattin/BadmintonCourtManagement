@@ -506,33 +506,33 @@ namespace BadmintonCourtManagement.GUI
         // Add / Sell Product click
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
-            // TODO: Implement sale dialog (select products, quantities, create bill).
-            // Build confirmation summary from _cart
-            var selectedItems = _cart.Where(kv => kv.Value > 0).ToList();
-            if (!selectedItems.Any())
-            {
-                MessageBox.Show("Chưa chọn sản phẩm nào để bán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+           // TODO: Implement sale dialog (select products, quantities, create bill).
+           // Build confirmation summary from _cart
+           var selectedItems = _cart.Where(kv => kv.Value > 0).ToList();
+           if (!selectedItems.Any())
+           {
+               MessageBox.Show("Chưa chọn sản phẩm nào để bán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               return;
+           }
 
-            if (getPrice(txt_totalPrice.Text) > getPrice(txt_priceCustomerPay.Text))
-            {
-                MessageBox.Show("Khách hàng chưa trả đủ số tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            var confirm = MessageBox.Show("Bạn có chắc chứ?", "Xác nhận đơn hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirm == DialogResult.Yes)
-            {
-                createBill(selectedItems);
-                MessageBox.Show("Đã xác nhận đơn hàng.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           if (getPrice(txt_totalPrice.Text) > getPrice(txt_priceCustomerPay.Text))
+           {
+               MessageBox.Show("Khách hàng chưa trả đủ số tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               return;
+           }
+           var confirm = MessageBox.Show("Bạn có chắc chứ?", "Xác nhận đơn hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+           if (confirm == DialogResult.Yes)
+           {
+               createBill(selectedItems);
+               MessageBox.Show("Đã xác nhận đơn hàng.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // clear cart and reset UI
-                _cart.Clear();
-                ReloadProductList();
-                txt_totalPrice.Text = "0";
-                txt_priceCustomerPay.Text = "";
-                txt_priceExchange.Text = "";
-            }
+               // clear cart and reset UI
+               _cart.Clear();
+               ReloadProductList();
+               txt_totalPrice.Text = "0";
+               txt_priceCustomerPay.Text = "";
+               txt_priceExchange.Text = "";
+           }
         }
 
         private string generateNewId(string billId)
@@ -563,7 +563,7 @@ namespace BadmintonCourtManagement.GUI
             string billDetailId = bill_detail_bus.GetMaxId();
             EmployeeBUS empBus = new EmployeeBUS();
 
-            var employee = empBus.GetEmployeeByUsername(acc.Username);
+            var employee = empBus.GetEmployeeById(acc.EmployeeId);
             if (employee == null)
             {
                 MessageBox.Show("Không tìm thấy nhân viên tương ứng với tài khoản này.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -600,27 +600,26 @@ namespace BadmintonCourtManagement.GUI
                 .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
                 .OrderBy(storage => storage.ImportBillDetailId)
                 .ToList();
-            
-            // Group by ProductId to handle each product separately
+
             var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
-            
+
             // Create BillProductDetail entries per storage batch
             foreach (var productGroup in storagesByProduct)
             {
                 string productId = productGroup.Key;
                 var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
-                
+
                 if (purchasedItem.Key == null) continue;
-                
+
                 int remainingQty = purchasedItem.Value;
                 var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
-                
+
                 foreach (var storage in productStorages)
                 {
                     if (remainingQty <= 0) break;
-                    
+
                     int qtyFromThisStorage = 0;
-                    
+
                     if (storage.Quantity >= remainingQty)
                     {
                         // This storage has enough quantity
@@ -638,7 +637,7 @@ namespace BadmintonCourtManagement.GUI
                         storage.Status = StorageDTO.Option.inactive;
                         StorageBUS.UpdateStorage(storage);
                     }
-                    
+
                     // Create BillProductDetail for this storage batch
                     double subtotal = qtyFromThisStorage * storage.Price;
                     BillProductDetailDTO bill_detail = new BillProductDetailDTO(
@@ -649,13 +648,13 @@ namespace BadmintonCourtManagement.GUI
                         storage.Price,       // Price from THIS storage
                         subtotal            // Subtotal for THIS batch
                     );
-                    
+
                     bill_detail_bus.InsertBillProductDetail(bill_detail);
-                    
+
                     // Generate next detail ID
                     billDetailId = generateNewId(billDetailId);
                 }
-                
+
                 if (remainingQty > 0)
                 {
                     MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.", 
@@ -671,7 +670,7 @@ namespace BadmintonCourtManagement.GUI
                 var qty = selectedItems.First(kv => kv.Key == id).Value;
                 product_dto.Quantity -= qty;
                 product_bus.UpdateProduct(product_dto);
-            }
+            }            
             // ===== END OF AI GENERATED CODE =====
         }
 

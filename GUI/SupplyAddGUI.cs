@@ -21,10 +21,17 @@ namespace BadmintonCourtManagement.GUI
         List<StorageDTO> storages = new();
         AccountDTO currentAcc;
 
-        public SupplyAddGUI(AccountDTO acc)
+        public ImportBillDTO? ResultBill { get; private set; }
+
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<ImportBillDTO> supplyList = new List<ImportBillDTO>();
+
+        public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList, List<ImportBillDTO> supplyList)
         {
             currentAcc = acc;
             InitializeComponent();
+            this.storageList = storageList;
+            this.supplyList = supplyList;
             if (this.listProductPanel != null)
             {
                 this.listProductPanel.ProductSelected += OnProductSelected;
@@ -173,10 +180,11 @@ namespace BadmintonCourtManagement.GUI
                 totalPrice += bill.TotalPrice;
             }
             // create new bill import
-            newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, employeeBus.GetEmployeeByUsername(currentAcc.Username).EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
+            newBill = new ImportBillDTO(importBillId, productBus.GetProductById(importDetails[0].ProductId).SupplierId, currentAcc.EmployeeId, totalPrice, ImportBillDTO.Option.delivered);
 
             // insert new bill import
             billImportBus.InsertBillImport(newBill);
+            ResultBill = newBill;
 
             // inset bill import details
             foreach (var bill_detail in importDetails)
@@ -187,7 +195,17 @@ namespace BadmintonCourtManagement.GUI
             // insert storages
             foreach (var s in storages)
             {
-                StorageBUS.InsertStorage(s);
+                bool result = StorageBUS.InsertStorage(s);
+                if (!result)
+                {
+                    MessageBox.Show("Lỗi khi thêm kho hàng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    storageList.Add(s);
+                    storageGUI storage = new storageGUI(currentAcc, storageList, supplyList);
+                    storage.ReloadStorage();
+                }
             }
 
             // update product quantities
@@ -200,6 +218,7 @@ namespace BadmintonCourtManagement.GUI
             }
 
             MessageBox.Show("Đã hoàn tất nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 

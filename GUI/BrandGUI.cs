@@ -16,6 +16,7 @@ namespace BadmintonCourtManagement.GUI
         private const int itemPerPage = 8;
         private int totalPages = 0;
         private List<BrandDTO> currentBrandList = new List<BrandDTO>();
+        private List<BrandDTO> brandList = new List<BrandDTO>();
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
         private bool isInsert = false, isUpdate = false, isDelete = false;
 
@@ -25,13 +26,14 @@ namespace BadmintonCourtManagement.GUI
             brandBUS = new BrandBUS();
         }
 
-        public BrandGUI(AccountDTO currentAccount)
+        public BrandGUI(AccountDTO currentAccount, List<BrandDTO> brandList)
         {
+            this.brandList = brandList;
             this.currentAccount = currentAccount;
             InitializeComponent();
-            CheckPermissions("F06");
+            CheckPermissions("F14");
             brandBUS = new BrandBUS();
-            LoadBrands(brandBUS.GetAllBrands());
+            LoadBrands(this.brandList);
         }
 
         private void CheckPermissions(string functionId)
@@ -56,7 +58,7 @@ namespace BadmintonCourtManagement.GUI
             string searchText = txtSearch.Text.Trim();
             page = 0;
             if (string.IsNullOrEmpty(searchText))
-                LoadBrands(brandBUS.GetAllBrands());
+                LoadBrands(this.brandList);
             else
                 LoadBrands(brandBUS.Search(searchText));
         }
@@ -65,13 +67,22 @@ namespace BadmintonCourtManagement.GUI
         {
             txtSearch.Text = string.Empty;
             page = 0;
-            LoadBrands(brandBUS.GetAllBrands());
+            LoadBrands(this.brandList);
         }
 
         private void lblAddBrand_Click(object sender, EventArgs e)
         {
             var form = new FormBrandGUI("Insert", null, currentAccount);
             form.ShowDialog();
+
+            // If the form created a brand, update the local brandList first, then reload UI
+            if (form.ResultBrand != null)
+            {
+                // Avoid duplicates: remove any existing with same id then add
+                brandList.RemoveAll(b => b.BrandId == form.ResultBrand.BrandId);
+                brandList.Add(form.ResultBrand);
+            }
+
             ReloadBrandList();
         }
 
@@ -123,7 +134,7 @@ namespace BadmintonCourtManagement.GUI
         private void ReloadBrandList()
         {
             page = 0;
-            LoadBrands(brandBUS.GetAllBrands());
+            LoadBrands(this.brandList);
         }
 
         private CustomPanel CreateBrandPanel(BrandDTO dto)
@@ -168,6 +179,17 @@ namespace BadmintonCourtManagement.GUI
             {
                 var form = new FormBrandGUI("Update", dto.BrandId, currentAccount);
                 form.ShowDialog();
+
+                // If the form returned an updated BrandDTO, update the local list first
+                if (form.ResultBrand != null)
+                {
+                    int idx = brandList.FindIndex(b => b.BrandId == form.ResultBrand.BrandId);
+                    if (idx >= 0)
+                        brandList[idx] = form.ResultBrand;
+                    else
+                        brandList.Add(form.ResultBrand);
+                }
+
                 ReloadBrandList();
             };
 
@@ -181,6 +203,8 @@ namespace BadmintonCourtManagement.GUI
                         if (brandBUS.DeleteBrand(dto.BrandId))
                         {
                             MessageBox.Show("Xóa thương hiệu thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // Remove from local list first so UI reflects change without DB re-fetch
+                            brandList.RemoveAll(b => b.BrandId == dto.BrandId);
                             ReloadBrandList();
                         }
                         else

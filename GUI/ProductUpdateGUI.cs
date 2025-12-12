@@ -12,6 +12,7 @@ namespace GUI
     {
         private ProductDTO? _product;
         private string? _newImageName; // Lưu tên file ảnh mới (nếu có)
+        public ProductDTO? ResultProduct { get; private set; }
 
         public ProductUpdateGUI()
         {
@@ -207,6 +208,16 @@ namespace GUI
                             if (deleteStatus)
                             {
                                 MessageBox.Show("Cập nhật trạng thái phẩm thành công");
+                                ResultProduct = new ProductDTO(
+                                    _product.ProductId,
+                                    productName,
+                                    supplierId,
+                                    imgName,
+                                    _product.Quantity,
+                                    brandId,
+                                    typeId,
+                                    isDeleted
+                                );
                                 this.FindForm()?.Close();
                                 return;
                             }
@@ -226,6 +237,16 @@ namespace GUI
                         if (deleteStatus)
                         {
                             MessageBox.Show("Xóa sản phẩm thành công");
+                            ResultProduct = new ProductDTO(
+                                _product.ProductId,
+                                productName,
+                                supplierId,
+                                imgName,
+                                -1,
+                                brandId,
+                                typeId,
+                                isDeleted
+                            );
                             this.FindForm()?.Close();
                             return;
                         }
@@ -262,6 +283,8 @@ namespace GUI
             else
             {
                 MessageBox.Show("Cập nhật sản phẩm thành công");
+                ResultProduct = updatedProduct;
+                // Set DialogResult so ShowDialog callers may detect success if they want
                 this.FindForm()?.Close();
             }
         }
