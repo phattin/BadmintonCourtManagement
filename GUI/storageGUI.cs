@@ -33,11 +33,12 @@ namespace BadmintonCourtManagement.GUI
         private int supplyItemPerPage = 8;
         private Boolean supplyIsFiltered = false;
 
-        public storageGUI(AccountDTO currentAccount, List<StorageDTO> storageList)
+        public storageGUI(AccountDTO currentAccount, List<StorageDTO> storageList, List<ImportBillDTO> importBillList)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
             this.storageList = storageList;
+            this.supplyList = importBillList;
             this.Load += StorageGUI_Load;
         }
 
@@ -58,7 +59,7 @@ namespace BadmintonCourtManagement.GUI
         // Load import bill list
         private void LoadSupplyList()
         {
-            supplyList = new BillImportBUS().GetAllImportBills();
+            // supplyList = new BillImportBUS().GetAllImportBills();
             supplyOldList = supplyList;
             supplySearchList = supplyOldList;
             supplyPage = 0;
@@ -747,6 +748,12 @@ namespace BadmintonCourtManagement.GUI
         {
             SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
             supplyAdd.ShowDialog();
+            if (supplyAdd.ResultBill != null)
+            {
+                // Avoid duplicates: remove any existing with same id then add
+                supplyList.RemoveAll(b => b.ImportBillId == supplyAdd.ResultBill.ImportBillId);
+                supplyList.Add(supplyAdd.ResultBill);
+            }
             // Refresh list after closing add form
             LoadSupplyList();
         }

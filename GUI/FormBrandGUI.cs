@@ -8,6 +8,9 @@ namespace BadmintonCourtManagement.GUI
 {
     public partial class FormBrandGUI : Form
     {
+        // Expose the created/updated brand so callers can update their local lists
+        public BrandDTO? ResultBrand { get; private set; }
+
         private string mode; // "Insert" or "Update"
         private string? brandId; // Only used when Update
         private BrandBUS brandBUS = new BrandBUS();
@@ -119,6 +122,10 @@ namespace BadmintonCourtManagement.GUI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
+                // Store the brand so the caller can update its in-memory list without re-querying DB
+                ResultBrand = brand;
+                // Set DialogResult so ShowDialog callers may detect success if they want
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
