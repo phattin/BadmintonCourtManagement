@@ -21,6 +21,8 @@ namespace BadmintonCourtManagement.GUI
         List<StorageDTO> storages = new();
         AccountDTO currentAcc;
 
+        public ImportBillDTO? ResultBill { get; private set; }
+
         public SupplyAddGUI(AccountDTO acc)
         {
             currentAcc = acc;
@@ -177,6 +179,7 @@ namespace BadmintonCourtManagement.GUI
 
             // insert new bill import
             billImportBus.InsertBillImport(newBill);
+            ResultBill = newBill;
 
             // inset bill import details
             foreach (var bill_detail in importDetails)
@@ -200,6 +203,7 @@ namespace BadmintonCourtManagement.GUI
             }
 
             MessageBox.Show("Đã hoàn tất nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
