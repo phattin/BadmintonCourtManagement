@@ -22,7 +22,7 @@ namespace BadmintonCourtManagement.GUI
         private Panel menuPanel, contentPanel;
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
 
-        private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<StorageDTO> storageList;
         private List<ProductDTO> productList = new List<ProductDTO>();
         private List<BrandDTO> brandList = new List<BrandDTO>();
         private List<ImportBillDTO> importBillList = new List<ImportBillDTO>();
@@ -187,7 +187,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Sell_Click(object sender, EventArgs e)
         {
-            OpenChildPanel(new ProductSaleGUI(currentAccount));
+            OpenChildPanel(new ProductSaleGUI(currentAccount, storageList));
         }
 
         // Event handlers for menu buttons
