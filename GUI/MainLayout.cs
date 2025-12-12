@@ -21,9 +21,13 @@ namespace BadmintonCourtManagement.GUI
         private MenuManager menuManager;
         private Panel menuPanel, contentPanel;
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
-        public MainLayout(AccountDTO account)
+
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+
+        public MainLayout(AccountDTO account, List<StorageDTO> storageList)
         {
             this.currentAccount = account;
+            this.storageList = storageList;
             InitializeComponent();
             Session.CurrentUser = account;
             Session.OnPermissionChanged += ReloadMenu;
@@ -203,7 +207,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Storage_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new storageGUI(currentAccount));
+            OpenChildPanel(new storageGUI(currentAccount, storageList));
         }
 
         private void Employee_Click(object? sender, EventArgs e)
