@@ -746,7 +746,7 @@ namespace BadmintonCourtManagement.GUI
         // Thêm đơn nhập hàng mới
         private void supplyAdd_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList, supplyList);
             supplyAdd.ShowDialog();
             if (supplyAdd.ResultBill != null)
             {
@@ -802,13 +802,13 @@ namespace BadmintonCourtManagement.GUI
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList, supplyList);
             supplyAdd.ShowDialog();
         }
 
         private void AddButton_Click_1(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList, supplyList);
             supplyAdd.ShowDialog();
         }
 

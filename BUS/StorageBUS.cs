@@ -95,8 +95,7 @@ namespace BadmintonCourtManagement.BUS
             {
                 var entity = StorageMapper.ToEntity(storage);
                 entity.CalcTotal();
-                //return dao.Insert(entity);
-                return true;
+                return dao.Insert(entity);
             }
 
             //throw new Exception("Storage đã tồn tại!");
