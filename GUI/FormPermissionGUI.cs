@@ -342,7 +342,6 @@ namespace BadmintonCourtManagement.GUI
                     && permissionDetailBUS.UpdatePermissionDetail(permissionDetailList))
                 {
                     MessageBox.Show("Cập nhật phân quyền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Session.TriggerPermissionChange();
                     // Đóng form
                     Form parentForm = this.FindForm();
                     if (parentForm != null)
