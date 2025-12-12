@@ -25,8 +25,9 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
         }
 
-        public TypeProductGUI(AccountDTO currentAccount)
+        public TypeProductGUI(AccountDTO currentAccount,List<TypeProductDTO> currentTypeProductList)
         {
+            this.currentTypeProductList = currentTypeProductList;
             this.currentAccount = currentAccount;
             InitializeComponent();
             CheckPermissions("F15");
@@ -92,7 +93,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void LoadTypeProducts(List<TypeProductDTO> list)
         {
-            currentTypeProductList = list ?? new List<TypeProductDTO>();
+
+            // currentTypeProductList = list ?? new List<TypeProductDTO>();
             totalPages = (int)Math.Ceiling((double)currentTypeProductList.Count / itemPerPage);
             if (totalPages == 0) totalPages = 1;
             if (page >= totalPages) page = totalPages - 1;
