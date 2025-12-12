@@ -21,10 +21,13 @@ namespace BadmintonCourtManagement.GUI
         List<StorageDTO> storages = new();
         AccountDTO currentAcc;
 
-        public SupplyAddGUI(AccountDTO acc)
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+
+        public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList)
         {
             currentAcc = acc;
             InitializeComponent();
+            this.storageList = storageList;
             if (this.listProductPanel != null)
             {
                 this.listProductPanel.ProductSelected += OnProductSelected;
@@ -187,7 +190,17 @@ namespace BadmintonCourtManagement.GUI
             // insert storages
             foreach (var s in storages)
             {
-                StorageBUS.InsertStorage(s);
+                bool result = StorageBUS.InsertStorage(s);
+                if (!result)
+                {
+                    MessageBox.Show("Lỗi khi thêm kho hàng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    storageList.Add(s);
+                    storageGUI storage = new storageGUI(currentAcc, storageList);
+                    storage.ReloadStorage();
+                }
             }
 
             // update product quantities
