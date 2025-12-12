@@ -208,6 +208,12 @@ namespace BadmintonCourtManagement.GUI
 
             btnUpdate.Click += (s, e) =>
             {
+                if(currentAccount.PermissionId == permissionDTO.PermissionId)
+                {
+                    MessageBox.Show("Bạn không thể sửa quyền hiện tại đang sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 Form dialog = new Form()
                 {
                     Text = string.Empty, // bỏ tiêu đề
