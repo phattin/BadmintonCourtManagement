@@ -15,16 +15,16 @@ namespace BadmintonCourtManagement.GUI
 
         private EmployeeBUS employeeBUS = new EmployeeBUS();
         private RoleBUS roleBUS = new RoleBUS();
-
+        private List<EmployeeDTO> employeeList;
         private List<RoleDTO> roleList;
 
-        public FormEmployeeGUI(string mode, string employeeId, AccountDTO currentAccount)
+        public FormEmployeeGUI(string mode, string employeeId, AccountDTO currentAccount, List<EmployeeDTO> list)
         {
             this.mode = mode;
             this.employeeId = employeeId;
             this.currentAccount = currentAccount;
-
             InitializeComponent();
+            this.employeeList = list;
 
             EmployeeID.Text = employeeId;
 
@@ -84,7 +84,6 @@ namespace BadmintonCourtManagement.GUI
             string phone = txtEmployeeSDT.Text.Trim();
             string address = txtEmployeeAddress.Text.Trim();
 
-            // Lấy RoleId từ RoleName – kiểm tra null
             if (RoleOption.SelectedItem == null)
             {
                 MessageBox.Show("Vui lòng chọn vai trò cho nhân viên!",
@@ -95,13 +94,6 @@ namespace BadmintonCourtManagement.GUI
             string selectedRoleName = RoleOption.SelectedItem.ToString();
             string selectedRoleId = roleList.Find(r => r.RoleName == selectedRoleName)?.RoleId;
 
-            if (selectedRoleId == null)
-            {
-                MessageBox.Show("Vai trò không hợp lệ!",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             var emp = new EmployeeDTO(
                 employeeId,
                 name,
@@ -110,65 +102,55 @@ namespace BadmintonCourtManagement.GUI
                 selectedRoleId
             );
 
-            // ---- THÊM MỚI ----  
+            // ================================
+            //          INSERT MODE
+            // ================================
             if (mode == "Insert")
             {
-                try
+                if (employeeBUS.InsertEmployee(emp))
                 {
-                    if (employeeBUS.InsertEmployee(emp))
-                    {
-                        MessageBox.Show("Thêm nhân viên thành công!",
-                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // ADD vào LIST trong RAM
+                    employeeList.Add(emp);
 
-                        Form parentForm = this.FindForm();
-                        if (parentForm != null)
-                        {
-                            parentForm.Close();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Thêm nhân viên thất bại! Vui lòng kiểm tra lại.",
-                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    MessageBox.Show("Thêm nhân viên thành công!",
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.FindForm()?.Close();
                 }
-                catch (ArgumentException aex)
+                else
                 {
-                    MessageBox.Show(aex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    MessageBox.Show("Thêm nhân viên thất bại!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                return;
             }
-            // ---- CẬP NHẬT ----
-            else if (mode == "Update")
-            {
-                try
-                {
-                    if (employeeBUS.UpdateEmployee(emp))
-                    {
-                        MessageBox.Show("Cập nhật nhân viên thành công!",
-                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        Form parentForm = this.FindForm();
-                        if (parentForm != null)
-                        {
-                            parentForm.Close();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cập nhật nhân viên thất bại! Vui lòng kiểm tra lại.",
-                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-                catch (ArgumentException ex)
+            // ================================
+            //          UPDATE MODE
+            // ================================
+            if (mode == "Update")
+            {
+                if (employeeBUS.UpdateEmployee(emp))
                 {
-                    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    // UPDATE lại LIST trong RAM
+                    int index = employeeList.FindIndex(x => x.EmployeeId == emp.EmployeeId);
+
+                    if (index >= 0)
+                        employeeList[index] = emp;
+
+                    MessageBox.Show("Cập nhật nhân viên thành công!",
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.FindForm()?.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật nhân viên thất bại!",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
 
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BadmintonCourtManagement.GUI
 {
@@ -16,7 +17,7 @@ namespace BadmintonCourtManagement.GUI
         private bool isInsert = false, isUpdate = false, isDelete = false;
 
         private EmployeeBUS employeeBUS;          // thêm
-        private List<EmployeeDTO> currentList;    // thêm
+        private List<EmployeeDTO> employeeList;    // thêm
 
         //public EmployeeGUI(AccountDTO currentAccount)
         //{
@@ -68,10 +69,11 @@ namespace BadmintonCourtManagement.GUI
         //}
 
         // Constructor có AccountDTO – cũng khởi tạo như trên
-        public EmployeeGUI(AccountDTO currentAccount)
+        public EmployeeGUI(AccountDTO currentAccount, List<EmployeeDTO> employeeList)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
+            this.employeeList = employeeList;
             CheckPermissions("F09");
 
             employeeBUS = new EmployeeBUS();
@@ -79,14 +81,14 @@ namespace BadmintonCourtManagement.GUI
             itemsPerPage = 8;
             totalPages = 1;
 
+            textBox1.KeyDown += searchEnterEvent;
+
             ReloadEmployeeList();
         }
 
         private void ReloadEmployeeList()
         {
-            currentList = employeeBUS.GetAllEmployees();
-            //MessageBox.Show("So nhan vien: " + currentList.Count);
-            LoadEmployees(currentList, 1);
+            LoadEmployees(employeeList, 1);
         }
 
         private void LoadEmployees(List<EmployeeDTO> list, int pageNumber)
@@ -255,6 +257,7 @@ namespace BadmintonCourtManagement.GUI
                 {
                     if (employeeBUS.DeleteEmployee(emp.EmployeeId))
                     {
+                        employeeList.RemoveAll(e => e.EmployeeId == emp.EmployeeId);
                         MessageBox.Show("Xóa nhân viên thành công!", "Thông báo");
                         ReloadEmployeeList();
                     }
@@ -278,7 +281,7 @@ namespace BadmintonCourtManagement.GUI
                     ShowInTaskbar = false
                 };
 
-                var editGUI = new FormEmployeeGUI("Update", emp.EmployeeId, currentAccount);
+                var editGUI = new FormEmployeeGUI("Update", emp.EmployeeId, currentAccount, employeeList);
                 editGUI.Dock = DockStyle.Fill;
 
                 dialog.Controls.Add(editGUI);
@@ -286,6 +289,7 @@ namespace BadmintonCourtManagement.GUI
 
                 ReloadEmployeeList();
             };
+
 
             buttonPanel.Controls.Add(btnDelete);
             buttonPanel.Controls.Add(btnEdit);
@@ -303,11 +307,37 @@ namespace BadmintonCourtManagement.GUI
         }
 
         // Search
-        private void txtBox1_TextChanged(object sender, EventArgs e)
+        //private void txtBox1_TextChanged(object sender, EventArgs e)
+        //{
+        //   employeeList = employeeBUS.Search(textBox1.Text);
+        //    LoadEmployees(employeeList, 1);
+        //}
+
+        private void searchEnterEvent(object sender, KeyEventArgs e)
         {
-            currentList = employeeBUS.Search(textBox1.Text);
-            LoadEmployees(currentList, 1);
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchEmployee(textBox1.Text);
+            }
         }
+
+        private void SearchEmployee(string keyword)
+        {
+            try
+            {
+                employeeList = employeeBUS.Search(keyword);
+                ReloadEmployeeList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message,
+                                "Thông báo",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+            }
+        }
+
+
 
         // Add employee
         private void btnAdd_Click(object sender, EventArgs e)
@@ -322,7 +352,7 @@ namespace BadmintonCourtManagement.GUI
                 ShowInTaskbar = false
             };
 
-            var addGUI = new FormEmployeeGUI("Insert", employeeBUS.GetNextId(), currentAccount);
+            var addGUI = new FormEmployeeGUI("Insert", employeeBUS.GetNextId(), currentAccount, employeeList);
             addGUI.Dock = DockStyle.Fill;
 
             dialog.Controls.Add(addGUI);
@@ -335,24 +365,24 @@ namespace BadmintonCourtManagement.GUI
         private void previousButton_Click(object sender, EventArgs e)
         {
             if (currentPage > 1)
-                LoadEmployees(currentList, currentPage - 1);
+                LoadEmployees(employeeList, currentPage - 1);
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
             if (currentPage < totalPages)
-                LoadEmployees(currentList, currentPage + 1);
+                LoadEmployees(employeeList, currentPage + 1);
         }
 
         private void extraPreviousButton_Click(object sender, EventArgs e)
         {
-            LoadEmployees(currentList, 1);
+            LoadEmployees(employeeList, 1);
         }
 
         private void extraNextButton_Click(object sender, EventArgs e)
         {
-            LoadEmployees(currentList, totalPages);
-        }
+            LoadEmployees(employeeList, totalPages);
+        }   
 
         private void customPanel2_Paint(object sender, PaintEventArgs e)
         {
