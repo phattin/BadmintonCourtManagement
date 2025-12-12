@@ -23,11 +23,17 @@ namespace BadmintonCourtManagement.GUI
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
 
         private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<ProductDTO> productList = new List<ProductDTO>();
+        private List<BrandDTO> brandList = new List<BrandDTO>();
+        private List<ImportBillDTO> importBillList = new List<ImportBillDTO>();
 
-        public MainLayout(AccountDTO account, List<StorageDTO> storageList)
+        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<ProductDTO> productList, List<BrandDTO> brandList, List<ImportBillDTO> importBillList)
         {
             this.currentAccount = account;
             this.storageList = storageList;
+            this.productList = productList;
+            this.brandList = brandList;
+            this.importBillList = importBillList;
             InitializeComponent();
             Session.CurrentUser = account;
             Session.OnPermissionChanged += ReloadMenu;
@@ -159,7 +165,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Brand_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new BrandGUI(currentAccount));
+            OpenChildPanel(new BrandGUI(currentAccount, brandList));
         }
         private void Permission_Click(object? sender, EventArgs e)
         {
@@ -207,7 +213,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Storage_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new storageGUI(currentAccount, storageList));
+            OpenChildPanel(new storageGUI(currentAccount, storageList, importBillList));
         }
 
         private void Employee_Click(object? sender, EventArgs e)
@@ -217,7 +223,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Product_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new ProductGUI(currentAccount));
+            OpenChildPanel(new ProductGUI(currentAccount, productList));
         }
 
         private void Statistics_Click(object? sender, EventArgs e)

@@ -13,6 +13,8 @@ namespace GUI
 {
     public partial class ProductInsertGUI : UserControl
     {
+
+        public ProductDTO? ResultProduct { get; private set; }
         public ProductInsertGUI()
         {
             InitializeComponent();
@@ -145,7 +147,9 @@ namespace GUI
             else
             {
                 MessageBox.Show("Thêm sản phẩm thành công");
+                ResultProduct = productDTO;
                 ResetForm();
+                this.FindForm()?.Close();
             }
         }
 
