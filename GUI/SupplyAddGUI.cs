@@ -26,9 +26,6 @@ namespace BadmintonCourtManagement.GUI
         private List<StorageDTO> storageList = new List<StorageDTO>();
 
         public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList)
-        public ImportBillDTO? ResultBill { get; private set; }
-
-        public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList)
         {
             currentAcc = acc;
             InitializeComponent();
