@@ -19,6 +19,15 @@ namespace BadmintonCourtManagement.GUI
         private List<StorageDTO> storageList = new List<StorageDTO>();
         private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
 
+        private List<BillBookingDTO> listBillBookings = new List<BillBookingDTO>();
+        private List<BillProductDTO> listBillProduct = new List<BillProductDTO>();
+        private List<ImportBillDTO> listImportBill = new List<ImportBillDTO>();
+        private List<BillProductDetailDTO> listBillDetails = new List<BillProductDetailDTO>();
+        private List<ProductDTO> listProducts = new List<ProductDTO>();
+        private List<BookingDTO> listBooking = new List<BookingDTO>();
+        private List<CourtDTO> listCourts = new List<CourtDTO>();
+        private List<BillImportDetailDTO> listImportDetails = new List<BillImportDetailDTO>();
+
         public LoginGUI()
         {
             InitializeComponent();
@@ -29,6 +38,14 @@ namespace BadmintonCourtManagement.GUI
         {
             storageList = StorageBUS.GetAllStorages();
             typeProductList = new TypeProductBUS().GetAllTypeProducts();
+            listBillBookings = new BillBookingBUS().GetAllBillBookings();
+            listBillProduct = new BillProductBUS().GetAllProductBills();
+            listImportBill = new BillImportBUS().GetAllImportBills();
+            listBillDetails = new BillProductDetailBUS().GetAllDetailProductBills();
+            listProducts = new ProductBUS().GetAllProducts();
+            listBooking = new BookingBUS().GetAllBookings();
+            listCourts = new CourtBUS().GetAllCourts();
+            listImportDetails = new BillImportDetailBUS().GetAllDetailImportBills();
         }
 
         private void lblWelcome_Click(object sender, EventArgs e)
@@ -114,7 +131,7 @@ namespace BadmintonCourtManagement.GUI
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Chuyển sang MainLayout
-                    MainLayout main = new MainLayout(account, storageList, typeProductList);
+                    MainLayout main = new MainLayout(account, storageList, typeProductList, listBillBookings, listBillProduct,listImportBill, listBillDetails, listProducts,listBooking, listCourts, listImportDetails);
                     main.Show();
                     // Khi MainLayout đóng → LoginGUI cũng đóng
                     main.FormClosed += (s, args) => this.Close();

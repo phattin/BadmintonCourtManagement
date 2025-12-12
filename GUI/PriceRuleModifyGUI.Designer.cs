@@ -203,6 +203,7 @@
             textBoxDes.Dock = DockStyle.Fill;
             textBoxDes.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxDes.Location = new Point(0, 28);
+            textBoxDes.MaxLength = 255;
             textBoxDes.Name = "textBoxDes";
             textBoxDes.Size = new Size(392, 27);
             textBoxDes.TabIndex = 1;
@@ -237,7 +238,7 @@
             numericUpDown1.Dock = DockStyle.Fill;
             numericUpDown1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             numericUpDown1.Location = new Point(0, 28);
-            numericUpDown1.Maximum = new decimal(new int[] { 1000000000, 0, 0, 0 });
+            numericUpDown1.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(392, 34);
             numericUpDown1.TabIndex = 1;

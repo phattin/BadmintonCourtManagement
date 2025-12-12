@@ -24,12 +24,28 @@ namespace BadmintonCourtManagement.GUI
 
         private List<StorageDTO> storageList = new List<StorageDTO>();
         private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
+        private List<BillBookingDTO> listBillBookings = new List<BillBookingDTO>();
+        private List<BillProductDTO> listBillProduct = new List<BillProductDTO>();
+        private List<ImportBillDTO> listImportBill = new List<ImportBillDTO>();
+        private List<BillProductDetailDTO> listBillDetails = new List<BillProductDetailDTO>();
+        private List<ProductDTO> listProducts = new List<ProductDTO>();
+        private List<BookingDTO> listBooking = new List<BookingDTO>();
+        private List<CourtDTO> listCourts = new List<CourtDTO>();
+        private List<BillImportDetailDTO> listImportDetails;
 
-        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<TypeProductDTO> typeProductList)
+        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<TypeProductDTO> typeProductList, List<BillBookingDTO> listBillBookings, List<BillProductDTO> listBillProduct, List<ImportBillDTO> listImportBill, List<BillProductDetailDTO> listBillDetails, List<ProductDTO> listProducts, List<BookingDTO> listBooking, List<CourtDTO> listCourts, List<BillImportDetailDTO> listImportDetails)
         {
             this.typeProductList = typeProductList;
             this.currentAccount = account;
             this.storageList = storageList;
+            this.listBillBookings = listBillBookings;
+            this.listBillProduct = listBillProduct;
+            this.listImportBill = listImportBill;
+            this.listBillDetails = listBillDetails;
+            this.listProducts = listProducts;
+            this.listCourts = listCourts;
+            this.listBooking = listBooking;
+            this.listImportDetails = listImportDetails;
             InitializeComponent();
             Session.CurrentUser = account;
             Session.OnPermissionChanged += ReloadMenu;
@@ -224,8 +240,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Statistics_Click(object? sender, EventArgs e)
         {
-            //OpenChildPanel(new StatisticGUI(currentAccount));
-            OpenChildPanel(new StatisticMainGUI());
+            OpenChildPanel(new StatisticMainGUI(listBillBookings,listBillProduct,listImportBill, listBillDetails,listProducts,listBooking,listCourts, listImportDetails));
         }
         private void TypeProduct_Click(object? sender, EventArgs e)
         {

@@ -61,12 +61,12 @@ namespace GUI
             {
                 var list = priceruleBUS.GetAllPriceRules();
                 priceRuleList = new BindingList<PriceRuleDTO>(list);
-                displayList = new BindingList<PriceRuleDTO>(list);
+                displayList = new BindingList<PriceRuleDTO>(new List<PriceRuleDTO>(list));
                 dataGridView1.DataSource = displayList;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
+                MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -115,7 +115,8 @@ namespace GUI
             PriceRuleAddGUI addPriceRuleGUI = new PriceRuleAddGUI();
             if (addPriceRuleGUI.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                priceRuleList.Add(addPriceRuleGUI.NewPriceRule);
+                displayList.Add(addPriceRuleGUI.NewPriceRule);
             }
         }
 
@@ -141,7 +142,8 @@ namespace GUI
 
             if (modifyForm.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                priceRuleList.ResetItem(priceRuleList.IndexOf(selectedItem));
+                displayList.ResetItem(displayList.IndexOf(selectedItem));
             }
         }
 
@@ -158,6 +160,13 @@ namespace GUI
 
             if (selectedItem == null) return;
 
+            if (selectedItem.IsActive != 1)
+            {
+                MessageBox.Show("Giá sân này đã ngưng hoạt động.\nKhông thể xóa.",
+                                "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             DialogResult result = MessageBox.Show(
                 $"Bạn có chắc chắn muốn xóa không?\n\nHành động này không thể hoàn tác.",
                 "Xác nhận xóa",
@@ -172,16 +181,14 @@ namespace GUI
                     if (priceruleBUS.DeletePriceRule1(selectedItem.PriceRuleId))
                     {
                         MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Xóa thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        selectedItem.IsActive = 0;
+                        priceRuleList.ResetItem(priceRuleList.IndexOf(selectedItem));
+                        displayList.ResetItem(displayList.IndexOf(selectedItem));
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Không thể xóa dữ liệu này.\nCó thể dữ liệu đang được sử dụng trong hóa đơn hoặc đặt sân.\n\nChi tiết: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -205,7 +212,8 @@ namespace GUI
             string keyword = textBox1.Text.Trim().ToLower();
             if (string.IsNullOrEmpty(keyword))
             {
-                dataGridView1.DataSource = new BindingList<PriceRuleDTO>(priceRuleList);
+                displayList = new BindingList<PriceRuleDTO>(priceRuleList);
+                dataGridView1.DataSource = displayList;
                 return;
             }
 
@@ -224,7 +232,8 @@ namespace GUI
                        matchStartDate || matchEndDate;
 
             }).ToList();
-            dataGridView1.DataSource = new BindingList<PriceRuleDTO>(filteredData);
+            displayList = new BindingList<PriceRuleDTO>(filteredData);
+            dataGridView1.DataSource = displayList;
         }
     }
 }

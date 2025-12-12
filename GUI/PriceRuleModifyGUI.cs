@@ -89,17 +89,7 @@ namespace GUI
             }
             try
             {
-                List<PriceRuleDTO> allRules = bus.GetAllPriceRules();
-                var overlappingRule = allRules.FirstOrDefault(r =>
-                    r.EndType == endType &&
-                    r.PriceRuleId != currentPriceRule.PriceRuleId &&
-                    (startTime < r.EndTime && endTime > r.StartTime) &&
-                    (
-                       (startDate == null || r.EndDate == null || startDate <= r.EndDate) &&
-                       (endDate == null || r.StartDate == null || endDate >= r.StartDate)
-                    )
-                );
-
+                PriceRuleDTO overlappingRule = bus.CheckOverlap(updateDto);
                 if (overlappingRule != null)
                 {
                     string msg = $"Bị trùng với mã: {overlappingRule.PriceRuleId}\n" +
@@ -114,13 +104,15 @@ namespace GUI
                 if (bus.UpdatePriceRule(updateDto))
                 {
                     MessageBox.Show("Sửa giá sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.currentPriceRule = updateDto;
+                    this.currentPriceRule.Price = price;
+                    this.currentPriceRule.StartTime = startTime;
+                    this.currentPriceRule.EndTime = endTime;
+                    this.currentPriceRule.StartDate = startDate;
+                    this.currentPriceRule.EndDate = endDate;
+                    this.currentPriceRule.EndType = endType;
+                    this.currentPriceRule.Description = description;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Sửa thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

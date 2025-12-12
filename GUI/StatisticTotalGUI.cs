@@ -15,20 +15,26 @@ namespace GUI
 {
     public partial class StatisticTotalGUI : UserControl
     {
-        public StatisticTotalGUI()
+        private List<BillBookingDTO> listBillBookings;
+        private List<BillProductDTO> listBillProduct;
+        private List<ImportBillDTO> listImportBill;
+        public StatisticTotalGUI(List<BillBookingDTO> listBillBookings, List<BillProductDTO> listBillProduct, List<ImportBillDTO> listImportBill)
         {
             InitializeComponent();
+            this.listBillBookings = listBillBookings;
+            this.listBillProduct = listBillProduct;
+            this.listImportBill = listImportBill;
             dateTimePicker1.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dateTimePicker2.Value = DateTime.Now;
-            LoadFinancialReport();
+            LoadFinancialReport(listBillBookings, listBillProduct, listImportBill);
         }
 
         private void buttonTK_Click(object sender, EventArgs e)
         {
-            LoadFinancialReport();
+            LoadFinancialReport(listBillBookings, listBillProduct, listImportBill);
         }
 
-        private void LoadFinancialReport()
+        private void LoadFinancialReport(List<BillBookingDTO> listBillBookings, List<BillProductDTO> listBillProduct, List<ImportBillDTO> listImportBill)
         {
             if (dateTimePicker1.Value.Date > dateTimePicker2.Value.Date)
             {
@@ -39,14 +45,7 @@ namespace GUI
             DateTime fromDate = dateTimePicker1.Value.Date;
             DateTime toDate = dateTimePicker2.Value.Date;
 
-            BillBookingBUS billBookingBUS = new BillBookingBUS();
-            var listBillBooking = billBookingBUS.GetAllBillBookings();
-            BillProductBUS billProductBUS = new BillProductBUS();
-            var listBillProduct = billProductBUS.GetAllProductBills();
-            BillImportBUS importBillBUS = new BillImportBUS();
-            var listImportBill = importBillBUS.GetAllImportBills();
-
-            double totalBooking = listBillBooking
+            double totalBooking = listBillBookings
                 .Where(x => x.DateCreated.Date >= fromDate && x.DateCreated.Date <= toDate)
                 .Sum(x => x.TotalPrice);
 

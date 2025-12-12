@@ -16,33 +16,32 @@ namespace GUI
     public partial class StatisticProductGUI : UserControl
     {
         private System.Collections.IList originalData;
-        public StatisticProductGUI()
+        private List<BillProductDTO> listBillProducts;
+        private List<BillProductDetailDTO> listBillDetails;
+        private List<ProductDTO> listProducts;
+        public StatisticProductGUI(List<BillProductDTO> listBillProducts, List<BillProductDetailDTO> listBillDetails, List<ProductDTO> listProducts)
         {
             InitializeComponent();
+            this.listBillProducts = listBillProducts;
+            this.listBillDetails = listBillDetails;
+            this.listProducts = listProducts;
             dateTimePicker1.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dateTimePicker2.Value = DateTime.Now;
-            LoadStatisticProductData();
+            LoadStatisticProductData(listBillProducts, listBillDetails, listProducts);
         }
 
         private void buttonTK_Click(object sender, EventArgs e)
         {
-            LoadStatisticProductData();
+            LoadStatisticProductData(listBillProducts, listBillDetails, listProducts);
         }
 
-        private void LoadStatisticProductData()
+        private void LoadStatisticProductData(List<BillProductDTO> listBillProducts, List<BillProductDetailDTO> listBillDetails, List<ProductDTO> listProducts)
         {
             if (dateTimePicker1.Value.Date > dateTimePicker2.Value.Date)
             {
                 MessageBox.Show("Ngày bắt đầu không được lớn hơn ngày kết thúc!");
                 return;
             }
-
-            BillProductBUS billProductBUS = new BillProductBUS();
-            var listBillProducts = billProductBUS.GetAllProductBills();
-            BillProductDetailBUS billDetailBUS = new BillProductDetailBUS();
-            var listBillDetails = billDetailBUS.GetAllDetailProductBills();
-            ProductBUS productBUS = new ProductBUS();
-            var listProducts = productBUS.GetAllProducts();
 
             DateTime fromDate = dateTimePicker1.Value.Date;
             DateTime toDate = dateTimePicker2.Value.Date;

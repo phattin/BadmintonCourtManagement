@@ -47,7 +47,7 @@ namespace BadmintonCourtManagement.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception("Error inserting price rule data: " + ex.Message);
+                throw new Exception("Error retrieving price rule data: " + ex.Message);
             }
             finally
             {
@@ -122,7 +122,71 @@ namespace BadmintonCourtManagement.DAO
             }
             return priceRules;
         }
+        public List<PriceRuleDTO> GetAllPriceRules1()
+        {
+            string query = "SELECT * FROM pricerule WHERE Status = 1";
+            List<PriceRuleDTO> priceRules = new List<PriceRuleDTO>();
+            try
+            {
+                db.OpenConnection();
+                MySqlCommand cmd = new MySqlCommand(query, db.Connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    PriceRuleDTO priceRule = new PriceRuleDTO();
+                    priceRule.PriceRuleId = reader["PriceRuleId"].ToString();
 
+                    if (reader["Price"] != DBNull.Value)
+                        priceRule.Price = double.Parse(reader["Price"].ToString());
+
+                    if (reader["StartDate"] != DBNull.Value)
+                        priceRule.StartDate = DateOnly.FromDateTime(Convert.ToDateTime(reader["StartDate"]));
+
+                    if (reader["EndDate"] != DBNull.Value)
+                        priceRule.EndDate = DateOnly.FromDateTime(Convert.ToDateTime(reader["EndDate"]));
+
+                    if (reader["StartTime"] != DBNull.Value)
+                    {
+                        if (reader["StartTime"] is TimeSpan tsStart)
+                            priceRule.StartTime = TimeOnly.FromTimeSpan(tsStart);
+                        else
+                            priceRule.StartTime = TimeOnly.Parse(reader["StartTime"].ToString());
+                    }
+
+                    if (reader["EndTime"] != DBNull.Value)
+                    {
+                        if (reader["EndTime"] is TimeSpan tsEnd)
+                            priceRule.EndTime = TimeOnly.FromTimeSpan(tsEnd);
+                        else
+                            priceRule.EndTime = TimeOnly.Parse(reader["EndTime"].ToString());
+                    }
+
+                    priceRule.EndType = reader["EndType"].ToString();
+                    priceRule.Description = reader["Description"].ToString();
+
+                    if (reader["Status"] != DBNull.Value)
+                    {
+                        priceRule.IsActive = Convert.ToInt32(reader["Status"]);
+                    }
+                    else
+                    {
+                        priceRule.IsActive = 0;
+                    }
+
+                    priceRules.Add(priceRule);
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving price rule data: " + ex.Message);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+            return priceRules;
+        }
 
         // Get by id
         public PriceRuleDTO GetPriceRuleById(string priceRuleId)

@@ -83,12 +83,12 @@ namespace GUI
             {
                 var list = accountBUS.GetAllAccount1();
                 accountList = new BindingList<AccountDTO>(list);
-                displayList = new BindingList<AccountDTO>(list);
+                displayList = new BindingList<AccountDTO>(new List<AccountDTO>(list));
                 dataGridView1.DataSource = displayList;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
+                MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -136,7 +136,8 @@ namespace GUI
             AccountAddGUI addForm = new AccountAddGUI();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                accountList.Add(addForm.NewAccount);
+                displayList.Add(addForm.NewAccount);
             }
         }
         private void buttonModify_Click(object sender, EventArgs e)
@@ -165,10 +166,10 @@ namespace GUI
             }
 
             AccountModifyGUI modifyForm = new AccountModifyGUI(selectedItem);
-
-            if (modifyForm.ShowDialog() == DialogResult.OK)
+            if(modifyForm.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                accountList.ResetItem(accountList.IndexOf(selectedItem));
+                displayList.ResetItem(displayList.IndexOf(selectedItem));
             }
         }
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -205,11 +206,9 @@ namespace GUI
                     if (accountBUS.DeleteAccount(selectedItem.Username))
                     {
                         MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Xóa thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        selectedItem.IsDeleted = 1;
+                        accountList.ResetItem(accountList.IndexOf(selectedItem));
+                        displayList.ResetItem(displayList.IndexOf(selectedItem));
                     }
                 }
                 catch (Exception ex)
@@ -224,7 +223,8 @@ namespace GUI
             string keyword = textBox1.Text.Trim().ToLower();
             if (string.IsNullOrEmpty(keyword))
             {
-                dataGridView1.DataSource = new BindingList<AccountDTO>(accountList);
+                displayList = new BindingList<AccountDTO>(accountList);
+                dataGridView1.DataSource = displayList;
                 return;
             }
 
@@ -248,7 +248,8 @@ namespace GUI
                 return matchUsername || matchPermissionName || matchEmployeeName || matchStatus;
 
             }).ToList();
-            dataGridView1.DataSource = new BindingList<AccountDTO>(filteredData);
+            displayList = new BindingList<AccountDTO>(filteredData);
+            dataGridView1.DataSource = displayList;
         }
     }
 }

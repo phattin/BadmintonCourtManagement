@@ -95,10 +95,6 @@ namespace GUI
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
-                else
-                {
-                    MessageBox.Show("Thêm thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
             catch (Exception ex)
             {
