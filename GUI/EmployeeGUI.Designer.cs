@@ -170,7 +170,7 @@
             textBox1.PlaceholderText = "Value";
             textBox1.Size = new Size(397, 16);
             textBox1.TabIndex = 0;
-            textBox1.TextChanged += txtBox1_TextChanged;
+            //textBox1.TextChanged += txtBox1_TextChanged;
             // 
             // lblTitle
             // 

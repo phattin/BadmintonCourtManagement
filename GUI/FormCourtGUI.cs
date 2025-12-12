@@ -3,26 +3,27 @@ using BadmintonCourtManagement.DTO;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace BadmintonCourtManagement.GUI
 {
     public partial class FormCourtGUI : UserControl
     {
-        private string mode; // Insert hoặc Update
+        private string mode;
         private string courtId;
         private AccountDTO currentAccount;
         private CourtBUS courtBUS = new CourtBUS();
 
-        public FormCourtGUI(string mode, string courtId, AccountDTO currentAccount)
+        private List<CourtDTO> courtList;    
+
+        public FormCourtGUI(string mode, string courtId, AccountDTO currentAccount, List<CourtDTO> courtList)
         {
             this.mode = mode;
             this.courtId = courtId;
             this.currentAccount = currentAccount;
+            this.courtList = courtList;    
 
             InitializeComponent();
 
-            // Gán sẵn ID sân (label hiển thị, không sửa)
             CourtID.Text = courtId;
 
             Status.Items.Clear();
@@ -32,28 +33,24 @@ namespace BadmintonCourtManagement.GUI
                 Title.Text = "Thêm sân";
                 txtCourtName.Text = "";
 
-                // Chỉ thêm "Hoạt động" cho form Thêm
                 Status.Items.Add("Hoạt động");
                 Status.SelectedIndex = 0;
-                Status.Enabled = false; // Không cho thay đổi
+                Status.Enabled = false;
             }
             else if (mode == "Update")
             {
                 Title.Text = "Sửa sân";
 
-                // Thêm cả 2 options cho form Sửa
                 Status.Items.Add("Hoạt động");
                 Status.Items.Add("Bảo trì");
-                Status.Enabled = true; // Cho phép thay đổi
+                Status.Enabled = true;
 
-                // Load thông tin sân
-                var court = courtBUS.GetCourtById(courtId);
+                var court = courtList.Find(c => c.CourtId == courtId); // <<< LOAD TỪ LIST, KHÔNG TỪ DB
                 if (court != null)
                 {
                     txtCourtName.Text = court.CourtName;
-                    Status.SelectedItem = court.Status == CourtDTO.Option.active
-                        ? "Hoạt động"
-                        : "Bảo trì";
+                    Status.SelectedItem =
+                        court.Status == CourtDTO.Option.active ? "Hoạt động" : "Bảo trì";
                 }
             }
         }
@@ -66,69 +63,61 @@ namespace BadmintonCourtManagement.GUI
                 return;
             }
 
-            string courtName = txtCourtName.Text.Trim();
+            string name = txtCourtName.Text.Trim();
 
-            // ---- THÊM MỚI ----
+            // --------- INSERT ---------
             if (mode == "Insert")
             {
-                if (courtBUS.InsertCourt(new CourtDTO
+                var newCourt = new CourtDTO
                 {
                     CourtId = courtId,
-                    CourtName = courtName,
-                    Status = CourtDTO.Option.active  // Luôn là active
-                }))
+                    CourtName = name,
+                    Status = CourtDTO.Option.active
+                };
+
+                if (courtBUS.InsertCourt(newCourt))
                 {
-                    MessageBox.Show("Thêm sân thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Form parentForm = this.FindForm();
-                    if (parentForm != null)
-                    {
-                        parentForm.Close();
-                    }
+                    // Cập nhật list ngay lập tức
+                    courtList.Add(newCourt);
+
+                    MessageBox.Show("Thêm sân thành công!", "Thành công", MessageBoxButtons.OK);
+
+                    this.FindForm()?.Close();
                 }
-                else
-                {
-                    return;
-                }
+                return;
             }
 
-            // ---- CẬP NHẬT ----
-            else if (mode == "Update")
+            // --------- UPDATE ---------
+            if (mode == "Update")
             {
                 var status = Status.SelectedItem.ToString() == "Hoạt động"
                     ? CourtDTO.Option.active
                     : CourtDTO.Option.maintenance;
 
-                if (courtBUS.UpdateCourt(new CourtDTO
+                var updatedCourt = new CourtDTO
                 {
                     CourtId = courtId,
-                    CourtName = courtName,
+                    CourtName = name,
                     Status = status
-                }))
+                };
+
+                if (courtBUS.UpdateCourt(updatedCourt))
                 {
-                    MessageBox.Show("Cập nhật sân thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Form parentForm = this.FindForm();
-                    if (parentForm != null)
-                    {
-                        parentForm.Close();
-                    }
-                }
-                else
-                {
-                    return;
+                    // UPDATE LIST
+                    var index = courtList.FindIndex(c => c.CourtId == courtId);
+                    if (index >= 0)
+                        courtList[index] = updatedCourt;
+
+                    MessageBox.Show("Cập nhật sân thành công!", "Thành công", MessageBoxButtons.OK);
+
+                    this.FindForm()?.Close();
                 }
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Form parentForm = this.FindForm();
-            if (parentForm != null)
-                parentForm.Close();
-        }
-
-        private void CourtID_Click(object sender, EventArgs e)
-        {
-
+            this.FindForm()?.Close();
         }
     }
 }

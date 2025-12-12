@@ -142,7 +142,7 @@
             CourtID.TabIndex = 17;
             CourtID.Text = "C00001";
             CourtID.UseCompatibleTextRendering = true;
-            CourtID.Click += CourtID_Click;
+            //CourtID.Click += CourtID_Click;
             // 
             // FormCourtGUI
             // 
