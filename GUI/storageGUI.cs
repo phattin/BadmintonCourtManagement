@@ -33,10 +33,11 @@ namespace BadmintonCourtManagement.GUI
         private int supplyItemPerPage = 8;
         private Boolean supplyIsFiltered = false;
 
-        public storageGUI(AccountDTO currentAccount)
+        public storageGUI(AccountDTO currentAccount, List<StorageDTO> storageList)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
+            this.storageList = storageList;
             this.Load += StorageGUI_Load;
         }
 
@@ -44,7 +45,7 @@ namespace BadmintonCourtManagement.GUI
         private void StorageGUI_Load(object sender, EventArgs e)
         {
             // lấy danh sách kho hàng
-            storageList = StorageBUS.GetAllStorages();
+            //storageList = StorageBUS.GetAllStorages();
             oldList = storageList;
             searchList = oldList;
             page = 0;
