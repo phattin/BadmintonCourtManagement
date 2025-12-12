@@ -97,8 +97,9 @@ namespace BadmintonCourtManagement.GUI
         public int SelectedRowIndex => _selectedRowIndex;
         public DataGridViewRow SelectedRow => (_selectedRowIndex >= 0 && _selectedRowIndex < dtv.Rows.Count) ? dtv.Rows[_selectedRowIndex] : null;
 
-        public ProductSaleGUI(AccountDTO currentAccount)
+        public ProductSaleGUI(AccountDTO currentAccount, List<StorageDTO> storageList)
         {
+            this.storageList = storageList;
             acc = currentAccount;
             InitializeComponent();
             acc = currentAccount;
@@ -625,8 +626,23 @@ namespace BadmintonCourtManagement.GUI
                         // This storage has enough quantity
                         qtyFromThisStorage = remainingQty;
                         storage.Quantity -= remainingQty;
-                        StorageBUS.UpdateStorage(storage);
+                        bool result = StorageBUS.UpdateStorage(storage);
                         remainingQty = 0;
+                        if(result == false)
+                        {
+                            MessageBox.Show("Cập nhật kho hàng thất bại!", 
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        } else
+                        {
+                            foreach (var s in storageList)
+                            {
+                                if (s.StorageId == storage.StorageId)
+                                {
+                                    s.Quantity = storage.Quantity;
+                                    break;
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -635,7 +651,24 @@ namespace BadmintonCourtManagement.GUI
                         remainingQty -= storage.Quantity;
                         storage.Quantity = 0;
                         storage.Status = StorageDTO.Option.inactive;
-                        StorageBUS.UpdateStorage(storage);
+                        bool result = StorageBUS.UpdateStorage(storage);
+                        if (result == false)
+                        {
+                            MessageBox.Show("Cập nhật kho hàng thất bại!",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            foreach (var s in storageList)
+                            {
+                                if (s.StorageId == storage.StorageId)
+                                {
+                                    s.Quantity = storage.Quantity;
+                                    break;
+                                }
+                            }
+                            
+                        }
                     }
 
                     // Create BillProductDetail for this storage batch

@@ -59,7 +59,9 @@ namespace BadmintonCourtManagement.DTO
 
         public Option Status { get => status; set => status = value; }
 
-        public StorageDTO() { }
+        public StorageDTO() { 
+            this.Status = Option.active;
+        }
 
         public StorageDTO(string storageId, string importBillDetailId, 
             string productId, int quantity, double price, 

@@ -24,14 +24,13 @@ namespace BadmintonCourtManagement.GUI
         public ImportBillDTO? ResultBill { get; private set; }
 
         private List<StorageDTO> storageList = new List<StorageDTO>();
-        private List<ImportBillDTO> supplyList = new List<ImportBillDTO>();
+        private storageGUI _parent;
 
-        public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList, List<ImportBillDTO> supplyList)
+        public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList, storageGUI parent)
         {
             currentAcc = acc;
             InitializeComponent();
             this.storageList = storageList;
-            this.supplyList = supplyList;
             if (this.listProductPanel != null)
             {
                 this.listProductPanel.ProductSelected += OnProductSelected;
@@ -46,6 +45,8 @@ namespace BadmintonCourtManagement.GUI
             {
                 this.listDetailPanel.productDeleted += OnProductDeleted;
             }
+
+            _parent = parent;
         }
 
 
@@ -203,8 +204,7 @@ namespace BadmintonCourtManagement.GUI
                 else
                 {
                     storageList.Add(s);
-                    storageGUI storage = new storageGUI(currentAcc, storageList, supplyList);
-                    storage.ReloadStorage();
+                    _parent.ReloadStorage();
                 }
             }
 
