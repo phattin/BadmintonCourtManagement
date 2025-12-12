@@ -504,36 +504,36 @@ namespace BadmintonCourtManagement.GUI
         }
 
         // Add / Sell Product click
-        //private void btnAddProduct_Click(object sender, EventArgs e)
-        //{
-        //    // TODO: Implement sale dialog (select products, quantities, create bill).
-        //    // Build confirmation summary from _cart
-        //    var selectedItems = _cart.Where(kv => kv.Value > 0).ToList();
-        //    if (!selectedItems.Any())
-        //    {
-        //        MessageBox.Show("Chưa chọn sản phẩm nào để bán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        return;
-        //    }
+        private void btnAddProduct_Click(object sender, EventArgs e)
+        {
+           // TODO: Implement sale dialog (select products, quantities, create bill).
+           // Build confirmation summary from _cart
+           var selectedItems = _cart.Where(kv => kv.Value > 0).ToList();
+           if (!selectedItems.Any())
+           {
+               MessageBox.Show("Chưa chọn sản phẩm nào để bán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               return;
+           }
 
-        //    if (getPrice(txt_totalPrice.Text) > getPrice(txt_priceCustomerPay.Text))
-        //    {
-        //        MessageBox.Show("Khách hàng chưa trả đủ số tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        return;
-        //    }
-        //    var confirm = MessageBox.Show("Bạn có chắc chứ?", "Xác nhận đơn hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-        //    if (confirm == DialogResult.Yes)
-        //    {
-        //        createBill(selectedItems);
-        //        MessageBox.Show("Đã xác nhận đơn hàng.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           if (getPrice(txt_totalPrice.Text) > getPrice(txt_priceCustomerPay.Text))
+           {
+               MessageBox.Show("Khách hàng chưa trả đủ số tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               return;
+           }
+           var confirm = MessageBox.Show("Bạn có chắc chứ?", "Xác nhận đơn hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+           if (confirm == DialogResult.Yes)
+           {
+               createBill(selectedItems);
+               MessageBox.Show("Đã xác nhận đơn hàng.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        //        // clear cart and reset UI
-        //        _cart.Clear();
-        //        ReloadProductList();
-        //        txt_totalPrice.Text = "0";
-        //        txt_priceCustomerPay.Text = "";
-        //        txt_priceExchange.Text = "";
-        //    }
-        //}
+               // clear cart and reset UI
+               _cart.Clear();
+               ReloadProductList();
+               txt_totalPrice.Text = "0";
+               txt_priceCustomerPay.Text = "";
+               txt_priceExchange.Text = "";
+           }
+        }
 
         private string generateNewId(string billId)
         {
@@ -577,101 +577,100 @@ namespace BadmintonCourtManagement.GUI
                 billId = "BP00001";
             }
             else
-{
-    billId = generateNewId(billId);
-}
+            {
+                billId = generateNewId(billId);
+            }
 
-if (string.IsNullOrWhiteSpace(billDetailId))
-{
-    billDetailId = "BPD00001";
-}
-else
-{
-    billDetailId = generateNewId(billDetailId);
-}
+            if (string.IsNullOrWhiteSpace(billDetailId))
+            {
+                billDetailId = "BPD00001";
+            }
+            else
+            {
+                billDetailId = generateNewId(billDetailId);
+            }
 
-// inserting bill product 
-BillProductDTO product = new BillProductDTO(billId, employeeId, totalPrice);
-bill_bus.InsertProductBill(product);
+            // inserting bill product 
+            BillProductDTO product = new BillProductDTO(billId, employeeId, totalPrice);
+            bill_bus.InsertProductBill(product);
 
-// ===== AI GENERATED CODE - STORAGE HANDLING =====
-// Get relevant storages ordered by FIFO
-var relevantStorages = storageList
-    .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
-    .OrderBy(storage => storage.ImportBillDetailId)
-    .ToList();
+            // ===== AI GENERATED CODE - STORAGE HANDLING =====
+            // Get relevant storages ordered by FIFO
+            var relevantStorages = storageList
+                .Where(storage => selectedItems.Any(item => item.Key == storage.ProductId) && storage.Status == StorageDTO.Option.active)
+                .OrderBy(storage => storage.ImportBillDetailId)
+                .ToList();
 
-// Group by ProductId to handle each product separately
-var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
+            var storagesByProduct = relevantStorages.GroupBy(s => s.ProductId);
 
-// Create BillProductDetail entries per storage batch
-foreach (var productGroup in storagesByProduct)
-{
-    string productId = productGroup.Key;
-    var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
+            // Create BillProductDetail entries per storage batch
+            foreach (var productGroup in storagesByProduct)
+            {
+                string productId = productGroup.Key;
+                var purchasedItem = selectedItems.FirstOrDefault(kv => kv.Key == productId);
 
-    if (purchasedItem.Key == null) continue;
+                if (purchasedItem.Key == null) continue;
 
-    int remainingQty = purchasedItem.Value;
-    var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
+                int remainingQty = purchasedItem.Value;
+                var productStorages = productGroup.OrderBy(s => s.ImportBillDetailId).ToList();
 
-    foreach (var storage in productStorages)
-    {
-        if (remainingQty <= 0) break;
+                foreach (var storage in productStorages)
+                {
+                    if (remainingQty <= 0) break;
 
-        int qtyFromThisStorage = 0;
+                    int qtyFromThisStorage = 0;
 
-        if (storage.Quantity >= remainingQty)
-        {
-            // This storage has enough quantity
-            qtyFromThisStorage = remainingQty;
-            storage.Quantity -= remainingQty;
-            StorageBUS.UpdateStorage(storage);
-            remainingQty = 0;
-        }
-        else
-        {
-            // Use all from this storage and move to next
-            qtyFromThisStorage = storage.Quantity;
-            remainingQty -= storage.Quantity;
-            storage.Quantity = 0;
-            storage.Status = StorageDTO.Option.inactive;
-            StorageBUS.UpdateStorage(storage);
-        }
+                    if (storage.Quantity >= remainingQty)
+                    {
+                        // This storage has enough quantity
+                        qtyFromThisStorage = remainingQty;
+                        storage.Quantity -= remainingQty;
+                        StorageBUS.UpdateStorage(storage);
+                        remainingQty = 0;
+                    }
+                    else
+                    {
+                        // Use all from this storage and move to next
+                        qtyFromThisStorage = storage.Quantity;
+                        remainingQty -= storage.Quantity;
+                        storage.Quantity = 0;
+                        storage.Status = StorageDTO.Option.inactive;
+                        StorageBUS.UpdateStorage(storage);
+                    }
 
-        // Create BillProductDetail for this storage batch
-        double subtotal = qtyFromThisStorage * storage.Price;
-        BillProductDetailDTO bill_detail = new BillProductDetailDTO(
-            billDetailId,
-            billId,
-            productId,
-            qtyFromThisStorage,  // Quantity from THIS storage
-            storage.Price,       // Price from THIS storage
-            subtotal            // Subtotal for THIS batch
-        );
+                    // Create BillProductDetail for this storage batch
+                    double subtotal = qtyFromThisStorage * storage.Price;
+                    BillProductDetailDTO bill_detail = new BillProductDetailDTO(
+                        billDetailId, 
+                        billId, 
+                        productId, 
+                        qtyFromThisStorage,  // Quantity from THIS storage
+                        storage.Price,       // Price from THIS storage
+                        subtotal            // Subtotal for THIS batch
+                    );
 
-        bill_detail_bus.InsertBillProductDetail(bill_detail);
+                    bill_detail_bus.InsertBillProductDetail(bill_detail);
 
-        // Generate next detail ID
-        billDetailId = generateNewId(billDetailId);
-    }
+                    // Generate next detail ID
+                    billDetailId = generateNewId(billDetailId);
+                }
 
-    if (remainingQty > 0)
-    {
-        MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.",
-                    "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    }
-}
+                if (remainingQty > 0)
+                {
+                    MessageBox.Show($"Insufficient stock for product {productId}. Missing {remainingQty} units.", 
+                                "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
 
-// updating product quantity
-var selectedIds = selectedItems.Select(kv => kv.Key).ToHashSet();
-foreach (string id in selectedIds)
-{
-    var product_dto = product_bus.GetProductById(id);
-    var qty = selectedItems.First(kv => kv.Key == id).Value;
-    product_dto.Quantity -= qty;
-    product_bus.UpdateProduct(product_dto);
-}
+            // updating product quantity
+            var selectedIds = selectedItems.Select(kv => kv.Key).ToHashSet();
+            foreach (string id in selectedIds)
+            {
+                var product_dto = product_bus.GetProductById(id);
+                var qty = selectedItems.First(kv => kv.Key == id).Value;
+                product_dto.Quantity -= qty;
+                product_bus.UpdateProduct(product_dto);
+            }            
             // ===== END OF AI GENERATED CODE =====
         }
 
