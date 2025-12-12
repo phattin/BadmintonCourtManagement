@@ -121,7 +121,7 @@ namespace BadmintonCourtManagement.GUI
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Chuyển sang MainLayout
-                    MainLayout main = new MainLayout(account, storageList, productList, brandList, importBillList);
+                    MainLayout main = new MainLayout(account, storageList, typeProductList, productList, brandList, importBillList);
                     main.Show();
                     // Khi MainLayout đóng → LoginGUI cũng đóng
                     main.FormClosed += (s, args) => this.Close();
