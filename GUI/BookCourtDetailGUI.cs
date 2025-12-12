@@ -16,6 +16,7 @@ namespace BadmintonCourtManagement.GUI
         private BookingBUS bookingBUS;
         private BillBookingBUS billBookingBUS;
         private CustomerBUS customerBUS;
+        private PriceRuleBUS priceRuleBUS;
         private string customerIdValue;
 
         public BookCourtDetailGUI()
@@ -34,6 +35,7 @@ namespace BadmintonCourtManagement.GUI
             bookingBUS = new BookingBUS();
             billBookingBUS = new BillBookingBUS();
             customerBUS = new CustomerBUS();
+            priceRuleBUS = new PriceRuleBUS();
             txtDate.Text = datePicked;
             txtStartTime.Text = timeStartPicked;
             txtEndTime.Text = timeEndPicked;
@@ -219,7 +221,6 @@ namespace BadmintonCourtManagement.GUI
                 return;
             }
 
-            var priceRuleDao = new PriceRuleDAO();
 
             TimeOnly currentStart = startTime;
             while (currentStart < endTime)
@@ -229,7 +230,7 @@ namespace BadmintonCourtManagement.GUI
                 if (currentEnd > endTime)
                     currentEnd = endTime;
 
-                PriceRuleDTO rule = priceRuleDao.GetPriceRuleByTime(currentStart, currentEnd, bookingDate);
+                PriceRuleDTO rule = priceRuleBUS.GetPriceRuleByTime(currentStart, currentEnd, bookingDate);
                 if (rule != null)
                     priceRuleListApplied.Add(rule);
 
@@ -265,9 +266,8 @@ namespace BadmintonCourtManagement.GUI
                 if (billBookingBUS == null)
                     billBookingBUS = new BillBookingBUS();
 
-                double totalPrice = double.Parse(txtTotalPrice.Text); // tổng tiền đã tính
+                double totalPrice = double.Parse(txtTotalPrice.Text); 
 
-                // 1️⃣ Validate (giữ nguyên như bạn đang làm)
                 if (string.IsNullOrWhiteSpace(txtPhone.Text))
                 {
                     MessageBox.Show("Vui lòng nhập số điện thoại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -288,7 +288,6 @@ namespace BadmintonCourtManagement.GUI
                 double prePayment = double.Parse(txtPrePayment.Text);
 
 
-                // 2️⃣ Parse thông tin booking (giữ nguyên)
                 DateOnly bookingDate = DateOnly.ParseExact(txtDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 TimeOnly startTime = TimeOnly.Parse(txtStartTime.Text);
                 TimeOnly endTime = TimeOnly.Parse(txtEndTime.Text);
@@ -296,7 +295,6 @@ namespace BadmintonCourtManagement.GUI
                 DateTime startDateTime = bookingDate.ToDateTime(startTime);
                 DateTime endDateTime = bookingDate.ToDateTime(endTime);
 
-                // 3️⃣ Kiểm tra trùng giờ (giữ nguyên)
                 List<BookingDTO> existingBookings = bookingBUS.GetSuccessfulBookingsByCourtID(txtCourtID.Text);
                 foreach (var booking in existingBookings)
                 {
@@ -311,10 +309,8 @@ namespace BadmintonCourtManagement.GUI
                     }
                 }
 
-                // 4️⃣ Lấy BookingId mới
                 string bookingId = bookingBUS.GetNextBookingId();
 
-                // 5️⃣ Tạo BookingDTO
                 BookingDTO newBooking = new BookingDTO
                 {
                     BookingId = bookingId,
@@ -326,7 +322,6 @@ namespace BadmintonCourtManagement.GUI
 
 
 
-                // 6️⃣ Insert Booking vào database
                 bool bookingResult = bookingBUS.InsertBooking(newBooking);
 
                 if (!bookingResult)
@@ -352,14 +347,11 @@ namespace BadmintonCourtManagement.GUI
                         MessageBox.Show("Đặt sân thành công nhưng lưu khách hàng thất bại!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                // 7️⃣ Tạo BillBookingId mới
                 string billBookingId = billBookingBUS.GetNextId();
 
 
-                // Lấy EmployeeId & CustomerId
                 string employeeId = currentAccount?.EmployeeId ?? "";   // tùy cấu trúc AccountDTO của bạn
 
-                // 9️⃣ Tạo BillBookingDTO
                 BillBookingDTO newBill = new BillBookingDTO
                 {
                     BillBookingId = billBookingId,
@@ -415,7 +407,6 @@ namespace BadmintonCourtManagement.GUI
                     $"Giờ: {txtStartTime.Text} - {txtEndTime.Text}\n" +
                     $"Tổng tiền: {txtTotalPrice.Text} VNĐ",
                     "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // 1️⃣1️⃣ Quay lại trang danh sách
                 this.Controls.Clear();
                 var bookingGUI = new BookCourtGUI(currentAccount);
                 bookingGUI.Dock = DockStyle.Fill;
@@ -426,7 +417,6 @@ namespace BadmintonCourtManagement.GUI
                 MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            // 11️⃣ Quay lại trang danh sách
             Form parentForm = this.FindForm();
             if (parentForm != null)
             {

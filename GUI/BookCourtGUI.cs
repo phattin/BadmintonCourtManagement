@@ -1,6 +1,7 @@
 ﻿using BadmintonCourtManagement.BUS;
 using BadmintonCourtManagement.DTO;
 using System.Globalization;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 
 namespace BadmintonCourtManagement.GUI
@@ -10,6 +11,7 @@ namespace BadmintonCourtManagement.GUI
         private AccountDTO currentAccount;
         private CourtBUS courtBUS;
         private BookingBUS bookingBUS;
+        private PriceRuleBUS priceRuleBUS;
 
         // ===== Thêm các biến phân trang =====
         private List<CourtDTO> currentList = new List<CourtDTO>();
@@ -24,6 +26,7 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
             courtBUS = new CourtBUS();
             bookingBUS = new BookingBUS();
+            priceRuleBUS = new PriceRuleBUS();
 
             // Khởi tạo phân trang
             currentPage = 1;
@@ -421,6 +424,11 @@ namespace BadmintonCourtManagement.GUI
                     MessageBox.Show("Giờ kết thúc phải lớn hơn giờ bắt đầu!");
                     return;
                 }
+                if ((endTime.ToTimeSpan() - startTime.ToTimeSpan()).TotalMinutes < 60)
+                {
+                    MessageBox.Show("Thời gian đặt sân phải tối thiểu 1 tiếng!");
+                    return;
+                }
                 int[] allowedMinutes = { 0, 15, 30, 45 };
                 if (!allowedMinutes.Contains(startTime.Minute) || !allowedMinutes.Contains(endTime.Minute))
                 {
@@ -449,6 +457,28 @@ namespace BadmintonCourtManagement.GUI
                 {
                     MessageBox.Show("Không được đặt vào thời gian trong quá khứ!");
                     return;
+                }
+
+                List<PriceRuleDTO > priceRuleListApplied = new List<PriceRuleDTO>();
+
+                TimeOnly currentStart = startTime;
+                while (currentStart < endTime)
+                {
+                    TimeOnly currentEnd = currentStart.AddMinutes(15);
+
+                    if (currentEnd > endTime)
+                        currentEnd = endTime;
+
+                    PriceRuleDTO rule = priceRuleBUS.GetPriceRuleByTime(currentStart, currentEnd, bookingDate);
+                    if (rule != null)
+                        priceRuleListApplied.Add(rule);
+                    else
+                    {
+                        MessageBox.Show($"Khung giờ không hoạt động!");
+                        return;
+                    }
+
+                    currentStart = currentEnd;
                 }
 
                 // === Mở popup BookCourtDetailGUI ===
@@ -519,7 +549,6 @@ namespace BadmintonCourtManagement.GUI
                 );
 
                 // 4. Lọc theo ngày và thời gian
-
                 bookingFilterList = bookingBUS.Filter(bookingDate, startTime, endTime);
 
             }
