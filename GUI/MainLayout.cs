@@ -23,9 +23,11 @@ namespace BadmintonCourtManagement.GUI
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
 
         private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
 
-        public MainLayout(AccountDTO account, List<StorageDTO> storageList)
+        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<TypeProductDTO> typeProductList)
         {
+            this.typeProductList = typeProductList;
             this.currentAccount = account;
             this.storageList = storageList;
             InitializeComponent();
@@ -227,7 +229,7 @@ namespace BadmintonCourtManagement.GUI
         }
         private void TypeProduct_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new TypeProductGUI(currentAccount));
+            OpenChildPanel(new TypeProductGUI(currentAccount, typeProductList));
         }
         
         private void Supplier_Click(object? sender, EventArgs e)

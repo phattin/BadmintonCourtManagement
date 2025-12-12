@@ -17,6 +17,7 @@ namespace BadmintonCourtManagement.GUI
     {
 
         private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
 
         public LoginGUI()
         {
@@ -27,6 +28,7 @@ namespace BadmintonCourtManagement.GUI
         private void LoginGUI_Load(object sender, EventArgs e)
         {
             storageList = StorageBUS.GetAllStorages();
+            typeProductList = new TypeProductBUS().GetAllTypeProducts();
         }
 
         private void lblWelcome_Click(object sender, EventArgs e)
@@ -112,7 +114,7 @@ namespace BadmintonCourtManagement.GUI
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Chuyển sang MainLayout
-                    MainLayout main = new MainLayout(account, storageList);
+                    MainLayout main = new MainLayout(account, storageList, typeProductList);
                     main.Show();
                     // Khi MainLayout đóng → LoginGUI cũng đóng
                     main.FormClosed += (s, args) => this.Close();
