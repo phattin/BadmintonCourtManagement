@@ -91,11 +91,16 @@ namespace BadmintonCourtManagement.BUS
             //return true;
 
             var existing = dao.GetById(storage.StorageId);
-            if (existing != null)
-                throw new Exception("Storage đã tồn tại!");
-            var entity = StorageMapper.ToEntity(storage);
-            entity.CalcTotal();
-            return dao.Insert(entity);
+            if (existing == null)
+            {
+                var entity = StorageMapper.ToEntity(storage);
+                entity.CalcTotal();
+                //return dao.Insert(entity);
+                return true;
+            }
+
+            //throw new Exception("Storage đã tồn tại!");
+            return false;
         }
 
         public static bool UpdateStorage(StorageDTO storage)

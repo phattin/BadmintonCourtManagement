@@ -252,18 +252,6 @@ namespace BadmintonCourtManagement.GUI
             }
         }
 
-        // hàm reset item
-        private void Reset_Click(object sender, EventArgs e)
-        {
-            page = 0;
-            storageList = oldList;
-            searchList = oldList;
-            Pagination();
-            isFiltered = false;
-            searchBar.Text = "";
-            StorageGUI_Load(sender, e);
-        }
-
         // hàm lọc theo ngày
         private void filterButton_Click(object sender, EventArgs e)
         {
@@ -325,6 +313,28 @@ namespace BadmintonCourtManagement.GUI
                     return;
                 }
             }
+        }
+
+        // hàm reset item
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            page = 0;
+            storageList = oldList;
+            searchList = oldList;
+            Pagination();
+            isFiltered = false;
+            searchBar.Text = "";
+            StorageGUI_Load(sender, e);
+        }
+
+        // hàm đọc lại list kho
+        public void ReloadStorage() {
+            page = 0;
+            storageList = oldList;
+            searchList = oldList;
+            Pagination();
+            isFiltered = false;
+            searchBar.Text = "";
         }
 
         // các hàm tạm
@@ -736,7 +746,7 @@ namespace BadmintonCourtManagement.GUI
         // Thêm đơn nhập hàng mới
         private void supplyAdd_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
             supplyAdd.ShowDialog();
             if (supplyAdd.ResultBill != null)
             {
@@ -792,13 +802,13 @@ namespace BadmintonCourtManagement.GUI
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
             supplyAdd.ShowDialog();
         }
 
         private void AddButton_Click_1(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
             supplyAdd.ShowDialog();
         }
 
