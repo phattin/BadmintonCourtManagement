@@ -52,6 +52,7 @@ namespace GUI
 
             comboBoxEndType.Text = currentPriceRule.EndType;
             textBoxDes.Text = currentPriceRule.Description;
+            UpdateDatePickersState();
         }
 
         private void buttonAccept_Click(object sender, EventArgs e)
@@ -62,12 +63,12 @@ namespace GUI
             TimeOnly startTime = new TimeOnly(dateTimePickerStartTime.Value.Hour, dateTimePickerStartTime.Value.Minute, 0);
             TimeOnly endTime = new TimeOnly(dateTimePickerEndTime.Value.Hour, dateTimePickerEndTime.Value.Minute, 0);
             DateOnly? startDate = null;
-            if (dateTimePickerStartDate.Checked)
+            if (dateTimePickerStartDate.Enabled && dateTimePickerStartDate.Checked)
             {
                 startDate = DateOnly.FromDateTime(dateTimePickerStartDate.Value);
             }
             DateOnly? endDate = null;
-            if (dateTimePickerEndDate.Checked)
+            if (dateTimePickerEndDate.Enabled && dateTimePickerEndDate.Checked)
             {
                 endDate = DateOnly.FromDateTime(dateTimePickerEndDate.Value);
             }
@@ -125,6 +126,30 @@ namespace GUI
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+        private void UpdateDatePickersState()
+        {
+            string type = comboBoxEndType.Text.Trim();
+            bool isRecurring = type.Equals("Weekday", StringComparison.OrdinalIgnoreCase)
+                            || type.Equals("Weekend", StringComparison.OrdinalIgnoreCase);
+
+            if (isRecurring)
+            {
+                dateTimePickerStartDate.Enabled = false;
+                dateTimePickerEndDate.Enabled = false;
+                dateTimePickerStartDate.Checked = false;
+                dateTimePickerEndDate.Checked = false;
+            }
+            else
+            {
+                dateTimePickerStartDate.Enabled = true;
+                dateTimePickerEndDate.Enabled = true;
+            }
+        }
+
+        private void comboBoxEndType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateDatePickersState();
         }
     }
 }

@@ -86,10 +86,35 @@ namespace GUI
             }
         }
 
+        private void UpdateDatePickersState()
+        {
+            string type = comboBoxEndType.Text.Trim();
+            bool isRecurring = type.Equals("Weekday", StringComparison.OrdinalIgnoreCase)
+                            || type.Equals("Weekend", StringComparison.OrdinalIgnoreCase);
+
+            if (isRecurring)
+            {
+                dateTimePickerStartDate.Enabled = false;
+                dateTimePickerEndDate.Enabled = false;
+                dateTimePickerStartDate.Checked = false;
+                dateTimePickerEndDate.Checked = false;
+            }
+            else
+            {
+                dateTimePickerStartDate.Enabled = true;
+                dateTimePickerEndDate.Enabled = true;
+            }
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void comboBoxEndType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateDatePickersState();
         }
     }
 }

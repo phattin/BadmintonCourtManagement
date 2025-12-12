@@ -279,6 +279,7 @@ namespace GUI
             comboBoxEndType.Name = "comboBoxEndType";
             comboBoxEndType.Size = new Size(392, 36);
             comboBoxEndType.TabIndex = 1;
+            comboBoxEndType.SelectedIndexChanged += comboBoxEndType_SelectedIndexChanged;
             // 
             // labelEndType
             // 
