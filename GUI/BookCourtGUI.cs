@@ -456,7 +456,7 @@ namespace BadmintonCourtManagement.GUI
                 {
                     FormBorderStyle = FormBorderStyle.FixedDialog,
                     StartPosition = FormStartPosition.CenterParent,
-                    Size = new Size(800, 500),     // chỉnh cho vừa UI chi tiết
+                    Size = new Size(1000, 800),     // chỉnh cho vừa UI chi tiết
                     MaximizeBox = false,
                     MinimizeBox = false,
                     ShowInTaskbar = false
