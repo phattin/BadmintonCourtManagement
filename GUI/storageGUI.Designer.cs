@@ -88,7 +88,7 @@ namespace BadmintonCourtManagement.GUI
             tabPane.Margin = new Padding(0);
             tabPane.Name = "tabPane";
             tabPane.SelectedIndex = 0;
-            tabPane.Size = new Size(1049, 602);
+            tabPane.Size = new Size(1199, 803);
             tabPane.TabIndex = 0;
             // 
             // khoHangPage
@@ -100,11 +100,11 @@ namespace BadmintonCourtManagement.GUI
             khoHangPage.Controls.Add(toolBar);
             khoHangPage.Controls.Add(titlePanel);
             khoHangPage.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            khoHangPage.Location = new Point(4, 34);
-            khoHangPage.Margin = new Padding(5);
+            khoHangPage.Location = new Point(4, 40);
+            khoHangPage.Margin = new Padding(6, 7, 6, 7);
             khoHangPage.Name = "khoHangPage";
-            khoHangPage.Padding = new Padding(26, 0, 26, 0);
-            khoHangPage.Size = new Size(1191, 564);
+            khoHangPage.Padding = new Padding(30, 0, 30, 0);
+            khoHangPage.Size = new Size(1191, 759);
             khoHangPage.TabIndex = 0;
             khoHangPage.Text = "Kho hàng";
             khoHangPage.Click += tabPage1_Click;
@@ -116,10 +116,10 @@ namespace BadmintonCourtManagement.GUI
             pageButtonPanel.Controls.Add(nextButton);
             pageButtonPanel.Controls.Add(previousButton);
             pageButtonPanel.Dock = DockStyle.Bottom;
-            pageButtonPanel.Location = new Point(26, 503);
+            pageButtonPanel.Location = new Point(30, 678);
             pageButtonPanel.Margin = new Padding(0);
             pageButtonPanel.Name = "pageButtonPanel";
-            pageButtonPanel.Size = new Size(989, 61);
+            pageButtonPanel.Size = new Size(1131, 81);
             pageButtonPanel.TabIndex = 3;
             // 
             // extraNextButton
@@ -130,10 +130,10 @@ namespace BadmintonCourtManagement.GUI
             extraNextButton.FlatAppearance.BorderSize = 0;
             extraNextButton.FlatStyle = FlatStyle.Flat;
             extraNextButton.Image = (Image)resources.GetObject("extraNextButton.Image");
-            extraNextButton.Location = new Point(583, 10);
-            extraNextButton.Margin = new Padding(2);
+            extraNextButton.Location = new Point(666, 13);
+            extraNextButton.Margin = new Padding(2, 3, 2, 3);
             extraNextButton.Name = "extraNextButton";
-            extraNextButton.Size = new Size(52, 44);
+            extraNextButton.Size = new Size(59, 59);
             extraNextButton.TabIndex = 16;
             extraNextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraNextButton.UseVisualStyleBackColor = false;
@@ -148,10 +148,10 @@ namespace BadmintonCourtManagement.GUI
             extraPreviousButton.FlatStyle = FlatStyle.Flat;
             extraPreviousButton.ForeColor = Color.Transparent;
             extraPreviousButton.Image = (Image)resources.GetObject("extraPreviousButton.Image");
-            extraPreviousButton.Location = new Point(352, 10);
+            extraPreviousButton.Location = new Point(402, 13);
             extraPreviousButton.Margin = new Padding(0);
             extraPreviousButton.Name = "extraPreviousButton";
-            extraPreviousButton.Size = new Size(52, 44);
+            extraPreviousButton.Size = new Size(59, 59);
             extraPreviousButton.TabIndex = 13;
             extraPreviousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             extraPreviousButton.UseVisualStyleBackColor = false;
@@ -165,10 +165,10 @@ namespace BadmintonCourtManagement.GUI
             nextButton.FlatAppearance.BorderSize = 0;
             nextButton.FlatStyle = FlatStyle.Flat;
             nextButton.Image = (Image)resources.GetObject("nextButton.Image");
-            nextButton.Location = new Point(504, 10);
-            nextButton.Margin = new Padding(2);
+            nextButton.Location = new Point(576, 13);
+            nextButton.Margin = new Padding(2, 3, 2, 3);
             nextButton.Name = "nextButton";
-            nextButton.Size = new Size(52, 44);
+            nextButton.Size = new Size(59, 59);
             nextButton.TabIndex = 15;
             nextButton.TextImageRelation = TextImageRelation.ImageAboveText;
             nextButton.UseVisualStyleBackColor = false;
@@ -182,10 +182,10 @@ namespace BadmintonCourtManagement.GUI
             previousButton.FlatAppearance.BorderSize = 0;
             previousButton.FlatStyle = FlatStyle.Flat;
             previousButton.Image = (Image)resources.GetObject("previousButton.Image");
-            previousButton.Location = new Point(430, 10);
-            previousButton.Margin = new Padding(2);
+            previousButton.Location = new Point(491, 13);
+            previousButton.Margin = new Padding(2, 3, 2, 3);
             previousButton.Name = "previousButton";
-            previousButton.Size = new Size(52, 44);
+            previousButton.Size = new Size(59, 59);
             previousButton.TabIndex = 14;
             previousButton.TextImageRelation = TextImageRelation.ImageAboveText;
             previousButton.UseVisualStyleBackColor = false;
@@ -202,14 +202,15 @@ namespace BadmintonCourtManagement.GUI
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             cardList.Font = new Font("Segoe UI", 11F);
-            cardList.Location = new Point(26, 106);
+            cardList.Location = new Point(30, 141);
             cardList.Margin = new Padding(0);
             cardList.Name = "cardList";
             cardList.RowCount = 2;
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             cardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            cardList.Size = new Size(990, 402);
+            cardList.Size = new Size(1131, 536);
             cardList.TabIndex = 2;
+            cardList.Paint += cardList_Paint_1;
             // 
             // toolBar
             // 
@@ -232,13 +233,13 @@ namespace BadmintonCourtManagement.GUI
             toolBar.Controls.Add(filterButton, 5, 0);
             toolBar.Dock = DockStyle.Top;
             toolBar.Font = new Font("Segoe UI", 9F);
-            toolBar.Location = new Point(26, 43);
+            toolBar.Location = new Point(30, 57);
             toolBar.Margin = new Padding(0);
             toolBar.Name = "toolBar";
-            toolBar.Padding = new Padding(7, 6, 7, 6);
+            toolBar.Padding = new Padding(8);
             toolBar.RowCount = 1;
             toolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            toolBar.Size = new Size(989, 64);
+            toolBar.Size = new Size(1131, 85);
             toolBar.TabIndex = 1;
             toolBar.Paint += tableLayoutPanel1_Paint;
             // 
@@ -250,10 +251,10 @@ namespace BadmintonCourtManagement.GUI
             Reset.FlatAppearance.BorderSize = 0;
             Reset.FlatStyle = FlatStyle.Flat;
             Reset.Image = Properties.Resources.Reset;
-            Reset.Location = new Point(896, 6);
+            Reset.Location = new Point(1027, 8);
             Reset.Margin = new Padding(0);
             Reset.Name = "Reset";
-            Reset.Size = new Size(86, 52);
+            Reset.Size = new Size(96, 69);
             Reset.TabIndex = 5;
             Reset.UseVisualStyleBackColor = false;
             Reset.Click += Reset_Click;
@@ -266,11 +267,11 @@ namespace BadmintonCourtManagement.GUI
             endDate.DropDownAlign = LeftRightAlignment.Right;
             endDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             endDate.Format = DateTimePickerFormat.Custom;
-            endDate.Location = new Point(652, 17);
-            endDate.Margin = new Padding(0, 11, 7, 0);
+            endDate.Location = new Point(747, 23);
+            endDate.Margin = new Padding(0, 15, 8, 0);
             endDate.Name = "endDate";
             endDate.ShowUpDown = true;
-            endDate.Size = new Size(154, 32);
+            endDate.Size = new Size(177, 39);
             endDate.TabIndex = 3;
             // 
             // endText
@@ -279,10 +280,10 @@ namespace BadmintonCourtManagement.GUI
             endText.Dock = DockStyle.Fill;
             endText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             endText.ForeColor = Color.White;
-            endText.Location = new Point(532, 6);
-            endText.Margin = new Padding(7, 0, 0, 0);
+            endText.Location = new Point(610, 8);
+            endText.Margin = new Padding(8, 0, 0, 0);
             endText.Name = "endText";
-            endText.Size = new Size(120, 52);
+            endText.Size = new Size(137, 69);
             endText.TabIndex = 3;
             endText.Text = "Ngày kết thúc:";
             endText.TextAlign = ContentAlignment.MiddleCenter;
@@ -293,11 +294,11 @@ namespace BadmintonCourtManagement.GUI
             searchBar.Cursor = Cursors.IBeam;
             searchBar.Dock = DockStyle.Fill;
             searchBar.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            searchBar.Location = new Point(7, 17);
-            searchBar.Margin = new Padding(0, 11, 7, 0);
+            searchBar.Location = new Point(8, 23);
+            searchBar.Margin = new Padding(0, 15, 8, 0);
             searchBar.Name = "searchBar";
             searchBar.PlaceholderText = "Tìm kiếm...";
-            searchBar.Size = new Size(231, 32);
+            searchBar.Size = new Size(265, 39);
             searchBar.TabIndex = 1;
             searchBar.TextChanged += textBox1_TextChanged;
             searchBar.KeyDown += searchEnterEvent;
@@ -310,12 +311,12 @@ namespace BadmintonCourtManagement.GUI
             startDate.DropDownAlign = LeftRightAlignment.Right;
             startDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             startDate.Format = DateTimePickerFormat.Custom;
-            startDate.Location = new Point(369, 17);
-            startDate.Margin = new Padding(0, 11, 7, 0);
+            startDate.Location = new Point(423, 23);
+            startDate.Margin = new Padding(0, 15, 8, 0);
             startDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
             startDate.Name = "startDate";
             startDate.ShowUpDown = true;
-            startDate.Size = new Size(149, 32);
+            startDate.Size = new Size(171, 39);
             startDate.TabIndex = 2;
             startDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             startDate.ValueChanged += dateTimePicker1_ValueChanged;
@@ -326,10 +327,10 @@ namespace BadmintonCourtManagement.GUI
             startText.Dock = DockStyle.Fill;
             startText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             startText.ForeColor = Color.White;
-            startText.Location = new Point(245, 6);
+            startText.Location = new Point(281, 8);
             startText.Margin = new Padding(0);
             startText.Name = "startText";
-            startText.Size = new Size(124, 52);
+            startText.Size = new Size(142, 69);
             startText.TabIndex = 2;
             startText.Text = "Ngày bắt đầu:";
             startText.TextAlign = ContentAlignment.MiddleCenter;
@@ -343,10 +344,10 @@ namespace BadmintonCourtManagement.GUI
             filterButton.FlatAppearance.BorderSize = 0;
             filterButton.FlatStyle = FlatStyle.Flat;
             filterButton.Image = Properties.Resources.Filter;
-            filterButton.Location = new Point(813, 6);
+            filterButton.Location = new Point(932, 8);
             filterButton.Margin = new Padding(0);
             filterButton.Name = "filterButton";
-            filterButton.Size = new Size(83, 52);
+            filterButton.Size = new Size(95, 69);
             filterButton.TabIndex = 4;
             filterButton.UseVisualStyleBackColor = false;
             filterButton.Click += filterButton_Click;
@@ -357,10 +358,10 @@ namespace BadmintonCourtManagement.GUI
             // 
             titlePanel.Controls.Add(titleText);
             titlePanel.Dock = DockStyle.Top;
-            titlePanel.Location = new Point(26, 0);
+            titlePanel.Location = new Point(30, 0);
             titlePanel.Margin = new Padding(0);
             titlePanel.Name = "titlePanel";
-            titlePanel.Size = new Size(989, 43);
+            titlePanel.Size = new Size(1131, 57);
             titlePanel.TabIndex = 0;
             titlePanel.Paint += panel1_Paint;
             // 
@@ -371,7 +372,7 @@ namespace BadmintonCourtManagement.GUI
             titleText.Location = new Point(0, 0);
             titleText.Margin = new Padding(0);
             titleText.Name = "titleText";
-            titleText.Size = new Size(989, 43);
+            titleText.Size = new Size(1131, 57);
             titleText.TabIndex = 2;
             titleText.Text = "Kho hàng";
             titleText.TextAlign = ContentAlignment.MiddleLeft;
@@ -384,11 +385,11 @@ namespace BadmintonCourtManagement.GUI
             nhapHangPage.Controls.Add(supplyCardList);
             nhapHangPage.Controls.Add(supplyToolBar);
             nhapHangPage.Controls.Add(supplyTitlePanel);
-            nhapHangPage.Location = new Point(4, 34);
+            nhapHangPage.Location = new Point(4, 40);
             nhapHangPage.Margin = new Padding(0);
             nhapHangPage.Name = "nhapHangPage";
-            nhapHangPage.Padding = new Padding(26, 0, 26, 0);
-            nhapHangPage.Size = new Size(1191, 564);
+            nhapHangPage.Padding = new Padding(30, 0, 30, 0);
+            nhapHangPage.Size = new Size(1191, 759);
             nhapHangPage.TabIndex = 1;
             nhapHangPage.Text = "Nhập hàng";
             nhapHangPage.UseVisualStyleBackColor = true;
@@ -400,10 +401,10 @@ namespace BadmintonCourtManagement.GUI
             supplyPagination.Controls.Add(supplyNext);
             supplyPagination.Controls.Add(supplyPrevious);
             supplyPagination.Dock = DockStyle.Bottom;
-            supplyPagination.Location = new Point(26, 503);
+            supplyPagination.Location = new Point(30, 678);
             supplyPagination.Margin = new Padding(0);
             supplyPagination.Name = "supplyPagination";
-            supplyPagination.Size = new Size(989, 61);
+            supplyPagination.Size = new Size(1131, 81);
             supplyPagination.TabIndex = 4;
             // 
             // supplyExtraNext
@@ -414,10 +415,10 @@ namespace BadmintonCourtManagement.GUI
             supplyExtraNext.FlatAppearance.BorderSize = 0;
             supplyExtraNext.FlatStyle = FlatStyle.Flat;
             supplyExtraNext.Image = (Image)resources.GetObject("supplyExtraNext.Image");
-            supplyExtraNext.Location = new Point(579, 9);
-            supplyExtraNext.Margin = new Padding(2);
+            supplyExtraNext.Location = new Point(661, 12);
+            supplyExtraNext.Margin = new Padding(2, 3, 2, 3);
             supplyExtraNext.Name = "supplyExtraNext";
-            supplyExtraNext.Size = new Size(52, 44);
+            supplyExtraNext.Size = new Size(59, 59);
             supplyExtraNext.TabIndex = 16;
             supplyExtraNext.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyExtraNext.UseVisualStyleBackColor = false;
@@ -432,10 +433,10 @@ namespace BadmintonCourtManagement.GUI
             supplyExtraPrevious.FlatStyle = FlatStyle.Flat;
             supplyExtraPrevious.ForeColor = Color.Transparent;
             supplyExtraPrevious.Image = (Image)resources.GetObject("supplyExtraPrevious.Image");
-            supplyExtraPrevious.Location = new Point(353, 9);
+            supplyExtraPrevious.Location = new Point(403, 12);
             supplyExtraPrevious.Margin = new Padding(0);
             supplyExtraPrevious.Name = "supplyExtraPrevious";
-            supplyExtraPrevious.Size = new Size(52, 44);
+            supplyExtraPrevious.Size = new Size(59, 59);
             supplyExtraPrevious.TabIndex = 13;
             supplyExtraPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyExtraPrevious.UseVisualStyleBackColor = false;
@@ -449,10 +450,10 @@ namespace BadmintonCourtManagement.GUI
             supplyNext.FlatAppearance.BorderSize = 0;
             supplyNext.FlatStyle = FlatStyle.Flat;
             supplyNext.Image = (Image)resources.GetObject("supplyNext.Image");
-            supplyNext.Location = new Point(504, 9);
-            supplyNext.Margin = new Padding(2);
+            supplyNext.Location = new Point(576, 12);
+            supplyNext.Margin = new Padding(2, 3, 2, 3);
             supplyNext.Name = "supplyNext";
-            supplyNext.Size = new Size(52, 44);
+            supplyNext.Size = new Size(59, 59);
             supplyNext.TabIndex = 15;
             supplyNext.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyNext.UseVisualStyleBackColor = false;
@@ -466,10 +467,10 @@ namespace BadmintonCourtManagement.GUI
             supplyPrevious.FlatAppearance.BorderSize = 0;
             supplyPrevious.FlatStyle = FlatStyle.Flat;
             supplyPrevious.Image = (Image)resources.GetObject("supplyPrevious.Image");
-            supplyPrevious.Location = new Point(429, 9);
-            supplyPrevious.Margin = new Padding(2);
+            supplyPrevious.Location = new Point(490, 12);
+            supplyPrevious.Margin = new Padding(2, 3, 2, 3);
             supplyPrevious.Name = "supplyPrevious";
-            supplyPrevious.Size = new Size(52, 44);
+            supplyPrevious.Size = new Size(59, 59);
             supplyPrevious.TabIndex = 14;
             supplyPrevious.TextImageRelation = TextImageRelation.ImageAboveText;
             supplyPrevious.UseVisualStyleBackColor = false;
@@ -487,13 +488,13 @@ namespace BadmintonCourtManagement.GUI
             supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             supplyCardList.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             supplyCardList.Font = new Font("Segoe UI", 11F);
-            supplyCardList.Location = new Point(26, 106);
+            supplyCardList.Location = new Point(30, 141);
             supplyCardList.Margin = new Padding(0);
             supplyCardList.Name = "supplyCardList";
             supplyCardList.RowCount = 2;
             supplyCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             supplyCardList.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            supplyCardList.Size = new Size(990, 402);
+            supplyCardList.Size = new Size(1131, 536);
             supplyCardList.TabIndex = 3;
             // 
             // supplyToolBar
@@ -517,14 +518,14 @@ namespace BadmintonCourtManagement.GUI
             supplyToolBar.Controls.Add(supplyFilter, 5, 0);
             supplyToolBar.Dock = DockStyle.Top;
             supplyToolBar.Font = new Font("Segoe UI", 9F);
-            supplyToolBar.Location = new Point(26, 40);
+            supplyToolBar.Location = new Point(30, 53);
             supplyToolBar.Margin = new Padding(0);
             supplyToolBar.Name = "supplyToolBar";
-            supplyToolBar.Padding = new Padding(7, 6, 7, 6);
+            supplyToolBar.Padding = new Padding(8);
             supplyToolBar.RowCount = 1;
             supplyToolBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            supplyToolBar.RowStyles.Add(new RowStyle(SizeType.Absolute, 54F));
-            supplyToolBar.Size = new Size(989, 66);
+            supplyToolBar.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+            supplyToolBar.Size = new Size(1131, 88);
             supplyToolBar.TabIndex = 2;
             // 
             // supplyReset
@@ -535,10 +536,10 @@ namespace BadmintonCourtManagement.GUI
             supplyReset.FlatAppearance.BorderSize = 0;
             supplyReset.FlatStyle = FlatStyle.Flat;
             supplyReset.Image = Properties.Resources.Reset;
-            supplyReset.Location = new Point(896, 6);
+            supplyReset.Location = new Point(1027, 8);
             supplyReset.Margin = new Padding(0);
             supplyReset.Name = "supplyReset";
-            supplyReset.Size = new Size(86, 54);
+            supplyReset.Size = new Size(96, 72);
             supplyReset.TabIndex = 5;
             supplyReset.UseVisualStyleBackColor = false;
             supplyReset.Click += supplyReset_Click;
@@ -553,11 +554,11 @@ namespace BadmintonCourtManagement.GUI
             supplyEndDate.DropDownAlign = LeftRightAlignment.Right;
             supplyEndDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyEndDate.Format = DateTimePickerFormat.Custom;
-            supplyEndDate.Location = new Point(652, 17);
-            supplyEndDate.Margin = new Padding(0, 11, 7, 0);
+            supplyEndDate.Location = new Point(747, 23);
+            supplyEndDate.Margin = new Padding(0, 15, 8, 0);
             supplyEndDate.Name = "supplyEndDate";
             supplyEndDate.ShowUpDown = true;
-            supplyEndDate.Size = new Size(154, 32);
+            supplyEndDate.Size = new Size(177, 39);
             supplyEndDate.TabIndex = 3;
             // 
             // supplyEndLabel
@@ -566,10 +567,10 @@ namespace BadmintonCourtManagement.GUI
             supplyEndLabel.Dock = DockStyle.Fill;
             supplyEndLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyEndLabel.ForeColor = Color.White;
-            supplyEndLabel.Location = new Point(532, 6);
-            supplyEndLabel.Margin = new Padding(7, 0, 0, 0);
+            supplyEndLabel.Location = new Point(610, 8);
+            supplyEndLabel.Margin = new Padding(8, 0, 0, 0);
             supplyEndLabel.Name = "supplyEndLabel";
-            supplyEndLabel.Size = new Size(120, 54);
+            supplyEndLabel.Size = new Size(137, 72);
             supplyEndLabel.TabIndex = 3;
             supplyEndLabel.Text = "Ngày kết thúc:";
             supplyEndLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -579,11 +580,11 @@ namespace BadmintonCourtManagement.GUI
             supplySearchBar.Cursor = Cursors.IBeam;
             supplySearchBar.Dock = DockStyle.Fill;
             supplySearchBar.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            supplySearchBar.Location = new Point(7, 17);
-            supplySearchBar.Margin = new Padding(0, 11, 7, 0);
+            supplySearchBar.Location = new Point(8, 23);
+            supplySearchBar.Margin = new Padding(0, 15, 8, 0);
             supplySearchBar.Name = "supplySearchBar";
             supplySearchBar.PlaceholderText = "Tìm kiếm...";
-            supplySearchBar.Size = new Size(231, 32);
+            supplySearchBar.Size = new Size(265, 39);
             supplySearchBar.TabIndex = 1;
             supplySearchBar.KeyDown += supplySearchEnterEvent;
             // 
@@ -595,12 +596,12 @@ namespace BadmintonCourtManagement.GUI
             supplyStartDate.DropDownAlign = LeftRightAlignment.Right;
             supplyStartDate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyStartDate.Format = DateTimePickerFormat.Custom;
-            supplyStartDate.Location = new Point(369, 17);
-            supplyStartDate.Margin = new Padding(0, 11, 7, 0);
+            supplyStartDate.Location = new Point(423, 23);
+            supplyStartDate.Margin = new Padding(0, 15, 8, 0);
             supplyStartDate.MaxDate = new DateTime(9998, 10, 1, 0, 0, 0, 0);
             supplyStartDate.Name = "supplyStartDate";
             supplyStartDate.ShowUpDown = true;
-            supplyStartDate.Size = new Size(149, 32);
+            supplyStartDate.Size = new Size(171, 39);
             supplyStartDate.TabIndex = 2;
             supplyStartDate.Value = new DateTime(1900, 1, 1, 0, 0, 0, 0);
             // 
@@ -610,10 +611,10 @@ namespace BadmintonCourtManagement.GUI
             supplyStartLabel.Dock = DockStyle.Fill;
             supplyStartLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             supplyStartLabel.ForeColor = Color.White;
-            supplyStartLabel.Location = new Point(245, 6);
+            supplyStartLabel.Location = new Point(281, 8);
             supplyStartLabel.Margin = new Padding(0);
             supplyStartLabel.Name = "supplyStartLabel";
-            supplyStartLabel.Size = new Size(124, 54);
+            supplyStartLabel.Size = new Size(142, 72);
             supplyStartLabel.TabIndex = 2;
             supplyStartLabel.Text = "Ngày bắt đầu:";
             supplyStartLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -626,10 +627,10 @@ namespace BadmintonCourtManagement.GUI
             supplyFilter.FlatAppearance.BorderSize = 0;
             supplyFilter.FlatStyle = FlatStyle.Flat;
             supplyFilter.Image = Properties.Resources.Filter;
-            supplyFilter.Location = new Point(813, 6);
+            supplyFilter.Location = new Point(932, 8);
             supplyFilter.Margin = new Padding(0);
             supplyFilter.Name = "supplyFilter";
-            supplyFilter.Size = new Size(83, 54);
+            supplyFilter.Size = new Size(95, 72);
             supplyFilter.TabIndex = 4;
             supplyFilter.UseVisualStyleBackColor = false;
             supplyFilter.Click += supplyFilter_Click;
@@ -641,27 +642,27 @@ namespace BadmintonCourtManagement.GUI
             supplyTitlePanel.ColumnCount = 2;
             supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
+            supplyTitlePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 21F));
             supplyTitlePanel.Controls.Add(supplyTitle, 0, 0);
             supplyTitlePanel.Controls.Add(supplyAdd, 1, 0);
             supplyTitlePanel.Dock = DockStyle.Top;
-            supplyTitlePanel.Location = new Point(26, 0);
+            supplyTitlePanel.Location = new Point(30, 0);
             supplyTitlePanel.Margin = new Padding(0);
             supplyTitlePanel.Name = "supplyTitlePanel";
-            supplyTitlePanel.Padding = new Padding(0, 3, 0, 3);
+            supplyTitlePanel.Padding = new Padding(0, 4, 0, 4);
             supplyTitlePanel.RowCount = 1;
             supplyTitlePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            supplyTitlePanel.Size = new Size(989, 40);
+            supplyTitlePanel.Size = new Size(1131, 53);
             supplyTitlePanel.TabIndex = 5;
             // 
             // supplyTitle
             // 
             supplyTitle.Dock = DockStyle.Fill;
             supplyTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            supplyTitle.Location = new Point(0, 3);
+            supplyTitle.Location = new Point(0, 4);
             supplyTitle.Margin = new Padding(0);
             supplyTitle.Name = "supplyTitle";
-            supplyTitle.Size = new Size(494, 34);
+            supplyTitle.Size = new Size(565, 45);
             supplyTitle.TabIndex = 3;
             supplyTitle.Text = "Nhập hàng";
             supplyTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -678,10 +679,10 @@ namespace BadmintonCourtManagement.GUI
             supplyAdd.Dock = DockStyle.Right;
             supplyAdd.FlatStyle = FlatStyle.Flat;
             supplyAdd.ForeColor = Color.White;
-            supplyAdd.Location = new Point(873, 3);
-            supplyAdd.Margin = new Padding(0, 0, 9, 0);
+            supplyAdd.Location = new Point(994, 4);
+            supplyAdd.Margin = new Padding(0, 0, 10, 0);
             supplyAdd.Name = "supplyAdd";
-            supplyAdd.Size = new Size(107, 34);
+            supplyAdd.Size = new Size(127, 45);
             supplyAdd.TabIndex = 4;
             supplyAdd.Text = "+ Thêm";
             supplyAdd.TextColor = Color.White;
@@ -692,7 +693,7 @@ namespace BadmintonCourtManagement.GUI
             // 
             // storageGUI
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             AutoSize = true;
@@ -700,7 +701,7 @@ namespace BadmintonCourtManagement.GUI
             Font = new Font("Segoe UI", 9F);
             Margin = new Padding(0);
             Name = "storageGUI";
-            Size = new Size(1049, 602);
+            Size = new Size(1199, 803);
             Load += storageGUI_Load;
             tabPane.ResumeLayout(false);
             khoHangPage.ResumeLayout(false);
