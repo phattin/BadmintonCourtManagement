@@ -21,9 +21,12 @@ namespace BadmintonCourtManagement.GUI
         List<StorageDTO> storages = new();
         AccountDTO currentAcc;
 
-        private List<StorageDTO> storageList = new List<StorageDTO>();
+        public ImportBillDTO? ResultBill { get; private set; }
 
-        public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList)
+        private List<StorageDTO> storageList = new List<StorageDTO>();
+        private storageGUI _parent;
+
+        public SupplyAddGUI(AccountDTO acc, List<StorageDTO> storageList, storageGUI parent)
         {
             currentAcc = acc;
             InitializeComponent();
@@ -42,6 +45,8 @@ namespace BadmintonCourtManagement.GUI
             {
                 this.listDetailPanel.productDeleted += OnProductDeleted;
             }
+
+            _parent = parent;
         }
 
 
@@ -180,6 +185,7 @@ namespace BadmintonCourtManagement.GUI
 
             // insert new bill import
             billImportBus.InsertBillImport(newBill);
+            ResultBill = newBill;
 
             // inset bill import details
             foreach (var bill_detail in importDetails)
@@ -198,8 +204,7 @@ namespace BadmintonCourtManagement.GUI
                 else
                 {
                     storageList.Add(s);
-                    storageGUI storage = new storageGUI(currentAcc, storageList);
-                    storage.ReloadStorage();
+                    _parent.ReloadStorage();
                 }
             }
 
@@ -213,6 +218,7 @@ namespace BadmintonCourtManagement.GUI
             }
 
             MessageBox.Show("Đã hoàn tất nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 

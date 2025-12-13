@@ -18,7 +18,7 @@ namespace BadmintonCourtManagement.GUI
         private AccountDTO currentAccount;
         private CourtBUS courtBUS;
         private BookingBUS bookingBUS;
-        private List<CourtDTO> currentList = new List<CourtDTO>();
+        private List<CourtDTO> courtList;
         private int currentPage;
         private int itemsPerPage;
         private int totalPages;
@@ -30,17 +30,19 @@ namespace BadmintonCourtManagement.GUI
             InitializeComponent();
         }
 
-        public CourtManagementGUI(AccountDTO currentAccount)
+        public CourtManagementGUI(AccountDTO currentAccount, List<CourtDTO> courtList)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
             courtBUS = new CourtBUS();
             bookingBUS = new BookingBUS();
+            this.courtList = courtList;
 
             currentPage = 1;
             itemsPerPage = 8;
             totalPages = 1;
             CheckPermissions("F02");
+            textBox1.KeyDown += searchEnterEvent;
             ReloadCourtList();
         }
 
@@ -145,8 +147,8 @@ namespace BadmintonCourtManagement.GUI
 
         private void ReloadCourtList()
         {
-            currentList = courtBUS.GetAllCourts();
-            LoadCourts(currentList, 1);
+            //courtList = courtBUS.GetAllCourts();
+            LoadCourts(courtList, 1);
         }
 
         private CustomPanel CreateCourtPanel(CourtDTO courtDTO)
@@ -255,6 +257,7 @@ namespace BadmintonCourtManagement.GUI
                         bool isDeleted = courtBUS.DeleteCourt(courtDTO.CourtId);
                         if (isDeleted)
                         {
+                            courtList.RemoveAll(x => x.CourtId ==courtDTO.CourtId);
                             MessageBox.Show("Xóa sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             ReloadCourtList();
                         }
@@ -283,7 +286,7 @@ namespace BadmintonCourtManagement.GUI
                     ShowInTaskbar = false
                 };
 
-                var editCourtGUI = new FormCourtGUI("Update", courtDTO.CourtId, currentAccount);
+                var editCourtGUI = new FormCourtGUI("Update", courtDTO.CourtId, currentAccount, courtList);
                 editCourtGUI.Dock = DockStyle.Fill;
 
                 dialog.Controls.Add(editCourtGUI);
@@ -322,7 +325,7 @@ namespace BadmintonCourtManagement.GUI
                 ShowInTaskbar = false
             };
 
-            var addCourtGUI = new FormCourtGUI("Insert", courtBUS.GetNextId(), currentAccount);
+            var addCourtGUI = new FormCourtGUI("Insert", courtBUS.GetNextId(), currentAccount, courtList);
             addCourtGUI.Dock = DockStyle.Fill;
 
             dialog.Controls.Add(addCourtGUI);
@@ -349,42 +352,67 @@ namespace BadmintonCourtManagement.GUI
             else if (selectedStatus == "Bảo trì")
                 statusCode = "maintenance";
 
-            currentList = courtBUS.FilterByStatus(statusCode);
+            courtList = courtBUS.FilterByStatus(statusCode);
 
-            // Đảm bảo currentList không null
-            if (currentList == null)
-                currentList = new List<CourtDTO>();
+            // Đảm bảo courtList không null
+            if (courtList == null)
+                courtList = new List<CourtDTO>();
 
-            LoadCourts(currentList, 1);
+            LoadCourts(courtList, 1);
         }
 
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        //private void textBox1_TextChanged(object sender, EventArgs e)
+        //{
+        //    courtList = courtBUS.Search(textBox1.Text);
+        //    LoadCourts(courtList, 1);
+        //}
+
+        private void searchEnterEvent(object sender, KeyEventArgs e)
         {
-            currentList = courtBUS.Search(textBox1.Text);
-            LoadCourts(currentList, 1);
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchCourt(textBox1.Text);
+            }
         }
+
+        private void SearchCourt(string keyword)
+        {
+            try
+            {
+                courtList = courtBUS.Search(keyword);
+                ReloadCourtList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message,
+                                "Thông báo",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+            }
+        }
+
 
         private void extraPreviousButton_Click(object sender, EventArgs e)
         {
-            LoadCourts(currentList, 1);
+            LoadCourts(courtList, 1);
         }
 
         private void previousButton_Click(object sender, EventArgs e)
         {
             if (currentPage > 1)
-                LoadCourts(currentList, currentPage - 1);
+                LoadCourts(courtList, currentPage - 1);
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
             if (currentPage < totalPages)
-                LoadCourts(currentList, currentPage + 1);
+                LoadCourts(courtList, currentPage + 1);
         }
 
         private void extraNextButton_Click(object sender, EventArgs e)
         {
-            LoadCourts(currentList, totalPages);
+            LoadCourts(courtList, totalPages);
         }
     }
 }

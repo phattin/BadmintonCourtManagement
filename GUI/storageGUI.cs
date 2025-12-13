@@ -33,11 +33,12 @@ namespace BadmintonCourtManagement.GUI
         private int supplyItemPerPage = 8;
         private Boolean supplyIsFiltered = false;
 
-        public storageGUI(AccountDTO currentAccount, List<StorageDTO> storageList)
+        public storageGUI(AccountDTO currentAccount, List<StorageDTO> storageList, List<ImportBillDTO> importBillList)
         {
             this.currentAccount = currentAccount;
             InitializeComponent();
             this.storageList = storageList;
+            this.supplyList = importBillList;
             this.Load += StorageGUI_Load;
         }
 
@@ -47,7 +48,7 @@ namespace BadmintonCourtManagement.GUI
             // lấy danh sách kho hàng
             //storageList = StorageBUS.GetAllStorages();
             oldList = storageList;
-            searchList = oldList;
+            searchList = storageList;
             page = 0;
             Pagination();
 
@@ -58,7 +59,7 @@ namespace BadmintonCourtManagement.GUI
         // Load import bill list
         private void LoadSupplyList()
         {
-            supplyList = new BillImportBUS().GetAllImportBills();
+            // supplyList = new BillImportBUS().GetAllImportBills();
             supplyOldList = supplyList;
             supplySearchList = supplyOldList;
             supplyPage = 0;
@@ -87,7 +88,10 @@ namespace BadmintonCourtManagement.GUI
                             card.AutoSize = false;
                             card.BorderRadius = 20;
                             card.AutoScroll = true;
-                            card.BackColor = Color.FromArgb(200, 250, 214);
+                            if (storageList[i].Quantity > 0)
+                                card.BackColor = Color.FromArgb(200, 250, 214);
+                            else
+                                card.BackColor = Color.FromArgb(255, 200, 200);
                             card.Controls.Add(cardButton);
                             card.Controls.Add(cardBody);
                             card.Controls.Add(cardTitle);
@@ -229,8 +233,8 @@ namespace BadmintonCourtManagement.GUI
                 if (tempList.Count() > 0)
                 {
                     page = 0;
-                    storageList = tempList;
-                    searchList = storageList;
+                    searchList = tempList;
+                    storageList = searchList;
                     Pagination();
                     searchBar.Text = ""; // reset tìm kiếm
                 }
@@ -745,8 +749,14 @@ namespace BadmintonCourtManagement.GUI
         // Thêm đơn nhập hàng mới
         private void supplyAdd_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, oldList, this);
             supplyAdd.ShowDialog();
+            if (supplyAdd.ResultBill != null)
+            {
+                // Avoid duplicates: remove any existing with same id then add
+                supplyList.RemoveAll(b => b.ImportBillId == supplyAdd.ResultBill.ImportBillId);
+                supplyList.Add(supplyAdd.ResultBill);
+            }
             // Refresh list after closing add form
             LoadSupplyList();
         }
@@ -795,13 +805,13 @@ namespace BadmintonCourtManagement.GUI
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, oldList, this);
             supplyAdd.ShowDialog();
         }
 
         private void AddButton_Click_1(object sender, EventArgs e)
         {
-            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, storageList);
+            SupplyAddGUI supplyAdd = new SupplyAddGUI(currentAccount, oldList, this);
             supplyAdd.ShowDialog();
         }
 

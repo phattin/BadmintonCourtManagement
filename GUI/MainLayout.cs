@@ -22,7 +22,13 @@ namespace BadmintonCourtManagement.GUI
         private Panel menuPanel, contentPanel;
         private PermissionDetailBUS permissiondetailBUS = new PermissionDetailBUS();
 
-        private List<StorageDTO> storageList = new List<StorageDTO>();
+        private List<StorageDTO> storageList;
+        private List<ProductDTO> productList = new List<ProductDTO>();
+        private List<BrandDTO> brandList = new List<BrandDTO>();
+        private List<ImportBillDTO> importBillList = new List<ImportBillDTO>();
+        private List<CourtDTO> courtList = new List<CourtDTO>();
+        private List<EmployeeDTO> employeeList = new List<EmployeeDTO>();
+
         private List<TypeProductDTO> typeProductList = new List<TypeProductDTO>();
         private List<BillBookingDTO> listBillBookings = new List<BillBookingDTO>();
         private List<BillProductDTO> listBillProduct = new List<BillProductDTO>();
@@ -33,7 +39,7 @@ namespace BadmintonCourtManagement.GUI
         private List<CourtDTO> listCourts = new List<CourtDTO>();
         private List<BillImportDetailDTO> listImportDetails;
 
-        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<TypeProductDTO> typeProductList, List<BillBookingDTO> listBillBookings, List<BillProductDTO> listBillProduct, List<ImportBillDTO> listImportBill, List<BillProductDetailDTO> listBillDetails, List<ProductDTO> listProducts, List<BookingDTO> listBooking, List<CourtDTO> listCourts, List<BillImportDetailDTO> listImportDetails)
+        public MainLayout(AccountDTO account, List<StorageDTO> storageList, List<TypeProductDTO> typeProductList, List<ProductDTO> productList, List<BrandDTO> brandList, List<ImportBillDTO> importBillList, List<CourtDTO> courtList, List<EmployeeDTO> employeeList, List<BillBookingDTO> listBillBookings, List<BillProductDTO> listBillProduct, List<ImportBillDTO> listImportBill, List<BillProductDetailDTO> listBillDetails, List<ProductDTO> listProducts, List<BookingDTO> listBooking, List<CourtDTO> listCourts, List<BillImportDetailDTO> listImportDetails)
         {
             this.typeProductList = typeProductList;
             this.currentAccount = account;
@@ -46,11 +52,16 @@ namespace BadmintonCourtManagement.GUI
             this.listCourts = listCourts;
             this.listBooking = listBooking;
             this.listImportDetails = listImportDetails;
+            this.productList = productList;
+            this.brandList = brandList;
+            this.importBillList = importBillList;
+            this.courtList = courtList;
             InitializeComponent();
             Session.CurrentUser = account;
             Session.OnPermissionChanged += ReloadMenu;
             ReloadMenu();
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.employeeList = employeeList;
         }
 
         private void ReloadMenu()
@@ -177,7 +188,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Brand_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new BrandGUI(currentAccount));
+            OpenChildPanel(new BrandGUI(currentAccount, brandList));
         }
         private void Permission_Click(object? sender, EventArgs e)
         {
@@ -196,7 +207,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void Sell_Click(object sender, EventArgs e)
         {
-            OpenChildPanel(new ProductSaleGUI(currentAccount));
+            OpenChildPanel(new ProductSaleGUI(currentAccount, storageList));
         }
 
         // Event handlers for menu buttons
@@ -208,7 +219,7 @@ namespace BadmintonCourtManagement.GUI
 
         private void ManageCourts_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new CourtManagementGUI(currentAccount));
+            OpenChildPanel(new CourtManagementGUI(currentAccount, courtList));
             //MessageBox.Show("Quản lý sân clicked!");
         }
 
@@ -225,17 +236,18 @@ namespace BadmintonCourtManagement.GUI
 
         private void Storage_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new storageGUI(currentAccount, storageList));
+            storageList = StorageBUS.GetAllStorages();
+            OpenChildPanel(new storageGUI(currentAccount, storageList, importBillList));
         }
 
         private void Employee_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new EmployeeGUI(currentAccount));
+            OpenChildPanel(new EmployeeGUI(currentAccount, employeeList));
         }
 
         private void Product_Click(object? sender, EventArgs e)
         {
-            OpenChildPanel(new ProductGUI(currentAccount));
+            OpenChildPanel(new ProductGUI(currentAccount, productList));
         }
 
         private void Statistics_Click(object? sender, EventArgs e)

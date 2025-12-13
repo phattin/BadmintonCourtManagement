@@ -21,18 +21,30 @@ namespace DAO.EF_Core
 
         public bool Insert(StorageEntity.Storage storage)
         {
-            using var context = new AppDbContext();
-            context.Storages.Add(storage);
-            context.SaveChanges();
-            return true;
+            try {
+                using var context = new AppDbContext();
+                context.Storages.Add(storage);
+                context.SaveChanges();
+                return true;
+            } catch(Exception e)
+            {
+                return false;
+            }
         }
 
         public bool Update(StorageEntity.Storage storage)
         {
-            using var context = new AppDbContext();
-            context.Storages.Update(storage);
-            context.SaveChanges();
-            return true;
+            try
+            {
+                using var context = new AppDbContext();
+                context.Storages.Update(storage);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public bool Delete(string id)

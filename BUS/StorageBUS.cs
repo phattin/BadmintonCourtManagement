@@ -95,8 +95,7 @@ namespace BadmintonCourtManagement.BUS
             {
                 var entity = StorageMapper.ToEntity(storage);
                 entity.CalcTotal();
-                //return dao.Insert(entity);
-                return true;
+                return dao.Insert(entity);
             }
 
             //throw new Exception("Storage đã tồn tại!");
@@ -122,11 +121,13 @@ namespace BadmintonCourtManagement.BUS
             //return false;
 
             var existing = dao.GetById(storage.StorageId);
-            if (existing == null)
-                throw new Exception("Storage không tồn tại!");
-            var entity = StorageMapper.ToEntity(storage);
-            entity.CalcTotal();
-            return dao.Update(entity);
+            if (existing != null)
+            {
+                var entity = StorageMapper.ToEntity(storage);
+                entity.CalcTotal();
+                return dao.Update(entity);
+            }
+            return false;
         }
 
         public static bool DeleteStorage(string id)
