@@ -331,7 +331,8 @@ namespace BadmintonCourtManagement.GUI
         }
 
         // hàm đọc lại list kho
-        public void ReloadStorage() {
+        public void ReloadStorage()
+        {
             page = 0;
             storageList = oldList;
             searchList = oldList;
@@ -831,6 +832,11 @@ namespace BadmintonCourtManagement.GUI
         }
 
         private void NhapHangToolBar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cardList_Paint_1(object sender, PaintEventArgs e)
         {
 
         }
