@@ -101,10 +101,10 @@ namespace BadmintonCourtManagement.GUI
             khoHangPage.Controls.Add(titlePanel);
             khoHangPage.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             khoHangPage.Location = new Point(4, 34);
-            khoHangPage.Margin = new Padding(0);
+            khoHangPage.Margin = new Padding(5);
             khoHangPage.Name = "khoHangPage";
             khoHangPage.Padding = new Padding(26, 0, 26, 0);
-            khoHangPage.Size = new Size(1041, 564);
+            khoHangPage.Size = new Size(1191, 564);
             khoHangPage.TabIndex = 0;
             khoHangPage.Text = "Kho hàng";
             khoHangPage.Click += tabPage1_Click;
@@ -388,7 +388,7 @@ namespace BadmintonCourtManagement.GUI
             nhapHangPage.Margin = new Padding(0);
             nhapHangPage.Name = "nhapHangPage";
             nhapHangPage.Padding = new Padding(26, 0, 26, 0);
-            nhapHangPage.Size = new Size(1041, 564);
+            nhapHangPage.Size = new Size(1191, 564);
             nhapHangPage.TabIndex = 1;
             nhapHangPage.Text = "Nhập hàng";
             nhapHangPage.UseVisualStyleBackColor = true;
