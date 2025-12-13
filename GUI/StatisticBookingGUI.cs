@@ -17,33 +17,32 @@ namespace GUI
 {
     public partial class StatisticBookingGUI : UserControl
     {
-        public StatisticBookingGUI()
+        private List<BookingDTO> listBooking;
+        private List<BillBookingDTO> listBills;
+        private List<CourtDTO> listCourts;
+        public StatisticBookingGUI(List<BookingDTO> listBooking, List<BillBookingDTO> listBills, List<CourtDTO> listCourts)
         {
             InitializeComponent();
+            this.listBooking = listBooking;
+            this.listBills = listBills;
+            this.listCourts = listCourts;
             dateTimePicker1.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dateTimePicker2.Value = DateTime.Now;
-            LoadStatisticBookingData();
+            LoadStatisticBookingData(listBooking, listBills, listCourts);
         }
 
         private void buttonTK_Click(object sender, EventArgs e)
         {
-            LoadStatisticBookingData();
+            LoadStatisticBookingData(listBooking, listBills, listCourts);
         }
 
-        private void LoadStatisticBookingData()
+        private void LoadStatisticBookingData(List<BookingDTO> listBooking, List<BillBookingDTO> listBills, List<CourtDTO> listCourts)
         {
             if (dateTimePicker1.Value.Date > dateTimePicker2.Value.Date)
             {
                 MessageBox.Show("Ngày bắt đầu không được lớn hơn ngày kết thúc!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            BookingBUS bookingBUS = new BookingBUS();
-            var listBooking = bookingBUS.GetAllBookings();
-            BillBookingBUS billBookingBUS = new BillBookingBUS();
-            var listBills = billBookingBUS.GetAllBillBookings();
-            CourtBUS courtBUS = new CourtBUS();
-            var listCourts = courtBUS.GetAllCourts();
 
             DateTime fromDate = dateTimePicker1.Value.Date;
             DateTime toDate = dateTimePicker2.Value.Date;

@@ -30,13 +30,13 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
-            statisticBookinggui1 = new StatisticBookingGUI();
+            statisticBookinggui1 = new StatisticBookingGUI(listBooking, listBillBookings,listCourts);
             tabPage2 = new TabPage();
-            statisticImportProductgui1 = new StatisticImportProductGUI();
+            statisticImportProductgui1 = new StatisticImportProductGUI(listImportBill, listImportDetails, listProducts);
             tabPage3 = new TabPage();
-            statisticProductgui1 = new StatisticProductGUI();
+            statisticProductgui1 = new StatisticProductGUI(listBillProduct, listBillDetails, listProducts);
             tabPage4 = new TabPage();
-            statisticTotalgui1 = new StatisticTotalGUI();
+            statisticTotalgui1 = new StatisticTotalGUI(listBillBookings,listBillProduct, listImportBill);
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();

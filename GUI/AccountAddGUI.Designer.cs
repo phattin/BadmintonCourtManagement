@@ -219,6 +219,7 @@
             textBoxPassword.Dock = DockStyle.Fill;
             textBoxPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxPassword.Location = new Point(0, 28);
+            textBoxPassword.MaxLength = 255;
             textBoxPassword.Name = "textBoxPassword";
             textBoxPassword.Size = new Size(311, 34);
             textBoxPassword.TabIndex = 1;
@@ -253,6 +254,7 @@
             textBoxUsername.Dock = DockStyle.Fill;
             textBoxUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxUsername.Location = new Point(0, 28);
+            textBoxUsername.MaxLength = 50;
             textBoxUsername.Name = "textBoxUsername";
             textBoxUsername.Size = new Size(311, 34);
             textBoxUsername.TabIndex = 1;

@@ -1,9 +1,12 @@
 using BadmintonCourtManagement.DAO;
 using BadmintonCourtManagement.DTO;
+using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
+using static Google.Protobuf.Reflection.FeatureSet.Types;
 
 namespace BadmintonCourtManagement.BUS
 {
@@ -18,39 +21,16 @@ namespace BadmintonCourtManagement.BUS
 
         public bool InsertPriceRule(PriceRuleDTO priceRule)
         {
-            // Kiểm tra xem PriceRule đã tồn tại chưa
-            var existing = dao.GetPriceRuleById(priceRule.PriceRuleId);
-            if (existing != null)
-                throw new Exception("PriceRule đã tồn tại!");
-
             return dao.InsertPriceRule(priceRule);
         }
 
         public bool UpdatePriceRule(PriceRuleDTO priceRule)
         {
-            // Kiểm tra xem PriceRule đã tồn tại chưa
-            var existing = dao.GetPriceRuleById(priceRule.PriceRuleId);
-            if (existing == null)
-                throw new Exception("PriceRule không tồn tại!");
-
             return dao.UpdatePriceRule(priceRule);
-        }
-
-        public bool DeletePriceRule(string id)
-        {
-            var existing = dao.GetPriceRuleById(id);
-            if (existing == null)
-                throw new Exception("PriceRule không tồn tại!");
-
-            return dao.DeletePriceRule(id);
         }
 
         public bool DeletePriceRule1(string id)
         {
-            var existing = dao.GetPriceRuleById(id);
-            if (existing == null)
-                throw new Exception("PriceRule không tồn tại!");
-
             return dao.DeletePriceRule1(id);
         }
 
@@ -75,19 +55,44 @@ namespace BadmintonCourtManagement.BUS
         public string GeneratePriceRuleId()
         {
             List<PriceRuleDTO> priceRules = dao.GetAllPriceRules();
-
             if (priceRules == null || priceRules.Count == 0)
             {
                 return "PR0001";
             }
-
-            string lastId = priceRules.OrderByDescending(r => r.PriceRuleId).FirstOrDefault().PriceRuleId;
-
-            string numberPart = lastId.Substring(2);
-
-            int nextNumber = int.Parse(numberPart) + 1;
-
+            int maxNumber = 0;
+            foreach (var rule in priceRules)
+            {
+                Match match = Regex.Match(rule.PriceRuleId, @"\d+");
+                if (match.Success)
+                {
+                    if (int.TryParse(match.Value, out int number))
+                    {
+                        if (number > maxNumber)
+                        {
+                            maxNumber = number;
+                        }
+                    }
+                }
+            }
+            int nextNumber = maxNumber + 1;
             return "PR" + nextNumber.ToString("D4");
+        }
+
+        public PriceRuleDTO CheckOverlap(PriceRuleDTO newRule)
+        {
+            List<PriceRuleDTO> allRules = dao.GetAllPriceRules1();
+            var overlappingRule = allRules.FirstOrDefault(r =>
+                r.EndType == newRule.EndType &&
+                r.PriceRuleId != newRule.PriceRuleId &&
+                (newRule.StartTime < r.EndTime && newRule.EndTime > r.StartTime) &&
+                (
+                   (newRule.StartDate == null || r.EndDate == null || newRule.StartDate <= r.EndDate) &&
+                   (newRule.EndDate == null || r.StartDate == null || newRule.EndDate >= r.StartDate)
+                )
+            );
+
+            return overlappingRule;
+            
         }
 
         public PriceRuleDTO GetPriceRuleByTime(TimeOnly startTime, TimeOnly endTime, DateOnly bookingDate)

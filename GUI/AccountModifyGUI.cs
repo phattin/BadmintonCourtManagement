@@ -71,7 +71,7 @@ namespace GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải danh sách nhân viên: " + ex.Message);
+                MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -117,19 +117,12 @@ namespace GUI
                 if (accountBUS.UpdateAccount(updateAccount))
                 {
                     MessageBox.Show("Cập nhật tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (Session.CurrentUser.Username == currentAccount.Username)
-                    {
-                        Session.CurrentUser = updateAccount;
-                        Session.TriggerPermissionChange();
-                    }
-
-                    this.currentAccount = updateAccount;
+                    this.currentAccount.Password = updateAccount.Password;
+                    this.currentAccount.PermissionId = updateAccount.PermissionId;
+                    this.currentAccount.EmployeeId = updateAccount.EmployeeId;
+                    this.currentAccount.IsDeleted = updateAccount.IsDeleted;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

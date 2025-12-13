@@ -215,15 +215,6 @@ namespace BadmintonCourtManagement.DAO
                 cmd.Parameters.AddWithValue("@Username", username);
                 result = cmd.ExecuteNonQuery();
             }
-            catch (MySqlException ex)
-            {
-                if (ex.Number == 1451)
-                {
-                    throw new Exception("Không thể xóa vĩnh viễn tài khoản này vì đã phát sinh dữ liệu liên quan");
-                }
-
-                throw new Exception("Lỗi khi xóa tài khoản: " + ex.Message);
-            }
             finally
             {
                 db.CloseConnection();

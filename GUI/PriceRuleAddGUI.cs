@@ -58,19 +58,7 @@ namespace GUI
             }
             try
             {
-                string newId = bus.GeneratePriceRuleId();
-                PriceRuleDTO newPriceRule = new PriceRuleDTO(newId, price, startTime, endTime, startDate, endDate, endType, description, 1);
-
-                List<PriceRuleDTO> allRules = bus.GetAllPriceRules();
-                var overlappingRule = allRules.FirstOrDefault(r =>
-                    r.EndType == endType &&
-                    (startTime < r.EndTime && endTime > r.StartTime) &&
-                    (
-                       (startDate == null || r.EndDate == null || startDate <= r.EndDate) &&
-                       (endDate == null || r.StartDate == null || endDate >= r.StartDate)
-                    )
-                );
-
+                PriceRuleDTO overlappingRule = bus.CheckOverlap(dto);
                 if (overlappingRule != null)
                 {
                     string msg = $"Bị trùng với mã: {overlappingRule.PriceRuleId}\n" +
@@ -82,16 +70,14 @@ namespace GUI
                     return;
                 }
 
+                string newId = bus.GeneratePriceRuleId();
+                PriceRuleDTO newPriceRule = new PriceRuleDTO(newId, price, startTime, endTime, startDate, endDate, endType, description, 1);
                 if (bus.InsertPriceRule(newPriceRule))
                 {
                     MessageBox.Show("Thêm giá sân thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.NewPriceRule = newPriceRule;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Thêm thất bại. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -100,10 +86,35 @@ namespace GUI
             }
         }
 
+        private void UpdateDatePickersState()
+        {
+            string type = comboBoxEndType.Text.Trim();
+            bool isRecurring = type.Equals("Weekday", StringComparison.OrdinalIgnoreCase)
+                            || type.Equals("Weekend", StringComparison.OrdinalIgnoreCase);
+
+            if (isRecurring)
+            {
+                dateTimePickerStartDate.Enabled = false;
+                dateTimePickerEndDate.Enabled = false;
+                dateTimePickerStartDate.Checked = false;
+                dateTimePickerEndDate.Checked = false;
+            }
+            else
+            {
+                dateTimePickerStartDate.Enabled = true;
+                dateTimePickerEndDate.Enabled = true;
+            }
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void comboBoxEndType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateDatePickersState();
         }
     }
 }

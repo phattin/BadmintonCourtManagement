@@ -40,20 +40,12 @@ namespace BadmintonCourtManagement.BUS
 
         public bool UpdateAccount(AccountDTO account)
         {
-            var existing = dao.GetByUsername(account.Username);
-            if (existing == null)
-                throw new Exception("Account không tồn tại!");
-
             return dao.UpdateAccount(account);
         }
 
         public bool DeleteAccount(string username)
         {
-            var existing = dao.GetByUsername(username);
-            if (existing == null)
-                throw new Exception("Account không tồn tại!");
-
-            return dao.DeleteAccount1(username);
+            return dao.DeleteAccount(username);
         }
 
         public Dictionary<string, string> ValidateAccount(AccountDTO account)
